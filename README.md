@@ -29,6 +29,12 @@ cp -r asset-inventory ~/.config/opencode/skills/
 cp -r asset-inventory .opencode/skills/
 ```
 
+### Auto-install via AI
+
+If you use an AI coding assistant, paste this prompt and let the AI install it for you:
+
+> Install the "asset-inventory" OpenCode skill from <https://github.com/sogeisetsu/asset-inventory>. Clone or download the repository, then copy the whole `asset-inventory` folder — `SKILL.md`, `references/`, `examples/`, `README.md`, `README-zh.md` — into the global OpenCode skills directory `~/.config/opencode/skills/` (create it if missing). Verify that `SKILL.md` ends up at `~/.config/opencode/skills/asset-inventory/SKILL.md`. Do not modify any skill file during installation. Report the final path.
+
 ## Usage
 
 Just ask, in any phrasing:
@@ -69,7 +75,9 @@ asset-inventory/
 
 ## Compatibility
 
-Requires [OpenCode](https://opencode.ai) (skills are loaded on-demand via the native `skill` tool). Works with host apps that wrap OpenCode (e.g. OpenChamber); the evidence-source mapping in `SKILL.md` can be remapped for other hosts. Windows (PowerShell) and Unix (sh) examples are both considered.
+**Scope: this skill is only tested in OpenCode** (including host apps that wrap OpenCode, such as OpenChamber). It is **not verified in other AI coding assistants** (Claude Code, Cursor, Windsurf, etc.) — whether it works there is unknown and unsupported.
+
+Requires [OpenCode](https://opencode.ai) (skills are loaded on-demand via the native `skill` tool). The evidence-source mapping in `SKILL.md` can be remapped for other hosts. Windows (PowerShell) and Unix (sh) examples are both considered.
 
 ## License
 

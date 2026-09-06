@@ -29,6 +29,12 @@ Copy-Item -Recurse asset-inventory "$env:USERPROFILE\.config\opencode\skills\"
 Copy-Item -Recurse asset-inventory .opencode\skills\
 ```
 
+### 用 AI 自动安装
+
+如果你用 AI 编程助手，直接把下面这段话复制给它，让它帮你装：
+
+> 请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <https://github.com/sogeisetsu/asset-inventory>。克隆或下载该仓库后，把整个 `asset-inventory` 文件夹（含 `SKILL.md`、`references/`、`examples/`、`README.md`、`README-zh.md`）复制到全局 OpenCode skills 目录 `~/.config/opencode/skills/`（没有就创建）。确认最终路径是 `~/.config/opencode/skills/asset-inventory/SKILL.md`。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。
+
 ## 用法
 
 直接说，任意措辞：
@@ -67,9 +73,11 @@ asset-inventory/
     └── inventory-example.md    # 脱敏输出示例
 ```
 
-## 兼容性
+## 适用范围与兼容性
 
-需要 [OpenCode](https://opencode.ai)（skill 经原生 `skill` 工具按需加载）。兼容包裹 OpenCode 的宿主应用（如 OpenChamber）；换宿主时重映射 `SKILL.md` 里的证据源即可。PowerShell 与 sh 示例均考虑。
+**适用范围：本 skill 目前只在 OpenCode 中测试过**（含包裹 OpenCode 的宿主应用，如 OpenChamber）。**未在其他 AI 编程助手中验证**（Claude Code、Cursor、Windsurf 等）——在这些软件中能否生效无法确定，也不做支持。
+
+需要 [OpenCode](https://opencode.ai)（skill 经原生 `skill` 工具按需加载）。换宿主时重映射 `SKILL.md` 里的证据源即可。PowerShell 与 sh 示例均考虑。
 
 ## 许可证
 
