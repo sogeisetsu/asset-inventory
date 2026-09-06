@@ -11,6 +11,15 @@ metadata:
 
 Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers three questions: **是什么、谁带来的、能不能删/删了会怎样**.
 
+## Dual Output
+
+Every run produces **two files** from the same evidence (no double collection):
+
+1. **`inventory.md`** — the encyclopedia: 7 tables (below), what each asset is.
+2. **`usage-guide.md`** — the how-to-use guide: reorganizes the same inventory by **user scenarios and frequency**, in plain language, telling the user **when to reach for each command/skill and why**. Format reference: `references/usage-guide.md`. This is a second *view* of the same facts — never re-collect or invent new ones.
+
+The Rule below describes the `inventory.md` tables; the Usage Guide section describes how to derive `usage-guide.md` from them.
+
 ## The Rule
 
 Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜怎么叫｜何时用｜干什么`); **表6 Agent has 6 columns** (`名称｜来源｜怎么叫｜何时用｜干什么｜模型链`).
@@ -83,6 +92,32 @@ In 表1/2/4/5/7, end every `干什么` with who brought it in and what breaks/va
   - **干什么**: **substantial** — `简单：一句话。详细：<1-3 句，基于源文件实际 description（SKILL.md / command/*.md / 官方文档 / magicPrompts 模板），转述成看得懂的中文>` + disposal where required.
   - **模型链 (表6 only)**: current preset's chain `a→b→c`, + backup presets.
 - Format examples: see `references/format-example.md` (values there are placeholders — replace, never copy).
+- **Usage Guide (`usage-guide.md`)**: after producing the 7 tables, derive a plain-language usage guide from the same rows. Do NOT re-collect evidence. Organize by user scenario, not by type:
+
+  ```
+  # 使用指南：这些命令/技能什么时候用
+  
+  ## 每天必用（最高频）
+  **`/catch-up`** — 每次回到项目第一件事。它静默检查 git 状态（进行中 diff、PR 状态、最近提交），告诉你"上次干到哪、从哪继续"。多会话来回切换时最高频。
+  **`/review`** — 提交代码前跑它。默认评审未提交改动，也可指定 commit/分支/PR。新手提交前等于免费 code review。
+  
+  ## 干活主力
+  | 命令 | 什么时候用 |
+  |---|---|
+  | `/deepwork` | 复杂多阶段任务，带审查关卡 |
+  
+  ## 按需
+  | 命令 | 什么时候用 |
+  |---|---|
+  | `/plan-feature` | 做新功能前先规划 |
+  
+  ## 周期性
+  | 命令 | 什么时候用 |
+  |---|---|
+  | `/reflect` | 每周回顾一次 |
+  ```
+
+  Rules: group by **frequency/scenario** (每天必用 / 干活主力 / 按需 / 周期性), write in plain Chinese telling *when and why* to use each, include practical caveats (需 git、很贵、Win 专用), keep it scannable. Only include `✅可用` items. Format reference: `references/usage-guide.md`.
 - End: one-line mnemonic + **Provenance** (3 lines):
   ```
   盘点时间：现查填写｜预设：现查填写｜命令：`opencode agent list` + `opencode --pure agent list` 已跑
@@ -111,6 +146,7 @@ In 表1/2/4/5/7, end every `干什么` with who brought it in and what breaks/va
 13. JSON PKs match Markdown rows, no duplicates.
 14. Empty tables have declaration line + `[]`.
 15. Commands sit in the right table (原生→表3, 插件→表2, 自建→表4, 宿主注入→表4).
+16. **`usage-guide.md` derived from the same rows** — no re-collection, no invented facts; grouped by scenario/frequency; only `✅可用` items; plain-language "when and why".
 
 ## Anti-patterns
 
@@ -125,3 +161,4 @@ In 表1/2/4/5/7, end every `干什么` with who brought it in and what breaks/va
 - Copying example rows from `references/format-example.md` as literal output.
 - Editing any skill/command/agent/MCP/config during the inventory. Read-only.
 - Writing baselines or state files onto the machine being inventoried.
+- Re-collecting or inventing facts for `usage-guide.md` — it must derive from the same 7-table rows.
