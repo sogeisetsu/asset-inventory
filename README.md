@@ -31,9 +31,9 @@ cp -r asset-inventory .opencode/skills/
 
 ### Auto-install via AI
 
-If you use an AI coding assistant, paste this prompt and let the AI install it for you:
+If you use an AI coding assistant, paste this prompt and let the AI install it for you (the AI should first ask you whether to install globally or into the current project):
 
-> Install the "asset-inventory" OpenCode skill from <https://github.com/sogeisetsu/asset-inventory>. Clone or download the repository, then copy the whole `asset-inventory` folder — `SKILL.md`, `references/`, `examples/`, `README.md`, `README-zh.md` — into the global OpenCode skills directory `~/.config/opencode/skills/` (create it if missing). Verify that `SKILL.md` ends up at `~/.config/opencode/skills/asset-inventory/SKILL.md`. Do not modify any skill file during installation. Report the final path.
+> Install the "asset-inventory" OpenCode skill from <https://github.com/sogeisetsu/asset-inventory>. First ask me whether to install it **globally** or **into the current project only**. Then clone or download the repository and copy only the runtime files — `SKILL.md`, `references/`, `examples/` — into the chosen target: global skills directory `~/.config/opencode/skills/` for global, or `.opencode/skills/` inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that `SKILL.md` ends up at `<target>/asset-inventory/SKILL.md`. Do not modify any skill file during installation. Report the final path.
 
 ## Usage
 

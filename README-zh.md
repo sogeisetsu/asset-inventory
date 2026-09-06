@@ -31,9 +31,9 @@ Copy-Item -Recurse asset-inventory .opencode\skills\
 
 ### 用 AI 自动安装
 
-如果你用 AI 编程助手，直接把下面这段话复制给它，让它帮你装：
+如果你用 AI 编程助手，直接把下面这段话复制给它，让它帮你装（AI 应该先问你是装全局还是装进当前项目）：
 
-> 请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <https://github.com/sogeisetsu/asset-inventory>。克隆或下载该仓库后，把整个 `asset-inventory` 文件夹（含 `SKILL.md`、`references/`、`examples/`、`README.md`、`README-zh.md`）复制到全局 OpenCode skills 目录 `~/.config/opencode/skills/`（没有就创建）。确认最终路径是 `~/.config/opencode/skills/asset-inventory/SKILL.md`。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。
+> 请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <https://github.com/sogeisetsu/asset-inventory>。先问我装到**全局**还是**只装进当前项目**。然后克隆或下载该仓库，只复制运行所需的文件——`SKILL.md`、`references/`、`examples/`——到选定的目标位置：全局就装到 `~/.config/opencode/skills/`，项目级就装到当前项目内的 `.opencode/skills/`（没有就创建）。不要复制 README 文件。确认最终路径是 `<目标位置>/asset-inventory/SKILL.md`。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。
 
 ## 用法
 

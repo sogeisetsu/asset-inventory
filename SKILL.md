@@ -93,7 +93,8 @@ No content after verification → **do not invent, do not omit**: output `表中
   - `output/inventory.md` — the 7-table encyclopedia below.
   - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
   - `output/asset-inventory.json` — standalone JSON, one element per row.
-- Chinese compact tables, blank line between tables, fixed headers, rows alphabetical (表2 grouped by software), one entry per cell.
+- **Language follows the user**: every table header, cell value, and the usage guide must be written in the same language the user asked in (中文→中文, English→English, 日本語→日本語, Deutsch→Deutsch, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (表1-5/7 five columns, 表6 six), but the headers themselves (e.g. 名称/来源/怎么叫/何时用/干什么 → Name/Source/How to call/When/What it does) and all cell content and prose are translated into the user's language. When in doubt, ask or mirror the last user message.
+- Compact tables, blank line between tables, fixed headers, rows alphabetical (表2 grouped by software), one entry per cell.
 - Cell conventions:
   - **名称**: one consistent shape per asset type — NO suffix words, NO redundancy:
     - Command → `/command`（裸斜杠命令，不加"命令"二字；别名只在 `怎么叫` 里写）。
@@ -181,6 +182,7 @@ No content after verification → **do not invent, do not omit**: output `表中
 20. 表6 row order: 核心自带 primary → 插件包 primary → 核心自带 subagent → 插件包 subagent, alphabetical within group.
 21. 表5 MCP rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
 22. 名称 column is uniform per asset type: commands are bare `/command` (no `命令` suffix), skills bare `skill-name` (no `/`), 表2 rows bare child name (no plugin prefix), software real names. No mixed styles.
+23. **Language follows the user**: all output (tables + usage guide) is in the user's question language — never a fixed default language.
 
 ## Anti-patterns
 
@@ -204,4 +206,5 @@ No content after verification → **do not invent, do not omit**: output `表中
 - Omitting a known MCP alias/tool-name prefix from 表5.
 - Missing plugin-registered slash commands (`/loop`) because the scan stopped at `command/` and never read the plugin dist `hooks/`.
 - Writing run output anywhere outside `output/` (baselines or state files onto the machine being inventoried).
+- Writing all output in a fixed default language (e.g. always Chinese) regardless of the user's question language — mirror the user's language instead.
 - Re-collecting or inventing facts for `usage-guide.md` — it must derive from the same 7-table rows.
