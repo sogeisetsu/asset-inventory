@@ -31,7 +31,15 @@
 |---|---|---|---|---|
 | 示例自建 Skill | 本地自建，上游 `<repo>` `<协议>`，依赖 `<CLI>` | 自动或 `/example:skill` | 需要某类处理时 | 简单：一句话用途。详细：1-2 句。依赖说明。 |
 | /status 命令 | 全局自定义，`$OPENCODE_CONFIG/command/status.md` | `/status` | 回来先看盘时 | 简单：一屏定位。详细：分支+状态+日志+读活文档。 |
-| /示例宿主命令 | 宿主平台注入，TUI `/` 可见 | `/示例宿主命令` | 每次回来断片时 | 简单：补课。详细：查进行中 diff、PR 状态、最近提交。 |
+| /catch-up | 宿主平台注入，宿主应用 `magicPrompts`（app.asar） | `/catch-up` | 每次回来断片时 | 简单：补课。详细：查分支提交、PR、未提交改动，给总结和下一步。 |
+| /plan-feature | 宿主平台注入，宿主应用 `magicPrompts` | `/plan-feature` | 做新功能动键盘前 | 简单：先画图。详细：引导探索代码库，分批澄清问题后出实现计划。 |
+| /craft-goal | 宿主平台注入，宿主应用 `magicPrompts` | `/craft-goal` | 目标含糊时 | 简单：磨目标。详细：把想法引导成清晰可验证的 Goal。 |
+| /workspace-review | 宿主平台注入，宿主应用 `magicPrompts` | `/workspace-review` | 改完没提交时 | 简单：审改动。详细：审查 diff 是否达标、按严重度分类。 |
+| /weigh | 宿主平台注入，宿主应用 `magicPrompts` | `/weigh` | 两方案僵持时 | 简单：摆利弊。详细：查代码后给 2-3 方案+取舍+推荐。 |
+| /debug | 宿主平台注入，宿主应用 `magicPrompts` | `/debug` | 测试红了修不好时 | 简单：找根因。详细：引导式根因分析再修。 |
+| /summary | 宿主平台注入，宿主应用 `magicPrompts` | `/summary` | 要交接时 | 简单：写交接。详细：非破坏性摘要，不压缩历史。 |
+| /explore | 宿主平台注入，宿主应用 `magicPrompts` | `/explore` | 进陌生目录时 | 简单：导览。详细：结构化讲仓库方位和主模块。 |
+| /fusion | 宿主平台注入，宿主应用 `magicPrompts` | `/fusion` | 多次结果要合并时 | 简单：合稿。详细：把多个运行结果并成最终答案。 |
 
 ## 表5 MCP
 
