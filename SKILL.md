@@ -1,146 +1,130 @@
 ---
 name: asset-inventory
-description: 全量盘点任意一台机器的 OpenCode/OpenChamber 资产。用户说“列一下我有什么插件/软件/Skill/命令/MCP/Agent”“哪个被禁用了”“谁带进来的”“能不能删”时用。产出 1→7 共 7 张表，每行必带来源与可信度，禁凑数，不写死任何版本与路径。规格 v1.5。
+description: Inventory every plugin, companion app, skill, command, MCP server, agent, and host capability on this machine's OpenCode/OpenChamber setup, with provenance for each item. Use when the user asks "列一下我有什么插件/Skill/命令/MCP/Agent"、"哪个被禁用了"、"谁带进来的"、"能不能删/删了会怎样", or wants a migration/onboarding checklist. Outputs 7 tables plus a machine-readable JSON file. Never invent assets, versions, or model names — verify everything on this machine.
+license: MIT
+metadata:
+  audience: opencode-users
+  workflow: inventory
 ---
 
-# 资产盘点（通用开源版）
+# Asset Inventory
 
-## 适用与不适用
+Inventory what this machine can actually invoke — not what files exist on disk. Every row answers three questions: **what is it, where did it come from, who can remove it**.
 
-- 适用：给新手讲清“装了啥、带来啥、怎么叫、何时用、关掉会怎样”；核对禁用项；
-  换机迁移前留档。凡“谁能删、删了会怎样”的追问，都归本 skill。
-- 不适用：普通改代码、单次调试、性能优化。一次孤立问题不建新资产。
+## The Rule
 
-## 人话定义（每次先复述）
+Your job is to produce **7 tables, 5 columns each**: `名称｜来源｜怎么叫｜何时用｜干什么`.
 
-- **命令**：你敲的，`/xxx` 按一下动一下；命令与 Skill 分开列，原生命令归表3、
-  插件带来的命令归表2、自建命令归表4，名称后缀“命令”二字以区别 Skill。
-- **Skill**：看你说话自动干，也能硬敲 `/技能名`。按需经 `skill` 工具加载完整 `SKILL.md`。
-- **MCP**：Agent 的工具箱，提供 tools 而非 skills，分本地/远端；Skill 也可自带 MCP。
-- **Agent**：后台干活的人，分原生（core 自带）与插件带来。`description` 决定何时被自动叫起。
-- **配套软件**：包着或增强 opencode 的外部组件（宿主是其中一种）。用户随口举的软件名
-  只是示意，输出一律现查，不得当事实写。
+Fixed table order:
 
-## 表顺序与列（固定 7 表）
+1. **表1 插件与配套软件** — the software/plugins themselves (host, plugins, companion apps). Do not list their skills here.
+2. **表2 各软件/插件带来的 Skill** — grouped by owning software: one summary row per software, then one row per skill it brings (`软件名 / Skill 名`, source per skill). Plugin-provided commands go here too, suffixed `命令`.
+3. **表3 原生命令与原生 Skill** — built-in commands (suffixed `命令`) and built-in skills, per official docs.
+4. **表4 自定义 Skill 或命令** — user-created skills (must note upstream + external deps) and user commands, each expanded, never merged. **This skill itself MUST appear here.**
+5. **表5 MCP** — every MCP server (global + project additions), local/remote, enabled state, whether auth headers were masked. User-built MCPs must appear with source. Related skills: only if you verified an actual call/dependency — otherwise write `未知`, never fabricate.
+6. **表6 Agent** — built-in (primary/subagent/hidden) + plugin-provided + custom. Models: current preset's chain, looked up fresh (`a→b→c`); note backup preset names; never hardcode model names.
+7. **表7 宿主** — host-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser actions, managed processes, prompt optimization, skill marketplace). If a capability is already owned by a software row in 表1/表2, do not duplicate it here.
 
-1. 插件与配套软件 → 2. 各软件/插件带来的 Skill → 3. 原生命令与原生 Skill →
-4. 自定义 Skill 或命令 → 5. MCP → 6. Agent → 7. 宿主。
+## Source Classification
 
-每表 5 列：`名称｜来源｜怎么叫｜何时用｜干什么`
+For every row, decide **state first**, then **source**. The source dictionary has only these values:
 
-- 来源词典（只用这些）：`核心` / `全局配置` / `项目配置` / `插件包` / `技能包` /
-  `本地自建` / `远端MCP` / `本地MCP` / `宿主`。
-- 可信度缀来源后：`✅实测` / `✅文档` / `⚠️推断`。
-- 何时用必须写场景，禁“按需”。干什么=简单一句+详细1-2句。
-- 版本号允许出现，但必须现查并可追溯（见“版本现查顺序”），禁凭记忆写。
+| 来源 | 用于 |
+|---|---|
+| 核心 | built-in / core |
+| 全局配置 / 项目配置 | declared in that layer |
+| 插件包 / 技能包 | brought by a plugin or skill package |
+| 本地自建 | user-created |
+| 远端MCP / 本地MCP | MCP transport |
+| 宿主 | injected by the host app |
 
-## 来源裁决（谁带进来的，取直接带来者）
+Suffix every source with confidence: `✅实测` / `✅文档` / `⚠️推断`. Append state:
 
-来源词典混了“是什么”与“从哪来”，必须裁决，否则十次十样：
+- `✅可用` — actually invokable (TUI autocomplete, `agent list`, config enabled).
+- `❌已禁用` — explicitly disabled in config; **quote the config line**.
+- `📦仅货架未装` — appears in marketplace/cache/docs only, not registered, not invokable. Typical: marketplace listings, plugin-cache source without registration.
+- `🚫不存在` — absent from both lists and disk. Never pad the tables to fill them.
 
-- 表5 MCP：优先 `远端MCP` 或 `本地MCP`；用户自建 MCP 用 `本地自建`，表注写安装方式。
-- 表2 组内行：优先 `插件包`、`技能包`、`宿主`。
-- 同物多源（如 Skill 由插件带来、该插件又来自宿主）：取**直接带来者**，
-  间接链写进“干什么”，不写进来源列。
+When an item has multiple sources, record the **direct bringer** (插件包/技能包/宿主 wins over its own origin), and push indirect provenance into `干什么`.
 
-## 来源判定（四态，代替拍脑袋）
+**Distinguish resolution from disk:** a file on disk but unregistered/unenabled = unavailable, say so explicitly, do not count as usable. A registered config that fails to resolve (missing command / missing env / probe failure) = broken reference: mark `⚠️推断` and put the failure class in a table note.
 
-每行先判状态，再写来源：
+## Procedure
 
-- `✅可用`：实测能叫到（TUI 联想有 / `agent list` 有 / 配置启用）。
-- `❌已禁用`：配置里显式关掉，必须贴出配置行（如 `agent.explore.disable`）。
-- `📦仅货架未装`：只出现在技能市场/缓存目录/文档里，配置未注册、实测叫不到。
-  典型：宿主技能市场里的条目、插件缓存包里有源码但无注册的技能。
-- `🚫不存在`：两份 list 皆无、磁盘也无。不要为凑数造资产。
+### 1. Discover (evidence sources, remap only this section on a new host/CLI)
 
-## 解析 vs 磁盘（关键区分）
+Gather from five sources (default OpenCode + OpenChamber mapping):
 
-盘点的是**“当前能叫到的能力”**，不是“磁盘上有什么文件”：
+1. **Declared config**: `$OPENCODE_CONFIG/opencode.jsonc`, `package.json:dependencies`, `$PROJECT_DIR/tui.json`.
+2. **User directory**: `$OPENCODE_CONFIG/command/`, first 15 lines of each `$OPENCODE_CONFIG/skills/*/SKILL.md`.
+3. **Project overlay**: `$PROJECT_DIR/.opencode/`, project-level MCP additions.
+4. **Host injection**: `$HOST_CONFIG/` settings, `$HOST_CONFIG/agent-tool/*.js`.
+5. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete.
 
-- 磁盘有文件但未注册/未启用 = 不可用，必须显式说明，不计入可用行。
-- 配置有注册但文件缺失/命令跑不通 = 坏引用，标 `⚠️推断` 并写表注。
-  坏引用分三类：缺命令、缺 env、探活失败，表注要写清是哪类。
-- 内置能力可能磁盘上无对应文件（如原生命令、隐藏 agent），以实测+文档为准。
+Use path variables only — never absolute paths in output. `$OPENCODE_CONFIG`, `$PROJECT_DIR`, `$HOST_CONFIG`, `$PACKAGE_CACHE` are the four allowed placeholders.
 
-## 空表规则
+### 2. Verify
 
-任一表现查无内容时，**不要编造、不要省略该表**，输出一行空表声明：
+Evidence order, cheapest first:
 
-`表中无可用行（现查日期）`；JSON 中该表为空数组。
+1. **Direct**: TUI `/` autocomplete; host browser on the host's local port; read-only listing of the five sources above; run the two `agent list` commands and compare.
+2. **Official docs**: `opencode.ai/docs/tui#commands`, `opencode.ai/docs/agents` (primary/subagent/hidden), Context7 for plugin docs. Docs may be ahead of the local version — local ground truth wins.
+3. **Source, last resort**: plugin cache registration tables (e.g. `CUSTOM_SKILLS`), command registration; source without registration = `📦仅货架未装`; host `agent-tool/*.js` for tool actions; app bundles (asar/web-dist) only to fill gaps.
 
-## 路径变量（勿写绝对路径）
+Version numbers, model names, counts: always look them up fresh, in this order — manifest → install-path segment → lockfile/marketplace → `未知（现查无结果）`. Never from memory.
 
-- `$OPENCODE_CONFIG`：全局配置目录（Win `%APPDATA%` 下或 `~/.config/opencode`，
-  以 `OPENCODE_CONFIG_DIR` 环境变量为准）。
-- `$PROJECT_DIR`：当前项目根，由会话目录推导。
-- `$HOST_CONFIG`：宿主应用配置目录（OpenChamber 即其 config 目录）。
-- `$PACKAGE_CACHE`：插件缓存目录（`opencode` 的 packages 缓存）。
-- 贴路径时写 `$OPENCODE_CONFIG/opencode.jsonc` 这类相对式，正文不出现
-  `C:\Users\xxx`、`E:\xxx`。
+### 3. Empty tables
 
-## 证据源（五类抽象，换环境只重映射这一节）
+If a table has no content after verification, **do not invent rows and do not omit the table**. Output one declaration line: `表中无可用行（现查日期）`; the JSON array for that table is `[]`.
 
-证据源抽象为五类；以下为 OpenCode + OpenChamber 的默认映射。换宿主或换 CLI 时
-只改本节的映射关系，其余规则不变：
+### 4. Disposal note
 
-1. **声明文件**：`$OPENCODE_CONFIG/opencode.jsonc`、`package.json:dependencies`、
-   `$PROJECT_DIR/tui.json`。
-2. **用户目录**：`$OPENCODE_CONFIG/command/`、`$OPENCODE_CONFIG/skills/*/SKILL.md` 前15行。
-3. **项目覆盖层**：`$PROJECT_DIR/.opencode/`、项目级 MCP 追加。
-4. **宿主注入**：`$HOST_CONFIG/` 宿主设置、`$HOST_CONFIG/agent-tool/*.js`。
-5. **运行时列表**：`opencode agent list` 与 `opencode --pure agent list` 对照、TUI `/` 联想。
+In 表1, 表2, 表4, 表5, 表7 — end every `干什么` cell with a disposal sentence: who brought this in, and what breaks/vanishes if the owning software or config is removed. In 表3 and 表6 (native capabilities) it is optional.
 
-## 证据顺序
+### 5. Output
 
-1. **直接验证**：TUI 输 `/` 看联想；宿主自带浏览器打开宿主本地端口页亲眼确认；
-   按上节五类证据源只读核查；跑 `opencode agent list` 与 `opencode --pure agent list`
-   对比，得出四态。
-2. **查官方文档**：`opencode.ai/docs/tui#commands`（系统命令）、
-   `opencode.ai/docs/agents/`（原生 Agent 三态：primary/subagent/隐藏）、
-   Context7 查插件包文档。文档版本可能领先本地版本，以本地实测为准。
-3. **最后读源码**：插件缓存包内搜技能注册表（如 `CUSTOM_SKILLS`）、命令注册；
-   有源码无注册=未安装（`📦仅货架未装`）；宿主 `agent-tool/*.js` 定工具动作；
-   应用包（asar/web-dist）只读搜补漏，有才收录。
+- Chinese compact tables, one blank line between tables; fixed headers; rows alphabetical by name (表2 grouped by software first); one entry per cell, never cram multiple commands into one.
+- End with a one-line mnemonic + a **Provenance** block (3 lines):
+  ```
+  盘点时间：现查填写｜预设：现查填写｜命令：`opencode agent list` + `opencode --pure agent list` 已跑
+  未解析：如实列（如某插件缓存读不到），无则写“无”
+  本表由 asset-inventory 生成（自包含）
+  ```
+  In real-name mode add a 4th line: `本输出含用户要求的真实项目名，请勿外发。`
+- **JSON**: emit a standalone JSON file alongside the Markdown, one element per row with at least `table`, `name`, `source`, `state`, `confidence`, `invoke`. Primary key = `table` + `name` (unique within a table). Empty table ⇒ `[]`.
+- **Masking**: default redact API keys, tokens, auth headers, absolute user paths, private project names. Real-name mode only when the user explicitly asks — and then the Provenance note above is mandatory.
+- **Diff mode**: when the user asks "跟上次比变了啥", ask them to paste the previous JSON (or Markdown), and output only the added/removed sections, keyed by `table` + `name` primary key. Never re-dump the full tables.
 
-## 版本现查顺序
+## Quality Bar
 
-需贴版本时按此顺序找，找不到就写 `未知（现查无结果）`，不编：
+Before you call this done, pass all of these:
 
-1. 技能/插件 manifest 里的版本字段 → 2. 安装路径里的版本段 →
-3. 锁文件/市场元数据 → 4. 未知。
+1. Exactly 7 tables, 5 columns each, headers consistent.
+2. Every source is from the dictionary, with confidence suffix, per the arbitration rules.
+3. No absolute paths, no plaintext keys/tokens, no real project names (unless real-name mode, which then has the 4th Provenance line).
+4. Versions/models/counts looked up fresh.
+5. `📦仅货架未装` never mixed with `✅可用`.
+6. This skill appears in 表4.
+7. No `按需` in any `何时用` cell.
+8. 表1/2/4/5/7 rows end `干什么` with a disposal sentence.
+9. JSON primary keys match Markdown rows, no duplicates.
+10. Empty tables have their declaration line and `[]` in JSON.
+11. Command rows carry the `命令` suffix and sit in the right table (原生→表3, 插件→表2, 自建→表4).
 
-## 各表 checklist（只写查法，不写答案）
+## Anti-patterns
 
-- **表1 插件与配套软件**：只列插件与配套软件本体，不塞其带的能力。来源：
-  `plugin[]`、`package.json:dependencies`、宿主被管进程文件。判宿主 vs 插件 vs 项目级。
-  每行“干什么”末句写处置提示（谁带来、删该软件/插件会怎样）。
-- **表2 各软件/插件带来的 Skill**：按软件/插件分组，每组先 1 行小结（名称为软件名，
-  干什么写一句话用途+版本现查），组内逐 Skill 一行（名称写成“软件名 / Skill 名”，
-  每 Skill 来源单列）；插件带来的命令同组收录，名称后缀“命令”二字。
-  每行“干什么”末句写处置提示（随哪个软件/插件删除）。
-- **表3 原生命令与原生 Skill**：系统命令以官方文档为准，命令行后缀“命令”二字；
-  builtin skill（如改自身配置类）归原生；原生 Skill 逐条。现查无原生 Skill 时
-  走空表规则，禁凑数。
-- **表4 自定义 Skill 或命令**：用户自建 Skill 逐条，必写上游（GitHub/协议/版本）与
-  外部依赖（如浏览器 CLI、OCR CLI）；全局/项目自定义命令逐条展开，禁合并，
-  后缀“命令”二字；每行“干什么”末句写处置提示；**本 skill 自身必须收录在本表**
-  （自包含，防盲区）。
-- **表5 MCP**：全局 `mcp` + 项目级追加，逐服务器一行；注明远端/本地、启用位、
-  认证头是否脱敏；相关 Skill 指调用或依赖该 MCP 的 Skill，查不到写“未知”，
-  禁生造关联；用户自建 MCP 必须出现且来源标清；每行“干什么”末句写处置提示。
-  表注写健康状态（缺命令/缺 env/探活失败/明文密钥/`http` 明文远端，有才写）。
-- **表6 Agent**：原生三类 + 插件全量 + 自定义（`agents/` 目录有无）。
-  模型只写“当前预设全链现查”，示例格式 `a→b→c`，另注备用预设名，不贴死模型；
-  换预设须重跑。
-- **表7 宿主**：全局行为规则、模型偏好、会话/任务动作、页内浏览器动作、被管进程、
-  提示优化、技能市场（`📦仅货架未装`，不可用）。宿主作为配套软件的一种，
-  其对应插件/能力行在表1/表2 已有归属时，表7 只列宿主自身注入能力，防重复。
+- Inventing a version, model chain, count, or a `📦仅货架未装` item to fill a table — same as inventing an asset.
+- Writing an inference as `✅实测`; writing "unknown" as a fact.
+- Cramming multiple commands into one cell, or merging distinct user commands into one row.
+- Fabricating an MCP "related skill" you never verified.
+- Treating a user's casually-named software as fact — verify it exists first, then classify it (`📦`/`🚫` if absent).
+- Copying the example rows in this file as literal output — they set the *format*, not the facts.
+- Editing any skill/command/agent/MCP/config during the inventory. This skill is read-only.
+- Writing baselines or state files onto the machine being inventoried; the JSON is for the user to save.
 
-## 输出契约（含格式示例，非事实）
+## Format Example
 
-- 中文 compact 表为主，表间空一行；每表表头固定，行按名称字母序（表2先按软件分组）；
-  多命令禁挤一格；末尾一句口诀 + Provenance 小节。
-- 下列示例行只定**格式**，输出时替换为现查值，不许照抄：
+These rows set the *format* only — replace every value with looked-up facts:
 
 ```
 ### 表1 插件与配套软件
@@ -153,55 +137,10 @@ description: 全量盘点任意一台机器的 OpenCode/OpenChamber 资产。用
 |---|---|---|---|---|
 | 示例软件 / 示例 Skill | 插件包✅实测 | 看话自动干，或 /示例:skill | 需要某类流程化处理时 | 一句话用途。细节1-2句。随示例软件删除。 |
 
-### 表5 MCP（示例 1 行）
+### 表5 MCP
 | 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
 |---|---|---|---|---|
 | 示例MCP | 本地自建✅实测 | Agent 按需调用，不手敲 | 需要联网查官方文档时 | 一句话用途。相关 Skill 未知。认证头已脱敏。删配置即断。 |
 ```
 
-- 表注写法（有风险才写，无则省略）：
-  `注：示例MCP 探活失败（缺命令 tools/list 不可达）；认证头含明文 key，已打码。`
-- 可选差异模式：用户说“跟上次比变了啥”，请用户粘贴上次 JSON，只输出增删两节，
-  以主键（表号+名称）引用，不重贴全表。
-
-## Provenance（每输出必带，3 行）
-
-```
-盘点时间：现查填写｜预设：现查填写｜命令：`opencode agent list` + `opencode --pure agent list` 已跑
-未解析：如实列（如某插件缓存读不到），无则写“无”
-本表由 asset-inventory 生成（自包含）
-```
-
-真名模式下加第四行：`本输出含用户要求的真实项目名，请勿外发。`
-
-## 自检清单（输出前逐项过）
-
-1. 每表 5 列、表头字样一致、恰为 7 表；
-2. 来源只用词典词 + 可信度缀，且符合来源裁决；
-3. 无绝对路径、无明文 key/token、无私有项目真名；
-4. 版本/模型/数量皆现查；5. `📦仅货架未装` 与 `✅可用` 未混；
-6. 本 skill 在表4；7. “何时用”无“按需”二字；
-8. 表1/表2/表4/表5/表7 每行“干什么”含处置句；
-9. JSON 主键（表号+名称）与 Markdown 行一致且主键唯一；
-10. 空表有声明且 JSON 为空数组；11. 命令行均带“命令”后缀且归属正确。
-
-## 开源卫生（本 skill 自带）
-
-- 输出与示例中**脱敏**：API key、token、绝对用户名路径、私有项目名一律打码。
-- 跨平台：路径用变量，shell 示例同时给 PowerShell 与 sh，或注明仅某平台。
-- 仓库建议：`SKILL.md` + `README.md`（中英双语）+ `LICENSE` + `examples/`（脱敏表示例）。
-- 不收录、不引用用户私有的二手速查文件；引用第三方 skill 注明上游与协议。
-- 方法借鉴已揉进本文件各规则，不单列借鉴章节。
-
-## 禁止
-
-- 写死版本/路径/模型/数量；把推断写成实测；多命令挤一格。
-- 未经确认改 skill/command/agent/MCP/配置；为凑数造资产；空表编造。
-- 把单会话返工当跨会话高频；用隐私路径做示例。
-- 照抄本文件里的示例行当事实输出；把用户随口举的软件名当事实。
-- 对表5 MCP 编造查不到的“相关 Skill”关联。
-
-## 输出
-
-中文 compact 表格为主，表间空一行，末尾一句口诀。版本新增（如未来新 subagent）
-单独注一句，不改历史结论。规格 v1.5。
+Table-note style (only when there is a real risk): `注：示例MCP 探活失败（缺命令 tools/list 不可达）；认证头含明文 key，已打码。`
