@@ -13,14 +13,14 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 
 ## The Rule
 
-Produce **7 tables, 5 columns each**: `名称｜来源｜怎么叫｜何时用｜干什么`.
+Produce **7 tables**. All tables have **5 columns** (`名称｜来源｜怎么叫｜何时用｜干什么`) **except 表6 Agent, which has 6 columns** (`名称｜来源｜怎么叫｜何时用｜干什么｜模型链`). The 模型链 column is mandatory — every agent's default model chain from the current preset, looked up fresh (`a→b→c`).
 
 1. **表1 插件与配套软件** — the software/plugins themselves (host, plugins, companion apps). One row per software. Do not list their skills here.
 2. **表2 各软件/插件带来的 Skill 与命令** — grouped by owning software. One summary row per software, then one row per skill/command it brings. A command belongs to whoever provides its *function* (调谁的工具归谁) — e.g. `/rtk-gain` → `@rezamonangg/opencode-rtk`, with its file location (`command/rtk-gain.md`) as a detail.
 3. **表3 原生命令与原生 Skill** — **ALL built-in TUI commands, never just a few.** Mandatory checklist to verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` (+ whatever the docs list). Plus built-in skills (e.g. `customize-opencode`). Native skills are rare — if none, use the empty-table declaration.
 4. **表4 自定义 Skill、自定义命令与宿主注入命令** — user-created skills (must note upstream + external deps), user commands, **and host-injected commands** (e.g. `/catch-up /plan-feature /interview` — source `宿主平台注入，TUI / 可见`). Each expanded, never merged. **This skill itself MUST appear here.**
 5. **表5 MCP** — every MCP server (global + project additions), local/remote, enabled state, whether auth headers were masked. User-built MCPs must appear with source. Related skills only when you verified an actual call/dependency — otherwise write `未知`, never fabricate.
-6. **表6 Agent** — the agents this user can actually select or invoke: native primary (`build`, `plan`), native subagents (`explore`, `general`, `scout` — mark disabled ones `❌已禁用` with the config line), plugin-provided agents, and custom ones. **Hidden system agents** (`compaction`, `title`, `summary` — auto-run, not selectable in the UI) go in a table note as "存在但 UI 不可选、自动运行", never as usable rows. Model chains looked up fresh from the current preset (`a→b→c`), note backup preset names; never hardcode model names from memory.
+6. **表6 Agent** — the agents this user can actually select or invoke: native primary (`build`, `plan`), native subagents (`explore`, `general`, `scout` — mark disabled ones `❌已禁用` with the config line), plugin-provided agents, and custom ones. **Hidden system agents** (`compaction`, `title`, `summary` — auto-run, not selectable in the UI) go in a table note as "存在但 UI 不可选、自动运行", never as usable rows. **6 columns including 模型链**: for every agent, the 模型链 cell must carry its default model chain from the current preset, looked up fresh (`a→b→c`, e.g. `opencode-go/deepseek-v4-flash → longcat/LongCat-2.0 → ...`), plus a note of backup preset names; never hardcode model names from memory.
 7. **表7 宿主** — host-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser actions, managed processes, prompt optimization, skill marketplace). If a capability is already owned by a software row in 表1/表2, do not duplicate it here.
 
 ## Source Classification
@@ -90,7 +90,8 @@ In 表1, 表2, 表4, 表5, 表7 — end every `干什么` cell with a disposal s
   - **来源**: three-part shape from Source Classification.
   - **怎么叫**: how it is invoked — `/命令`, `@agent`, `看话自动干`, `Agent 自调`, `装完自动生效`.
   - **何时用**: a concrete scenario with any conditions (`需 git`, `很贵`, `Win 专用`, `没提交时`). No bare `按需`.
-  - **干什么**: `简单：一句话。详细：1-2 句。` + disposal sentence where required.
+  - **干什么**: **substantial, not one-line hand-waving.** Write `简单：一句话。详细：<1-3 句，基于源文件的实际 description>。` Pull the detail from the actual source — the command file's frontmatter (`command/*.md`), the skill's `SKILL.md` description, the official docs, or the host's `magicPrompts` template — and paraphrase it into plain Chinese. Never reduce a documented capability to a vague label; the reader must understand what it actually does. + disposal sentence where required.
+  - **模型链 (表6 only)**: default model chain from the current preset, looked up fresh (`a→b→c`), plus backup preset names.
 - End with a one-line mnemonic + a **Provenance** block (3 lines):
   ```
   盘点时间：现查填写｜预设：现查填写｜命令：`opencode agent list` + `opencode --pure agent list` 已跑
@@ -106,7 +107,7 @@ In 表1, 表2, 表4, 表5, 表7 — end every `干什么` cell with a disposal s
 
 Before you call this done, pass all of these:
 
-1. Exactly 7 tables, 5 columns each, headers consistent.
+1. Exactly 7 tables. 表1-5/7 have 5 columns, 表6 has 6 columns (including 模型链); headers consistent.
 2. Every 来源 names the specific bringer (never a bare category), with confidence suffix, per the arbitration rules.
 3. 表3 lists **all** built-in commands from `opencode.ai/docs/tui` — not just a handful; cross-check the checklist in The Rule.
 4. 表4 includes host-injected commands (source `宿主平台注入`), not only user-written ones.
@@ -115,10 +116,12 @@ Before you call this done, pass all of these:
 7. `📦仅货架未装` never mixed with `✅可用`.
 8. This skill appears in 表4.
 9. No `按需` in any `何时用` cell.
-10. 表1/2/4/5/7 rows end `干什么` with a disposal sentence.
-11. JSON primary keys match Markdown rows, no duplicates.
-12. Empty tables have their declaration line and `[]` in JSON.
-13. Command rows sit in the right table (原生→表3, 插件提供功能→表2, 自建→表4, 宿主注入→表4 with source `宿主平台注入`).
+10. **Every `干什么` cell is substantial** — based on the source file's actual description, not a vague one-liner; the reader must understand what it does.
+11. **Every 表6 row has a 模型链 cell** with a concrete `a→b→c` chain from the current preset, not a placeholder.
+12. 表1/2/4/5/7 rows end `干什么` with a disposal sentence.
+13. JSON primary keys match Markdown rows, no duplicates.
+14. Empty tables have their declaration line and `[]` in JSON.
+15. Command rows sit in the right table (原生→表3, 插件提供功能→表2, 自建→表4, 宿主注入→表4 with source `宿主平台注入`).
 
 ## Anti-patterns
 
@@ -151,22 +154,22 @@ These rows set the *format* only — replace every value with looked-up facts:
 ### 表3 原生命令与原生 Skill（片段）
 | 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
 |---|---|---|---|---|
-| /undo 命令 | 核心自带，官方 TUI 文档 | /undo | 改错反悔时，需 git | 简单：后悔药。详细：回滚上一条消息及文件改动。 |
+| /undo 命令 | 核心自带，官方 TUI 文档 | /undo | 改错反悔时，需 git | 简单：后悔药。详细：撤销上一条消息，并通过 Git 回滚它产生的文件改动；项目不是 git 仓库时不可用。 |
 
 ### 表4 自定义 Skill、命令与宿主注入（片段）
 | 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
 |---|---|---|---|---|
-| /catch-up | 宿主平台注入，TUI / 可见 | /catch-up | 每次回来断片时，第一件事 | 简单：补课。详细：查进行中 diff、PR 状态、最近提交，告诉上次干到哪、从哪继续。 |
+| /catch-up | 宿主平台注入，宿主应用 magicPrompts（app.asar） | /catch-up | 每次回来断片时，第一件事 | 简单：补课。详细：把当前分支的提交、PR 状态和未提交改动汇总成一段 branch-aware 上下文，给出可扫读的总结和下一步建议，帮你从断点继续。 |
 
 ### 表5 MCP
 | 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
 |---|---|---|---|---|
 | 示例MCP | 本地自建✅实测 | Agent 自调 | 需要联网查官方文档时 | 简单：一句话用途。详细：1-2 句。相关 Skill 未知。认证头已脱敏。删配置即断。 |
 
-### 表6 Agent（片段）
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
-|---|---|---|---|---|
-| 示例Agent | 示例插件（插件包）✅实测 | 自动接管 | 任何多步活时 | 简单：包工头。详细：拆活派活整合。模型（当前预设现查）`a→b→c`。 |
+### 表6 Agent（片段，6 列含模型链）
+| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 | 模型链 |
+|---|---|---|---|---|---|
+| 示例Agent | 示例插件（插件包）✅实测 | 自动接管 | 任何多步活时 | 简单：包工头。详细：拆活派活整合，只调度不写码，负责把子任务结果拼回最终答案。 | `opencode-go/模型A → longcat/模型B → opencode/模型C`（当前预设现查）；备用预设：预设2、预设3 |
 
 ### 表7 宿主（片段）
 | 名称 | 来源 | 何时生效 | 干什么 |
