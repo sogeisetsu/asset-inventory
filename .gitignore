@@ -1,3 +1,26 @@
-# 会话运行时产物（截图、interview 规格文档）
+# ---- 会话运行时产物（不入库） ----
 .opencode/
 interview/
+
+# ---- 依赖 ----
+node_modules/
+
+# ---- 环境 / 密钥（永不入库） ----
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# ---- 日志 / 临时 ----
+*.log
+*.tmp
+*.bak
