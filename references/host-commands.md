@@ -1,5 +1,7 @@
 # 宿主注入命令（magicPrompts，app.asar 实测）
 
+> **注意：下表为 2026-09 快照，仅供参考。盘点时必须对宿主包现扫全量 `magicPrompts` key（含 git / github / linear / planning / session 各组），以现扫结果为准。** 快照列出的命令可能因宿主版本变化而增减。
+
 OpenChamber 把宿主注入的 `/` 命令定义在宿主应用本体 `app.asar` 的 `settings.magicPrompts` 段。这些命令**不是** opencode 配置、`command/` 目录或插件带来的，来源一律写 `宿主平台注入，宿主应用 magicPrompts（app.asar）`。
 
 ## 如何发现（必做，普通 grep 会漏二进制）
@@ -30,3 +32,17 @@ const b = require('fs').readFileSync('<宿主应用包/app.asar 或 web-dist>');
 | /implement | 把已定方案落地实现（planning 组） |
 
 另有 git/github/linear 组 magicPrompts 键（如 `gitCommitGenerate`、`githubPrReview`、`linearIssueReview`），按实际发现补充；`settings.magicPrompts` 键名即命令语义来源。
+
+## 非斜杠 magicPrompts key（git / github / linear / planning / session 组）
+
+上表仅列出 11 个 `/xxx` 斜杠命令，但 `settings.magicPrompts` 段还包含多组**非斜杠** key，盘点时不可遗漏：
+
+| 组 | 示例 key | 说明 |
+|---|---|---|
+| git | `gitCommitGenerate`, `gitPrGenerate`, `gitConflictResolve`, `gitIntegrateCherrypickResolve` | git 提交/PR/冲突/cherry-pick |
+| github | `githubPrReview`, `githubIssueReview`, `githubPrChecksReview`, `githubPrCommentsReview`, `githubPrCommentSingle` | GitHub PR/Issue/检查/评论审查 |
+| linear | `linearIssueReview` | Linear Issue 审查 |
+| planning | `planTodo`, `planImprove`, `planImplement` | 任务规划与实施 |
+| session | `sessionExplore`, `sessionSummary`, `sessionReview`, `sessionPlan`, `sessionCraftGoal`, `sessionCatchup`, `sessionDebug`, `sessionWeigh`, `sessionFusion` | 会话级操作 |
+
+**盘点要求**：对宿主包做二进制安全扫描时，应提取 `settings.magicPrompts` 段的**全量 key**（用 `Object.keys()` 或正则提取），不只限于上表列出的斜杠命令。每个 key 对应一项宿主注入命令/能力，来源一律写 `宿主平台注入，宿主应用 magicPrompts（app.asar）`。**以现扫结果为准，上表与本表均为参考快照。**

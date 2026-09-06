@@ -1,0 +1,904 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>asset-inventory — OpenCode 环境全景盘点</title>
+<style>
+  :root {
+    --bg: #0c0e14;
+    --bg-card: #151822;
+    --bg-card-hover: #1a1f2e;
+    --border: #1e2333;
+    --border-accent: #2a5cff;
+    --text: #e4e6ed;
+    --text-dim: #8890a4;
+    --accent: #4f8cff;
+    --accent2: #a78bfa;
+    --accent3: #34d399;
+    --accent4: #f472b6;
+    --gradient-hero: linear-gradient(135deg, #0c0e14 0%, #111628 40%, #0e1225 100%);
+    --gradient-accent: linear-gradient(135deg, #4f8cff, #a78bfa);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow-card: 0 2px 16px rgba(0,0,0,.35);
+    --shadow-glow: 0 0 40px rgba(79,140,255,.12);
+    --font-body: system-ui, -apple-system, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: "Cascadia Code", "Fira Code", "JetBrains Mono", "SF Mono", Consolas, monospace;
+    --max-w: 1080px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ─── Language Toggle ─── */
+  .lang-toggle {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .lang-toggle:hover { border-color: var(--accent); box-shadow: 0 0 12px rgba(79,140,255,.2); }
+  .lang-toggle span {
+    font-size: 13px;
+    padding: 3px 10px;
+    border-radius: 14px;
+    transition: background .25s, color .25s;
+    color: var(--text-dim);
+  }
+  .lang-toggle span.active {
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+  }
+
+  /* ─── Container ─── */
+  .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+
+  /* ─── Hero ─── */
+  .hero {
+    background: var(--gradient-hero);
+    padding: 100px 0 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(79,140,255,.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    bottom: -80px; left: -60px;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(167,139,250,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(79,140,255,.1);
+    border: 1px solid rgba(79,140,255,.25);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 800;
+    letter-spacing: -1px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .hero h1 .gradient-text {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2.2vw, 20px);
+    color: var(--text-dim);
+    max-width: 640px;
+    margin-bottom: 40px;
+    line-height: 1.65;
+  }
+
+  /* ─── Install Block ─── */
+  .install-block {
+    background: #111520;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0;
+    max-width: 760px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-glow);
+  }
+  .install-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: rgba(79,140,255,.06);
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-dim);
+    gap: 8px;
+  }
+  .install-label .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent3);
+    flex-shrink: 0;
+  }
+  .install-code-wrap {
+    position: relative;
+  }
+  .install-code {
+    padding: 20px 20px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--accent3);
+    white-space: pre-wrap;
+    word-break: break-word;
+    -webkit-user-select: all;
+    user-select: all;
+    max-height: 260px;
+  }
+  .copy-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(79,140,255,.15);
+    border: 1px solid rgba(79,140,255,.3);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-family: var(--font-body);
+    color: var(--accent);
+    cursor: pointer;
+    transition: all .2s;
+    z-index: 2;
+  }
+  .copy-btn:hover { background: rgba(79,140,255,.25); }
+  .copy-btn.copied {
+    background: rgba(52,211,153,.15);
+    border-color: rgba(52,211,153,.4);
+    color: var(--accent3);
+  }
+
+  /* ─── Section ─── */
+  section { padding: 72px 0; }
+  section + section { border-top: 1px solid var(--border); }
+
+  .section-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .section-title {
+    font-size: clamp(24px, 3.5vw, 36px);
+    font-weight: 700;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .section-desc {
+    color: var(--text-dim);
+    font-size: 16px;
+    max-width: 620px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+
+  /* ─── Feature Cards ─── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: border-color .3s, box-shadow .3s, transform .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gradient-accent);
+    opacity: 0;
+    transition: opacity .3s;
+  }
+  .feature-card:hover {
+    border-color: rgba(79,140,255,.3);
+    box-shadow: 0 4px 24px rgba(79,140,255,.08);
+    transform: translateY(-2px);
+  }
+  .feature-card:hover::before { opacity: 1; }
+
+  .feature-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    margin-bottom: 16px;
+    background: rgba(79,140,255,.08);
+    border: 1px solid rgba(79,140,255,.15);
+  }
+  .feature-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .feature-card p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.65;
+  }
+
+  /* ─── Story Block ─── */
+  .story {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px 36px;
+    max-width: 740px;
+    position: relative;
+  }
+  .story::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 20px; bottom: 20px;
+    width: 3px;
+    border-radius: 3px;
+    background: var(--gradient-accent);
+  }
+  .story p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-dim);
+  }
+  .story p + p { margin-top: 14px; }
+  .story strong { color: var(--text); }
+
+  /* ─── Use Cases ─── */
+  .usecase-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .usecase-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: border-color .3s, background .3s;
+  }
+  .usecase-item:hover {
+    border-color: rgba(79,140,255,.25);
+    background: var(--bg-card-hover);
+  }
+  .usecase-icon {
+    font-size: 26px;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .usecase-item h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .usecase-item p {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* ─── Install Guide ─── */
+  .install-guide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    max-width: 780px;
+  }
+  @media (max-width: 680px) {
+    .install-guide { grid-template-columns: 1fr; }
+  }
+  .install-method {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+  }
+  .install-method h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .install-method .tag {
+    font-size: 11px;
+    background: rgba(79,140,255,.12);
+    color: var(--accent);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .install-method p {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .cmd-block {
+    background: #0e1118;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--accent3);
+    overflow-x: auto;
+    white-space: pre;
+    margin-bottom: 8px;
+  }
+  .cmd-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    font-weight: 500;
+  }
+
+  /* ─── Output Preview ─── */
+  .output-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-top: 40px;
+  }
+  @media (max-width: 700px) {
+    .output-row { grid-template-columns: 1fr; }
+  }
+  .output-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 22px 20px;
+    text-align: center;
+    transition: border-color .3s;
+  }
+  .output-card:hover { border-color: rgba(79,140,255,.25); }
+  .output-card .file-icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .output-card h4 {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .output-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 36px 0;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  footer a:hover { color: var(--accent2); }
+  footer .note {
+    margin-top: 8px;
+    font-size: 12px;
+    opacity: .7;
+  }
+
+  /* ─── Animations ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    opacity: 0;
+    animation: fadeUp .6s ease forwards;
+  }
+  .fade-up.d1 { animation-delay: .1s; }
+  .fade-up.d2 { animation-delay: .2s; }
+  .fade-up.d3 { animation-delay: .3s; }
+  .fade-up.d4 { animation-delay: .4s; }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 600px) {
+    .hero { padding: 80px 0 48px; }
+    section { padding: 52px 0; }
+    .features-grid { grid-template-columns: 1fr; }
+    .usecase-list { grid-template-columns: 1fr; }
+    .install-block { max-width: 100%; }
+    .story { padding: 28px 20px; }
+    .lang-toggle { top: 12px; right: 12px; }
+  }
+
+  /* ─── Hidden lang ─── */
+  [data-lang="en"] { display: none; }
+  html[data-show="en"] [data-lang="zh"] { display: none !important; }
+  html[data-show="en"] [data-lang="en"] { display: revert; }
+  html[data-show="en"] .features-grid,
+  html[data-show="en"] .usecase-list,
+  html[data-show="en"] .output-row,
+  html[data-show="en"] .install-guide { display: grid; }
+  html[data-show="en"] .feature-card,
+  html[data-show="en"] .usecase-item,
+  html[data-show="en"] .output-card,
+  html[data-show="en"] .install-method,
+  html[data-show="en"] .story,
+  html[data-show="en"] .install-block,
+  html[data-show="en"] .install-code-wrap { display: block; }
+  html[data-show="en"] .section-label,
+  html[data-show="en"] .section-title,
+  html[data-show="en"] .section-desc,
+  html[data-show="en"] .hero-badge,
+  html[data-show="en"] .hero h1,
+  html[data-show="en"] .hero-sub,
+  html[data-show="en"] .install-label,
+  html[data-show="en"] footer,
+  html[data-show="en"] footer .note { display: block; }
+  html[data-show="en"] footer span[data-lang="zh"],
+  html[data-show="en"] footer .note span[data-lang="zh"] { display: none; }
+
+  /* copy feedback toast */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--accent3);
+    color: #0c0e14;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0;
+    pointer-events: none;
+    transition: all .3s ease;
+    z-index: 200;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Language Toggle -->
+<div class="lang-toggle" id="langToggle" onclick="toggleLang()">
+  <span data-lang="zh" class="active">中</span>
+  <span data-lang="en">EN</span>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-badge fade-up">
+      <span data-lang="zh">📦 OpenCode Skill</span>
+      <span data-lang="en">📦 OpenCode Skill</span>
+    </div>
+
+    <h1 class="fade-up d1">
+      <span data-lang="zh">你的 OpenCode 环境<br><span class="gradient-text">到底装了什么？</span></span>
+      <span data-lang="en">What's <span class="gradient-text">actually installed</span><br>in your OpenCode?</span>
+    </h1>
+
+    <p class="hero-sub fade-up d2">
+      <span data-lang="zh">asset-inventory 全量盘点本机可调用的插件、Skill、命令、MCP、Agent 和宿主能力——每项标注来源追溯，30 秒看清全貌。</span>
+      <span data-lang="en">asset-inventory inventories every plugin, skill, command, MCP server, agent, and host capability on this machine — with provenance for each item. See the full picture in 30 seconds.</span>
+    </p>
+
+    <!-- Install Block -->
+    <div class="install-block fade-up d3">
+      <div class="install-label">
+        <span style="display:flex;align-items:center;gap:8px;">
+          <span class="dot"></span>
+          <span data-lang="zh">复制下面这段话，发给 AI，它会自动帮你装好</span>
+          <span data-lang="en">Copy the text below, send it to your AI, and it will install for you</span>
+        </span>
+      </div>
+      <div class="install-code-wrap">
+        <button class="copy-btn" id="copyBtn" onclick="copyInstall()">复制</button>
+         <div class="install-code" id="installCode" data-lang="zh">请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。先问我装到**全局**还是**只装进当前项目**。然后克隆或下载该仓库，只复制运行所需的文件——`SKILL.md`、`references/`、`examples/`——到选定的目标位置：全局就装到 `~/.config/opencode/skills/`（Windows：`$env:USERPROFILE\.config\opencode\skills\`），项目级就装到当前项目内的 `.opencode/skills/`（没有就创建）。不要复制 README 文件。确认最终路径是 &lt;目标位置&gt;/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。</div>
+        <div class="install-code" id="installCodeEn" data-lang="en">Please install the "asset-inventory" OpenCode skill from &lt;https://github.com/sogeisetsu/asset-inventory&gt;. First ask whether to install it **globally** or **in the current project only**. Then clone or download the repository and copy only the required files — `SKILL.md`, `references/`, `examples/` — to the chosen location: global goes to `~/.config/opencode/skills/` (Windows: `$env:USERPROFILE\.config\opencode\skills\`), project-level goes to `.opencode/skills/` inside the current project (create if missing). Do not copy README files. Confirm the final path is `&lt;target&gt;/asset-inventory/SKILL.md`. Do not modify any skill files during installation. Report the final path.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FEATURES ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-label" data-lang="zh">功能一览</div>
+    <div class="section-label" data-lang="en">Features</div>
+
+    <h2 class="section-title" data-lang="zh">一份可信的全景清单</h2>
+    <h2 class="section-title" data-lang="en">A trustworthy inventory of everything</h2>
+
+    <p class="section-desc" data-lang="zh">不靠猜、不靠记忆，直接从机器上实际可调用的能力出发，逐项列出并追溯来源。</p>
+    <p class="section-desc" data-lang="en">No guessing, no memory — it starts from what this machine can actually invoke, listing each item with provenance.</p>
+
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon">📊</div>
+        <h3 data-lang="zh">7 表百科</h3>
+        <h3 data-lang="en">7-Table Encyclopedia</h3>
+        <p data-lang="zh">插件配套、Skill 命令、原生能力、自定义 Skill、MCP、Agent、宿主——7 张表覆盖所有类别，每行回答"是什么、谁带来的、怎么用"。</p>
+        <p data-lang="en">Plugins, skills, commands, custom skills, MCP servers, agents, and host capabilities — 7 tables covering every category. Each row answers: what, who brought it, how to use it.</p>
+      </div>
+
+      <div class="feature-card fade-up d1">
+        <div class="feature-icon">🔍</div>
+        <h3 data-lang="zh">来源追溯</h3>
+        <h3 data-lang="en">Source Provenance</h3>
+        <p data-lang="zh">每个资产标注来源：核心自带 / 插件带来 / 宿主注入 / 本地自建——附置信度标记（✅实测 / ✅文档 / ⚠️推断）。</p>
+        <p data-lang="en">Every asset is tagged with its source: core built-in, plugin-provided, host-injected, or locally created — with confidence markers (✅verified / ✅documented / ⚠️inferred).</p>
+      </div>
+
+      <div class="feature-card fade-up d2">
+        <div class="feature-icon">🚦</div>
+        <h3 data-lang="zh">四态标注</h3>
+        <h3 data-lang="en">Four-State Labels</h3>
+        <p data-lang="zh">✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在——一眼看清谁在干活、谁在睡觉、谁压根没装。</p>
+        <p data-lang="en">✅available / ❌disabled / 📦shelf-only / 🚫absent — see at a glance who's working, who's dormant, who was never installed.</p>
+      </div>
+
+      <div class="feature-card fade-up d3">
+        <div class="feature-icon">📁</div>
+        <h3 data-lang="zh">三份输出</h3>
+        <h3 data-lang="en">Three Output Files</h3>
+        <p data-lang="zh">inventory.md（7 表百科）、usage-guide.md（按频率重组的使用指南）、asset-inventory.json（机器可读，供 diff/迁移）。</p>
+        <p data-lang="en">inventory.md (7-table encyclopedia), usage-guide.md (usage guide organized by frequency), asset-inventory.json (machine-readable, for diff/migration).</p>
+      </div>
+
+      <div class="feature-card fade-up d4">
+        <div class="feature-icon">🔄</div>
+        <h3 data-lang="zh">差异模式</h3>
+        <h3 data-lang="en">Diff Mode</h3>
+        <p data-lang="zh">贴上上次的 JSON，自动对比增减变化——迁移前后、更新前后，一目了然。</p>
+        <p data-lang="en">Paste a previous JSON to auto-compare additions and removals — see changes before and after migration or updates at a glance.</p>
+      </div>
+
+      <div class="feature-card fade-up d4">
+        <div class="feature-icon">🛡️</div>
+        <h3 data-lang="zh">只读 · 脱敏</h3>
+        <h3 data-lang="en">Read-Only · Masked</h3>
+        <p data-lang="zh">盘点过程绝不改动任何配置；默认脱敏 API 密钥、用户路径、私有项目名。</p>
+        <p data-lang="en">Never modifies any configuration during inventory; API keys, user paths, and private project names are masked by default.</p>
+      </div>
+
+      <div class="feature-card fade-up d4">
+        <div class="feature-icon">🔬</div>
+        <h3 data-lang="zh">宿主应用感知</h3>
+        <h3 data-lang="en">Host-Aware Scanning</h3>
+        <p data-lang="zh">对宿主应用包做二进制安全扫描（如 OpenChamber 的 app.asar），抓出普通 grep 漏掉的宿主注入命令。</p>
+        <p data-lang="en">Binary-safe scan of the host app bundle (e.g. OpenChamber's app.asar) catches host-injected slash commands that plain grep misses.</p>
+      </div>
+    </div>
+
+    <!-- Output Files Preview -->
+    <div class="output-row">
+      <div class="output-card fade-up">
+        <div class="file-icon">📘</div>
+        <h4>inventory.md</h4>
+        <p data-lang="zh">7 张表的完整百科，人类可读</p>
+        <p data-lang="en">Full 7-table encyclopedia, human-readable</p>
+      </div>
+      <div class="output-card fade-up d1">
+        <div class="file-icon">📗</div>
+        <h4>usage-guide.md</h4>
+        <p data-lang="zh">按每天必用 / 干活主力 / 按需 / 周期性重组的使用指南</p>
+        <p data-lang="en">Usage guide reorganized by daily-use / main tools / on-demand / periodic</p>
+      </div>
+      <div class="output-card fade-up d2">
+        <div class="file-icon">📙</div>
+        <h4>asset-inventory.json</h4>
+        <p data-lang="zh">机器可读 JSON，table+name 主键，供 diff 和迁移</p>
+        <p data-lang="en">Machine-readable JSON with table+name primary key, for diff and migration</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ WHY ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-label" data-lang="zh">为什么会有这个 skill</div>
+    <div class="section-label" data-lang="en">Why it exists</div>
+
+    <h2 class="section-title" data-lang="zh">装了什么？谁带的？什么时候该用？</h2>
+    <h2 class="section-title" data-lang="en">What did I install? Who brought it? When should I use it?</h2>
+
+    <div class="story">
+      <p data-lang="zh">OpenCode 环境膨胀得很快。几周下来，你装了十几个插件、好几套 Skill、一堆 MCP，还有宿主自带的各种能力。然后某天你突然想不起来：那个命令是哪个插件带的？那个 Agent 为什么禁用了？换台机器的话，我得装什么？</p>
+      <p data-lang="en">OpenCode environments grow fast. After a few weeks you've installed a dozen plugins, several skill sets, a bunch of MCP servers, and there are all those host-injected capabilities. Then one day you realize: which plugin brought that command? Why is that agent disabled? If I switch machines, what do I need to install?</p>
+      <p data-lang="zh"><strong>asset-inventory</strong> 就是来回答这些问题的。它不是靠你手动填表，而是直接从机器上实际可调用的能力出发——读配置、扫缓存、查注册表、跑命令验证——给你一份可信的完整答案。</p>
+      <p data-lang="en"><strong>asset-inventory</strong> exists to answer these questions. It doesn't ask you to fill in a form — it starts from what this machine can actually invoke: reads configs, scans caches, checks registries, runs commands to verify — and gives you a trustworthy, complete answer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ USE CASES ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-label" data-lang="zh">适用于什么情况</div>
+    <div class="section-label" data-lang="en">Use Cases</div>
+
+    <h2 class="section-title" data-lang="zh">这 5 种场景，都用得上</h2>
+    <h2 class="section-title" data-lang="en">These 5 scenarios — all covered</h2>
+
+    <div class="usecase-list">
+      <div class="usecase-item fade-up">
+        <div class="usecase-icon">🗺️</div>
+        <div>
+          <h4 data-lang="zh">环境盘点</h4>
+          <h4 data-lang="en">Environment Inventory</h4>
+          <p data-lang="zh">新机器、接手项目、或单纯想知道"我现在到底有什么"。</p>
+          <p data-lang="en">New machine, taking over a project, or just want to know "what do I actually have right now."</p>
+        </div>
+      </div>
+      <div class="usecase-item fade-up d1">
+        <div class="usecase-icon">🔎</div>
+        <div>
+          <h4 data-lang="zh">排查问题</h4>
+          <h4 data-lang="en">Troubleshooting</h4>
+          <p data-lang="zh">"哪个命令被禁了？""那个 MCP 是谁装的？""这个 Agent 为什么用不了？"</p>
+          <p data-lang="en">"Which command is disabled?" "Who installed that MCP?" "Why can't I use that agent?"</p>
+        </div>
+      </div>
+      <div class="usecase-item fade-up d2">
+        <div class="usecase-icon">🚚</div>
+        <div>
+          <h4 data-lang="zh">换机迁移</h4>
+          <h4 data-lang="en">Machine Migration</h4>
+          <p data-lang="zh">新机器开箱，用 JSON 对比快速确认"还差什么没装"。</p>
+          <p data-lang="en">Fresh machine setup — use JSON diff to quickly confirm "what's still missing."</p>
+        </div>
+      </div>
+      <div class="usecase-item fade-up d3">
+        <div class="usecase-icon">👥</div>
+        <div>
+          <h4 data-lang="zh">入职交接</h4>
+          <h4 data-lang="en">Onboarding Handoff</h4>
+          <p data-lang="zh">给新同事一份环境清单，少走弯路。</p>
+          <p data-lang="en">Hand a new teammate an environment checklist — fewer dead ends.</p>
+        </div>
+      </div>
+      <div class="usecase-item fade-up d4">
+        <div class="usecase-icon">📈</div>
+        <div>
+          <h4 data-lang="zh">更新前后对比</h4>
+          <h4 data-lang="en">Pre/Post Update Diff</h4>
+          <p data-lang="zh">插件升级前后跑一次，看增删了哪些能力。</p>
+          <p data-lang="en">Run before and after a plugin upgrade to see what capabilities were added or removed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ INSTALL ═══════════ -->
+<section>
+  <div class="wrap">
+    <div class="section-label" data-lang="zh">安装方式</div>
+    <div class="section-label" data-lang="en">Installation</div>
+
+    <h2 class="section-title" data-lang="zh">两种装法，选适合你的</h2>
+    <h2 class="section-title" data-lang="en">Two ways to install — pick what fits</h2>
+
+    <p class="section-desc" data-lang="zh">全局装 = 所有项目都能用；项目级装 = 只跟着当前项目走。选好后把上面那段话发给 AI，它会帮你完成。</p>
+    <p class="section-desc" data-lang="en">Global = available in all projects; project-level = stays with the current project only. Pick one and send the install prompt above to your AI — it will handle the rest.</p>
+
+    <div class="install-guide">
+      <div class="install-method fade-up">
+        <h3>
+          <span data-lang="zh">🌍 全局安装</span>
+          <span data-lang="en">🌍 Global Install</span>
+          <span class="tag" data-lang="zh">所有项目可用</span>
+          <span class="tag" data-lang="en">All projects</span>
+        </h3>
+        <p data-lang="zh">装到 OpenCode 的全局 skills 目录，每个项目都能调用。</p>
+        <p data-lang="en">Install into OpenCode's global skills directory — available to every project.</p>
+        <div class="cmd-label">macOS / Linux</div>
+        <div class="cmd-block">~/.config/opencode/skills/asset-inventory/</div>
+        <div class="cmd-label">Windows (PowerShell)</div>
+        <div class="cmd-block">$env:USERPROFILE\.config\opencode\skills\asset-inventory\</div>
+      </div>
+
+      <div class="install-method fade-up d1">
+        <h3>
+          <span data-lang="zh">📁 项目级安装</span>
+          <span data-lang="en">📁 Project-Level Install</span>
+          <span class="tag" data-lang="zh">仅当前项目</span>
+          <span class="tag" data-lang="en">Current project only</span>
+        </h3>
+        <p data-lang="zh">装到当前项目内，跟着项目走，适合团队共享或临时使用。</p>
+        <p data-lang="en">Install inside the current project — travels with the repo, good for team sharing or temporary use.</p>
+         <div class="cmd-label"><span data-lang="zh">所有平台</span><span data-lang="en">All platforms</span></div>
+        <div class="cmd-block">.opencode/skills/asset-inventory/</div>
+        <div class="cmd-label" data-lang="zh">包含文件</div>
+        <div class="cmd-label" data-lang="en">Files included</div>
+        <div class="cmd-block">SKILL.md + references/ + examples/</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="wrap">
+    <p>
+      <span data-lang="zh">asset-inventory</span>
+      <span data-lang="en">asset-inventory</span>
+      · <span data-lang="zh">MIT 许可证</span>
+      <span data-lang="en">MIT License</span>
+      · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener"><span data-lang="zh">GitHub 仓库</span><span data-lang="en">GitHub repo</span></a>
+    </p>
+    <p class="note" data-lang="zh">⚠️ 本 skill 仅在 OpenCode（含 OpenChamber 等宿主）环境中测试通过，其他环境不保证可用。</p>
+    <p class="note" data-lang="en">⚠️ This skill has only been tested in OpenCode (including hosts like OpenChamber). Compatibility with other environments is not guaranteed.</p>
+  </div>
+</footer>
+
+<script>
+// ─── Language Toggle ───
+function toggleLang() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-show') || 'zh';
+  const next = current === 'zh' ? 'en' : 'zh';
+  html.setAttribute('data-show', next);
+
+  // update toggle active state
+  document.querySelectorAll('.lang-toggle span').forEach(s => s.classList.remove('active'));
+  document.querySelector(`.lang-toggle span[data-lang="${next}"]`).classList.add('active');
+
+  // sync copy button text
+  updateCopyBtn(next);
+
+  // replay fade-up animation for cards already in viewport after language switch
+  document.querySelectorAll('.fade-up').forEach(el => {
+    if (getComputedStyle(el).display !== 'none' && el.style.animationPlayState === 'paused') {
+      el.style.animationPlayState = 'running';
+      observer.unobserve(el);
+    }
+  });
+}
+
+function updateCopyBtn(lang) {
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = lang === 'zh' ? '复制' : 'Copy';
+  btn.classList.remove('copied');
+}
+
+// ─── Copy Install Text ───
+function copyInstall() {
+  const lang = document.documentElement.getAttribute('data-show') || 'zh';
+  const el = lang === 'en' ? document.getElementById('installCodeEn') : document.getElementById('installCode');
+  const text = el.textContent.trim();
+
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    const toast = document.getElementById('toast');
+    btn.classList.add('copied');
+    btn.textContent = lang === 'zh' ? '已复制 ✓' : 'Copied ✓';
+    toast.textContent = lang === 'zh' ? '已复制到剪贴板' : 'Copied to clipboard';
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+      btn.classList.remove('copied');
+      updateCopyBtn(lang);
+    }, 2000);
+  }).catch(() => {
+    // fallback
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    const btn = document.getElementById('copyBtn');
+    const toast = document.getElementById('toast');
+    btn.classList.add('copied');
+    btn.textContent = lang === 'zh' ? '已复制 ✓' : 'Copied ✓';
+    toast.textContent = lang === 'zh' ? '已复制到剪贴板' : 'Copied to clipboard';
+    toast.classList.add('show');
+    setTimeout(() => {
+      toast.classList.remove('show');
+      btn.classList.remove('copied');
+      updateCopyBtn(lang);
+    }, 2000);
+  });
+}
+
+// ─── Intersection Observer for fade-up ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.animationPlayState = 'running';
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.fade-up').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+
+// hero items play immediately
+document.querySelectorAll('.hero .fade-up').forEach(el => {
+  el.style.animationPlayState = 'running';
+});
+</script>
+</body>
+</html>

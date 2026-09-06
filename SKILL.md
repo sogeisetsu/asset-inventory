@@ -11,12 +11,13 @@ metadata:
 
 Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers: **是什么、谁带来的、怎么用**.
 
-## Dual Output
+## Output
 
-Every run produces **two files** from the same evidence (no double collection):
+Every run produces **three files** from the same evidence (no double collection):
 
 1. **`inventory.md`** — the encyclopedia: 7 tables (below), what each asset is.
 2. **`usage-guide.md`** — the how-to-use guide: reorganizes the same inventory by **user scenarios and frequency**, in plain language, telling the user **when to reach for each command/skill and why**. Format reference: `references/usage-guide.md`. This is a second *view* of the same facts — never re-collect or invent new ones.
+3. **`asset-inventory.json`** — standalone machine-readable JSON, one element per row (PK: `table`+`name`). For diff / migration / onboarding.
 
 The Rule below describes the `inventory.md` tables; the Usage Guide section describes how to derive `usage-guide.md` from them.
 
@@ -49,10 +50,14 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜�
 
 Suffix every source with confidence: `✅实测` / `✅文档` / `⚠️推断`. Append state:
 
-- `✅可用` — actually invokable.
-- `❌已禁用` — explicitly disabled in config; **quote the config line**.
-- `📦仅货架未装` — marketplace/cache/docs only, not registered, not invokable.
-- `🚫不存在` — absent everywhere. Never pad tables.
+| 中文标记 | English marker | 含义 |
+|---|---|---|
+| `✅可用` | `✅available` | actually invokable. |
+| `❌已禁用` | `❌disabled` | explicitly disabled in config; **quote the config line**. |
+| `📦仅货架未装` | `📦shelf-only` | marketplace/cache/docs only, not registered, not invokable. |
+| `🚫不存在` | `🚫absent` | absent everywhere. Never pad tables. |
+
+> **State markers follow the output language**: use the 中文 column when outputting in Chinese; use the English column when outputting in English (and likewise for other languages).
 
 Multi-source items: record the **direct bringer**; push indirect provenance into `干什么`. **Resolution vs disk:** on-disk-but-unregistered = unavailable (say so); registered-but-broken (missing command/env/probe fail) = `⚠️推断` + failure class in a table note.
 
@@ -63,17 +68,34 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
 1. **Declared config**: `$OPENCODE_CONFIG/opencode.jsonc`, `package.json:dependencies`, `$PROJECT_DIR/tui.json`.
 2. **User directory**: `$OPENCODE_CONFIG/command/`, first 15 lines of each `$OPENCODE_CONFIG/skills/*/SKILL.md`.
 3. **Project overlay**: `$PROJECT_DIR/.opencode/`, project-level MCP/plugin additions.
-4. **Plugin packages**: installed plugin caches (`$PACKAGE_CACHE/packages/*/`) — list `src/skills/` (packaged skills) AND scan `dist/*.js` for `registerCommand`/`COMMAND_NAME` hook registrations (plugin-registered `/` commands like `/loop` live there, not in `command/`). Also cross-check the plugin's own skills manifest (e.g. `.oh-my-opencode-slim/skills-manifest.json`) to tell `✅可用` (synced to global skills) from `📦仅货架未装` (in package but not synced).
+4. **Plugin packages**: evidence sources are **remappable per host**. Try, in order:
+   - **Installed plugin cache** (`$PACKAGE_CACHE/packages/*/`) — list `src/skills/` (packaged skills) AND scan `dist/*.js` for `registerCommand`/`COMMAND_NAME` hook registrations (plugin-registered `/` commands like `/loop` live there, not in `command/`).
+   - **Plugin self-managed manifest** (e.g. `.oh-my-opencode-slim/skills-manifest.json`) — tells `✅可用` (synced to global skills) from `📦仅货架未装` (in package but not synced).
+   - **`package.json:dependencies`** and the plugin's own dist/hooks referenced from `opencode.jsonc:plugin[]`.
+   
+   Use whichever sources exist on the host being inventoried; never assume a single fixed path.
 5. **Host injection**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the host app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method and the confirmed command list.
+   > **Note**: host settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The app.asar scan still works regardless.
 6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the host's own opencode binary**, not the system-wide one — they can differ.
 
-Path variables only: `$OPENCODE_CONFIG`, `$PROJECT_DIR`, `$HOST_CONFIG`, `$PACKAGE_CACHE`.
+Path variables (common defaults — **verify against the actual host**):
+
+| Variable | macOS / Linux | Windows (PowerShell) |
+|---|---|---|
+| `$OPENCODE_CONFIG` | `~/.config/opencode/` | `$env:USERPROFILE\.config\opencode\` |
+| `$PROJECT_DIR` | current working directory | current working directory |
+| `$HOST_CONFIG` | `~/.config/<HostApp>/` | `$env:APPDATA\<HostApp>\` |
+| `$PACKAGE_CACHE` | host-specific plugin cache dir | host-specific plugin cache dir |
+
+> These are typical values, not guarantees. Always confirm against the machine being inventoried.
 
 ### 2. Verify
 
 Cheapest first: (1) direct — TUI autocomplete, host browser, read-only listing, the two `agent list` commands; (2) official docs — `opencode.ai/docs/tui#commands` (full command list), `opencode.ai/docs/agents`; (3) source, last resort — plugin cache registration tables, host `agent-tool/*.js`, app bundles. Docs may lead local version — local ground truth wins.
 
 Versions/models/counts: look up fresh, order manifest → install-path → lockfile/marketplace → `未知`. Never from memory.
+
+Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't match the actual `agent list` name (e.g. `explorer`), **the `agent list` ground truth wins**. Note the mismatch in a table footnote and don't invent a row for the stale config name.
 
 ### 3. Empty tables
 
@@ -93,7 +115,7 @@ No content after verification → **do not invent, do not omit**: output `表中
   - `output/inventory.md` — the 7-table encyclopedia below.
   - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
   - `output/asset-inventory.json` — standalone JSON, one element per row.
-- **Language follows the user**: every table header, cell value, and the usage guide must be written in the same language the user asked in (中文→中文, English→English, 日本語→日本語, Deutsch→Deutsch, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (表1-5/7 five columns, 表6 six), but the headers themselves (e.g. 名称/来源/怎么叫/何时用/干什么 → Name/Source/How to call/When/What it does) and all cell content and prose are translated into the user's language. When in doubt, ask or mirror the last user message.
+- **Language follows the user**: every table header, cell value, state marker, and the usage guide must be written in the same language the user asked in (中文→中文, English→English, 日本語→日本語, Deutsch→Deutsch, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (表1-5/7 five columns, 表6 six), but the headers themselves (e.g. 名称/来源/怎么叫/何时用/干什么 → Name/Source/How to call/When/What it does), all cell content, state markers (e.g. `✅可用`→`✅available`, `❌已禁用`→`❌disabled`, `📦仅货架未装`→`📦shelf-only`, `🚫不存在`→`🚫absent`), and prose are translated into the user's language. When in doubt, ask or mirror the last user message.
 - Compact tables, blank line between tables, fixed headers, rows alphabetical (表2 grouped by software), one entry per cell.
 - Cell conventions:
   - **名称**: one consistent shape per asset type — NO suffix words, NO redundancy:
@@ -135,10 +157,10 @@ No content after verification → **do not invent, do not omit**: output `表中
   |---|---|
   | `/deepwork` | 复杂多阶段任务，带审查关卡 |
   
-  ## 按需
-  | 命令 | 什么时候用 |
-  |---|---|
-  | `/plan-feature` | 做新功能前先规划 |
+   ## 按需 (on-demand frequency group, not a 何时用 cell value)
+   | 命令 | 什么时候用 |
+   |---|---|
+   | `/plan-feature` | 做新功能前先规划 |
   
   ## 周期性
   | 命令 | 什么时候用 |
@@ -168,21 +190,19 @@ No content after verification → **do not invent, do not omit**: output `表中
 6. Versions/models/counts looked up fresh.
 7. `📦仅货架未装` never mixed with `✅可用`.
 8. This skill appears in 表4.
-9. No `按需` in any `何时用`.
-10. Every `干什么` is detailed (简单一句话 + 详细 2-4 句，基于源 description 展开，含典型用法与关键注意事项；一句话/标签式算不达标).
+9. Every `干什么` is detailed (简单一句话 + 详细 2-4 句，基于源 description 展开，含典型用法与关键注意事项；一句话/标签式算不达标).
+10. *(reserved — removed duplicate; see Anti-patterns)*
 11. Every 表6 row has a concrete 模型链 (`a→b→c`), not a placeholder.
 12. 表1/2/4/5/7 rows do NOT carry deletion consequences; 干什么 focuses on 是什么/谁带来/怎么用/注意事项.
 13. JSON PKs match Markdown rows, no duplicates.
 14. Empty tables have declaration line + `[]`.
-15. Commands sit in the right table (原生→表3, 插件→表2, 自建→表4, 宿主注入→表4).
+15. Commands sit in the right table (原生→表3, 插件→表2, 自建→表4, 宿主注入命令→表4); host capabilities (non-command) → 表7.
 16. **`usage-guide.md` derived from the same rows** — no re-collection, no invented facts; grouped by scenario/frequency; only `✅可用` items; plain-language "when and why".
 17. Every `怎么叫` lists ALL real invocation paths (命令→`/命令`+别名；技能→`看话自动干，或 /技能名`；MCP→`Agent 自调`+工具前缀/别名). No bare `看话自动干`.
-18. 表2 has NO summary rows — only one row per skill/command.
-19. 表1 software names are real names (e.g. `OpenChamber`), never placeholders.
+18. 表1 software names are real names (e.g. `OpenChamber`), never placeholders.
 20. 表6 row order: 核心自带 primary → 插件包 primary → 核心自带 subagent → 插件包 subagent, alphabetical within group.
 21. 表5 MCP rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
 22. 名称 column is uniform per asset type: commands are bare `/command` (no `命令` suffix), skills bare `skill-name` (no `/`), 表2 rows bare child name (no plugin prefix), software real names. No mixed styles.
-23. **Language follows the user**: all output (tables + usage guide) is in the user's question language — never a fixed default language.
 
 ## Anti-patterns
 
@@ -206,5 +226,4 @@ No content after verification → **do not invent, do not omit**: output `表中
 - Omitting a known MCP alias/tool-name prefix from 表5.
 - Missing plugin-registered slash commands (`/loop`) because the scan stopped at `command/` and never read the plugin dist `hooks/`.
 - Writing run output anywhere outside `output/` (baselines or state files onto the machine being inventoried).
-- Writing all output in a fixed default language (e.g. always Chinese) regardless of the user's question language — mirror the user's language instead.
 - Re-collecting or inventing facts for `usage-guide.md` — it must derive from the same 7-table rows.

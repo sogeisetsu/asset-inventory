@@ -26,3 +26,6 @@ Thumbs.db
 *.log
 *.tmp
 *.bak
+
+# ---- deepwork 本地状态（不入库，但允许 OpenCode 读取） ----
+.slim/deepwork/
