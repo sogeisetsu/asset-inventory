@@ -1,6 +1,6 @@
 ---
 name: asset-inventory
-description: Inventory every plugin, companion app, skill, command, MCP server, agent, and host capability on this machine's OpenCode/OpenChamber setup, with provenance for each item. Use when the user asks "列一下我有什么插件/Skill/命令/MCP/Agent"、"哪个被禁用了"、"谁带进来的"、"能不能删/删了会怎样", or wants a migration/onboarding checklist. Outputs 7 tables plus a machine-readable JSON file. Never invent assets, versions, or model names — verify everything on this machine.
+description: Inventory every plugin, companion app, skill, command, MCP server, agent, and host capability on this machine's OpenCode/OpenChamber setup, with provenance for each item. Use when the user asks "列一下我有什么插件/Skill/命令/MCP/Agent"、"哪个被禁用了"、"谁带进来的", or wants a migration/onboarding checklist. Outputs 7 tables plus a machine-readable JSON file. Never invent assets, versions, or model names — verify everything on this machine.
 license: MIT
 metadata:
   audience: opencode-users
@@ -9,7 +9,7 @@ metadata:
 
 # Asset Inventory
 
-Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers three questions: **是什么、谁带来的、能不能删/删了会怎样**.
+Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers: **是什么、谁带来的、怎么用**.
 
 ## Dual Output
 
@@ -24,12 +24,12 @@ The Rule below describes the `inventory.md` tables; the Usage Guide section desc
 
 Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜怎么叫｜何时用｜干什么`); **表6 Agent has 6 columns** (`名称｜来源｜怎么叫｜何时用｜干什么｜模型链`).
 
-1. **表1 插件与配套软件** — the software/plugins themselves (host, plugins, companion apps). One row per software.
-2. **表2 各软件/插件带来的 Skill 与命令** — grouped by owning software: one summary row, then one row per skill/command. A command belongs to whoever provides its *function* (调谁的工具归谁) — `/rtk-gain` → `@rezamonangg/opencode-rtk`, file location as a detail.
+1. **表1 插件与配套软件** — the software/plugins themselves (host, plugins, companion apps). One row per software. **名称 must be the software's real name** (e.g. `OpenChamber`、`@rezamonangg/opencode-rtk@0.4.0`) — never a placeholder like `宿主桌面应用`; 从安装路径/配置命名反查实名.
+2. **表2 各软件/插件带来的 Skill 与命令** — grouped by owning software: **one row per skill/command, NO summary rows** (软件本体已在表1, 汇总行冗余). A command belongs to whoever provides its *function* (调谁的工具归谁) — `/rtk-gain` → `@rezamonangg/opencode-rtk`, file location as a detail. 插件通过 hook 注册的斜杠命令也列于此（如 `/loop`，源码在插件 dist `hooks/loop-command`），来源写 `<插件名> 注册命令（dist hooks/…）`.
 3. **表3 原生命令与原生 Skill** — **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + docs list) and built-in skills. If none, empty-table declaration.
 4. **表4 自定义 Skill、命令与宿主注入命令** — user-created skills (upstream + deps), user commands, **and host-injected commands** (source `宿主平台注入`). Each expanded, never merged. **This skill itself MUST appear here.**
-5. **表5 MCP** — every MCP server (global + project), local/remote, enabled state, auth-masking state. User-built MCPs with source. Related skills only when verified — else `未知`, never fabricate.
-6. **表6 Agent** — selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌已禁用` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **模型链 column is mandatory**: default model chain from the current preset, looked up fresh (`a→b→c`), + backup preset names.
+5. **表5 MCP** — every MCP server (global + project), local/remote, enabled state, auth-masking state. User-built MCPs with source. Related skills only when verified — else `未知`, never fabricate. 若 MCP 有已知别名/工具名前缀（如 grep_app → 别名 `gh_grep`），在 `来源` 或 `怎么叫` 中写明.
+6. **表6 Agent** — selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌已禁用` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **模型链 column is mandatory**: default model chain from the current preset, looked up fresh (`a→b→c`), + backup preset names. **行序强制：核心自带 primary → 插件包 primary → 核心自带 subagent → 插件包 subagent；组内按名称字母序。**
 7. **表7 宿主** — host-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with 表1/表2.
 
 ## Source Classification
@@ -63,8 +63,9 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
 1. **Declared config**: `$OPENCODE_CONFIG/opencode.jsonc`, `package.json:dependencies`, `$PROJECT_DIR/tui.json`.
 2. **User directory**: `$OPENCODE_CONFIG/command/`, first 15 lines of each `$OPENCODE_CONFIG/skills/*/SKILL.md`.
 3. **Project overlay**: `$PROJECT_DIR/.opencode/`, project-level MCP/plugin additions.
-4. **Host injection**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the host app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method and the confirmed command list.
-5. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the host's own opencode binary**, not the system-wide one — they can differ.
+4. **Plugin packages**: installed plugin caches (`$PACKAGE_CACHE/packages/*/`) — list `src/skills/` (packaged skills) AND scan `dist/*.js` for `registerCommand`/`COMMAND_NAME` hook registrations (plugin-registered `/` commands like `/loop` live there, not in `command/`). Also cross-check the plugin's own skills manifest (e.g. `.oh-my-opencode-slim/skills-manifest.json`) to tell `✅可用` (synced to global skills) from `📦仅货架未装` (in package but not synced).
+5. **Host injection**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the host app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method and the confirmed command list.
+6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the host's own opencode binary**, not the system-wide one — they can differ.
 
 Path variables only: `$OPENCODE_CONFIG`, `$PROJECT_DIR`, `$HOST_CONFIG`, `$PACKAGE_CACHE`.
 
@@ -78,18 +79,45 @@ Versions/models/counts: look up fresh, order manifest → install-path → lockf
 
 No content after verification → **do not invent, do not omit**: output `表中无可用行（现查日期）`; JSON = `[]`.
 
-### 4. Disposal note
+### 4. ~~Disposal note~~ (removed)
 
-In 表1/2/4/5/7, end every `干什么` with who brought it in and what breaks/vanishes if removed. Optional in 表3/表6.
+删除后果（"随插件删除/删了会怎样"）**不写**——表格里不输出"怎么删、删了会怎样"；那是运维手册的活，盘点只负责「是什么、谁带来的、怎么用」。若某依赖缺失确实影响可用性（如依赖 CLI 未装），只在 `干什么` 里如实说明，不写删除建议。
 
 ### 5. Output
 
+- Every run writes **three files** into the **`output/` directory of the project
+  being inventoried** — the current working directory (`$PROJECT_DIR`), created if
+  missing. Not the skill's install location: the skill may live in a global config
+  dir, but the output must always land in the user's project root so it ships with
+  that project. Never write anywhere else:
+  - `output/inventory.md` — the 7-table encyclopedia below.
+  - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
+  - `output/asset-inventory.json` — standalone JSON, one element per row.
 - Chinese compact tables, blank line between tables, fixed headers, rows alphabetical (表2 grouped by software), one entry per cell.
 - Cell conventions:
+  - **名称**: one consistent shape per asset type — NO suffix words, NO redundancy:
+    - Command → `/command`（裸斜杠命令，不加"命令"二字；别名只在 `怎么叫` 里写）。
+    - Skill → `skill-name`（技能名，不加斜杠；斜杠调用属于 `怎么叫`）。
+    - Plugin/software → real product name（`OpenChamber`、`@rezamonangg/opencode-rtk@0.4.0`）。
+    - Agent → `agent-name`；MCP → `mcp-name`；host capability → capability name。
+    - 表2 名称 = 子项本身的名字（`/loop`、`clonedeps`、`/rtk-gain`），**不带插件名前缀**（归属已由 `来源` 列和分组体现）。
   - **来源**: three-part shape.
-  - **怎么叫**: `/命令`, `@agent`, `看话自动干`, `Agent 自调`, `装完自动生效`.
+  - **怎么叫**: how the user can actually reach it — **list ALL real invocation paths, never one only**:
+    - Command → the literal `/command` (aliases in parens). Never `看话自动干`.
+    - Skill → both paths: `看话自动干，或 /skill名` (skills auto-trigger on description match AND are slash-invocable). Never bare `看话自动干` when a slash name exists.
+    - Agent → `Tab 切换` / `自动接管` / `@agent名`.
+    - MCP → `Agent 自调` (+ known tool-name prefix/alias, e.g. `grep_app_* / gh_grep_*`).
+    - Software/host capability → `装完自动生效` / `不用叫，开机自带` / `Agent 调时`.
   - **何时用**: concrete scenario with conditions (`需 git`, `很贵`, `Win 专用`). No bare `按需`.
-  - **干什么**: **substantial** — `简单：一句话。详细：<1-3 句，基于源文件实际 description（SKILL.md / command/*.md / 官方文档 / magicPrompts 模板），转述成看得懂的中文>` + disposal where required.
+  - **干什么**: **detailed, never one-liners** — shape `简单：一句话。详细：<2-4 句>`.
+    The 详细 part MUST be expanded from the source's actual description
+    (`SKILL.md` frontmatter `description`, `command/*.md` frontmatter + body,
+    official doc wording, `magicPrompts` usage text), paraphrased into readable
+    Chinese, covering: what it actually does, how it is typically invoked,
+    and key caveats (`需 git`, `很贵`, `依赖某 CLI 且已装/未装`, `走什么模型链`).
+    **Never** write deletion consequences ("随插件删除/删了会怎样").
+    - ❌ Bad: `简单：看结果。详细：打出本会话数据。`
+    - ✅ Good: `简单：看本会话省了多少 token。详细：它立即执行 rtk_gain 工具，把白名单命令经 RTK 改写后省下的 token 量打成账单展示，不问问题、不改配置；适合每次长会话结束时看一眼省了多少。`
   - **模型链 (表6 only)**: current preset's chain `a→b→c`, + backup presets.
 - Format examples: see `references/format-example.md` (values there are placeholders — replace, never copy).
 - **Usage Guide (`usage-guide.md`)**: after producing the 7 tables, derive a plain-language usage guide from the same rows. Do NOT re-collect evidence. Organize by user scenario, not by type:
@@ -125,7 +153,7 @@ In 表1/2/4/5/7, end every `干什么` with who brought it in and what breaks/va
   本表由 asset-inventory 生成（自包含）
   ```
   Real-name mode adds a 4th line: `本输出含用户要求的真实项目名，请勿外发。`
-- **JSON**: standalone file, one element per row: `table, name, source, state, confidence, invoke`. PK = `table`+`name`. Empty table ⇒ `[]`.
+- **JSON** (`output/asset-inventory.json`): standalone file, one element per row: `table, name, source, state, confidence, invoke`. PK = `table`+`name`. Empty table ⇒ `[]`.
 - **Masking**: default redact API keys, tokens, auth headers, absolute user paths, private project names. Real-name mode only on explicit request + Provenance line.
 - **Diff mode**: user asks "跟上次比变了啥" → ask them to paste previous JSON/Markdown, output only added/removed, keyed by PK. Never re-dump full tables.
 
@@ -140,13 +168,19 @@ In 表1/2/4/5/7, end every `干什么` with who brought it in and what breaks/va
 7. `📦仅货架未装` never mixed with `✅可用`.
 8. This skill appears in 表4.
 9. No `按需` in any `何时用`.
-10. Every `干什么` is substantial (based on source description, not a vague label).
+10. Every `干什么` is detailed (简单一句话 + 详细 2-4 句，基于源 description 展开，含典型用法与关键注意事项；一句话/标签式算不达标).
 11. Every 表6 row has a concrete 模型链 (`a→b→c`), not a placeholder.
-12. 表1/2/4/5/7 rows end with disposal sentence.
+12. 表1/2/4/5/7 rows do NOT carry deletion consequences; 干什么 focuses on 是什么/谁带来/怎么用/注意事项.
 13. JSON PKs match Markdown rows, no duplicates.
 14. Empty tables have declaration line + `[]`.
 15. Commands sit in the right table (原生→表3, 插件→表2, 自建→表4, 宿主注入→表4).
 16. **`usage-guide.md` derived from the same rows** — no re-collection, no invented facts; grouped by scenario/frequency; only `✅可用` items; plain-language "when and why".
+17. Every `怎么叫` lists ALL real invocation paths (命令→`/命令`+别名；技能→`看话自动干，或 /技能名`；MCP→`Agent 自调`+工具前缀/别名). No bare `看话自动干`.
+18. 表2 has NO summary rows — only one row per skill/command.
+19. 表1 software names are real names (e.g. `OpenChamber`), never placeholders.
+20. 表6 row order: 核心自带 primary → 插件包 primary → 核心自带 subagent → 插件包 subagent, alphabetical within group.
+21. 表5 MCP rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
+22. 名称 column is uniform per asset type: commands are bare `/command` (no `命令` suffix), skills bare `skill-name` (no `/`), 表2 rows bare child name (no plugin prefix), software real names. No mixed styles.
 
 ## Anti-patterns
 
@@ -160,5 +194,14 @@ In 表1/2/4/5/7, end every `干什么` with who brought it in and what breaks/va
 - Skipping the binary scan of the host app bundle — silently drops the whole host-injected class.
 - Copying example rows from `references/format-example.md` as literal output.
 - Editing any skill/command/agent/MCP/config during the inventory. Read-only.
-- Writing baselines or state files onto the machine being inventoried.
+- Writing `干什么` as a one-liner or a vague label (e.g. `简单：看结果。详细：打出本会话数据。`).
+- Writing deletion consequences in `干什么` ("随插件删除/删了会怎样") — the inventory reports what/who/how, not removal guidance.
+- Writing a single invocation path in `怎么叫` (e.g. bare `看话自动干` when the skill is also slash-invocable).
+- Adding summary rows to 表2 that duplicate 表1 software entries.
+- Writing a placeholder software name in 表1 (e.g. `宿主桌面应用`) instead of the real name.
+- Scrambling 表6 order (core primary should precede plugin primary, primary precede subagent).
+- Mixing 名称 column styles (e.g. `/undo 命令` vs `/catch-up` vs `插件名 / 子项名`) — commands are bare `/command`, skills bare `skill-name`, 表2 bare child name.
+- Omitting a known MCP alias/tool-name prefix from 表5.
+- Missing plugin-registered slash commands (`/loop`) because the scan stopped at `command/` and never read the plugin dist `hooks/`.
+- Writing run output anywhere outside `output/` (baselines or state files onto the machine being inventoried).
 - Re-collecting or inventing facts for `usage-guide.md` — it must derive from the same 7-table rows.
