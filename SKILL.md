@@ -60,7 +60,7 @@ Gather from five sources (default OpenCode + OpenChamber mapping):
 1. **Declared config**: `$OPENCODE_CONFIG/opencode.jsonc`, `package.json:dependencies`, `$PROJECT_DIR/tui.json`.
 2. **User directory**: `$OPENCODE_CONFIG/command/`, first 15 lines of each `$OPENCODE_CONFIG/skills/*/SKILL.md`.
 3. **Project overlay**: `$PROJECT_DIR/.opencode/`, project-level MCP additions and `tui.json:plugin[]`.
-4. **Host injection**: `$HOST_CONFIG/` settings, `$HOST_CONFIG/agent-tool/*.js`, host-registered slash commands visible in TUI.
+4. **Host injection**: `$HOST_CONFIG/` settings, `$HOST_CONFIG/agent-tool/*.js`, host-registered slash commands visible in TUI. **Host-injected slash commands often live INSIDE the host app binary** (e.g. OpenChamber's `app.asar` / `web-dist`, `settings.magicPrompts`), which plain-text grep cannot search. Scan the host app bundle with a binary-safe search (e.g. node `Buffer.indexOf`) for slash-command literals like `/catch-up`, `/plan-feature`, `/craft-goal`, `/workspace-review`, `/weigh`, `/debug`, `/summary`, `/explore`, `/todo`, `/implement` — and any other `/xxx` near `magicPrompts`. This is mandatory, not optional: without it, the inventory silently drops an entire class of assets.
 5. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the host's own opencode binary** (e.g. OpenChamber's bundled `opencode-cli/opencode.exe`), not the system-wide one — the two can differ.
 
 Use path variables only — never absolute paths in output. `$OPENCODE_CONFIG`, `$PROJECT_DIR`, `$HOST_CONFIG`, `$PACKAGE_CACHE` are the four allowed placeholders.
