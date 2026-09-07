@@ -23,14 +23,22 @@ OpenCode 环境膨胀得很快。几周后你就忘了自己装了什么、*从�
 | 命令 | 干什么 | 产物 |
 |---|---|---|
 | `/asset-inventory` | 全量盘点：7 张表全出 | `output/` 三份文件 |
-| `/asset-inventory mcp` | 只盘 MCP | `inventory.md`（仅表5）+ JSON |
-| `/asset-inventory agents` | 只盘 Agent | 仅表6 + JSON |
-| `/asset-inventory hosts` | 只盘外层应用能力 | 仅表7 + JSON |
-| `/asset-inventory skills` | 只盘 Skill 与命令 | 表2+表3+表4 + JSON |
+| `/asset-inventory mcp` | 只盘 MCP（表5） | `inventory.md`（仅表5）+ JSON |
+| `/asset-inventory agents` | 只盘 Agent（表6） | `inventory.md`（仅表6）+ JSON |
+| `/asset-inventory hosts` | 只盘外层应用能力（表7） | `inventory.md`（仅表7）+ JSON |
+| `/asset-inventory skills` | 只盘 Skill 与命令（表2–4） | `inventory.md`（仅表2–4）+ JSON |
 | `/asset-inventory diff` | 差异模式 | 只出按主键增减的项（请贴上次 JSON） |
 | `/asset-inventory usage` | 全量扫描，但只生成使用指南 | 仅 `usage-guide.md` |
 
-> 命令名跟随 skill 的 `name`（`SKILL.md` frontmatter）。改了 skill 名，斜杠命令会跟着变。带参数的精扫会跳过无关的证据收集步骤，但输出规则（语言、来源追溯、脱敏、写到 `output/`）照旧。
+**关于三份产物文件** —— 每次全量跑都会写三份文件，都从同一次扫描派生（不重复收集）：
+
+- **`inventory.md`** — 7 表百科（上面的表1–7）。
+- **`usage-guide.md`** — 使用指南：把同一批行按场景与频率重排（每天必用 / 干活主力 / 按需 / 周期性），讲"什么时候用、为什么用"。
+- **`asset-inventory.json`** — 机器可读行（主键：`table` + `name`），用于差异对比 / 迁移 / 上手。
+
+精扫（`mcp`、`agents`、`hosts`、`skills`）只写 `inventory.md`（限该表）+ 对应的 JSON 行，并跳过无关的证据收集步骤——但输出规则（语言、来源追溯、脱敏、写到 `output/`）照旧。
+
+> 命令名跟随 skill 的 `name`（`SKILL.md` frontmatter）。改了 skill 名，斜杠命令会跟着变。
 
 ## 安装
 
@@ -63,7 +71,9 @@ cp -r asset-inventory .opencode/skills/
 
 如果你用 AI 编程助手，直接把下面这段话复制给它，让它帮你装：
 
-> 请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <https://github.com/sogeisetsu/asset-inventory>。先问我装到**全局**还是**只装进当前项目**。然后克隆或下载该仓库，只复制运行所需的文件——`SKILL.md`、`references/`、`examples/`——到选定的目标位置：全局就装到 `~/.config/opencode/skills/`（Windows：`$env:USERPROFILE\.config\opencode\skills\`），项目级就装到当前项目内的 `.opencode/skills/`（没有就创建）。不要复制 README 文件。确认最终路径是 `<目标位置>/asset-inventory/SKILL.md`。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。
+```text
+请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <https://github.com/sogeisetsu/asset-inventory>。先问我装到全局还是只装进当前项目。然后克隆或下载该仓库，只复制运行所需的文件——SKILL.md、references/、examples/——到选定的目标位置：全局就装到 ~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\），项目级就装到当前项目内的 .opencode/skills/（没有就创建）。不要复制 README 文件。确认最终路径是 <目标位置>/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。
+```
 
 ## 用法
 

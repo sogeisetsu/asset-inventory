@@ -23,14 +23,22 @@ Once installed, OpenCode automatically registers the skill as a slash command un
 | Command | What it does | Output |
 |---|---|---|
 | `/asset-inventory` | Full inventory: all 7 tables | three files in `output/` |
-| `/asset-inventory mcp` | MCP servers only | `inventory.md` (table 5) + JSON |
-| `/asset-inventory agents` | Agents only | table 6 + JSON |
-| `/asset-inventory hosts` | Outer-app capabilities only | table 7 + JSON |
-| `/asset-inventory skills` | Skills & commands only | tables 2+3+4 + JSON |
+| `/asset-inventory mcp` | MCP servers only (table 5) | `inventory.md` (table 5 only) + JSON |
+| `/asset-inventory agents` | Agents only (table 6) | `inventory.md` (table 6 only) + JSON |
+| `/asset-inventory hosts` | Outer-app capabilities only (table 7) | `inventory.md` (table 7 only) + JSON |
+| `/asset-inventory skills` | Skills & commands only (tables 2–4) | `inventory.md` (tables 2–4 only) + JSON |
 | `/asset-inventory diff` | Diff mode | added/removed rows only (paste last JSON) |
 | `/asset-inventory usage` | Full scan, then only the usage guide | `usage-guide.md` only |
 
-> The command name follows the skill's `name` (frontmatter in `SKILL.md`). Rename the skill and the slash command changes with it. Targeted runs skip the unrelated evidence-collection steps, but keep the same output rules (language, provenance, masking, `output/` location).
+**About the output files** — every full run writes three files, all derived from the same scan (no double collection):
+
+- **`inventory.md`** — the 7-table encyclopedia (tables 1–7 above).
+- **`usage-guide.md`** — a "when to use" guide that reorganizes the same rows by scenario & frequency (daily / workhorse / on-demand / periodic).
+- **`asset-inventory.json`** — machine-readable rows (PK: `table` + `name`), for diff / migration / onboarding.
+
+A targeted run (`mcp`, `agents`, `hosts`, `skills`) writes `inventory.md` (limited to that table) plus the matching JSON rows, and skips the unrelated evidence-collection steps — but keeps the same output rules (language, provenance, masking, `output/` location).
+
+> The command name follows the skill's `name` (frontmatter in `SKILL.md`). Rename the skill and the slash command changes with it.
 
 ## Install
 
@@ -61,7 +69,9 @@ Copy-Item -Recurse asset-inventory .opencode\skills\
 
 Paste this prompt into an AI coding assistant and let it install for you:
 
-> Install the "asset-inventory" OpenCode skill from <https://github.com/sogeisetsu/asset-inventory>. First ask me whether to install it **globally** or **into the current project only**. Then clone or download the repository and copy only the runtime files — `SKILL.md`, `references/`, `examples/` — into the chosen target: global skills directory `~/.config/opencode/skills/` (Windows: `$env:USERPROFILE\.config\opencode\skills\`) for global, or `.opencode/skills/` inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that `SKILL.md` ends up at `<target>/asset-inventory/SKILL.md`. Do not modify any skill file during installation. Report the final path.
+```text
+Install the "asset-inventory" OpenCode skill from <https://github.com/sogeisetsu/asset-inventory>. First ask me whether to install it globally or into the current project only. Then clone or download the repository and copy only the runtime files — SKILL.md, references/, examples/ — into the chosen target: global skills directory ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\) for global, or .opencode/skills/ inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that SKILL.md ends up at <target>/asset-inventory/SKILL.md. Do not modify any skill file during installation. Report the final path.
+```
 
 ## Usage
 
@@ -90,17 +100,17 @@ your-project-root/
 
 | # | Table | What it covers |
 |---|---|---|
-| 1 | 插件与配套软件 | the software/plugins themselves, real names |
-| 2 | 各软件/插件带来的 Skill 与命令 | every skill/command grouped by who provides it |
-| 3 | 原生命令与原生 Skill | built-in TUI commands & skills |
-| 4 | 自定义 Skill、命令与外层应用注入命令 | your own + outer-app-injected commands |
+| 1 | Plugins & companion apps | the software/plugins themselves, real names |
+| 2 | Skills & commands each brings | every skill/command grouped by who provides it |
+| 3 | Built-in commands & skills | native TUI commands & skills |
+| 4 | Custom skills, commands & outer-app-injected commands | your own + outer-app-injected commands |
 | 5 | MCP | every MCP server (global + project), local/remote, enabled state |
-| 6 | Agent | every agent, with its default model chain (`a→b→c`) |
-| 7 | 外层应用 | outer-app capabilities (behavior rules, browser, etc.) |
+| 6 | Agents | every agent, with its default model chain (`a→b→c`) |
+| 7 | Outer-app capabilities | behavior rules, in-app browser, etc. |
 
 ### Provenance, not guesses
 
-Every row names the **specific bringer** with a confidence suffix — `oh-my-opencode-slim@2.2.18（插件包）`, `外层应用注入，外层应用 magicPrompts（app.asar）` — never a vague category. Every asset gets one of four states: `✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在`.
+Every row names the **specific bringer** with a confidence suffix — `oh-my-opencode-slim@2.2.18 (plugin package)`, `outer-app injected, outer-app magicPrompts (app.asar)` — never a vague category. Every asset gets one of four states: `✅available / ❌disabled / 📦shelf-only / 🚫absent`.
 
 ### Three files, one evidence
 
@@ -114,9 +124,9 @@ After running, check:
 3. `usage-guide.md` only contains available items.
 4. `asset-inventory.json` has the same row count as the markdown tables.
 
-## A note on "outer app" (宿主 / host)
+## A note on "outer app" (host / 外层应用)
 
-Some of this skill's tables and sources refer to an **outer app** — the desktop program that wraps the OpenCode engine and injects extra commands and capabilities (for example **OpenChamber**). In English sources this is sometimes called the **host**. We use **外层应用** in Chinese to avoid the confusing bare word "宿主", which doesn't tell a reader *what* it is. When you see 外层应用, think: *the desktop app sitting around OpenCode that adds its own slash commands and features*.
+Some tables and sources refer to an **outer app** — the desktop program that wraps the OpenCode engine and injects extra commands and capabilities (for example **OpenChamber**). In English this is sometimes called the **host**. In the Chinese docs and table sources we use **外层应用** rather than the bare word 宿主, because 宿主 ("host") doesn't tell a reader what it is. Whenever you see 外层应用, read it as: *the desktop app sitting around OpenCode that adds its own slash commands and features*.
 
 ## Repository layout
 
