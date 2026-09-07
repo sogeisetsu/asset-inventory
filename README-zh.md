@@ -1,12 +1,12 @@
 # 资产盘点（Asset Inventory）
 
-一次扫清你机器上的 OpenCode 环境——所有插件、Skill、命令、MCP、Agent 和外层应用能力，每一项都带**来源追溯**（它从哪来的）。对每个资产回答三问：**是什么、谁带来的、怎么用**。
+**asset-inventory** 是一个 OpenCode Skill：一次扫清你机器上的 OpenCode 环境——所有插件、Skill、命令、MCP、Agent 和外层应用能力，每一项都带**来源追溯**（它从哪来的）。对每个资产回答三问：**是什么、谁带来的、怎么用**。
 
 ## 这是什么
 
 OpenCode 环境膨胀得很快。几周后你就忘了自己装了什么、*从哪来的*、*什么时候该用*。这个 skill 按需产出一份可信的完整答案——而且从不瞎编。一次扫描就能把你机器上**真正能调用**的一切（不只是盘上的文件）映射成三份文件：
 
-- **`inventory.md`** — 7 表清单：所有资产按固定 7 张表列全。
+- **`inventory.md`** — 一份 Markdown 文件，里面包含 7 张表：插件、Skill、命令、MCP、Agent、外层应用能力等各类内容，全部按固定 7 张表列全。
 - **`usage-guide.md`** — 大白话"什么时候用"指南：按场景/频率讲每样东西何时用、为什么用。
 - **`asset-inventory.json`** — 机器可读的 JSON：同一批数据的结构化形式，供程序处理/对比。
 
@@ -67,12 +67,6 @@ cp -r asset-inventory .opencode/skills/
 ## 斜杠命令
 
 装好后，OpenCode 会自动把 skill 按它的名字注册成斜杠命令。在输入框敲 `/` 选中 `asset-inventory`，或打开 `/skills` 对话框选择它即可。
-
-每次运行都产出 **3 份文件**（同一次扫描派生，不重复收集）：
-
-- **`inventory.md`** — 7 表清单。
-- **`usage-guide.md`** — 使用指南：把同一批行按场景与频率重排（每天必用 / 干活主力 / 按需 / 周期性），讲"什么时候用、为什么用"。
-- **`asset-inventory.json`** — 机器可读行（主键：`table` + `name`），用于差异对比 / 迁移 / 上手。
 
 7 张表依次是：**1** 插件与配套软件 · **2** 各软件/插件带来的 Skill 与命令 · **3** 原生命令与原生 Skill · **4** 自定义 Skill、命令与外层应用注入命令 · **5** MCP · **6** Agent（含默认模型链） · **7** 外层应用能力。各表具体覆盖什么 → [看「7 张表」](#7-张表)
 
@@ -162,7 +156,7 @@ asset-inventory/
 
 **适用范围：本 skill 目前只在 OpenCode 中测试过**（含包裹 OpenCode 的外层应用，如 OpenChamber）。**未在其他 AI 编程助手中验证**（Claude Code、Cursor、Windsurf 等）——在这些软件中能否生效无法确定，也不做支持。
 
-需要 [OpenCode](https://opencode.ai)（skill 经原生 `skill` 工具按需加载）。换外层应用时重映射 `SKILL.md` 里的证据源即可。PowerShell 与 sh 示例均考虑。
+需要 [OpenCode](https://opencode.ai)（skill 经原生 `skill` 工具按需加载）。
 
 ## 许可证
 

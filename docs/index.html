@@ -570,8 +570,8 @@
       </div>
       <div class="install-code-wrap">
         <button class="copy-btn" id="copyBtn" onclick="copyInstall()">复制</button>
-         <div class="install-code" id="installCode" data-lang="zh">请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。先问我装到**全局**还是**只装进当前项目**。然后克隆或下载该仓库，只复制运行所需的文件——`SKILL.md`、`references/`、`examples/`——到选定的目标位置：全局就装到 `~/.config/opencode/skills/`（Windows：`$env:USERPROFILE\.config\opencode\skills\`），项目级就装到当前项目内的 `.opencode/skills/`（没有就创建）。不要复制 README 文件。确认最终路径是 &lt;目标位置&gt;/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。</div>
-        <div class="install-code" id="installCodeEn" data-lang="en">Please install the "asset-inventory" OpenCode skill from &lt;https://github.com/sogeisetsu/asset-inventory&gt;. First ask whether to install it **globally** or **in the current project only**. Then clone or download the repository and copy only the required files — `SKILL.md`, `references/`, `examples/` — to the chosen location: global goes to `~/.config/opencode/skills/` (Windows: `$env:USERPROFILE\.config\opencode\skills\`), project-level goes to `.opencode/skills/` inside the current project (create if missing). Do not copy README files. Confirm the final path is `&lt;target&gt;/asset-inventory/SKILL.md`. Do not modify any skill files during installation. Report the final path.</div>
+         <div class="install-code" id="installCode" data-lang="zh">请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。先问我装到全局还是只装进当前项目。然后克隆或下载该仓库，只复制运行所需的文件——SKILL.md、references/、examples/——到选定的目标位置：全局就装到 ~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\），项目级就装到当前项目内的 .opencode/skills/（没有就创建）。不要复制 README 文件。确认最终路径是 &lt;目标位置&gt;/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。</div>
+        <div class="install-code" id="installCodeEn" data-lang="en">Install the "asset-inventory" OpenCode skill from &lt;https://github.com/sogeisetsu/asset-inventory&gt;. First ask me whether to install it globally or into the current project only. Then clone or download the repository and copy only the runtime files — SKILL.md, references/, examples/ — into the chosen target: global skills directory ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\) for global, or .opencode/skills/ inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that SKILL.md ends up at &lt;target&gt;/asset-inventory/SKILL.md. Do not modify any skill file during installation. Report the final path.</div>
       </div>
     </div>
   </div>
@@ -757,8 +757,8 @@
     <h2 class="section-title" data-lang="zh">两种装法，选适合你的</h2>
     <h2 class="section-title" data-lang="en">Two ways to install — pick what fits</h2>
 
-    <p class="section-desc" data-lang="zh">全局装 = 所有项目都能用；项目级装 = 只跟着当前项目走。选好后把上面那段话发给 AI，它会帮你完成。</p>
-    <p class="section-desc" data-lang="en">Global = available in all projects; project-level = stays with the current project only. Pick one and send the install prompt above to your AI — it will handle the rest.</p>
+    <p class="section-desc" data-lang="zh">全局装 = 所有项目都能用；项目级装 = 只跟着当前项目走。先克隆仓库（或下载 ZIP 解压）得到 <code>asset-inventory/</code> 文件夹，再在<strong>包含它的目录</strong>里运行下面的复制命令。</p>
+    <p class="section-desc" data-lang="en">Global = available in all projects; project-level = stays with the current project only. First clone the repo (or download &amp; unzip the ZIP) to get an <code>asset-inventory/</code> folder, then run the copy command below from the directory that contains it.</p>
 
     <div class="install-guide">
       <div class="install-method fade-up">
@@ -771,9 +771,9 @@
         <p data-lang="zh">装到 OpenCode 的全局 skills 目录，每个项目都能调用。</p>
         <p data-lang="en">Install into OpenCode's global skills directory — available to every project.</p>
         <div class="cmd-label">macOS / Linux</div>
-        <div class="cmd-block">~/.config/opencode/skills/asset-inventory/</div>
+        <div class="cmd-block">cp -r asset-inventory ~/.config/opencode/skills/</div>
         <div class="cmd-label">Windows (PowerShell)</div>
-        <div class="cmd-block">$env:USERPROFILE\.config\opencode\skills\asset-inventory\</div>
+        <div class="cmd-block">Copy-Item -Recurse asset-inventory "$env:USERPROFILE\.config\opencode\skills\"</div>
       </div>
 
       <div class="install-method fade-up d1">
@@ -785,8 +785,10 @@
         </h3>
         <p data-lang="zh">装到当前项目内，跟着项目走，适合团队共享或临时使用。</p>
         <p data-lang="en">Install inside the current project — travels with the repo, good for team sharing or temporary use.</p>
-         <div class="cmd-label"><span data-lang="zh">所有平台</span><span data-lang="en">All platforms</span></div>
-        <div class="cmd-block">.opencode/skills/asset-inventory/</div>
+        <div class="cmd-label">macOS / Linux</div>
+        <div class="cmd-block">cp -r asset-inventory .opencode/skills/</div>
+        <div class="cmd-label">Windows (PowerShell)</div>
+        <div class="cmd-block">Copy-Item -Recurse asset-inventory .opencode\skills\</div>
         <div class="cmd-label" data-lang="zh">包含文件</div>
         <div class="cmd-label" data-lang="en">Files included</div>
         <div class="cmd-block">SKILL.md + references/ + examples/</div>

@@ -1,12 +1,12 @@
 # Asset Inventory
 
-Inventory your OpenCode setup in one shot — every plugin, skill, command, MCP server, agent, and outer-app capability on your machine, each with **provenance** (where it came from). For every asset it answers three questions: **what it is, who brought it in, how to use it**.
+**asset-inventory** is an OpenCode skill that inventories your setup in one shot — every plugin, skill, command, MCP server, agent, and outer-app capability on your machine, each with **provenance** (where it came from). For every asset it answers three questions: **what it is, who brought it in, how to use it**.
 
 ## What this is
 
 OpenCode setups grow fast. Within weeks you forget what you installed, *where it came from*, and *when to reach for it*. This skill produces a single trustworthy answer on demand — and never guesses. One scan maps everything your machine can **actually invoke** (not just files on disk) into three files:
 
-- **`inventory.md`** — a fixed 7-table inventory: every asset listed across the 7 tables.
+- **`inventory.md`** — one Markdown file containing 7 tables: plugins, skills, commands, MCP, agents, outer-app capabilities, and more, all laid out across the fixed 7 tables.
 - **`usage-guide.md`** — a plain-language "when to use" guide, by scenario & frequency.
 - **`asset-inventory.json`** — the same data as machine-readable JSON, for tooling and diffing.
 
@@ -65,12 +65,6 @@ That one command runs the full inventory end-to-end. To target just part of your
 ## Slash commands
 
 Once installed, OpenCode automatically registers the skill as a slash command under its own name. In the input box, type `/` and pick `asset-inventory`, or open the `/skills` dialog and select it.
-
-Every run produces **three files**, all derived from the same scan (no double collection):
-
-- **`inventory.md`** — the 7-table inventory.
-- **`usage-guide.md`** — a "when to use" guide that reorganizes the same rows by scenario & frequency (daily / workhorse / on-demand / periodic).
-- **`asset-inventory.json`** — machine-readable rows (PK: `table` + `name`), for diff / migration / onboarding.
 
 The 7 tables, in order: **1** Plugins & companion apps · **2** Skills & commands each brings · **3** Built-in commands & skills · **4** Custom skills, commands & outer-app-injected commands · **5** MCP · **6** Agents (with model chains) · **7** Outer-app capabilities. What each table covers → see [The 7 tables](#the-7-tables)
 
@@ -160,7 +154,7 @@ asset-inventory/
 
 **Scope: this skill is only tested in OpenCode** (including outer apps that wrap OpenCode, such as OpenChamber). It is **not verified in other AI coding assistants** (Claude Code, Cursor, Windsurf, etc.) — whether it works there is unknown and unsupported.
 
-Requires [OpenCode](https://opencode.ai) (skills are loaded on-demand via the native `skill` tool). The evidence-source mapping in `SKILL.md` can be remapped for other hosts. Windows (PowerShell) and Unix (sh) examples are both considered.
+Requires [OpenCode](https://opencode.ai) (skills are loaded on-demand via the native `skill` tool).
 
 ## License
 
