@@ -1,15 +1,15 @@
-# 宿主注入命令（magicPrompts，app.asar 实测）
+# 外层应用注入命令（magicPrompts，app.asar 实测）
 
-> **注意：下表为 2026-09 快照，仅供参考。盘点时必须对宿主包现扫全量 `magicPrompts` key（含 git / github / linear / planning / session 各组），以现扫结果为准。** 快照列出的命令可能因宿主版本变化而增减。
+> **注意：下表为 2026-09 快照，仅供参考。盘点时必须对外层应用包现扫全量 `magicPrompts` key（含 git / github / linear / planning / session 各组），以现扫结果为准。** 快照列出的命令可能因外层应用版本变化而增减。
 
-OpenChamber 把宿主注入的 `/` 命令定义在宿主应用本体 `app.asar` 的 `settings.magicPrompts` 段。这些命令**不是** opencode 配置、`command/` 目录或插件带来的，来源一律写 `宿主平台注入，宿主应用 magicPrompts（app.asar）`。
+OpenChamber 把外层应用注入的 `/` 命令定义在外层应用本体 `app.asar` 的 `settings.magicPrompts` 段。这些命令**不是** opencode 配置、`command/` 目录或插件带来的，来源一律写 `外层应用注入，外层应用 magicPrompts（app.asar）`。
 
 ## 如何发现（必做，普通 grep 会漏二进制）
 
-用二进制安全搜索扫描宿主应用包（node `Buffer.indexOf`），找 `/xxx` 字面量：
+用二进制安全搜索扫描外层应用包（node `Buffer.indexOf`），找 `/xxx` 字面量：
 
 ```js
-const b = require('fs').readFileSync('<宿主应用包/app.asar 或 web-dist>');
+const b = require('fs').readFileSync('<外层应用包/app.asar 或 web-dist>');
 ['/catch-up','/plan-feature','/craft-goal','/workspace-review','/weigh',
  '/debug','/summary','/explore','/todo','/implement'].forEach(t =>
   console.log(t, b.indexOf(Buffer.from(t)) >= 0 ? 'FOUND' : 'absent'));
@@ -45,4 +45,4 @@ const b = require('fs').readFileSync('<宿主应用包/app.asar 或 web-dist>');
 | planning | `planTodo`, `planImprove`, `planImplement` | 任务规划与实施 |
 | session | `sessionExplore`, `sessionSummary`, `sessionReview`, `sessionPlan`, `sessionCraftGoal`, `sessionCatchup`, `sessionDebug`, `sessionWeigh`, `sessionFusion` | 会话级操作 |
 
-**盘点要求**：对宿主包做二进制安全扫描时，应提取 `settings.magicPrompts` 段的**全量 key**（用 `Object.keys()` 或正则提取），不只限于上表列出的斜杠命令。每个 key 对应一项宿主注入命令/能力，来源一律写 `宿主平台注入，宿主应用 magicPrompts（app.asar）`。**以现扫结果为准，上表与本表均为参考快照。**
+**盘点要求**：对外层应用包做二进制安全扫描时，应提取 `settings.magicPrompts` 段的**全量 key**（用 `Object.keys()` 或正则提取），不只限于上表列出的斜杠命令。每个 key 对应一项外层应用注入命令/能力，来源一律写 `外层应用注入，外层应用 magicPrompts（app.asar）`。**以现扫结果为准，上表与本表均为参考快照。**

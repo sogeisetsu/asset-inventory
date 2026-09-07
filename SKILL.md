@@ -21,17 +21,37 @@ Every run produces **three files** from the same evidence (no double collection)
 
 The Rule below describes the `inventory.md` tables; the Usage Guide section describes how to derive `usage-guide.md` from them.
 
+## Targeting（参数路由）
+
+`asset-inventory` 也接受斜杠命令参数——`/asset-inventory <target>` 只盘用户关心的子集，更快、产物更聚焦。斜杠后的内容即 `$ARGUMENTS`：
+
+| 输入 | 行为 | 产物 |
+|---|---|---|
+| `/asset-inventory`（无参数） | 全量 7 表 | `output/` 三份文件 |
+| `/asset-inventory mcp` | 只盘 MCP | `output/inventory.md`（仅表5）+ `output/asset-inventory.json`（仅表5行） |
+| `/asset-inventory agents` | 只盘 Agent | 仅表6 + 对应 JSON |
+| `/asset-inventory hosts` | 只盘外层应用能力 | 仅表7 + 对应 JSON |
+| `/asset-inventory skills` | 只盘 Skill 与命令 | 表2+表3+表4 + 对应 JSON |
+| `/asset-inventory diff` | 差异模式 | 只输出按 PK 增减的项（请用户贴上次 JSON） |
+| `/asset-inventory usage` | 全量扫描后只生成使用指南 | 仅 `output/usage-guide.md` |
+
+规则：
+- 带 target 时**跳过无关的证据收集步骤**（例：`mcp` 不扫插件 dist、`agents` 不读外层应用包），但**语言跟随用户**、单元格规范、来源三段式、掩码规则、`output/` 写入位置全部照旧。
+- `diff` 与自然语言的差异模式等价：请用户贴上次的 JSON，只输出按 PK 新增/移除的项，绝不重贴全表。
+- `usage` 仍先做全量扫描（使用指南必须从同一批行派生），但只写 `usage-guide.md`，不写 `inventory.md` 与 JSON。
+- 未匹配的 target → 回退全量扫描，并在结尾注明"未知目标，已回退全量"。
+
 ## The Rule
 
 Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜怎么叫｜何时用｜干什么`); **表6 Agent has 6 columns** (`名称｜来源｜怎么叫｜何时用｜干什么｜模型链`).
 
-1. **表1 插件与配套软件** — the software/plugins themselves (host, plugins, companion apps). One row per software. **名称 must be the software's real name** (e.g. `OpenChamber`、`@rezamonangg/opencode-rtk@0.4.0`) — never a placeholder like `宿主桌面应用`; 从安装路径/配置命名反查实名.
+1. **表1 插件与配套软件** — the software/plugins themselves (host, plugins, companion apps). One row per software. **名称 must be the software's real name** (e.g. `OpenChamber`、`@rezamonangg/opencode-rtk@0.4.0`) — never a placeholder like `外层桌面应用`; 从安装路径/配置命名反查实名.
 2. **表2 各软件/插件带来的 Skill 与命令** — grouped by owning software: **one row per skill/command, NO summary rows** (软件本体已在表1, 汇总行冗余). A command belongs to whoever provides its *function* (调谁的工具归谁) — `/rtk-gain` → `@rezamonangg/opencode-rtk`, file location as a detail. 插件通过 hook 注册的斜杠命令也列于此（如 `/loop`，源码在插件 dist `hooks/loop-command`），来源写 `<插件名> 注册命令（dist hooks/…）`.
 3. **表3 原生命令与原生 Skill** — **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + docs list) and built-in skills. If none, empty-table declaration.
-4. **表4 自定义 Skill、命令与宿主注入命令** — user-created skills (upstream + deps), user commands, **and host-injected commands** (source `宿主平台注入`). Each expanded, never merged. **This skill itself MUST appear here.**
+4. **表4 自定义 Skill、命令与外层应用注入命令** — user-created skills (upstream + deps), user commands, **and outer-app-injected commands** (source `外层应用注入`). Each expanded, never merged. **This skill itself MUST appear here.**
 5. **表5 MCP** — every MCP server (global + project), local/remote, enabled state, auth-masking state. User-built MCPs with source. Related skills only when verified — else `未知`, never fabricate. 若 MCP 有已知别名/工具名前缀（如 grep_app → 别名 `gh_grep`），在 `来源` 或 `怎么叫` 中写明.
 6. **表6 Agent** — selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌已禁用` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **模型链 column is mandatory**: default model chain from the current preset, looked up fresh (`a→b→c`), + backup preset names. **行序强制：核心自带 primary → 插件包 primary → 核心自带 subagent → 插件包 subagent；组内按名称字母序。**
-7. **表7 宿主** — host-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with 表1/表2.
+7. **表7 外层应用** — outer-app-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with 表1/表2.
 
 ## Source Classification
 
@@ -41,11 +61,11 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜�
 |---|---|
 | `核心自带，官方 TUI 文档` | built-in |
 | `第三方插件，opencode.jsonc:plugin[]，源码 <repo> <协议>` | npm plugin |
-| `宿主官方，安装包 <dir> + 配置 $HOST_CONFIG/` | host app |
+| `外层应用官方，安装包 <dir> + 配置 $HOST_CONFIG/` | outer app (host) |
 | `<插件名> 包 <src/skills/<name>>` | plugin-bundled skill |
 | `本地自建，整合/上游 <repo> <协议>` | user-created skill |
 | `全局配置 command/<name>.md` | user command |
-| `宿主平台注入，宿主应用 magicPrompts（app.asar）` | host-injected command |
+| `外层应用注入，外层应用 magicPrompts（app.asar）` | outer-app-injected command |
 | `<MCP名>（远端MCP，<url>）` / `<MCP名>（本地MCP，<cmd>）` | MCP server |
 
 Suffix every source with confidence: `✅实测` / `✅文档` / `⚠️推断`. Append state:
@@ -74,9 +94,9 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
    - **`package.json:dependencies`** and the plugin's own dist/hooks referenced from `opencode.jsonc:plugin[]`.
    
    Use whichever sources exist on the host being inventoried; never assume a single fixed path.
-5. **Host injection**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the host app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method and the confirmed command list.
-   > **Note**: host settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The app.asar scan still works regardless.
-6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the host's own opencode binary**, not the system-wide one — they can differ.
+- **外层应用注入**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the outer app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method and the confirmed command list.
+   > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The app.asar scan still works regardless.
+6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
 
 Path variables (common defaults — **verify against the actual host**):
 
@@ -84,7 +104,7 @@ Path variables (common defaults — **verify against the actual host**):
 |---|---|---|
 | `$OPENCODE_CONFIG` | `~/.config/opencode/` | `$env:USERPROFILE\.config\opencode\` |
 | `$PROJECT_DIR` | current working directory | current working directory |
-| `$HOST_CONFIG` | `~/.config/<HostApp>/` | `$env:APPDATA\<HostApp>\` |
+| `$HOST_CONFIG` | `~/.config/<OuterApp>/` | `$env:APPDATA\<OuterApp>\` |
 | `$PACKAGE_CACHE` | host-specific plugin cache dir | host-specific plugin cache dir |
 
 > These are typical values, not guarantees. Always confirm against the machine being inventoried.
@@ -185,7 +205,7 @@ No content after verification → **do not invent, do not omit**: output `表中
 1. Exactly 7 tables; 表1-5/7 five columns, 表6 six (含模型链); headers consistent.
 2. Every 来源 names the specific bringer, with confidence suffix.
 3. 表3 lists **all** built-in commands from docs, not a handful.
-4. 表4 includes host-injected commands (source `宿主平台注入`).
+4. 表4 includes outer-app-injected commands (source `外层应用注入`).
 5. No absolute paths, plaintext keys/tokens, or real project names (unless real-name mode + 4th Provenance line).
 6. Versions/models/counts looked up fresh.
 7. `📦仅货架未装` never mixed with `✅可用`.
@@ -196,7 +216,7 @@ No content after verification → **do not invent, do not omit**: output `表中
 12. 表1/2/4/5/7 rows do NOT carry deletion consequences; 干什么 focuses on 是什么/谁带来/怎么用/注意事项.
 13. JSON PKs match Markdown rows, no duplicates.
 14. Empty tables have declaration line + `[]`.
-15. Commands sit in the right table (原生→表3, 插件→表2, 自建→表4, 宿主注入命令→表4); host capabilities (non-command) → 表7.
+15. Commands sit in the right table (原生→表3, 插件→表2, 自建→表4, 外层应用注入命令→表4); outer-app capabilities (non-command) → 表7.
 16. **`usage-guide.md` derived from the same rows** — no re-collection, no invented facts; grouped by scenario/frequency; only `✅可用` items; plain-language "when and why".
 17. Every `怎么叫` lists ALL real invocation paths (命令→`/命令`+别名；技能→`看话自动干，或 /技能名`；MCP→`Agent 自调`+工具前缀/别名). No bare `看话自动干`.
 18. 表1 software names are real names (e.g. `OpenChamber`), never placeholders.
@@ -213,14 +233,14 @@ No content after verification → **do not invent, do not omit**: output `表中
 - Fabricating an MCP "related skill" you never verified.
 - Treating a user's casually-named software as fact — verify first (`📦`/`🚫` if absent).
 - Writing `插件包`/`本地自建` as a source without naming the actual plugin/software.
-- Skipping the binary scan of the host app bundle — silently drops the whole host-injected class.
+- Skipping the binary scan of the outer app bundle — silently drops the whole outer-app-injected class.
 - Copying example rows from `references/format-example.md` as literal output.
 - Editing any skill/command/agent/MCP/config during the inventory. Read-only.
 - Writing `干什么` as a one-liner or a vague label (e.g. `简单：看结果。详细：打出本会话数据。`).
 - Writing deletion consequences in `干什么` ("随插件删除/删了会怎样") — the inventory reports what/who/how, not removal guidance.
 - Writing a single invocation path in `怎么叫` (e.g. bare `看话自动干` when the skill is also slash-invocable).
 - Adding summary rows to 表2 that duplicate 表1 software entries.
-- Writing a placeholder software name in 表1 (e.g. `宿主桌面应用`) instead of the real name.
+- Writing a placeholder software name in 表1 (e.g. `外层桌面应用`) instead of the real name.
 - Scrambling 表6 order (core primary should precede plugin primary, primary precede subagent).
 - Mixing 名称 column styles (e.g. `/undo 命令` vs `/catch-up` vs `插件名 / 子项名`) — commands are bare `/command`, skills bare `skill-name`, 表2 bare child name.
 - Omitting a known MCP alias/tool-name prefix from 表5.
