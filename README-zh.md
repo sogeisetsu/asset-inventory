@@ -6,40 +6,6 @@
 
 OpenCode 环境膨胀得很快。几周后你就忘了自己装了什么、*从哪来的*、*什么时候该用*。这个 skill 按需产出一份可信的完整答案——而且从不瞎编。一次扫描就能把你机器上**真正能调用**的一切（不只是盘上的文件）映射成一张固定 7 表的百科、一份大白话"什么时候用"指南，和一份机器可读的 JSON。
 
-## 快速上手
-
-装好 skill（选一种范围），直接调用，无需任何配置：
-
-```
-/asset-inventory
-```
-
-这一条命令就会端到端跑完整个盘点。只想盘某一部分？在命令后加参数——见[斜杠命令](#斜杠命令)。
-
-## 斜杠命令
-
-装好后，OpenCode 会自动把 skill 按它的名字注册成斜杠命令。在输入框敲 `/` 选中 `asset-inventory`，或打开 `/skills` 对话框选择它即可。
-
-| 命令 | 干什么 | 产物 |
-|---|---|---|
-| `/asset-inventory` | 全量盘点：7 张表全出 | `output/` 三份文件 |
-| `/asset-inventory mcp` | 只盘 MCP（表5） | `inventory.md`（仅表5）+ JSON |
-| `/asset-inventory agents` | 只盘 Agent（表6） | `inventory.md`（仅表6）+ JSON |
-| `/asset-inventory hosts` | 只盘外层应用能力（表7） | `inventory.md`（仅表7）+ JSON |
-| `/asset-inventory skills` | 只盘 Skill 与命令（表2–4） | `inventory.md`（仅表2–4）+ JSON |
-| `/asset-inventory diff` | 差异模式 | 只出按主键增减的项（请贴上次 JSON） |
-| `/asset-inventory usage` | 全量扫描，但只生成使用指南 | 仅 `usage-guide.md` |
-
-**关于三份产物文件** —— 每次全量跑都会写三份文件，都从同一次扫描派生（不重复收集）：
-
-- **`inventory.md`** — 7 表百科（上面的表1–7）。
-- **`usage-guide.md`** — 使用指南：把同一批行按场景与频率重排（每天必用 / 干活主力 / 按需 / 周期性），讲"什么时候用、为什么用"。
-- **`asset-inventory.json`** — 机器可读行（主键：`table` + `name`），用于差异对比 / 迁移 / 上手。
-
-精扫（`mcp`、`agents`、`hosts`、`skills`）只写 `inventory.md`（限该表）+ 对应的 JSON 行，并跳过无关的证据收集步骤——但输出规则（语言、来源追溯、脱敏、写到 `output/`）照旧。
-
-> 命令名跟随 skill 的 `name`（`SKILL.md` frontmatter）。改了 skill 名，斜杠命令会跟着变。
-
 ## 安装
 
 选**一种**范围：
@@ -74,6 +40,40 @@ cp -r asset-inventory .opencode/skills/
 ```text
 请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <https://github.com/sogeisetsu/asset-inventory>。先问我装到全局还是只装进当前项目。然后克隆或下载该仓库，只复制运行所需的文件——SKILL.md、references/、examples/——到选定的目标位置：全局就装到 ~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\），项目级就装到当前项目内的 .opencode/skills/（没有就创建）。不要复制 README 文件。确认最终路径是 <目标位置>/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。
 ```
+
+## 快速上手
+
+装好 skill（选一种范围），直接调用，无需任何配置：
+
+```
+/asset-inventory
+```
+
+这一条命令就会端到端跑完整个盘点。只想盘某一部分？在命令后加参数——见[斜杠命令](#斜杠命令)。
+
+## 斜杠命令
+
+装好后，OpenCode 会自动把 skill 按它的名字注册成斜杠命令。在输入框敲 `/` 选中 `asset-inventory`，或打开 `/skills` 对话框选择它即可。
+
+每次运行都产出 **3 份文件**（同一次扫描派生，不重复收集）：
+
+- **`inventory.md`** — 7 表百科。
+- **`usage-guide.md`** — 使用指南：把同一批行按场景与频率重排（每天必用 / 干活主力 / 按需 / 周期性），讲"什么时候用、为什么用"。
+- **`asset-inventory.json`** — 机器可读行（主键：`table` + `name`），用于差异对比 / 迁移 / 上手。
+
+7 张表依次是：**1** 插件与配套软件 · **2** 各软件/插件带来的 Skill 与命令 · **3** 原生命令与原生 Skill · **4** 自定义 Skill、命令与外层应用注入命令 · **5** MCP · **6** Agent（含默认模型链） · **7** 外层应用能力。
+
+| 命令 | 干什么 | 产物 |
+|---|---|---|
+| `/asset-inventory` | 全量盘点：7 张表全出 | `inventory.md` + `usage-guide.md` + `asset-inventory.json` |
+| `/asset-inventory mcp` | 只盘 MCP（表5） | `inventory.md`（仅表5）+ `asset-inventory.json`（仅表5行） |
+| `/asset-inventory agents` | 只盘 Agent（表6） | `inventory.md`（仅表6）+ `asset-inventory.json`（仅表6行） |
+| `/asset-inventory hosts` | 只盘外层应用能力（表7） | `inventory.md`（仅表7）+ `asset-inventory.json`（仅表7行） |
+| `/asset-inventory skills` | 只盘 Skill 与命令（表2–4） | `inventory.md`（仅表2–4）+ `asset-inventory.json`（仅表2–4行） |
+| `/asset-inventory diff` | 差异模式 | 只出按主键增减的项（请贴上次 JSON） |
+| `/asset-inventory usage` | 全量扫描，但只生成使用指南 | 仅 `usage-guide.md` |
+
+精扫（`mcp`、`agents`、`hosts`、`skills`）只写 `inventory.md`（限该表）+ 对应的 JSON 行，并跳过无关的证据收集步骤——但输出规则（语言、来源追溯、脱敏、写到 `output/`）照旧。
 
 ## 用法
 
