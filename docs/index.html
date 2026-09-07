@@ -4,12 +4,66 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>asset-inventory — OpenCode 环境全景盘点</title>
+<!-- ─── 主题防闪烁：渲染前确定 data-theme ─── -->
+<script>
+(function() {
+  var t = localStorage.getItem('theme-preference') || 'system';
+  if (t === 'system') {
+    var h = new Date().getHours();
+    t = (h >= 6 && h < 18) ? 'light' : 'dark';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
 <style>
+  /* ═══════════════════════════════════════════════
+     ─── 主题色变量：浅色默认 + 深色覆盖 ───
+     ═══════════════════════════════════════════════ */
   :root {
+    color-scheme: light;
+    --bg: #f0f2f5;
+    --bg-card: rgba(255,255,255,.62);
+    --bg-card-solid: #ffffff;
+    --bg-card-hover: rgba(255,255,255,.78);
+    --border: rgba(0,0,0,.08);
+    --border-accent: #4f6bcc;
+    --text: #1a1d2e;
+    --text-dim: #5a6078;
+    --accent: #4f6bcc;
+    --accent2: #8b5cf6;
+    --accent3: #059669;
+    --accent4: #db2777;
+    --gradient-hero: linear-gradient(135deg, #dbe3fc 0%, #d4ddf8 35%, #e4e9fc 65%, #dfe4f7 100%);
+    --hero-blob1: rgba(79,107,203,.18);
+    --hero-blob2: rgba(139,92,246,.14);
+    --gradient-accent: linear-gradient(135deg, #4f6bcc, #8b5cf6);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow-card: 0 2px 16px rgba(0,0,0,.06);
+    --shadow-glow: 0 4px 24px rgba(79,107,203,.08);
+    --font-body: system-ui, -apple-system, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: "Cascadia Code", "Fira Code", "JetBrains Mono", "SF Mono", Consolas, monospace;
+    --max-w: 1080px;
+    /* 玻璃变量 */
+    --glass-bg: rgba(255,255,255,.48);
+    --glass-border: rgba(255,255,255,.72);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.07), inset 0 1px 0 rgba(255,255,255,.85);
+    --glass-code-bg: rgba(0,0,0,.04);
+    --glass-sweep: rgba(255,255,255,.6);
+    /* body 渐变光斑（浅色下需要更强才可见） */
+    --body-bg: radial-gradient(ellipse 70% 55% at 15% 8%, rgba(79,107,203,.28) 0%, transparent 65%),
+               radial-gradient(ellipse 55% 45% at 85% 75%, rgba(139,92,246,.22) 0%, transparent 60%),
+               radial-gradient(ellipse 45% 35% at 50% 45%, rgba(16,185,129,.14) 0%, transparent 55%),
+               radial-gradient(ellipse 40% 30% at 65% 20%, rgba(236,72,153,.10) 0%, transparent 50%),
+               #e8ecf4;
+  }
+  [data-theme="dark"] {
+    color-scheme: dark;
     --bg: #0c0e14;
-    --bg-card: #151822;
-    --bg-card-hover: #1a1f2e;
-    --border: #1e2333;
+    --bg-card: rgba(255,255,255,.06);
+    --bg-card-solid: #151822;
+    --bg-card-hover: rgba(255,255,255,.10);
+    --border: rgba(255,255,255,.08);
     --border-accent: #2a5cff;
     --text: #e4e6ed;
     --text-dim: #8890a4;
@@ -18,14 +72,20 @@
     --accent3: #34d399;
     --accent4: #f472b6;
     --gradient-hero: linear-gradient(135deg, #0c0e14 0%, #111628 40%, #0e1225 100%);
+    --hero-blob1: rgba(79,140,255,.12);
+    --hero-blob2: rgba(167,139,250,.08);
     --gradient-accent: linear-gradient(135deg, #4f8cff, #a78bfa);
-    --radius: 12px;
-    --radius-sm: 8px;
     --shadow-card: 0 2px 16px rgba(0,0,0,.35);
     --shadow-glow: 0 0 40px rgba(79,140,255,.12);
-    --font-body: system-ui, -apple-system, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-    --font-mono: "Cascadia Code", "Fira Code", "JetBrains Mono", "SF Mono", Consolas, monospace;
-    --max-w: 1080px;
+    --glass-bg: rgba(255,255,255,.06);
+    --glass-border: rgba(255,255,255,.12);
+    --glass-shadow: 0 30px 60px -20px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.1);
+    --glass-code-bg: rgba(0,0,0,.3);
+    --glass-sweep: rgba(255,255,255,.08);
+    --body-bg: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79,140,255,.08) 0%, transparent 60%),
+               radial-gradient(ellipse 60% 50% at 80% 80%, rgba(167,139,250,.06) 0%, transparent 60%),
+               radial-gradient(ellipse 50% 40% at 50% 50%, rgba(52,211,153,.04) 0%, transparent 60%),
+               #0c0e14;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,42 +94,120 @@
 
   body {
     font-family: var(--font-body);
-    background: var(--bg);
+    background: var(--body-bg);
     color: var(--text);
     line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
 
-  /* ─── Language Toggle ─── */
-  .lang-toggle {
+  /* ─── 玻璃拟态基础 ─── */
+  .glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: 20px;
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass { background: var(--bg-card-solid); }
+  }
+  /* hover 高光扫过 */
+  .glass--sweep { position: relative; overflow: hidden; }
+  .glass--sweep::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -60%;
+    width: 40%;
+    height: 200%;
+    background: linear-gradient(105deg, transparent, var(--glass-sweep), transparent);
+    transform: skewX(-20deg);
+    transition: left .5s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glass--sweep:hover::after {
+    left: 120%;
+  }
+
+  /* ─── 控件容器（右上角） ─── */
+  .controls {
     position: fixed;
     top: 20px;
     right: 24px;
     z-index: 100;
     display: flex;
     align-items: center;
-    gap: 6px;
-    background: var(--bg-card);
+    gap: 8px;
+  }
+
+  /* ─── 分段控件（语言 & 主题） ─── */
+  .segmented {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 4px 6px;
-    cursor: pointer;
-    user-select: none;
-    transition: border-color .25s, box-shadow .25s;
+    padding: 3px;
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    margin: 0;
+    list-style: none;
   }
-  .lang-toggle:hover { border-color: var(--accent); box-shadow: 0 0 12px rgba(79,140,255,.2); }
-  .lang-toggle span {
+  .segmented input[type="radio"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .segmented label {
+    position: relative;
+    z-index: 1;
     font-size: 13px;
-    padding: 3px 10px;
-    border-radius: 14px;
-    transition: background .25s, color .25s;
+    padding: 4px 14px;
+    border-radius: 17px;
+    cursor: pointer;
+    text-align: center;
     color: var(--text-dim);
+    transition: color .25s;
+    user-select: none;
+    font-weight: 500;
   }
-  .lang-toggle span.active {
+  .segmented label:hover { color: var(--text); }
+  .segmented input:checked + label {
     background: var(--accent);
     color: #fff;
     font-weight: 600;
+  }
+
+  /* ─── 主题切换按钮 ─── */
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color .25s, box-shadow .25s;
+    padding: 0;
+    line-height: 1;
+  }
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 12px rgba(79,140,255,.15);
   }
 
   /* ─── Container ─── */
@@ -87,7 +225,7 @@
     position: absolute;
     top: -120px; right: -120px;
     width: 480px; height: 480px;
-    background: radial-gradient(circle, rgba(79,140,255,.12) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--hero-blob1) 0%, transparent 70%);
     pointer-events: none;
   }
   .hero::after {
@@ -95,7 +233,7 @@
     position: absolute;
     bottom: -80px; left: -60px;
     width: 360px; height: 360px;
-    background: radial-gradient(circle, rgba(167,139,250,.08) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--hero-blob2) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -136,14 +274,19 @@
 
   /* ─── Install Block ─── */
   .install-block {
-    background: #111520;
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 0;
     max-width: 760px;
     position: relative;
     overflow: hidden;
-    box-shadow: var(--shadow-glow);
+    box-shadow: var(--glass-shadow);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .install-block { background: var(--bg-card-solid); }
   }
   .install-label {
     display: flex;
@@ -173,10 +316,14 @@
     line-height: 1.7;
     color: var(--accent3);
     white-space: pre-wrap;
-    word-break: break-word;
+    overflow-wrap: anywhere;
+    word-break: normal;
     -webkit-user-select: all;
     user-select: all;
     max-height: 260px;
+  }
+  .install-code .no-break {
+    white-space: nowrap;
   }
   .copy-btn {
     position: absolute;
@@ -233,13 +380,19 @@
     gap: 16px;
   }
   .feature-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 24px;
-    transition: border-color .3s, box-shadow .3s, transform .3s;
+    transition: border-color .3s, transform .3s;
     position: relative;
     overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .feature-card { background: var(--bg-card-solid); }
   }
   .feature-card::before {
     content: "";
@@ -249,13 +402,25 @@
     background: var(--gradient-accent);
     opacity: 0;
     transition: opacity .3s;
+    z-index: 1;
   }
   .feature-card:hover {
-    border-color: rgba(79,140,255,.3);
-    box-shadow: 0 4px 24px rgba(79,140,255,.08);
-    transform: translateY(-2px);
+    border-color: rgba(79,140,255,.35);
+    transform: translateY(-3px);
   }
   .feature-card:hover::before { opacity: 1; }
+  /* hover 扫光 */
+  .feature-card::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -60%;
+    width: 40%; height: 200%;
+    background: linear-gradient(105deg, transparent, var(--glass-sweep), transparent);
+    transform: skewX(-20deg);
+    transition: left .5s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+  }
+  .feature-card:hover::after { left: 120%; }
 
   .feature-icon {
     width: 44px; height: 44px;
@@ -267,26 +432,39 @@
     margin-bottom: 16px;
     background: rgba(79,140,255,.08);
     border: 1px solid rgba(79,140,255,.15);
+    position: relative;
+    z-index: 1;
   }
   .feature-card h3 {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
   }
   .feature-card p {
     font-size: 14px;
     color: var(--text-dim);
     line-height: 1.65;
+    position: relative;
+    z-index: 1;
   }
 
   /* ─── Story Block ─── */
   .story {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 40px 36px;
     max-width: 740px;
     position: relative;
+    overflow: hidden;
+    box-shadow: var(--glass-shadow);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .story { background: var(--bg-card-solid); }
   }
   .story::before {
     content: "";
@@ -300,6 +478,8 @@
     font-size: 16px;
     line-height: 1.8;
     color: var(--text-dim);
+    position: relative;
+    z-index: 1;
   }
   .story p + p { margin-top: 14px; }
   .story strong { color: var(--text); }
@@ -311,51 +491,81 @@
     gap: 14px;
   }
   .usecase-item {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-sm);
     padding: 20px 22px;
     display: flex;
     align-items: flex-start;
     gap: 14px;
-    transition: border-color .3s, background .3s;
+    transition: border-color .3s;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--glass-shadow);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .usecase-item { background: var(--bg-card-solid); }
   }
   .usecase-item:hover {
-    border-color: rgba(79,140,255,.25);
-    background: var(--bg-card-hover);
+    border-color: rgba(79,140,255,.3);
   }
+  /* hover 扫光 */
+  .usecase-item::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -60%;
+    width: 40%; height: 200%;
+    background: linear-gradient(105deg, transparent, var(--glass-sweep), transparent);
+    transform: skewX(-20deg);
+    transition: left .5s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+  }
+  .usecase-item:hover::after { left: 120%; }
   .usecase-icon {
     font-size: 26px;
     line-height: 1;
     flex-shrink: 0;
     margin-top: 2px;
+    position: relative;
+    z-index: 1;
   }
   .usecase-item h4 {
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
   }
   .usecase-item p {
     font-size: 13.5px;
     color: var(--text-dim);
     line-height: 1.6;
+    position: relative;
+    z-index: 1;
   }
 
   /* ─── Install Guide ─── */
   .install-guide {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 16px;
     max-width: 780px;
   }
-  @media (max-width: 680px) {
-    .install-guide { grid-template-columns: 1fr; }
-  }
   .install-method {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 28px 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--glass-shadow);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .install-method { background: var(--bg-card-solid); }
   }
   .install-method h3 {
     font-size: 15px;
@@ -364,6 +574,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    position: relative;
+    z-index: 1;
   }
   .install-method .tag {
     font-size: 11px;
@@ -378,9 +590,11 @@
     color: var(--text-dim);
     margin-bottom: 14px;
     line-height: 1.6;
+    position: relative;
+    z-index: 1;
   }
   .cmd-block {
-    background: #0e1118;
+    background: var(--glass-code-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     padding: 14px 16px;
@@ -391,12 +605,16 @@
     overflow-x: auto;
     white-space: pre;
     margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
   }
   .cmd-label {
     font-size: 11px;
     color: var(--text-dim);
     margin-bottom: 4px;
     font-weight: 500;
+    position: relative;
+    z-index: 1;
   }
 
   /* ─── Output Preview ─── */
@@ -410,17 +628,39 @@
     .output-row { grid-template-columns: 1fr; }
   }
   .output-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-sm);
     padding: 22px 20px;
     text-align: center;
     transition: border-color .3s;
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--glass-shadow);
   }
-  .output-card:hover { border-color: rgba(79,140,255,.25); }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .output-card { background: var(--bg-card-solid); }
+  }
+  .output-card:hover { border-color: rgba(79,140,255,.3); }
+  /* hover 扫光 */
+  .output-card::after {
+    content: '';
+    position: absolute;
+    top: -50%; left: -60%;
+    width: 40%; height: 200%;
+    background: linear-gradient(105deg, transparent, var(--glass-sweep), transparent);
+    transform: skewX(-20deg);
+    transition: left .5s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+  }
+  .output-card:hover::after { left: 120%; }
   .output-card .file-icon {
     font-size: 28px;
     margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
   }
   .output-card h4 {
     font-family: var(--font-mono);
@@ -428,11 +668,15 @@
     font-weight: 600;
     color: var(--accent);
     margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
   }
   .output-card p {
     font-size: 13px;
     color: var(--text-dim);
     line-height: 1.55;
+    position: relative;
+    z-index: 1;
   }
 
   /* ─── Footer ─── */
@@ -477,7 +721,9 @@
     .usecase-list { grid-template-columns: 1fr; }
     .install-block { max-width: 100%; }
     .story { padding: 28px 20px; }
-    .lang-toggle { top: 12px; right: 12px; }
+    .controls { top: 12px; right: 12px; gap: 6px; }
+    .segmented label { padding: 3px 10px; font-size: 12px; }
+    .theme-toggle { width: 32px; height: 32px; font-size: 14px; }
   }
 
   /* ─── Hidden lang ─── */
@@ -535,10 +781,15 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Language Toggle -->
-<div class="lang-toggle" id="langToggle" onclick="toggleLang()">
-  <span data-lang="zh" class="active">中</span>
-  <span data-lang="en">EN</span>
+<!-- Controls: 语言分段控件 + 主题切换 -->
+<div class="controls">
+  <fieldset class="segmented" id="langSegmented" role="radiogroup" aria-label="language">
+    <input id="lang-zh" name="language" type="radio" value="zh" checked>
+    <label for="lang-zh">中</label>
+    <input id="lang-en" name="language" type="radio" value="en">
+    <label for="lang-en">EN</label>
+  </fieldset>
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="切换白天/黑夜">🌙</button>
 </div>
 
 <!-- ═══════════ HERO ═══════════ -->
@@ -555,12 +806,12 @@
     </h1>
 
     <p class="hero-sub fade-up d2">
-      <span data-lang="zh">asset-inventory 全量盘点本机可调用的插件、Skill、命令、MCP、Agent 和外层应用能力——每项标注来源追溯，30 秒看清全貌。</span>
-      <span data-lang="en">asset-inventory inventories every plugin, skill, command, MCP server, agent, and host capability on this machine — with provenance for each item. See the full picture in 30 seconds.</span>
+      <span data-lang="zh">asset-inventory 是一个 OpenCode Skill，装好后跑一条命令，就能自动生成三份文件，盘点本机所有可调用的插件、Skill、命令、MCP、Agent 和外层应用能力，每项都标注了来源——哪里来的、谁装的、能不能用。</span>
+      <span data-lang="en">asset-inventory is an OpenCode Skill. Install it, run one command, and it automatically generates three files: a full inventory of every plugin, skill, command, MCP server, agent, and host capability on this machine — with provenance for each item (where it came from, who installed it, whether it works).</span>
     </p>
 
     <!-- Install Block -->
-    <div class="install-block fade-up d3">
+    <div class="install-block fade-up d3 glass glass--sweep">
       <div class="install-label">
         <span style="display:flex;align-items:center;gap:8px;">
           <span class="dot"></span>
@@ -570,8 +821,8 @@
       </div>
       <div class="install-code-wrap">
         <button class="copy-btn" id="copyBtn" onclick="copyInstall()">复制</button>
-         <div class="install-code" id="installCode" data-lang="zh">请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。先问我装到全局还是只装进当前项目。然后克隆或下载该仓库，只复制运行所需的文件——SKILL.md、references/、examples/——到选定的目标位置：全局就装到 ~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\），项目级就装到当前项目内的 .opencode/skills/（没有就创建）。不要复制 README 文件。确认最终路径是 &lt;目标位置&gt;/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。</div>
-        <div class="install-code" id="installCodeEn" data-lang="en">Install the "asset-inventory" OpenCode skill from &lt;https://github.com/sogeisetsu/asset-inventory&gt;. First ask me whether to install it globally or into the current project only. Then clone or download the repository and copy only the runtime files — SKILL.md, references/, examples/ — into the chosen target: global skills directory ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\) for global, or .opencode/skills/ inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that SKILL.md ends up at &lt;target&gt;/asset-inventory/SKILL.md. Do not modify any skill file during installation. Report the final path.</div>
+         <div class="install-code" id="installCode" data-lang="zh">请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <span class="no-break">&lt;https://github.com/sogeisetsu/asset-inventory&gt;</span>。先问我装到全局还是只装进当前项目。然后克隆或下载该仓库，只复制运行所需的文件——SKILL.md、references/、examples/——到选定的目标位置：全局就装到 ~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\），项目级就装到当前项目内的 .opencode/skills/（没有就创建）。不要复制 README 文件。确认最终路径是 &lt;目标位置&gt;/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。</div>
+        <div class="install-code" id="installCodeEn" data-lang="en">Install the "asset-inventory" OpenCode skill from <span class="no-break">&lt;https://github.com/sogeisetsu/asset-inventory&gt;</span>. First ask me whether to install it globally or into the current project only. Then clone or download the repository and copy only the runtime files — SKILL.md, references/, examples/ — into the chosen target: global skills directory ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\) for global, or .opencode/skills/ inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that SKILL.md ends up at &lt;target&gt;/asset-inventory/SKILL.md. Do not modify any skill file during installation. Report the final path.</div>
       </div>
     </div>
   </div>
@@ -583,38 +834,15 @@
     <div class="section-label" data-lang="zh">功能一览</div>
     <div class="section-label" data-lang="en">Features</div>
 
-    <h2 class="section-title" data-lang="zh">一份可信的全景清单</h2>
-    <h2 class="section-title" data-lang="en">A trustworthy inventory of everything</h2>
+    <h2 class="section-title" data-lang="zh">核心功能</h2>
+    <h2 class="section-title" data-lang="en">Core Features</h2>
 
     <p class="section-desc" data-lang="zh">不靠猜、不靠记忆，直接从机器上实际可调用的能力出发，逐项列出并追溯来源。</p>
     <p class="section-desc" data-lang="en">No guessing, no memory — it starts from what this machine can actually invoke, listing each item with provenance.</p>
 
     <div class="features-grid">
-      <div class="feature-card fade-up">
-        <div class="feature-icon">📊</div>
-        <h3 data-lang="zh">7 表清单</h3>
-        <h3 data-lang="en">7-Table Inventory</h3>
-        <p data-lang="zh">插件配套、Skill 命令、原生能力、自定义 Skill、MCP、Agent、外层应用——7 张表覆盖所有类别，每行回答"是什么、谁带来的、怎么用"。</p>
-        <p data-lang="en">Plugins, skills, commands, custom skills, MCP servers, agents, and host capabilities — 7 tables covering every category. Each row answers: what, who brought it, how to use it.</p>
-      </div>
-
-      <div class="feature-card fade-up d1">
-        <div class="feature-icon">🔍</div>
-        <h3 data-lang="zh">来源追溯</h3>
-        <h3 data-lang="en">Source Provenance</h3>
-        <p data-lang="zh">每个资产都会写明它从哪来的——OpenCode 自带、插件装进来、你自建、还是外层应用注入——绝不写"某个插件"这种含糊说法。</p>
-        <p data-lang="en">Every asset says where it came from — built into OpenCode, brought by a plugin, created by you, or injected by an outer app — never a vague "some plugin".</p>
-      </div>
-
-      <div class="feature-card fade-up d2">
-        <div class="feature-icon">🚦</div>
-        <h3 data-lang="zh">四态标注</h3>
-        <h3 data-lang="en">Four-State Labels</h3>
-        <p data-lang="zh">✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在——一眼看清谁在干活、谁在睡觉、谁压根没装。</p>
-        <p data-lang="en">✅available / ❌disabled / 📦shelf-only / 🚫absent — see at a glance who's working, who's dormant, who was never installed.</p>
-      </div>
-
-      <div class="feature-card fade-up d3">
+      <!-- 三份输出（置顶） -->
+      <div class="feature-card fade-up glass glass--sweep">
         <div class="feature-icon">📁</div>
         <h3 data-lang="zh">三份输出</h3>
         <h3 data-lang="en">Three Output Files</h3>
@@ -622,7 +850,35 @@
         <p data-lang="en">inventory.md (7-table inventory), usage-guide.md (usage guide organized by frequency), asset-inventory.json (machine-readable, for diff/migration).</p>
       </div>
 
-      <div class="feature-card fade-up d4">
+      <!-- 7 表清单 -->
+      <div class="feature-card fade-up d1 glass glass--sweep">
+        <div class="feature-icon">📊</div>
+        <h3 data-lang="zh">7 表清单</h3>
+        <h3 data-lang="en">7-Table Inventory</h3>
+        <p data-lang="zh">插件配套、Skill 命令、原生能力、自定义 Skill、MCP、Agent、外层应用——7 张表覆盖所有类别，每行回答"是什么、谁带来的、怎么用"。</p>
+        <p data-lang="en">Plugins, skills, commands, custom skills, MCP servers, agents, and host capabilities — 7 tables covering every category. Each row answers: what, who brought it, how to use it.</p>
+      </div>
+
+      <!-- 来源追溯 -->
+      <div class="feature-card fade-up d2 glass glass--sweep">
+        <div class="feature-icon">🔍</div>
+        <h3 data-lang="zh">来源追溯</h3>
+        <h3 data-lang="en">Source Provenance</h3>
+        <p data-lang="zh">每个资产都会写明它从哪来的——OpenCode 自带、插件装进来、你自建、还是外层应用注入——绝不写"某个插件"这种含糊说法。</p>
+        <p data-lang="en">Every asset says where it came from — built into OpenCode, brought by a plugin, created by you, or injected by an outer app — never a vague "some plugin".</p>
+      </div>
+
+      <!-- 四态标注 -->
+      <div class="feature-card fade-up d3 glass glass--sweep">
+        <div class="feature-icon">🚦</div>
+        <h3 data-lang="zh">四态标注</h3>
+        <h3 data-lang="en">Four-State Labels</h3>
+        <p data-lang="zh">✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在——一眼看清谁在干活、谁在睡觉、谁压根没装。</p>
+        <p data-lang="en">✅available / ❌disabled / 📦shelf-only / 🚫absent — see at a glance who's working, who's dormant, who was never installed.</p>
+      </div>
+
+      <!-- 差异模式 -->
+      <div class="feature-card fade-up d4 glass glass--sweep">
         <div class="feature-icon">🔄</div>
         <h3 data-lang="zh">差异模式</h3>
         <h3 data-lang="en">Diff Mode</h3>
@@ -630,7 +886,8 @@
         <p data-lang="en">Paste a previous JSON to auto-compare additions and removals — see changes before and after migration or updates at a glance.</p>
       </div>
 
-      <div class="feature-card fade-up d4">
+      <!-- 只读·脱敏 -->
+      <div class="feature-card fade-up d4 glass glass--sweep">
         <div class="feature-icon">🛡️</div>
         <h3 data-lang="zh">只读 · 脱敏</h3>
         <h3 data-lang="en">Read-Only · Masked</h3>
@@ -638,7 +895,8 @@
         <p data-lang="en">Never modifies any configuration during inventory; API keys, user paths, and private project names are masked by default.</p>
       </div>
 
-      <div class="feature-card fade-up d4">
+      <!-- 外层应用感知 -->
+      <div class="feature-card fade-up d4 glass glass--sweep">
         <div class="feature-icon">🔬</div>
         <h3 data-lang="zh">外层应用感知</h3>
         <h3 data-lang="en">Host-Aware Scanning</h3>
@@ -649,19 +907,19 @@
 
     <!-- Output Files Preview -->
     <div class="output-row">
-      <div class="output-card fade-up">
+      <div class="output-card fade-up glass glass--sweep">
         <div class="file-icon">📘</div>
         <h4>inventory.md</h4>
         <p data-lang="zh">一份 Markdown 文件，里面包含 7 张表——插件、Skill、命令、MCP、Agent、外层应用等各类内容，全列在里面</p>
         <p data-lang="en">A single Markdown file containing 7 tables — plugins, skills, commands, MCP, agents, outer-app capabilities, everything listed inside</p>
       </div>
-      <div class="output-card fade-up d1">
+      <div class="output-card fade-up d1 glass glass--sweep">
         <div class="file-icon">📗</div>
         <h4>usage-guide.md</h4>
         <p data-lang="zh">按每天必用 / 干活主力 / 按需 / 周期性重组的使用指南</p>
         <p data-lang="en">Usage guide reorganized by daily-use / main tools / on-demand / periodic</p>
       </div>
-      <div class="output-card fade-up d2">
+      <div class="output-card fade-up d2 glass glass--sweep">
         <div class="file-icon">📙</div>
         <h4>asset-inventory.json</h4>
         <p data-lang="zh">机器可读 JSON，table+name 主键，供 diff 和迁移</p>
@@ -677,10 +935,10 @@
     <div class="section-label" data-lang="zh">为什么会有这个 skill</div>
     <div class="section-label" data-lang="en">Why it exists</div>
 
-    <h2 class="section-title" data-lang="zh">装了什么？谁带的？什么时候该用？</h2>
-    <h2 class="section-title" data-lang="en">What did I install? Who brought it? When should I use it?</h2>
+    <h2 class="section-title" data-lang="zh">为什么需要它</h2>
+    <h2 class="section-title" data-lang="en">Why you need it</h2>
 
-    <div class="story">
+    <div class="story glass glass--sweep">
       <p data-lang="zh">OpenCode 环境膨胀得很快。几周下来，你装了十几个插件、好几套 Skill、一堆 MCP，还有外层应用自带的各种能力。然后某天你突然想不起来：那个命令是哪个插件带的？那个 Agent 为什么禁用了？换台机器的话，我得装什么？</p>
       <p data-lang="en">OpenCode environments grow fast. After a few weeks you've installed a dozen plugins, several skill sets, a bunch of MCP servers, and there are all those host-injected capabilities. Then one day you realize: which plugin brought that command? Why is that agent disabled? If I switch machines, what do I need to install?</p>
       <p data-lang="zh"><strong>asset-inventory</strong> 就是来回答这些问题的。它不是靠你手动填表，而是直接从机器上实际可调用的能力出发——读配置、扫缓存、查注册表、跑命令验证——给你一份可信的完整答案。</p>
@@ -699,7 +957,7 @@
     <h2 class="section-title" data-lang="en">These 5 scenarios — all covered</h2>
 
     <div class="usecase-list">
-      <div class="usecase-item fade-up">
+      <div class="usecase-item fade-up glass glass--sweep">
         <div class="usecase-icon">🗺️</div>
         <div>
           <h4 data-lang="zh">环境盘点</h4>
@@ -708,16 +966,16 @@
           <p data-lang="en">New machine, taking over a project, or just want to know "what do I actually have right now."</p>
         </div>
       </div>
-      <div class="usecase-item fade-up d1">
+      <div class="usecase-item fade-up d1 glass glass--sweep">
         <div class="usecase-icon">🔎</div>
         <div>
           <h4 data-lang="zh">排查问题</h4>
           <h4 data-lang="en">Troubleshooting</h4>
-          <p data-lang="zh">"哪个命令被禁了？""那个 MCP 是谁装的？""这个 Agent 为什么用不了？"</p>
-          <p data-lang="en">"Which command is disabled?" "Who installed that MCP?" "Why can't I use that agent?"</p>
+          <p data-lang="zh">"哪个命令被禁了？"<br>"那个 MCP 是谁装的？"<br>"这个 Agent 为什么用不了？"</p>
+          <p data-lang="en">"Which command is disabled?"<br>"Who installed that MCP?"<br>"Why can't I use that agent?"</p>
         </div>
       </div>
-      <div class="usecase-item fade-up d2">
+      <div class="usecase-item fade-up d2 glass glass--sweep">
         <div class="usecase-icon">🚚</div>
         <div>
           <h4 data-lang="zh">换机迁移</h4>
@@ -726,7 +984,7 @@
           <p data-lang="en">Fresh machine setup — use JSON diff to quickly confirm "what's still missing."</p>
         </div>
       </div>
-      <div class="usecase-item fade-up d3">
+      <div class="usecase-item fade-up d3 glass glass--sweep">
         <div class="usecase-icon">👥</div>
         <div>
           <h4 data-lang="zh">入职交接</h4>
@@ -735,7 +993,7 @@
           <p data-lang="en">Hand a new teammate an environment checklist — fewer dead ends.</p>
         </div>
       </div>
-      <div class="usecase-item fade-up d4">
+      <div class="usecase-item fade-up d4 glass glass--sweep">
         <div class="usecase-icon">📈</div>
         <div>
           <h4 data-lang="zh">更新前后对比</h4>
@@ -761,7 +1019,7 @@
     <p class="section-desc" data-lang="en">Global = available in all projects; project-level = stays with the current project only. First clone the repo (or download &amp; unzip the ZIP) to get an <code>asset-inventory/</code> folder, then <code>cd</code> into it and copy only three things (<code>SKILL.md</code>, <code>references/</code>, <code>examples/</code> — the README and docs are not needed).</p>
 
     <div class="install-guide">
-      <div class="install-method fade-up">
+      <div class="install-method fade-up glass glass--sweep">
         <h3>
           <span data-lang="zh">🌍 全局安装</span>
           <span data-lang="en">🌍 Global Install</span>
@@ -776,7 +1034,7 @@
         <div class="cmd-block">New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"<br>Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"</div>
       </div>
 
-      <div class="install-method fade-up d1">
+      <div class="install-method fade-up d1 glass glass--sweep">
         <h3>
           <span data-lang="zh">📁 项目级安装</span>
           <span data-lang="en">📁 Project-Level Install</span>
@@ -810,68 +1068,98 @@
 </footer>
 
 <script>
-// ─── Language Toggle ───
-function toggleLang() {
-  const html = document.documentElement;
-  const current = html.getAttribute('data-show') || 'zh';
-  const next = current === 'zh' ? 'en' : 'zh';
-  html.setAttribute('data-show', next);
+// ─── 主题切换 ───
+(function initTheme() {
+  var btn = document.getElementById('themeToggle');
+  function apply(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '☀️' : '🌙';
+  }
+  apply(document.documentElement.getAttribute('data-theme') || 'dark');
 
-  // update toggle active state
-  document.querySelectorAll('.lang-toggle span').forEach(s => s.classList.remove('active'));
-  document.querySelector(`.lang-toggle span[data-lang="${next}"]`).classList.add('active');
-
-  // sync copy button text
-  updateCopyBtn(next);
-
-  // replay fade-up animation for cards already in viewport after language switch
-  document.querySelectorAll('.fade-up').forEach(el => {
-    if (getComputedStyle(el).display !== 'none' && el.style.animationPlayState === 'paused') {
-      el.style.animationPlayState = 'running';
-      observer.unobserve(el);
-    }
+  btn.addEventListener('click', function() {
+    var cur = document.documentElement.getAttribute('data-theme');
+    var next = cur === 'dark' ? 'light' : 'dark';
+    localStorage.setItem('theme-preference', next);
+    apply(next);
   });
-}
+})();
+
+// ─── 语言切换（分段控件，直接切换） ───
+(function initLang() {
+  var radios = document.querySelectorAll('#langSegmented input[type="radio"]');
+  var saved = localStorage.getItem('lang-preference');
+  if (saved) {
+    radios.forEach(function(r) { r.checked = (r.value === saved); });
+  }
+
+  function setLanguage(lang) {
+    var html = document.documentElement;
+    html.setAttribute('data-show', lang);
+    localStorage.setItem('lang-preference', lang);
+
+    // sync copy button text
+    updateCopyBtn(lang);
+
+    // replay fade-up animation for cards already in viewport after language switch
+    document.querySelectorAll('.fade-up').forEach(function(el) {
+      if (getComputedStyle(el).display !== 'none' && el.style.animationPlayState === 'paused') {
+        el.style.animationPlayState = 'running';
+        observer.unobserve(el);
+      }
+    });
+  }
+
+  radios.forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      if (this.checked) setLanguage(this.value);
+    });
+  });
+
+  // initialize on load
+  var initLang = document.documentElement.getAttribute('data-show') || 'zh';
+  setLanguage(initLang);
+})();
 
 function updateCopyBtn(lang) {
-  const btn = document.getElementById('copyBtn');
+  var btn = document.getElementById('copyBtn');
   btn.textContent = lang === 'zh' ? '复制' : 'Copy';
   btn.classList.remove('copied');
 }
 
 // ─── Copy Install Text ───
 function copyInstall() {
-  const lang = document.documentElement.getAttribute('data-show') || 'zh';
-  const el = lang === 'en' ? document.getElementById('installCodeEn') : document.getElementById('installCode');
-  const text = el.textContent.trim();
+  var lang = document.documentElement.getAttribute('data-show') || 'zh';
+  var el = lang === 'en' ? document.getElementById('installCodeEn') : document.getElementById('installCode');
+  var text = el.textContent.trim();
 
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copyBtn');
-    const toast = document.getElementById('toast');
+  navigator.clipboard.writeText(text).then(function() {
+    var btn = document.getElementById('copyBtn');
+    var toast = document.getElementById('toast');
     btn.classList.add('copied');
     btn.textContent = lang === 'zh' ? '已复制 ✓' : 'Copied ✓';
     toast.textContent = lang === 'zh' ? '已复制到剪贴板' : 'Copied to clipboard';
     toast.classList.add('show');
-    setTimeout(() => {
+    setTimeout(function() {
       toast.classList.remove('show');
       btn.classList.remove('copied');
       updateCopyBtn(lang);
     }, 2000);
-  }).catch(() => {
+  }).catch(function() {
     // fallback
-    const ta = document.createElement('textarea');
+    var ta = document.createElement('textarea');
     ta.value = text;
     document.body.appendChild(ta);
     ta.select();
     document.execCommand('copy');
     document.body.removeChild(ta);
-    const btn = document.getElementById('copyBtn');
-    const toast = document.getElementById('toast');
+    var btn = document.getElementById('copyBtn');
+    var toast = document.getElementById('toast');
     btn.classList.add('copied');
     btn.textContent = lang === 'zh' ? '已复制 ✓' : 'Copied ✓';
     toast.textContent = lang === 'zh' ? '已复制到剪贴板' : 'Copied to clipboard';
     toast.classList.add('show');
-    setTimeout(() => {
+    setTimeout(function() {
       toast.classList.remove('show');
       btn.classList.remove('copied');
       updateCopyBtn(lang);
@@ -880,8 +1168,8 @@ function copyInstall() {
 }
 
 // ─── Intersection Observer for fade-up ───
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
     if (e.isIntersecting) {
       e.target.style.animationPlayState = 'running';
       observer.unobserve(e.target);
@@ -889,13 +1177,13 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 
-document.querySelectorAll('.fade-up').forEach(el => {
+document.querySelectorAll('.fade-up').forEach(function(el) {
   el.style.animationPlayState = 'paused';
   observer.observe(el);
 });
 
 // hero items play immediately
-document.querySelectorAll('.hero .fade-up').forEach(el => {
+document.querySelectorAll('.hero .fade-up').forEach(function(el) {
   el.style.animationPlayState = 'running';
 });
 </script>
