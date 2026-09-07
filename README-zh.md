@@ -21,27 +21,33 @@ git clone https://github.com/sogeisetsu/asset-inventory.git
 
 或者从 GitHub 页面 **Code → Download ZIP** 下载并解压。之后你会得到一个 `asset-inventory/` 文件夹。
 
-**第二步：选一种范围，在包含 `asset-inventory/` 文件夹的目录里运行对应命令**（`cd` 到 `asset-inventory` 的**上一级**目录再执行）：
+**第二步：进入 `asset-inventory/` 文件夹，只复制三样东西**（`SKILL.md`、`references/`、`examples/`——README、docs 等文档不用装）到目标位置：
 
 | 范围 | 什么时候选 | 目标位置 |
 |---|---|---|
-| **全局** | 每个项目都能用 | `~/.config/opencode/skills/` |
-| **项目级** | 只给一个项目用 | `<项目根目录>/.opencode/skills/` |
+| **全局** | 每个项目都能用 | `~/.config/opencode/skills/`（Windows：`$env:USERPROFILE\.config\opencode\skills\`） |
+| **项目级** | 只给一个项目用 | 那个项目根目录下的 `.opencode/skills/` |
 
-```powershell
-# 全局（PowerShell）
-Copy-Item -Recurse asset-inventory "$env:USERPROFILE\.config\opencode\skills\"
-
-# 项目级（PowerShell）
-Copy-Item -Recurse asset-inventory .opencode\skills\
-```
+先 `cd` 进 `asset-inventory/` 再执行（下面的命令都在这个文件夹里运行）：
 
 ```sh
 # 全局（macOS / Linux）
-cp -r asset-inventory ~/.config/opencode/skills/
+mkdir -p ~/.config/opencode/skills/asset-inventory
+cp -r SKILL.md references examples ~/.config/opencode/skills/asset-inventory/
 
-# 项目级（macOS / Linux）
-cp -r asset-inventory .opencode/skills/
+# 项目级（macOS / Linux）——把 <项目根目录> 换成你的项目路径
+mkdir -p <项目根目录>/.opencode/skills/asset-inventory
+cp -r SKILL.md references examples <项目根目录>/.opencode/skills/asset-inventory/
+```
+
+```powershell
+# 全局（PowerShell）
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"
+Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"
+
+# 项目级（PowerShell）——把 <项目根目录> 换成你的项目路径
+New-Item -ItemType Directory -Force -Path "<项目根目录>\.opencode\skills\asset-inventory"
+Copy-Item -Recurse SKILL.md, references, examples -Destination "<项目根目录>\.opencode\skills\asset-inventory\"
 ```
 
 > 不确定选哪个？选**全局**——skill 输出跟着你运行的项目走，不管 skill 本身装在哪。
@@ -68,7 +74,7 @@ cp -r asset-inventory .opencode/skills/
 
 装好后，OpenCode 会自动把 skill 按它的名字注册成斜杠命令。在输入框敲 `/` 选中 `asset-inventory`，或打开 `/skills` 对话框选择它即可。
 
-7 张表依次是：**1** 插件与配套软件 · **2** 各软件/插件带来的 Skill 与命令 · **3** 原生命令与原生 Skill · **4** 自定义 Skill、命令与外层应用注入命令 · **5** MCP · **6** Agent（含默认模型链） · **7** 外层应用能力。各表具体覆盖什么 → [看「7 张表」](#7-张表)
+7 张表依次是：**1** 插件与配套软件 · **2** 各软件/插件带来的 Skill 与命令 · **3** 原生命令与原生 Skill · **4** 自定义 Skill、命令与外层应用注入命令 · **5** MCP · **6** Agent（含默认模型链） · **7** 外层应用能力。各表具体覆盖什么 → [看 `inventory.md` 里的 7 张表](#inventorymd-里的-7-张表)
 
 | 命令 | 干什么 | 产物 |
 |---|---|---|
@@ -91,7 +97,7 @@ cp -r asset-inventory .opencode/skills/
   - "谁带进来的"
   - "跟上次比变了啥"（差异模式——把上次的 JSON 贴给我）
 
-skill 会往**当前项目根目录**的 `output/` 写入产物，描述你机器的真实情况；它也是自包含的：在它自己的表4 里能找到它自己。
+skill 会往**当前项目根目录**的 `output/` 写入产物，描述你机器的真实情况。
 
 ## 你会得到什么
 
@@ -105,7 +111,9 @@ skill 会往**当前项目根目录**的 `output/` 写入产物，描述你机�
 
 > 注意：产物落在"被盘点的项目"根目录，不是 skill 安装目录——全局安装后，输出跟着你的项目走。
 
-### 7 张表
+### `inventory.md` 里的 7 张表
+
+`inventory.md` 就是上面 `output/` 里的第一份文件——一份 Markdown 文档，所有资产按下面 7 张表组织：
 
 | # | 表 | 覆盖什么 |
 |---|---|---|
@@ -119,19 +127,11 @@ skill 会往**当前项目根目录**的 `output/` 写入产物，描述你机�
 
 ### 来源可追溯，不瞎编
 
-每一行来源都点名**具体带来者**并带置信度后缀——`oh-my-opencode-slim@2.2.18（插件包）`、`外层应用注入，外层应用 magicPrompts（app.asar）`——绝不写模糊的类别词。每个资产带四态之一：`✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在`。
+清单里每一项都会写清楚它是**从哪来的**——是 OpenCode 自带的、某个插件装进来的、你自己建的，还是外层应用（如 OpenChamber）注入的——绝不写"某个插件"这种含糊说法。每一项还会标出当前状态：能用、被禁用、只是货架上没装、还是压根不存在。
 
 ### 三份文件，一批证据
 
 `inventory.md`、`usage-guide.md`、`asset-inventory.json` 都从**同一次扫描**派生——不重复收集。使用指南把同一批行按场景和频率重排（"每样东西什么时候用、为什么用"），绝不重新收集或编造事实。
-
-## 验证
-
-跑完后检查：
-1. `inventory.md` 恰好 7 个表。
-2. 每个来源都写了具体带来者（不是"插件"这种模糊词）。
-3. `usage-guide.md` 只收可用项。
-4. `asset-inventory.json` 行数与 markdown 表格一致。
 
 ## 关于「外层应用」（宿主 / host）
 

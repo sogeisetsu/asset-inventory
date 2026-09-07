@@ -602,8 +602,8 @@
         <div class="feature-icon">🔍</div>
         <h3 data-lang="zh">来源追溯</h3>
         <h3 data-lang="en">Source Provenance</h3>
-        <p data-lang="zh">每个资产标注来源：核心自带 / 插件带来 / 外层应用注入 / 本地自建——附置信度标记（✅实测 / ✅文档 / ⚠️推断）。</p>
-        <p data-lang="en">Every asset is tagged with its source: core built-in, plugin-provided, host-injected, or locally created — with confidence markers (✅verified / ✅documented / ⚠️inferred).</p>
+        <p data-lang="zh">每个资产都会写明它从哪来的——OpenCode 自带、插件装进来、你自建、还是外层应用注入——绝不写"某个插件"这种含糊说法。</p>
+        <p data-lang="en">Every asset says where it came from — built into OpenCode, brought by a plugin, created by you, or injected by an outer app — never a vague "some plugin".</p>
       </div>
 
       <div class="feature-card fade-up d2">
@@ -652,8 +652,8 @@
       <div class="output-card fade-up">
         <div class="file-icon">📘</div>
         <h4>inventory.md</h4>
-        <p data-lang="zh">7 张表的完整清单，人类可读</p>
-        <p data-lang="en">Full 7-table inventory, human-readable</p>
+        <p data-lang="zh">一份 Markdown 文件，里面包含 7 张表——插件、Skill、命令、MCP、Agent、外层应用等各类内容，全列在里面</p>
+        <p data-lang="en">A single Markdown file containing 7 tables — plugins, skills, commands, MCP, agents, outer-app capabilities, everything listed inside</p>
       </div>
       <div class="output-card fade-up d1">
         <div class="file-icon">📗</div>
@@ -757,8 +757,8 @@
     <h2 class="section-title" data-lang="zh">两种装法，选适合你的</h2>
     <h2 class="section-title" data-lang="en">Two ways to install — pick what fits</h2>
 
-    <p class="section-desc" data-lang="zh">全局装 = 所有项目都能用；项目级装 = 只跟着当前项目走。先克隆仓库（或下载 ZIP 解压）得到 <code>asset-inventory/</code> 文件夹，再在<strong>包含它的目录</strong>里运行下面的复制命令。</p>
-    <p class="section-desc" data-lang="en">Global = available in all projects; project-level = stays with the current project only. First clone the repo (or download &amp; unzip the ZIP) to get an <code>asset-inventory/</code> folder, then run the copy command below from the directory that contains it.</p>
+    <p class="section-desc" data-lang="zh">全局装 = 所有项目都能用；项目级装 = 只跟着当前项目走。先克隆仓库（或下载 ZIP 解压）得到 <code>asset-inventory/</code> 文件夹，<code>cd</code> 进它里面，只复制三样东西（<code>SKILL.md</code>、<code>references/</code>、<code>examples/</code>——README 等文档不用装）。</p>
+    <p class="section-desc" data-lang="en">Global = available in all projects; project-level = stays with the current project only. First clone the repo (or download &amp; unzip the ZIP) to get an <code>asset-inventory/</code> folder, then <code>cd</code> into it and copy only three things (<code>SKILL.md</code>, <code>references/</code>, <code>examples/</code> — the README and docs are not needed).</p>
 
     <div class="install-guide">
       <div class="install-method fade-up">
@@ -771,9 +771,9 @@
         <p data-lang="zh">装到 OpenCode 的全局 skills 目录，每个项目都能调用。</p>
         <p data-lang="en">Install into OpenCode's global skills directory — available to every project.</p>
         <div class="cmd-label">macOS / Linux</div>
-        <div class="cmd-block">cp -r asset-inventory ~/.config/opencode/skills/</div>
+        <div class="cmd-block">mkdir -p ~/.config/opencode/skills/asset-inventory<br>cp -r SKILL.md references examples ~/.config/opencode/skills/asset-inventory/</div>
         <div class="cmd-label">Windows (PowerShell)</div>
-        <div class="cmd-block">Copy-Item -Recurse asset-inventory "$env:USERPROFILE\.config\opencode\skills\"</div>
+        <div class="cmd-block">New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"<br>Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"</div>
       </div>
 
       <div class="install-method fade-up d1">
@@ -783,15 +783,12 @@
           <span class="tag" data-lang="zh">仅当前项目</span>
           <span class="tag" data-lang="en">Current project only</span>
         </h3>
-        <p data-lang="zh">装到当前项目内，跟着项目走，适合团队共享或临时使用。</p>
-        <p data-lang="en">Install inside the current project — travels with the repo, good for team sharing or temporary use.</p>
+        <p data-lang="zh">装到当前项目内，跟着项目走，适合团队共享或临时使用。把 <code>&lt;项目根目录&gt;</code> 换成你的项目路径。</p>
+        <p data-lang="en">Install inside the current project — travels with the repo, good for team sharing or temporary use. Replace <code>&lt;project-root&gt;</code> with your project path.</p>
         <div class="cmd-label">macOS / Linux</div>
-        <div class="cmd-block">cp -r asset-inventory .opencode/skills/</div>
+        <div class="cmd-block">mkdir -p &lt;项目根目录&gt;/.opencode/skills/asset-inventory<br>cp -r SKILL.md references examples &lt;项目根目录&gt;/.opencode/skills/asset-inventory/</div>
         <div class="cmd-label">Windows (PowerShell)</div>
-        <div class="cmd-block">Copy-Item -Recurse asset-inventory .opencode\skills\</div>
-        <div class="cmd-label" data-lang="zh">包含文件</div>
-        <div class="cmd-label" data-lang="en">Files included</div>
-        <div class="cmd-block">SKILL.md + references/ + examples/</div>
+        <div class="cmd-block">New-Item -ItemType Directory -Force -Path "&lt;项目根目录&gt;\.opencode\skills\asset-inventory"<br>Copy-Item -Recurse SKILL.md, references, examples -Destination "&lt;项目根目录&gt;\.opencode\skills\asset-inventory\"</div>
       </div>
     </div>
   </div>

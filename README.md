@@ -21,25 +21,31 @@ git clone https://github.com/sogeisetsu/asset-inventory.git
 
 or download **Code → Download ZIP** from the GitHub page and unzip it. You'll end up with an `asset-inventory/` folder.
 
-**Step 2 — pick** one **scope, then run the matching command from the directory that *contains* the `asset-inventory/` folder** (i.e. `cd` one level *above* `asset-inventory`, then execute):
+**Step 2 — `cd` into the `asset-inventory/` folder and copy only three things** (`SKILL.md`, `references/`, `examples/` — the README, docs, etc. are not needed) to the target:
 
 | Scope | When to choose | Target |
 |---|---|---|
-| **Global** | Available in every project | `~/.config/opencode/skills/` |
-| **Project-scoped** | Only for one project | `<project>/.opencode/skills/` |
+| **Global** | Available in every project | `~/.config/opencode/skills/` (Windows: `$env:USERPROFILE\.config\opencode\skills\`) |
+| **Project-scoped** | Only for one project | `<project-root>/.opencode/skills/` |
 
 ```sh
 # Global (macOS / Linux)
-cp -r asset-inventory ~/.config/opencode/skills/
+mkdir -p ~/.config/opencode/skills/asset-inventory
+cp -r SKILL.md references examples ~/.config/opencode/skills/asset-inventory/
 
+# Project-scoped (macOS / Linux) — replace <project-root> with your project path
+mkdir -p <project-root>/.opencode/skills/asset-inventory
+cp -r SKILL.md references examples <project-root>/.opencode/skills/asset-inventory/
+```
+
+```powershell
 # Global (Windows PowerShell)
-Copy-Item -Recurse asset-inventory "$env:USERPROFILE\.config\opencode\skills\"
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"
+Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"
 
-# Project-scoped (macOS / Linux)
-cp -r asset-inventory .opencode/skills/
-
-# Project-scoped (Windows PowerShell)
-Copy-Item -Recurse asset-inventory .opencode\skills\
+# Project-scoped (Windows PowerShell) — replace <project-root> with your project path
+New-Item -ItemType Directory -Force -Path "<project-root>\.opencode\skills\asset-inventory"
+Copy-Item -Recurse SKILL.md, references, examples -Destination "<project-root>\.opencode\skills\asset-inventory\"
 ```
 
 > Not sure? Go with **global** — the skill writes its output into whatever project you run it in, regardless of where the skill itself lives.
@@ -66,7 +72,7 @@ That one command runs the full inventory end-to-end. To target just part of your
 
 Once installed, OpenCode automatically registers the skill as a slash command under its own name. In the input box, type `/` and pick `asset-inventory`, or open the `/skills` dialog and select it.
 
-The 7 tables, in order: **1** Plugins & companion apps · **2** Skills & commands each brings · **3** Built-in commands & skills · **4** Custom skills, commands & outer-app-injected commands · **5** MCP · **6** Agents (with model chains) · **7** Outer-app capabilities. What each table covers → see [The 7 tables](#the-7-tables)
+The 7 tables, in order: **1** Plugins & companion apps · **2** Skills & commands each brings · **3** Built-in commands & skills · **4** Custom skills, commands & outer-app-injected commands · **5** MCP · **6** Agents (with model chains) · **7** Outer-app capabilities. What each table covers → see [The 7 tables in `inventory.md`](#the-7-tables-in-inventorymd)
 
 | Command | What it does | Output |
 |---|---|---|
@@ -89,7 +95,7 @@ A targeted run (`mcp`, `agents`, `hosts`, `skills`) writes `inventory.md` (limit
   - "Who brought this in"
   - "What changed since last time" (diff mode — paste the previous JSON)
 
-The skill writes its output into the **`output/` directory of the project being inventoried** (your current working directory) and describes your actual machine. It is also self-inventorying: it appears in its own table 4.
+The skill writes its output into the **`output/` directory of the project being inventoried** (your current working directory) and describes your actual machine.
 
 ## What you get
 
@@ -103,7 +109,9 @@ your-project-root/
 
 > The output lands in the project being inventoried, not in the skill's install location — so a globally installed skill still writes into your project root.
 
-### The 7 tables
+### The 7 tables in `inventory.md`
+
+`inventory.md` is the first file in `output/` above — a Markdown document that organizes every asset into the following 7 tables:
 
 | # | Table | What it covers |
 |---|---|---|
@@ -117,19 +125,11 @@ your-project-root/
 
 ### Provenance, not guesses
 
-Every row names the **specific bringer** with a confidence suffix — `oh-my-opencode-slim@2.2.18 (plugin package)`, `outer-app injected, outer-app magicPrompts (app.asar)` — never a vague category. Every asset gets one of four states: `✅available / ❌disabled / 📦shelf-only / 🚫absent`.
+Every row says exactly **where the asset came from** — built into OpenCode, brought in by a specific plugin, created by you, or injected by an outer app (like OpenChamber) — never a vague "some plugin". Every asset also gets a status: usable, disabled, on the shelf but not installed, or simply absent.
 
 ### Three files, one evidence
 
 `inventory.md`, `usage-guide.md`, and `asset-inventory.json` are all derived from the **same scan** — no double collection. The usage guide reorganizes the same rows by scenario and frequency ("when and why to reach for each"), never re-collecting or inventing facts.
-
-## Verify
-
-After running, check:
-1. `inventory.md` has exactly 7 tables.
-2. Every source names a specific bringer (not a bare category like "plugin").
-3. `usage-guide.md` only contains available items.
-4. `asset-inventory.json` has the same row count as the markdown tables.
 
 ## A note on "outer app" (host / 外层应用)
 
