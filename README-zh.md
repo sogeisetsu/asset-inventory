@@ -4,11 +4,24 @@
 
 ## 这是什么
 
-OpenCode 环境膨胀得很快。几周后你就忘了自己装了什么、*从哪来的*、*什么时候该用*。这个 skill 按需产出一份可信的完整答案——而且从不瞎编。一次扫描就能把你机器上**真正能调用**的一切（不只是盘上的文件）映射成一张固定 7 表的百科、一份大白话"什么时候用"指南，和一份机器可读的 JSON。
+OpenCode 环境膨胀得很快。几周后你就忘了自己装了什么、*从哪来的*、*什么时候该用*。这个 skill 按需产出一份可信的完整答案——而且从不瞎编。一次扫描就能把你机器上**真正能调用**的一切（不只是盘上的文件）映射成三份文件：
+
+- **`inventory.md`** — 7 表清单：所有资产按固定 7 张表列全。
+- **`usage-guide.md`** — 大白话"什么时候用"指南：按场景/频率讲每样东西何时用、为什么用。
+- **`asset-inventory.json`** — 机器可读的 JSON：同一批数据的结构化形式，供程序处理/对比。
 
 ## 安装
 
-选**一种**范围：
+**第一步：把仓库弄到本地。** 二选一：
+
+```sh
+# 克隆（推荐）
+git clone https://github.com/sogeisetsu/asset-inventory.git
+```
+
+或者从 GitHub 页面 **Code → Download ZIP** 下载并解压。之后你会得到一个 `asset-inventory/` 文件夹。
+
+**第二步：选一种范围，在包含 `asset-inventory/` 文件夹的目录里运行对应命令**（`cd` 到 `asset-inventory` 的**上一级**目录再执行）：
 
 | 范围 | 什么时候选 | 目标位置 |
 |---|---|---|
@@ -57,11 +70,11 @@ cp -r asset-inventory .opencode/skills/
 
 每次运行都产出 **3 份文件**（同一次扫描派生，不重复收集）：
 
-- **`inventory.md`** — 7 表百科。
+- **`inventory.md`** — 7 表清单。
 - **`usage-guide.md`** — 使用指南：把同一批行按场景与频率重排（每天必用 / 干活主力 / 按需 / 周期性），讲"什么时候用、为什么用"。
 - **`asset-inventory.json`** — 机器可读行（主键：`table` + `name`），用于差异对比 / 迁移 / 上手。
 
-7 张表依次是：**1** 插件与配套软件 · **2** 各软件/插件带来的 Skill 与命令 · **3** 原生命令与原生 Skill · **4** 自定义 Skill、命令与外层应用注入命令 · **5** MCP · **6** Agent（含默认模型链） · **7** 外层应用能力。
+7 张表依次是：**1** 插件与配套软件 · **2** 各软件/插件带来的 Skill 与命令 · **3** 原生命令与原生 Skill · **4** 自定义 Skill、命令与外层应用注入命令 · **5** MCP · **6** Agent（含默认模型链） · **7** 外层应用能力。各表具体覆盖什么 → [看「7 张表」](#7-张表)
 
 | 命令 | 干什么 | 产物 |
 |---|---|---|
@@ -73,7 +86,7 @@ cp -r asset-inventory .opencode/skills/
 | `/asset-inventory diff` | 差异模式 | 只出按主键增减的项（请贴上次 JSON） |
 | `/asset-inventory usage` | 全量扫描，但只生成使用指南 | 仅 `usage-guide.md` |
 
-精扫（`mcp`、`agents`、`hosts`、`skills`）只写 `inventory.md`（限该表）+ 对应的 JSON 行，并跳过无关的证据收集步骤——但输出规则（语言、来源追溯、脱敏、写到 `output/`）照旧。
+精扫（`mcp`、`agents`、`hosts`、`skills`）只写 `inventory.md`（限该表）+ 对应的 JSON 行，并跳过无关的证据收集步骤。
 
 ## 用法
 
@@ -91,7 +104,7 @@ skill 会往**当前项目根目录**的 `output/` 写入产物，描述你机�
 ```
 当前项目根目录\
 └── output/
-    ├── inventory.md        # 7 表百科
+    ├── inventory.md        # 7 表清单
     ├── usage-guide.md      # 使用指南（每天必用 / 干活主力 / 按需 / 周期性）
     └── asset-inventory.json # 机器可读行（主键：table + name）
 ```

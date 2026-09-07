@@ -555,7 +555,7 @@
     </h1>
 
     <p class="hero-sub fade-up d2">
-      <span data-lang="zh">asset-inventory 全量盘点本机可调用的插件、Skill、命令、MCP、Agent 和宿主能力——每项标注来源追溯，30 秒看清全貌。</span>
+      <span data-lang="zh">asset-inventory 全量盘点本机可调用的插件、Skill、命令、MCP、Agent 和外层应用能力——每项标注来源追溯，30 秒看清全貌。</span>
       <span data-lang="en">asset-inventory inventories every plugin, skill, command, MCP server, agent, and host capability on this machine — with provenance for each item. See the full picture in 30 seconds.</span>
     </p>
 
@@ -592,9 +592,9 @@
     <div class="features-grid">
       <div class="feature-card fade-up">
         <div class="feature-icon">📊</div>
-        <h3 data-lang="zh">7 表百科</h3>
-        <h3 data-lang="en">7-Table Encyclopedia</h3>
-        <p data-lang="zh">插件配套、Skill 命令、原生能力、自定义 Skill、MCP、Agent、宿主——7 张表覆盖所有类别，每行回答"是什么、谁带来的、怎么用"。</p>
+        <h3 data-lang="zh">7 表清单</h3>
+        <h3 data-lang="en">7-Table Inventory</h3>
+        <p data-lang="zh">插件配套、Skill 命令、原生能力、自定义 Skill、MCP、Agent、外层应用——7 张表覆盖所有类别，每行回答"是什么、谁带来的、怎么用"。</p>
         <p data-lang="en">Plugins, skills, commands, custom skills, MCP servers, agents, and host capabilities — 7 tables covering every category. Each row answers: what, who brought it, how to use it.</p>
       </div>
 
@@ -602,7 +602,7 @@
         <div class="feature-icon">🔍</div>
         <h3 data-lang="zh">来源追溯</h3>
         <h3 data-lang="en">Source Provenance</h3>
-        <p data-lang="zh">每个资产标注来源：核心自带 / 插件带来 / 宿主注入 / 本地自建——附置信度标记（✅实测 / ✅文档 / ⚠️推断）。</p>
+        <p data-lang="zh">每个资产标注来源：核心自带 / 插件带来 / 外层应用注入 / 本地自建——附置信度标记（✅实测 / ✅文档 / ⚠️推断）。</p>
         <p data-lang="en">Every asset is tagged with its source: core built-in, plugin-provided, host-injected, or locally created — with confidence markers (✅verified / ✅documented / ⚠️inferred).</p>
       </div>
 
@@ -618,8 +618,8 @@
         <div class="feature-icon">📁</div>
         <h3 data-lang="zh">三份输出</h3>
         <h3 data-lang="en">Three Output Files</h3>
-        <p data-lang="zh">inventory.md（7 表百科）、usage-guide.md（按频率重组的使用指南）、asset-inventory.json（机器可读，供 diff/迁移）。</p>
-        <p data-lang="en">inventory.md (7-table encyclopedia), usage-guide.md (usage guide organized by frequency), asset-inventory.json (machine-readable, for diff/migration).</p>
+        <p data-lang="zh">inventory.md（7 表清单）、usage-guide.md（按频率重组的使用指南）、asset-inventory.json（机器可读，供 diff/迁移）。</p>
+        <p data-lang="en">inventory.md (7-table inventory), usage-guide.md (usage guide organized by frequency), asset-inventory.json (machine-readable, for diff/migration).</p>
       </div>
 
       <div class="feature-card fade-up d4">
@@ -640,9 +640,9 @@
 
       <div class="feature-card fade-up d4">
         <div class="feature-icon">🔬</div>
-        <h3 data-lang="zh">宿主应用感知</h3>
+        <h3 data-lang="zh">外层应用感知</h3>
         <h3 data-lang="en">Host-Aware Scanning</h3>
-        <p data-lang="zh">对宿主应用包做二进制安全扫描（如 OpenChamber 的 app.asar），抓出普通 grep 漏掉的宿主注入命令。</p>
+        <p data-lang="zh">对外层应用包做二进制安全扫描（如 OpenChamber 的 app.asar），抓出普通 grep 漏掉的外层应用注入命令。</p>
         <p data-lang="en">Binary-safe scan of the host app bundle (e.g. OpenChamber's app.asar) catches host-injected slash commands that plain grep misses.</p>
       </div>
     </div>
@@ -652,8 +652,8 @@
       <div class="output-card fade-up">
         <div class="file-icon">📘</div>
         <h4>inventory.md</h4>
-        <p data-lang="zh">7 张表的完整百科，人类可读</p>
-        <p data-lang="en">Full 7-table encyclopedia, human-readable</p>
+        <p data-lang="zh">7 张表的完整清单，人类可读</p>
+        <p data-lang="en">Full 7-table inventory, human-readable</p>
       </div>
       <div class="output-card fade-up d1">
         <div class="file-icon">📗</div>
@@ -681,7 +681,7 @@
     <h2 class="section-title" data-lang="en">What did I install? Who brought it? When should I use it?</h2>
 
     <div class="story">
-      <p data-lang="zh">OpenCode 环境膨胀得很快。几周下来，你装了十几个插件、好几套 Skill、一堆 MCP，还有宿主自带的各种能力。然后某天你突然想不起来：那个命令是哪个插件带的？那个 Agent 为什么禁用了？换台机器的话，我得装什么？</p>
+      <p data-lang="zh">OpenCode 环境膨胀得很快。几周下来，你装了十几个插件、好几套 Skill、一堆 MCP，还有外层应用自带的各种能力。然后某天你突然想不起来：那个命令是哪个插件带的？那个 Agent 为什么禁用了？换台机器的话，我得装什么？</p>
       <p data-lang="en">OpenCode environments grow fast. After a few weeks you've installed a dozen plugins, several skill sets, a bunch of MCP servers, and there are all those host-injected capabilities. Then one day you realize: which plugin brought that command? Why is that agent disabled? If I switch machines, what do I need to install?</p>
       <p data-lang="zh"><strong>asset-inventory</strong> 就是来回答这些问题的。它不是靠你手动填表，而是直接从机器上实际可调用的能力出发——读配置、扫缓存、查注册表、跑命令验证——给你一份可信的完整答案。</p>
       <p data-lang="en"><strong>asset-inventory</strong> exists to answer these questions. It doesn't ask you to fill in a form — it starts from what this machine can actually invoke: reads configs, scans caches, checks registries, runs commands to verify — and gives you a trustworthy, complete answer.</p>
@@ -805,7 +805,7 @@
       <span data-lang="en">MIT License</span>
       · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener"><span data-lang="zh">GitHub 仓库</span><span data-lang="en">GitHub repo</span></a>
     </p>
-    <p class="note" data-lang="zh">⚠️ 本 skill 仅在 OpenCode（含 OpenChamber 等宿主）环境中测试通过，其他环境不保证可用。</p>
+    <p class="note" data-lang="zh">⚠️ 本 skill 仅在 OpenCode（含 OpenChamber 等外层应用）环境中测试通过，其他环境不保证可用。</p>
     <p class="note" data-lang="en">⚠️ This skill has only been tested in OpenCode (including hosts like OpenChamber). Compatibility with other environments is not guaranteed.</p>
   </div>
 </footer>

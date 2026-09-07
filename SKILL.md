@@ -15,7 +15,7 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 
 Every run produces **three files** from the same evidence (no double collection):
 
-1. **`inventory.md`** — the encyclopedia: 7 tables (below), what each asset is.
+1. **`inventory.md`** — the 7-table inventory: 7 tables (below), what each asset is.
 2. **`usage-guide.md`** — the how-to-use guide: reorganizes the same inventory by **user scenarios and frequency**, in plain language, telling the user **when to reach for each command/skill and why**. Format reference: `references/usage-guide.md`. This is a second *view* of the same facts — never re-collect or invent new ones.
 3. **`asset-inventory.json`** — standalone machine-readable JSON, one element per row (PK: `table`+`name`). For diff / migration / onboarding.
 
@@ -132,7 +132,7 @@ No content after verification → **do not invent, do not omit**: output `表中
   missing. Not the skill's install location: the skill may live in a global config
   dir, but the output must always land in the user's project root so it ships with
   that project. Never write anywhere else:
-  - `output/inventory.md` — the 7-table encyclopedia below.
+  - `output/inventory.md` — the 7-table inventory below.
   - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
   - `output/asset-inventory.json` — standalone JSON, one element per row.
 - **Language follows the user**: every table header, cell value, state marker, and the usage guide must be written in the same language the user asked in (中文→中文, English→English, 日本語→日本語, Deutsch→Deutsch, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (表1-5/7 five columns, 表6 six), but the headers themselves (e.g. 名称/来源/怎么叫/何时用/干什么 → Name/Source/How to call/When/What it does), all cell content, state markers (e.g. `✅可用`→`✅available`, `❌已禁用`→`❌disabled`, `📦仅货架未装`→`📦shelf-only`, `🚫不存在`→`🚫absent`), and prose are translated into the user's language. When in doubt, ask or mirror the last user message.

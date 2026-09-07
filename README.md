@@ -4,11 +4,24 @@ Inventory your OpenCode setup in one shot — every plugin, skill, command, MCP 
 
 ## What this is
 
-OpenCode setups grow fast. Within weeks you forget what you installed, *where it came from*, and *when to reach for it*. This skill produces a single trustworthy answer on demand — and never guesses. One scan maps everything your machine can **actually invoke** (not just files on disk), into a fixed 7-table encyclopedia plus a plain-language "when to use" guide and a machine-readable JSON.
+OpenCode setups grow fast. Within weeks you forget what you installed, *where it came from*, and *when to reach for it*. This skill produces a single trustworthy answer on demand — and never guesses. One scan maps everything your machine can **actually invoke** (not just files on disk) into three files:
+
+- **`inventory.md`** — a fixed 7-table inventory: every asset listed across the 7 tables.
+- **`usage-guide.md`** — a plain-language "when to use" guide, by scenario & frequency.
+- **`asset-inventory.json`** — the same data as machine-readable JSON, for tooling and diffing.
 
 ## Install
 
-Choose **one** scope:
+**Step 1 — get the repository locally.** Either:
+
+```sh
+# Clone (recommended)
+git clone https://github.com/sogeisetsu/asset-inventory.git
+```
+
+or download **Code → Download ZIP** from the GitHub page and unzip it. You'll end up with an `asset-inventory/` folder.
+
+**Step 2 — pick** one **scope, then run the matching command from the directory that *contains* the `asset-inventory/` folder** (i.e. `cd` one level *above* `asset-inventory`, then execute):
 
 | Scope | When to choose | Target |
 |---|---|---|
@@ -55,11 +68,11 @@ Once installed, OpenCode automatically registers the skill as a slash command un
 
 Every run produces **three files**, all derived from the same scan (no double collection):
 
-- **`inventory.md`** — the 7-table encyclopedia.
+- **`inventory.md`** — the 7-table inventory.
 - **`usage-guide.md`** — a "when to use" guide that reorganizes the same rows by scenario & frequency (daily / workhorse / on-demand / periodic).
 - **`asset-inventory.json`** — machine-readable rows (PK: `table` + `name`), for diff / migration / onboarding.
 
-The 7 tables, in order: **1** Plugins & companion apps · **2** Skills & commands each brings · **3** Built-in commands & skills · **4** Custom skills, commands & outer-app-injected commands · **5** MCP · **6** Agents (with model chains) · **7** Outer-app capabilities.
+The 7 tables, in order: **1** Plugins & companion apps · **2** Skills & commands each brings · **3** Built-in commands & skills · **4** Custom skills, commands & outer-app-injected commands · **5** MCP · **6** Agents (with model chains) · **7** Outer-app capabilities. What each table covers → see [The 7 tables](#the-7-tables)
 
 | Command | What it does | Output |
 |---|---|---|
@@ -71,7 +84,7 @@ The 7 tables, in order: **1** Plugins & companion apps · **2** Skills & command
 | `/asset-inventory diff` | Diff mode | added/removed rows only (paste last JSON) |
 | `/asset-inventory usage` | Full scan, then only the usage guide | `usage-guide.md` only |
 
-A targeted run (`mcp`, `agents`, `hosts`, `skills`) writes `inventory.md` (limited to that table) plus the matching JSON rows, and skips the unrelated evidence-collection steps — but keeps the same output rules (language, provenance, masking, `output/` location).
+A targeted run (`mcp`, `agents`, `hosts`, `skills`) writes `inventory.md` (limited to that table) plus the matching JSON rows, and skips the unrelated evidence-collection steps.
 
 ## Usage
 
@@ -89,7 +102,7 @@ The skill writes its output into the **`output/` directory of the project being 
 ```
 your-project-root/
 └── output/
-    ├── inventory.md        # the 7-table encyclopedia
+    ├── inventory.md        # the 7-table inventory
     ├── usage-guide.md      # "when to use" guide (daily / workhorse / on-demand / periodic)
     └── asset-inventory.json # machine-readable rows (PK: table + name)
 ```
