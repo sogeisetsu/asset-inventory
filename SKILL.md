@@ -134,7 +134,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜�
 | `<插件名> 包 <src/skills/<name>>` | plugin-bundled skill |
 | `本地自建，整合/上游 <repo> <协议>` | user-created skill |
 | `全局配置 command/<name>.md` | user command |
-| `外层应用注入，外层应用 magicPrompts（app.asar）` | outer-app-injected command |
+| `外层应用注入，二进制扫描 <bundle> 发现` | outer-app-injected command |
 | `<MCP名>（远端MCP，<url>）` / `<MCP名>（本地MCP，<cmd>）` | MCP server |
 
 Suffix every source with confidence: `✅实测` / `✅文档` / `⚠️推断`. Append state:
@@ -165,8 +165,8 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
    - **`package.json:dependencies`** and the plugin's own dist/hooks referenced from `opencode.jsonc:plugin[]`.
    
    Use whichever sources exist on the host being inventoried; never assume a single fixed path.
-5. **外层应用注入**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the outer app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method.
-   > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The app.asar scan still works regardless.
+5. **外层应用注入**: `$HOST_CONFIG/` settings, and **binary-safe scan of the outer app bundle** for `/xxx` slash-command literals — plain grep misses binaries. The bundle may be `app.asar` (Electron), `web-dist`, or other formats depending on the outer app's tech stack. See `references/host-commands.md` for the scan method.
+   > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The bundle scan still works regardless.
 6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
 
 Path variables (common defaults — **verify against the actual host**):

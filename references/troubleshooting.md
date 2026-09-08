@@ -19,7 +19,7 @@
 ### 盘点结果不全
 
 1. 插件相关：检查 `$OPENCODE_CONFIG/opencode.jsonc` 的 `plugin[]` 配置
-2. 外层应用命令：需要对 `app.asar` 做二进制安全扫描（见 `references/host-commands.md`）
+2. 外层应用命令：需要对外层应用包做二进制安全扫描（见 `references/host-commands.md`）
 3. Agent：运行 `opencode agent list` 和 `opencode --pure agent list` 对比结果
 4. MCP：检查 `opencode.jsonc` 的 `mcp` 配置段
 

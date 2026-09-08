@@ -1,37 +1,78 @@
-# 外层应用注入命令扫描方法
+# 外层应用扫描方法
 
-## 如何发现（必做，普通 grep 会漏二进制）
+## 如何发现注入命令（必做，普通 grep 会漏二进制）
+
+外层应用可能通过多种方式注入斜杠命令。以下是常见的注入机制：
+
+| 机制 | 说明 | 扫描方法 |
+|---|---|---|
+| **应用包二进制扫描** | Electron 应用的 `app.asar`、Tauri 的 `web-dist`、或其他打包格式 | 二进制安全搜索 `/xxx` 字面量 |
+| **配置文件** | `settings.json`、`magicPrompts` 段、或其他配置键 | 读取并解析配置 |
+| **注册表/内部存储** | Electron DIPS/SQLite、系统注册表等 | 需要特定工具读取 |
+
+**通用原则：** 不要假设外层应用的格式。先确认它是什么（Electron？Tauri？原生？），再用对应方法扫描。
+
+## 应用包二进制扫描（Electron 类应用）
 
 用二进制安全搜索扫描外层应用包，找 `/xxx` 字面量：
 
 **Node.js:**
 ```js
-const b = require('fs').readFileSync('<外层应用包/app.asar 或 web-dist>');
-['/catch-up','/plan-feature','/craft-goal'].forEach(t =>
-  console.log(t, b.indexOf(Buffer.from(t)) >= 0 ? 'FOUND' : 'absent'));
+const b = require('fs').readFileSync('<外层应用包路径>');
+const commands = []; // 扫描到的命令列表
+// 扫描所有 /xxx 模式
+const text = b.toString('utf8');
+const matches = text.match(/\/[a-z][a-z0-9-]+/g);
+if (matches) {
+  const unique = [...new Set(matches)];
+  unique.forEach(cmd => console.log(cmd));
+}
 ```
 
 **PowerShell:**
 ```powershell
-$b = [IO.File]::ReadAllBytes('<外层应用包/app.asar>')
+$b = [IO.File]::ReadAllBytes('<外层应用包路径>')
 $text = [System.Text.Encoding]::UTF8.GetString($b)
-@('/catch-up','/plan-feature','/craft-goal') | ForEach-Object {
-    "$_ $(if($text.Contains($_)){'FOUND'}else{'absent'})"
+# 扫描所有 /xxx 模式
+$matches = [regex]::Matches($text, '/[a-z][a-z0-9-]+')
+$unique = $matches | ForEach-Object { $_.Value } | Sort-Object -Unique
+$unique | ForEach-Object { Write-Host $_ }
+```
+
+> **注意：** 上面的正则只是示例。实际扫描时应根据外层应用的具体格式调整。关键是**不要预设任何命令列表**——以现扫结果为准。
+
+## 配置文件扫描
+
+如果外层应用有配置文件（如 `settings.json`），检查其中是否有命令注册相关的键：
+
+```powershell
+$configPath = "$env:USERPROFILE\.config\<外层应用名>\settings.json"
+if (Test-Path $configPath) {
+    $config = Get-Content $configPath -Raw | ConvertFrom-Json
+    # 检查是否有 magicPrompts、commands、slashCommands 等键
+    $config.PSObject.Properties | Where-Object { 
+        $_.Name -match 'prompt|command|slash|magic' 
+    } | ForEach-Object {
+        Write-Host "$($_.Name): $($_.Value)"
+    }
 }
 ```
 
-> **注意：** 上面的命令列表只是示例，不是完整清单。盘点时应扫描**全量** `/xxx` 字面量，以现扫结果为准。
+## 盘点要求
 
-## 非斜杠 magicPrompts key
+1. **不要预设任何命令列表** — 每次盘点必须现扫，以扫描结果为准
+2. **不要假设外层应用的格式** — 先确认是什么技术栈，再用对应方法
+3. **不要假设配置键名** — `magicPrompts` 只是 OpenChamber 的键名，其他外层应用可能用不同的键
+4. **来源一律写** `外层应用注入，<具体发现方式>（<路径>）`
+5. **找不到就说找不到** — 不编造、不推测
 
-`settings.magicPrompts` 段还包含多组**非斜杠** key，盘点时不可遗漏：
+## 常见外层应用（仅供参考）
 
-| 组 | 示例 key | 说明 |
+| 应用 | 技术栈 | 可能的扫描目标 |
 |---|---|---|
-| git | `gitCommitGenerate`, `gitPrGenerate`, `gitConflictResolve` | git 提交/PR/冲突 |
-| github | `githubPrReview`, `githubIssueReview`, `githubPrChecksReview` | GitHub PR/Issue/检查审查 |
-| linear | `linearIssueReview` | Linear Issue 审查 |
-| planning | `planTodo`, `planImprove`, `planImplement` | 任务规划与实施 |
-| session | `sessionExplore`, `sessionSummary`, `sessionReview` | 会话级操作 |
+| OpenChamber | Electron | `app.asar`、`~/.config/openchamber/settings.json` |
+| 其他 Electron 应用 | Electron | 应用安装目录下的 `app.asar` 或 `resources/` |
+| Tauri 应用 | Tauri | `web-dist/`、`src-tauri/` 配置 |
+| 原生应用 | 各异 | 安装目录、配置目录、系统注册表 |
 
-**盘点要求**：对外层应用包做二进制安全扫描时，应提取 `settings.magicPrompts` 段的**全量 key**（用 `Object.keys()` 或正则提取），不只限于预设的斜杠命令。每个 key 对应一项外层应用注入命令/能力，来源一律写 `外层应用注入，外层应用 magicPrompts（app.asar）`。**以现扫结果为准。**
+> 以上仅为参考，实际盘点时以现查为准。
