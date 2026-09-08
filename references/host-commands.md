@@ -12,7 +12,7 @@ OpenChamber 把外层应用注入的 `/` 命令定义在外层应用本体 `app.
 ```js
 const b = require('fs').readFileSync('<外层应用包/app.asar 或 web-dist>');
 ['/catch-up','/plan-feature','/craft-goal','/workspace-review','/weigh',
- '/debug','/summary','/explore','/todo','/implement'].forEach(t =>
+ '/debug','/summary','/explore','/todo'].forEach(t =>
   console.log(t, b.indexOf(Buffer.from(t)) >= 0 ? 'FOUND' : 'absent'));
 ```
 
@@ -21,7 +21,7 @@ const b = require('fs').readFileSync('<外层应用包/app.asar 或 web-dist>');
 $b = [IO.File]::ReadAllBytes('<外层应用包/app.asar>')
 $text = [System.Text.Encoding]::UTF8.GetString($b)
 @('/catch-up','/plan-feature','/craft-goal','/workspace-review','/weigh',
-  '/debug','/summary','/explore','/todo','/implement') | ForEach-Object {
+  '/debug','/summary','/explore','/todo') | ForEach-Object {
     "$_ $(if($text.Contains($_)){'FOUND'}else{'absent'})"
 }
 ```
@@ -38,9 +38,11 @@ $text = [System.Text.Encoding]::UTF8.GetString($b)
 | /debug | 引导式根因分析再修，禁止盲目试错 |
 | /summary | 非破坏性会话摘要（不压缩历史），供交接 |
 | /explore | 结构化仓库导览：总览、主模块、模块关系、从哪开始读 |
-| /fusion | 把多个运行结果按序合并成一份最终答案 |
 | /todo | 拆任务清单（planning 组） |
-| /implement | 把已定方案落地实现（planning 组） |
+
+> **已移除的命令（旧版本存在，当前版本已删除）：**
+> - `/implement` — 旧版本 planning 组命令，当前版本已移除
+> - `/fusion` — 旧版本合并命令，当前版本已移除
 
 另有 git/github/linear 组 magicPrompts 键（如 `gitCommitGenerate`、`githubPrReview`、`linearIssueReview`），按实际发现补充；`settings.magicPrompts` 键名即命令语义来源。
 
