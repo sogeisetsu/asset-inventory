@@ -167,7 +167,7 @@ asset-inventory/
 ├── CONTRIBUTING.md             # 贡献指南
 ├── references/
 │   ├── format-example.md       # 7 表单元格格式参考
-│   ├── host-commands.md        # 外层应用命令扫描方法 + 清单
+│   ├── host-commands.md        # 外层应用命令扫描方法
 │   └── usage-guide.md          # 使用指南格式参考
 └── examples/
     └── inventory-example.md    # 脱敏输出示例

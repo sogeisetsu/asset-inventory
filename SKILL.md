@@ -165,7 +165,7 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
    - **`package.json:dependencies`** and the plugin's own dist/hooks referenced from `opencode.jsonc:plugin[]`.
    
    Use whichever sources exist on the host being inventoried; never assume a single fixed path.
-5. **外层应用注入**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the outer app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method and the confirmed command list.
+5. **外层应用注入**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the outer app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method.
    > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The app.asar scan still works regardless.
 6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
 

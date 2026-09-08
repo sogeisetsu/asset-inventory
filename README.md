@@ -165,7 +165,7 @@ asset-inventory/
 ├── CONTRIBUTING.md             # contribution guidelines
 ├── references/
 │   ├── format-example.md       # 7-table cell format reference
-│   ├── host-commands.md        # outer-app command scan method + list
+│   ├── host-commands.md        # outer-app command scan method
 │   └── usage-guide.md          # usage-guide format reference
 └── examples/
     └── inventory-example.md    # desensitized output example
