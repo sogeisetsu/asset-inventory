@@ -21,10 +21,8 @@
      ═══════════════════════════════════════════════ */
   :root {
     color-scheme: light;
-    --bg: #f0f2f5;
-    --bg-card: rgba(255,255,255,.62);
+    --bg: #e8ecf4;
     --bg-card-solid: #ffffff;
-    --bg-card-hover: rgba(255,255,255,.78);
     --border: rgba(0,0,0,.08);
     --border-accent: #4f6bcc;
     --text: #1a1d2e;
@@ -33,9 +31,9 @@
     --accent2: #8b5cf6;
     --accent3: #059669;
     --accent4: #db2777;
-    --gradient-hero: linear-gradient(135deg, #dbe3fc 0%, #d4ddf8 35%, #e4e9fc 65%, #dfe4f7 100%);
-    --hero-blob1: rgba(79,107,203,.18);
-    --hero-blob2: rgba(139,92,246,.14);
+    --gradient-hero: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 40%, #e0e7ff 100%);
+    --hero-blob1: rgba(79,107,203,.3);
+    --hero-blob2: rgba(139,92,246,.25);
     --gradient-accent: linear-gradient(135deg, #4f6bcc, #8b5cf6);
     --radius: 12px;
     --radius-sm: 8px;
@@ -44,25 +42,26 @@
     --font-body: system-ui, -apple-system, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
     --font-mono: "Cascadia Code", "Fira Code", "JetBrains Mono", "SF Mono", Consolas, monospace;
     --max-w: 1080px;
-    /* 玻璃变量 */
-    --glass-bg: rgba(255,255,255,.48);
-    --glass-border: rgba(255,255,255,.72);
-    --glass-shadow: 0 8px 32px rgba(0,0,0,.07), inset 0 1px 0 rgba(255,255,255,.85);
-    --glass-code-bg: rgba(0,0,0,.04);
-    --glass-sweep: rgba(255,255,255,.6);
-    /* body 渐变光斑（浅色下需要更强才可见） */
-    --body-bg: radial-gradient(ellipse 70% 55% at 15% 8%, rgba(79,107,203,.28) 0%, transparent 65%),
-               radial-gradient(ellipse 55% 45% at 85% 75%, rgba(139,92,246,.22) 0%, transparent 60%),
-               radial-gradient(ellipse 45% 35% at 50% 45%, rgba(16,185,129,.14) 0%, transparent 55%),
-               radial-gradient(ellipse 40% 30% at 65% 20%, rgba(236,72,153,.10) 0%, transparent 50%),
-               #e8ecf4;
+    /* ─── 玻璃变量（浅色） ─── */
+    --glass-bg: rgba(255,255,255,.28);
+    --glass-border: rgba(255,255,255,.55);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.06), inset 0 1px 0 rgba(255,255,255,.9);
+    --glass-code-bg: rgba(255,255,255,.55);
+    --glass-sweep: rgba(255,255,255,.55);
+    /* ─── body 渐变光斑（大块、饱和、鲜艳——苹果玻璃的"壁纸"） ─── */
+    --body-bg:
+      radial-gradient(ellipse 80% 70% at 5%  5%,  rgba(56,152,255,.38) 0%, transparent 55%),
+      radial-gradient(ellipse 65% 55% at 90% 15%, rgba(192,132,252,.35) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 60% at 80% 85%, rgba(52,211,153,.18) 0%, transparent 40%),
+      radial-gradient(ellipse 55% 50% at 15% 90%, rgba(251,113,133,.16) 0%, transparent 40%),
+      radial-gradient(ellipse 60% 45% at 50% 50%, rgba(96,165,250,.22) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 35% 30%, rgba(251,191,36,.16) 0%, transparent 45%),
+      #e8ecf4;
   }
   [data-theme="dark"] {
     color-scheme: dark;
-    --bg: #0c0e14;
-    --bg-card: rgba(255,255,255,.06);
+    --bg: #0a0a12;
     --bg-card-solid: #151822;
-    --bg-card-hover: rgba(255,255,255,.10);
     --border: rgba(255,255,255,.08);
     --border-accent: #2a5cff;
     --text: #e4e6ed;
@@ -72,20 +71,25 @@
     --accent3: #34d399;
     --accent4: #f472b6;
     --gradient-hero: linear-gradient(135deg, #0c0e14 0%, #111628 40%, #0e1225 100%);
-    --hero-blob1: rgba(79,140,255,.12);
-    --hero-blob2: rgba(167,139,250,.08);
+    --hero-blob1: rgba(79,140,255,.2);
+    --hero-blob2: rgba(167,139,250,.15);
     --gradient-accent: linear-gradient(135deg, #4f8cff, #a78bfa);
     --shadow-card: 0 2px 16px rgba(0,0,0,.35);
     --shadow-glow: 0 0 40px rgba(79,140,255,.12);
-    --glass-bg: rgba(255,255,255,.06);
-    --glass-border: rgba(255,255,255,.12);
-    --glass-shadow: 0 30px 60px -20px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.1);
-    --glass-code-bg: rgba(0,0,0,.3);
-    --glass-sweep: rgba(255,255,255,.08);
-    --body-bg: radial-gradient(ellipse 80% 60% at 20% 10%, rgba(79,140,255,.08) 0%, transparent 60%),
-               radial-gradient(ellipse 60% 50% at 80% 80%, rgba(167,139,250,.06) 0%, transparent 60%),
-               radial-gradient(ellipse 50% 40% at 50% 50%, rgba(52,211,153,.04) 0%, transparent 60%),
-               #0c0e14;
+    /* ─── 玻璃变量（深色） ─── */
+    --glass-bg: rgba(255,255,255,.08);
+    --glass-border: rgba(255,255,255,.14);
+    --glass-shadow: 0 30px 60px -20px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.12);
+    --glass-code-bg: rgba(0,0,0,.35);
+    --glass-sweep: rgba(255,255,255,.10);
+    /* ─── body 渐变光斑（深色下要高饱和大色块） ─── */
+    --body-bg:
+      radial-gradient(ellipse 80% 65% at 10% 10%, rgba(56,152,255,.40) 0%, transparent 55%),
+      radial-gradient(ellipse 65% 55% at 85% 20%, rgba(192,132,252,.35) 0%, transparent 50%),
+      radial-gradient(ellipse 70% 60% at 80% 80%, rgba(52,211,153,.18) 0%, transparent 40%),
+      radial-gradient(ellipse 55% 50% at 15% 85%, rgba(251,113,133,.15) 0%, transparent 40%),
+      radial-gradient(ellipse 60% 45% at 50% 50%, rgba(79,140,255,.18) 0%, transparent 50%),
+      #0a0a12;
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -104,8 +108,8 @@
   /* ─── 玻璃拟态基础 ─── */
   .glass {
     background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
     border-radius: 20px;
@@ -113,23 +117,57 @@
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .glass { background: var(--bg-card-solid); }
   }
-  /* hover 高光扫过 */
+  /* ─── hover 扫光 + 顶部渐变条（合并到 ::before） ─── */
   .glass--sweep { position: relative; overflow: hidden; }
+  .glass--sweep::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 5%, var(--gradient-accent) 50%, transparent 95%);
+    opacity: 0;
+    transition: opacity .3s;
+    z-index: 2;
+  }
+  .glass--sweep:hover::before { opacity: 1; }
+  /* ─── 鼠标跟随高光（::after） ─── */
   .glass--sweep::after {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -60%;
-    width: 40%;
-    height: 200%;
-    background: linear-gradient(105deg, transparent, var(--glass-sweep), transparent);
-    transform: skewX(-20deg);
-    transition: left .5s cubic-bezier(.4,0,.2,1);
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity .3s ease;
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255,255,255,.14) 0%, rgba(255,255,255,.05) 30%, transparent 70%);
+    mix-blend-mode: screen;
     pointer-events: none;
-    z-index: 0;
+    z-index: 3;
   }
-  .glass--sweep:hover::after {
-    left: 120%;
+  .glass--sweep:hover::after { opacity: 1; }
+  /* ─── 点击光效 ─── */
+  .glass--sweep:active::after {
+    opacity: 1;
+    background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255,255,255,.22) 0%, rgba(255,255,255,.08) 40%, transparent 78%);
+    transition: opacity .08s ease-out;
+  }
+  .glass--sweep:active {
+    transform: scale(.985);
+    transition: transform .08s ease;
+  }
+  .feature-card:active {
+    transform: translateY(-3px) scale(.985);
+  }
+  /* ─── 触屏/减少动画：禁用光效 ─── */
+  @media (hover: none), (pointer: coarse) {
+    .glass--sweep::after { display: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .glass--sweep::after { display: none !important; }
+    .glass--sweep:hover::after { opacity: 0; }
+    .glass--sweep:active { transform: none; }
+    .feature-card:active { transform: none; }
   }
 
   /* ─── 控件容器（右上角） ─── */
@@ -147,12 +185,12 @@
   .segmented {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border: 1px solid var(--border);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
     padding: 3px;
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     position: relative;
     margin: 0;
     list-style: none;
@@ -191,10 +229,10 @@
     width: 36px;
     height: 36px;
     border-radius: 20px;
-    border: 1px solid var(--border);
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     color: var(--text);
     font-size: 16px;
     cursor: pointer;
@@ -275,8 +313,8 @@
   /* ─── Install Block ─── */
   .install-block {
     background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 0;
@@ -381,8 +419,8 @@
   }
   .feature-card {
     background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 24px;
@@ -394,33 +432,10 @@
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .feature-card { background: var(--bg-card-solid); }
   }
-  .feature-card::before {
-    content: "";
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: var(--gradient-accent);
-    opacity: 0;
-    transition: opacity .3s;
-    z-index: 1;
-  }
   .feature-card:hover {
     border-color: rgba(79,140,255,.35);
     transform: translateY(-3px);
   }
-  .feature-card:hover::before { opacity: 1; }
-  /* hover 扫光 */
-  .feature-card::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -60%;
-    width: 40%; height: 200%;
-    background: linear-gradient(105deg, transparent, var(--glass-sweep), transparent);
-    transform: skewX(-20deg);
-    transition: left .5s cubic-bezier(.4,0,.2,1);
-    pointer-events: none;
-  }
-  .feature-card:hover::after { left: 120%; }
 
   .feature-icon {
     width: 44px; height: 44px;
@@ -433,28 +448,28 @@
     background: rgba(79,140,255,.08);
     border: 1px solid rgba(79,140,255,.15);
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .feature-card h3 {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 8px;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .feature-card p {
     font-size: 14px;
     color: var(--text-dim);
     line-height: 1.65;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
 
   /* ─── Story Block ─── */
   .story {
     background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 40px 36px;
@@ -479,7 +494,7 @@
     line-height: 1.8;
     color: var(--text-dim);
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .story p + p { margin-top: 14px; }
   .story strong { color: var(--text); }
@@ -492,8 +507,8 @@
   }
   .usecase-item {
     background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-sm);
     padding: 20px 22px;
@@ -511,39 +526,27 @@
   .usecase-item:hover {
     border-color: rgba(79,140,255,.3);
   }
-  /* hover 扫光 */
-  .usecase-item::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -60%;
-    width: 40%; height: 200%;
-    background: linear-gradient(105deg, transparent, var(--glass-sweep), transparent);
-    transform: skewX(-20deg);
-    transition: left .5s cubic-bezier(.4,0,.2,1);
-    pointer-events: none;
-  }
-  .usecase-item:hover::after { left: 120%; }
   .usecase-icon {
     font-size: 26px;
     line-height: 1;
     flex-shrink: 0;
     margin-top: 2px;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .usecase-item h4 {
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 4px;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .usecase-item p {
     font-size: 13.5px;
     color: var(--text-dim);
     line-height: 1.6;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
 
   /* ─── Install Guide ─── */
@@ -555,8 +558,8 @@
   }
   .install-method {
     background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     padding: 28px 24px;
@@ -575,7 +578,7 @@
     align-items: center;
     gap: 8px;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .install-method .tag {
     font-size: 11px;
@@ -591,7 +594,7 @@
     margin-bottom: 14px;
     line-height: 1.6;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .cmd-block {
     background: var(--glass-code-bg);
@@ -606,7 +609,7 @@
     white-space: pre;
     margin-bottom: 8px;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .cmd-label {
     font-size: 11px;
@@ -614,7 +617,7 @@
     margin-bottom: 4px;
     font-weight: 500;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
 
   /* ─── Output Preview ─── */
@@ -629,8 +632,8 @@
   }
   .output-card {
     background: var(--glass-bg);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(36px) saturate(200%);
+    backdrop-filter: blur(36px) saturate(200%);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-sm);
     padding: 22px 20px;
@@ -644,23 +647,11 @@
     .output-card { background: var(--bg-card-solid); }
   }
   .output-card:hover { border-color: rgba(79,140,255,.3); }
-  /* hover 扫光 */
-  .output-card::after {
-    content: '';
-    position: absolute;
-    top: -50%; left: -60%;
-    width: 40%; height: 200%;
-    background: linear-gradient(105deg, transparent, var(--glass-sweep), transparent);
-    transform: skewX(-20deg);
-    transition: left .5s cubic-bezier(.4,0,.2,1);
-    pointer-events: none;
-  }
-  .output-card:hover::after { left: 120%; }
   .output-card .file-icon {
     font-size: 28px;
     margin-bottom: 10px;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .output-card h4 {
     font-family: var(--font-mono);
@@ -669,14 +660,14 @@
     color: var(--accent);
     margin-bottom: 6px;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
   .output-card p {
     font-size: 13px;
     color: var(--text-dim);
     line-height: 1.55;
     position: relative;
-    z-index: 1;
+    z-index: 5;
   }
 
   /* ─── Footer ─── */
@@ -1044,9 +1035,11 @@
         <p data-lang="zh">装到当前项目内，跟着项目走，适合团队共享或临时使用。把 <code>&lt;项目根目录&gt;</code> 换成你的项目路径。</p>
         <p data-lang="en">Install inside the current project — travels with the repo, good for team sharing or temporary use. Replace <code>&lt;project-root&gt;</code> with your project path.</p>
         <div class="cmd-label">macOS / Linux</div>
-        <div class="cmd-block">mkdir -p &lt;项目根目录&gt;/.opencode/skills/asset-inventory<br>cp -r SKILL.md references examples &lt;项目根目录&gt;/.opencode/skills/asset-inventory/</div>
+        <div class="cmd-block" data-lang="zh">mkdir -p &lt;项目根目录&gt;/.opencode/skills/asset-inventory<br>cp -r SKILL.md references examples &lt;项目根目录&gt;/.opencode/skills/asset-inventory/</div>
+        <div class="cmd-block" data-lang="en">mkdir -p &lt;project-root&gt;/.opencode/skills/asset-inventory<br>cp -r SKILL.md references examples &lt;project-root&gt;/.opencode/skills/asset-inventory/</div>
         <div class="cmd-label">Windows (PowerShell)</div>
-        <div class="cmd-block">New-Item -ItemType Directory -Force -Path "&lt;项目根目录&gt;\.opencode\skills\asset-inventory"<br>Copy-Item -Recurse SKILL.md, references, examples -Destination "&lt;项目根目录&gt;\.opencode\skills\asset-inventory\"</div>
+        <div class="cmd-block" data-lang="zh">New-Item -ItemType Directory -Force -Path "&lt;项目根目录&gt;\.opencode\skills\asset-inventory"<br>Copy-Item -Recurse SKILL.md, references, examples -Destination "&lt;项目根目录&gt;\.opencode\skills\asset-inventory\"</div>
+        <div class="cmd-block" data-lang="en">New-Item -ItemType Directory -Force -Path "&lt;project-root&gt;\.opencode\skills\asset-inventory"<br>Copy-Item -Recurse SKILL.md, references, examples -Destination "&lt;project-root&gt;\.opencode\skills\asset-inventory\"</div>
       </div>
     </div>
   </div>
@@ -1186,6 +1179,25 @@ document.querySelectorAll('.fade-up').forEach(function(el) {
 document.querySelectorAll('.hero .fade-up').forEach(function(el) {
   el.style.animationPlayState = 'running';
 });
+
+// ─── 鼠标跟随高光（Liquid Glass） ───
+// 触屏设备跳过
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('.glass--sweep').forEach(function(card) {
+    var ticking = false;
+    card.addEventListener('mousemove', function(e) {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          var rect = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  });
+}
 </script>
 </body>
 </html>

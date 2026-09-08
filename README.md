@@ -131,9 +131,9 @@ Every row says exactly **where the asset came from** — built into OpenCode, br
 
 `inventory.md`, `usage-guide.md`, and `asset-inventory.json` are all derived from the **same scan** — no double collection. The usage guide reorganizes the same rows by scenario and frequency ("when and why to reach for each"), never re-collecting or inventing facts.
 
-## A note on "outer app" (host / 外层应用)
+## A note on "outer app" (host)
 
-Some tables and sources refer to an **outer app** — the desktop program that wraps the OpenCode engine and injects extra commands and capabilities (for example **OpenChamber**). In English this is sometimes called the **host**. In the Chinese docs and table sources we use **外层应用** rather than the bare word 宿主, because 宿主 ("host") doesn't tell a reader what it is. Whenever you see 外层应用, read it as: *the desktop app sitting around OpenCode that adds its own slash commands and features*.
+Some tables and sources refer to an **outer app** — the desktop program that wraps the OpenCode engine and injects extra commands and capabilities (for example **OpenChamber**). In English this is sometimes called the **host**. Whenever you see it, read it as: *the desktop app sitting around OpenCode that adds its own slash commands and features*.
 
 ## Repository layout
 
