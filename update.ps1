@@ -76,6 +76,12 @@ if ($Target) {
 
 Write-Host "`n> Updating: $installDir" -ForegroundColor Cyan
 
+# --- ensure target directory exists ---
+if (-not (Test-Path $installDir)) {
+  Write-Host "  Creating target directory: $installDir" -ForegroundColor DarkGray
+  New-Item -ItemType Directory -Force -Path $installDir | Out-Null
+}
+
 # --- read old version ---
 $oldVersion = ""
 $oldSkill = Join-Path $installDir "SKILL.md"

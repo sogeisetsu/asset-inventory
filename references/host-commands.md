@@ -6,13 +6,24 @@ OpenChamber 把外层应用注入的 `/` 命令定义在外层应用本体 `app.
 
 ## 如何发现（必做，普通 grep 会漏二进制）
 
-用二进制安全搜索扫描外层应用包（node `Buffer.indexOf`），找 `/xxx` 字面量：
+用二进制安全搜索扫描外层应用包，找 `/xxx` 字面量：
 
+**Node.js:**
 ```js
 const b = require('fs').readFileSync('<外层应用包/app.asar 或 web-dist>');
 ['/catch-up','/plan-feature','/craft-goal','/workspace-review','/weigh',
  '/debug','/summary','/explore','/todo','/implement'].forEach(t =>
   console.log(t, b.indexOf(Buffer.from(t)) >= 0 ? 'FOUND' : 'absent'));
+```
+
+**PowerShell:**
+```powershell
+$b = [IO.File]::ReadAllBytes('<外层应用包/app.asar>')
+$text = [System.Text.Encoding]::UTF8.GetString($b)
+@('/catch-up','/plan-feature','/craft-goal','/workspace-review','/weigh',
+  '/debug','/summary','/explore','/todo','/implement') | ForEach-Object {
+    "$_ $(if($text.Contains($_)){'FOUND'}else{'absent'})"
+}
 ```
 
 ## 已确认的命令（2026-09 实测，按需现查复核）
