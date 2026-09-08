@@ -60,6 +60,24 @@ Copy-Item -Recurse SKILL.md, references, examples -Destination "<项目根目录
 请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <https://github.com/sogeisetsu/asset-inventory>。先问我装到全局还是只装进当前项目。然后克隆或下载该仓库，只复制运行所需的文件——SKILL.md、references/、examples/——到选定的目标位置：全局就装到 ~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\），项目级就装到当前项目内的 .opencode/skills/（没有就创建）。不要复制 README 文件。确认最终路径是 <目标位置>/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。
 ```
 
+## 更新
+
+已安装过？拉最新版并覆盖：
+
+```sh
+cd asset-inventory && pwsh ./update.ps1
+```
+
+脚本自动检测安装位置（全局 `~/.config/opencode/skills/asset-inventory/` 或项目级目录），执行 `git pull`，然后覆盖三个运行时文件。会报告更新前后的版本号，确认更新成功。
+
+**项目级**安装需要显式指定目标：
+
+```sh
+pwsh ./update.ps1 -Target /path/to/your-project/.opencode/skills/asset-inventory
+```
+
+也可以重新跑一遍[安装](#安装)命令——覆盖安装是幂等的。
+
 ## 快速上手
 
 装好 skill（选一种范围），直接调用，无需任何配置：
@@ -141,9 +159,10 @@ skill 会往**当前项目根目录**的 `output/` 写入产物，描述你机�
 
 ```
 asset-inventory/
-├── SKILL.md                    # skill 本体（执行骨架 + 规则）
-├── README-zh.md                # 中文说明（本文件）
-├── README.md                   # 英文说明
+├── SKILL.md                    # skill 主体（规则与流程）
+├── update.ps1                  # 一键更新脚本
+├── README.md                   # 英文文档
+├── README-zh.md                # 中文文档（本文件）
 ├── references/
 │   ├── format-example.md       # 7 表单元格格式参考
 │   ├── host-commands.md        # 外层应用命令扫描方法 + 清单

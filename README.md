@@ -58,6 +58,24 @@ Paste this prompt into an AI coding assistant and let it install for you:
 Install the "asset-inventory" OpenCode skill from <https://github.com/sogeisetsu/asset-inventory>. First ask me whether to install it globally or into the current project only. Then clone or download the repository and copy only the runtime files — SKILL.md, references/, examples/ — into the chosen target: global skills directory ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\) for global, or .opencode/skills/ inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that SKILL.md ends up at <target>/asset-inventory/SKILL.md. Do not modify any skill file during installation. Report the final path.
 ```
 
+## Updating
+
+Already installed? Pull the latest and overwrite:
+
+```sh
+cd asset-inventory && pwsh ./update.ps1
+```
+
+The script auto-detects where your install lives (global `~/.config/opencode/skills/asset-inventory/` or a project-scoped directory), does `git pull`, and copies over the three runtime files. It reports the before/after version so you can confirm the update took effect.
+
+For a **project-scoped** install, pass the target explicitly:
+
+```sh
+pwsh ./update.ps1 -Target /path/to/your-project/.opencode/skills/asset-inventory
+```
+
+Or re-run the one-liner from [Install](#install) — it's idempotent.
+
 ## Quick start
 
 Install the skill (one scope), then invoke it. No configuration needed.
@@ -140,6 +158,7 @@ Some tables and sources refer to an **outer app** — the desktop program that w
 ```
 asset-inventory/
 ├── SKILL.md                    # the skill (execution skeleton + rules)
+├── update.ps1                  # one-command update script
 ├── README.md                   # English documentation (this file)
 ├── README-zh.md                # Chinese documentation
 ├── references/
