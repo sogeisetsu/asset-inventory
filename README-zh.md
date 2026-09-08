@@ -168,6 +168,7 @@ asset-inventory/
 ├── references/
 │   ├── format-example.md       # 7 表单元格格式参考
 │   ├── host-commands.md        # 外层应用命令扫描方法
+│   ├── troubleshooting.md      # 常见问题与解决方案
 │   └── usage-guide.md          # 使用指南格式参考
 └── examples/
     └── inventory-example.md    # 脱敏输出示例

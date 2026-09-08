@@ -166,6 +166,7 @@ asset-inventory/
 ├── references/
 │   ├── format-example.md       # 7-table cell format reference
 │   ├── host-commands.md        # outer-app command scan method
+│   ├── troubleshooting.md      # common issues and solutions
 │   └── usage-guide.md          # usage-guide format reference
 └── examples/
     └── inventory-example.md    # desensitized output example
