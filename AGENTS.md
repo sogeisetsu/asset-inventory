@@ -25,8 +25,9 @@ An OpenCode skill (`asset-inventory`) that inventories plugins, skills, commands
 
 1. Edit `SKILL.md` for rule/behavior changes
 2. Edit `references/` for format/method documentation
-3. Run `pwsh ./update.ps1` to deploy to install location
-4. Version lives in SKILL.md frontmatter (`version: x.y.z`)
+3. Update `CHANGELOG.md` — add entry under `[1.3.0] - Unreleased` (or bump version if releasing)
+4. Run `pwsh ./update.ps1` to deploy to install location
+5. Version lives in SKILL.md frontmatter (`version: x.y.z`), CHANGELOG must match
 
 ## Gotchas
 
