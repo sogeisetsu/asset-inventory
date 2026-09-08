@@ -1,8 +1,4 @@
-# 外层应用注入命令（magicPrompts，app.asar 实测）
-
-> **注意：下表为 2026-09 快照，仅供参考。盘点时必须对外层应用包现扫全量 `magicPrompts` key（含 git / github / linear / planning / session 各组），以现扫结果为准。** 快照列出的命令可能因外层应用版本变化而增减。
-
-OpenChamber 把外层应用注入的 `/` 命令定义在外层应用本体 `app.asar` 的 `settings.magicPrompts` 段。这些命令**不是** opencode 配置、`command/` 目录或插件带来的，来源一律写 `外层应用注入，外层应用 magicPrompts（app.asar）`。
+# 外层应用注入命令扫描方法
 
 ## 如何发现（必做，普通 grep 会漏二进制）
 
@@ -11,8 +7,7 @@ OpenChamber 把外层应用注入的 `/` 命令定义在外层应用本体 `app.
 **Node.js:**
 ```js
 const b = require('fs').readFileSync('<外层应用包/app.asar 或 web-dist>');
-['/catch-up','/plan-feature','/craft-goal','/workspace-review','/weigh',
- '/debug','/summary','/explore','/todo'].forEach(t =>
+['/catch-up','/plan-feature','/craft-goal'].forEach(t =>
   console.log(t, b.indexOf(Buffer.from(t)) >= 0 ? 'FOUND' : 'absent'));
 ```
 
@@ -20,42 +15,23 @@ const b = require('fs').readFileSync('<外层应用包/app.asar 或 web-dist>');
 ```powershell
 $b = [IO.File]::ReadAllBytes('<外层应用包/app.asar>')
 $text = [System.Text.Encoding]::UTF8.GetString($b)
-@('/catch-up','/plan-feature','/craft-goal','/workspace-review','/weigh',
-  '/debug','/summary','/explore','/todo') | ForEach-Object {
+@('/catch-up','/plan-feature','/craft-goal') | ForEach-Object {
     "$_ $(if($text.Contains($_)){'FOUND'}else{'absent'})"
 }
 ```
 
-## 已确认的命令（2026-09 实测，按需现查复核）
+> **注意：** 上面的命令列表只是示例，不是完整清单。盘点时应扫描**全量** `/xxx` 字面量，以现扫结果为准。
 
-| 命令 | 用途 |
-|---|---|
-| /catch-up | branch-aware 上下文：当前分支提交 + PR 状态 + 未提交改动 → 可扫读总结 + 下一步建议 |
-| /plan-feature | 引导式：先探索代码库，分批澄清需求，再出实现计划；不直接写码 |
-| /craft-goal | 把模糊想法/任务引导成清晰、可验证的 Goal |
-| /workspace-review | 审查工作区 diff 是否达标、正确、合理，按严重度分类 |
-| /weigh | 查代码后给 2-3 个方案 + 取舍 + 推荐，不写计划不写码 |
-| /debug | 引导式根因分析再修，禁止盲目试错 |
-| /summary | 非破坏性会话摘要（不压缩历史），供交接 |
-| /explore | 结构化仓库导览：总览、主模块、模块关系、从哪开始读 |
-| /todo | 拆任务清单（planning 组） |
+## 非斜杠 magicPrompts key
 
-> **已移除的命令（旧版本存在，当前版本已删除）：**
-> - `/implement` — 旧版本 planning 组命令，当前版本已移除
-> - `/fusion` — 旧版本合并命令，当前版本已移除
-
-另有 git/github/linear 组 magicPrompts 键（如 `gitCommitGenerate`、`githubPrReview`、`linearIssueReview`），按实际发现补充；`settings.magicPrompts` 键名即命令语义来源。
-
-## 非斜杠 magicPrompts key（git / github / linear / planning / session 组）
-
-上表仅列出 11 个 `/xxx` 斜杠命令，但 `settings.magicPrompts` 段还包含多组**非斜杠** key，盘点时不可遗漏：
+`settings.magicPrompts` 段还包含多组**非斜杠** key，盘点时不可遗漏：
 
 | 组 | 示例 key | 说明 |
 |---|---|---|
-| git | `gitCommitGenerate`, `gitPrGenerate`, `gitConflictResolve`, `gitIntegrateCherrypickResolve` | git 提交/PR/冲突/cherry-pick |
-| github | `githubPrReview`, `githubIssueReview`, `githubPrChecksReview`, `githubPrCommentsReview`, `githubPrCommentSingle` | GitHub PR/Issue/检查/评论审查 |
+| git | `gitCommitGenerate`, `gitPrGenerate`, `gitConflictResolve` | git 提交/PR/冲突 |
+| github | `githubPrReview`, `githubIssueReview`, `githubPrChecksReview` | GitHub PR/Issue/检查审查 |
 | linear | `linearIssueReview` | Linear Issue 审查 |
 | planning | `planTodo`, `planImprove`, `planImplement` | 任务规划与实施 |
-| session | `sessionExplore`, `sessionSummary`, `sessionReview`, `sessionPlan`, `sessionCraftGoal`, `sessionCatchup`, `sessionDebug`, `sessionWeigh`, `sessionFusion` | 会话级操作 |
+| session | `sessionExplore`, `sessionSummary`, `sessionReview` | 会话级操作 |
 
-**盘点要求**：对外层应用包做二进制安全扫描时，应提取 `settings.magicPrompts` 段的**全量 key**（用 `Object.keys()` 或正则提取），不只限于上表列出的斜杠命令。每个 key 对应一项外层应用注入命令/能力，来源一律写 `外层应用注入，外层应用 magicPrompts（app.asar）`。**以现扫结果为准，上表与本表均为参考快照。**
+**盘点要求**：对外层应用包做二进制安全扫描时，应提取 `settings.magicPrompts` 段的**全量 key**（用 `Object.keys()` 或正则提取），不只限于预设的斜杠命令。每个 key 对应一项外层应用注入命令/能力，来源一律写 `外层应用注入，外层应用 magicPrompts（app.asar）`。**以现扫结果为准。**
