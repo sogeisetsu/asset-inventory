@@ -161,6 +161,8 @@ asset-inventory/
 ├── update.ps1                  # one-command update script
 ├── README.md                   # English documentation (this file)
 ├── README-zh.md                # Chinese documentation
+├── CHANGELOG.md                # version history
+├── CONTRIBUTING.md             # contribution guidelines
 ├── references/
 │   ├── format-example.md       # 7-table cell format reference
 │   ├── host-commands.md        # outer-app command scan method + list

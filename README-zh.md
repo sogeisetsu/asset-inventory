@@ -163,6 +163,8 @@ asset-inventory/
 ├── update.ps1                  # 一键更新脚本
 ├── README.md                   # 英文文档
 ├── README-zh.md                # 中文文档（本文件）
+├── CHANGELOG.md                # 版本历史
+├── CONTRIBUTING.md             # 贡献指南
 ├── references/
 │   ├── format-example.md       # 7 表单元格格式参考
 │   ├── host-commands.md        # 外层应用命令扫描方法 + 清单

@@ -5,11 +5,13 @@
 #
 # What it does:
 #   1. Pulls latest from the repo (skips if the repo dir is dirty)
-#   2. Copies SKILL.md + references/ + examples/ to the install location
-#   3. Reports before/after version
+#   2. Backs up existing SKILL.md (if exists)
+#   3. Copies SKILL.md + references/ + examples/ to the install location
+#   4. Reports before/after version
 
 param(
-  [string]$Target   # Optional: project-scoped target dir (e.g. /path/to/my-project/.opencode/skills/asset-inventory)
+  [string]$Target,   # Optional: project-scoped target dir (e.g. /path/to/my-project/.opencode/skills/asset-inventory)
+  [switch]$NoBackup  # Skip backup step
 )
 
 $ErrorActionPreference = "Stop"
@@ -20,6 +22,21 @@ $SkillSource = Join-Path $RepoRoot "SKILL.md"
 if (-not (Test-Path $SkillSource)) {
   Write-Error "SKILL.md not found next to this script. Run this from the asset-inventory repo root."
   exit 1
+}
+
+# --- read new version from frontmatter ---
+$newVersion = ""
+$frontmatter = Get-Content $SkillSource -Head 15
+foreach ($line in $frontmatter) {
+  if ($line -match '^\s*version:\s*(.+)\s*$') {
+    $newVersion = $matches[1].Trim()
+    break
+  }
+}
+if ($newVersion) {
+  Write-Host "`n  New version: $newVersion" -ForegroundColor Green
+} else {
+  Write-Host "`n  (no version declared in frontmatter)" -ForegroundColor DarkGray
 }
 
 # --- pull latest ---
@@ -34,21 +51,6 @@ if (Test-Path (Join-Path $RepoRoot ".git")) {
   }
 } else {
   Write-Warning "Not a git repo — skipping pull."
-}
-
-# --- read new version from frontmatter ---
-$newVersion = ""
-$frontmatter = Get-Content $SkillSource -Head 10
-foreach ($line in $frontmatter) {
-  if ($line -match '^\s*version:\s*(.+)\s*$') {
-    $newVersion = $matches[1].Trim()
-    break
-  }
-}
-if ($newVersion) {
-  Write-Host "`n  New version: $newVersion" -ForegroundColor Green
-} else {
-  Write-Host "`n  (no version declared in frontmatter)" -ForegroundColor DarkGray
 }
 
 # --- determine install target ---
@@ -78,7 +80,7 @@ Write-Host "`n> Updating: $installDir" -ForegroundColor Cyan
 $oldVersion = ""
 $oldSkill = Join-Path $installDir "SKILL.md"
 if (Test-Path $oldSkill) {
-  $oldFM = Get-Content $oldSkill -Head 10
+  $oldFM = Get-Content $oldSkill -Head 15
   foreach ($line in $oldFM) {
     if ($line -match '^\s*version:\s*(.+)\s*$') {
       $oldVersion = $matches[1].Trim()
@@ -88,12 +90,30 @@ if (Test-Path $oldSkill) {
   if ($oldVersion) {
     Write-Host "  Old version: $oldVersion"
   }
+
+  # --- backup existing files ---
+  if (-not $NoBackup -and $oldVersion -and $oldVersion -ne $newVersion) {
+    $backupDir = Join-Path $installDir "backup.$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+    Write-Host "  Backing up to: $backupDir" -ForegroundColor DarkGray
+    foreach ($item in $runtimeFiles) {
+      $src = Join-Path $installDir $item
+      if (Test-Path $src) {
+        $dst = Join-Path $backupDir $item
+        Copy-Item -Recurse -Force -Path $src -Destination $dst
+      }
+    }
+    Write-Host "  Backup complete." -ForegroundColor DarkGray
+  }
 }
 
 # --- copy files ---
 foreach ($item in $runtimeFiles) {
   $src = Join-Path $RepoRoot $item
   $dst = Join-Path $installDir $item
+  if (-not (Test-Path $src)) {
+    Write-Warning "Source not found: $src — skipping"
+    continue
+  }
   if (Test-Path $src -PathType Container) {
     Copy-Item -Recurse -Force -Path $src -Destination $dst
   } else {
