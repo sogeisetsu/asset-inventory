@@ -28,9 +28,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 - **Targeting section** — unified to English headers for consistency with other sections.
 - **Output section** — condensed to avoid duplicating Quick Reference; now references format-example.md for details.
 - **update.ps1 improved** — added auto-create target directory, backup step before overwrite, `-NoBackup` switch, better error messages.
+- **host-commands.md rewritten** — removed hardcoded command list (contradicted "always scan fresh" philosophy); now provides scan methods only, with generic support for Electron/Tauri/native outer apps.
+- **Outer app scanning generic** — removed OpenChamber-specific assumptions; source classification now uses `外层应用注入，二进制扫描 <bundle> 发现` format.
 
 ### Removed
 - Removed "Disposal note" section (marked as removed in v1.1.0, now fully deleted).
+- Removed hardcoded command list from host-commands.md (was causing AI to skip actual scanning).
 
 ---
 

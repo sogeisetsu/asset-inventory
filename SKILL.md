@@ -94,7 +94,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜�
 - **何时用**: concrete scenario with conditions (`需 git`, `很贵`, `Win 专用`). No bare `按需`.
 - **干什么**: **detailed, never one-liners** — shape `简单：一句话。详细：<2-4 句>`.
   The 详细 part MUST be expanded from the source's actual description
-  (`SKILL.md` frontmatter `description`, `command/*.md` frontposition + body,
+  (`SKILL.md` frontmatter `description`, `command/*.md` frontmatter + body,
   official doc wording, `magicPrompts` usage text), paraphrased into readable
   Chinese, covering: what it actually does, how it is typically invoked,
   and key caveats (`需 git`, `很贵`, `依赖某 CLI 且已装/未装`, `走什么模型链`).
