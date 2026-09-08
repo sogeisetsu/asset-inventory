@@ -46,12 +46,12 @@ The Rule below describes the `inventory.md` tables; the Usage Guide section desc
 Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜怎么叫｜何时用｜干什么`); **表6 Agent has 6 columns** (`名称｜来源｜怎么叫｜何时用｜干什么｜模型链`).
 
 1. **表1 插件与配套软件** — the software/plugins themselves (host, plugins, companion apps). One row per software. **名称 must be the software's real name** (e.g. `OpenChamber`、`@rezamonangg/opencode-rtk@0.4.0`) — never a placeholder like `外层桌面应用`; 从安装路径/配置命名反查实名.
-2. **表2 各软件/插件带来的 Skill 与命令** — grouped by owning software: **one row per skill/command, NO summary rows** (软件本体已在表1, 汇总行冗余). A command belongs to whoever provides its *function* (调谁的工具归谁) — `/rtk-gain` → `@rezamonangg/opencode-rtk`, file location as a detail. 插件通过 hook 注册的斜杠命令也列于此（如 `/loop`，源码在插件 dist `hooks/loop-command`），来源写 `<插件名> 注册命令（dist hooks/…）`.
+2. **表2 各软件/插件带来的 Skill 与命令** — grouped by owning software: **one row per skill/command, NO summary rows** (软件本体已在表1, 汇总行冗余). A command belongs to whoever provides its *function* (调谁的工具归谁) — `/rtk-gain` → `@rezamonangg/opencode-rtk`, file location as a detail. 插件通过 hook 注册的斜杠命令也列于此（如 `/loop`，源码在插件 dist `hooks/loop-command`），来源写 `<插件名> 注册命令（dist hooks/…）`. **分组呈现方式固定**：允许在每个软件的行块前加一行粗体分组行（名称列只写软件名，其余列为空）；分组行不是数据行——JSON 不含分组行，行数统计也不计。要么全程用分组行，要么全程不用，同一次运行内不得混用。表4 的「本地自建 / 用户命令 / 外层应用注入」分组行同理。
 3. **表3 原生命令与原生 Skill** — **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + docs list) and built-in skills. If none, empty-table declaration.
 4. **表4 自定义 Skill、命令与外层应用注入命令** — user-created skills (upstream + deps), user commands, **and outer-app-injected commands** (source `外层应用注入`). Each expanded, never merged. **This skill itself MUST appear here.**
 5. **表5 MCP** — every MCP server (global + project), local/remote, enabled state, auth-masking state. User-built MCPs with source. Related skills only when verified — else `未知`, never fabricate. 若 MCP 有已知别名/工具名前缀（如 grep_app → 别名 `gh_grep`），在 `来源` 或 `怎么叫` 中写明.
 6. **表6 Agent** — selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌已禁用` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **模型链 column is mandatory**: default model chain from the current preset, looked up fresh (`a→b→c`), + backup preset names. **行序强制：核心自带 primary → 插件包 primary → 核心自带 subagent → 插件包 subagent；组内按名称字母序。**
-7. **表7 外层应用** — outer-app-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with 表1/表2.
+7. **表7 外层应用** — outer-app-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with 表1/表2. **行名从固定能力类别清单取，跨运行保持稳定**（名称可按输出语言翻译，但类别构成固定）：① 全局行为规则 ② 模型偏好管理 ③ 会话与定时任务动作 ④ 页内浏览器 ⑤ 托管进程管理 ⑥ 提示优化 ⑦ Skill 市场目录。机器上不存在的类别不列行，禁止自造新类别名（新能力先归入最近类别，`干什么` 里说明）。
 
 ## Source Classification
 
@@ -85,7 +85,7 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
 
 ### 1. Discover (remap only this section on a new host/CLI)
 
-1. **Declared config**: `$OPENCODE_CONFIG/opencode.jsonc`, `package.json:dependencies`, `$PROJECT_DIR/tui.json`.
+1. **Declared config**: `$OPENCODE_CONFIG/opencode.jsonc`, `package.json:dependencies`, `tui.json`（用户目录或项目目录都可能出现，需现查）.
 2. **User directory**: `$OPENCODE_CONFIG/command/`, first 15 lines of each `$OPENCODE_CONFIG/skills/*/SKILL.md`.
 3. **Project overlay**: `$PROJECT_DIR/.opencode/`, project-level MCP/plugin additions.
 4. **Plugin packages**: evidence sources are **remappable per host**. Try, in order:
@@ -94,7 +94,7 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
    - **`package.json:dependencies`** and the plugin's own dist/hooks referenced from `opencode.jsonc:plugin[]`.
    
    Use whichever sources exist on the host being inventoried; never assume a single fixed path.
-- **外层应用注入**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the outer app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method and the confirmed command list.
+5. **外层应用注入**: `$HOST_CONFIG/` settings, `agent-tool/*.js`, and **binary-safe scan of the outer app bundle** (`app.asar`/`web-dist`) for `/xxx` slash-command literals — plain grep misses binaries. See `references/host-commands.md` for the scan method and the confirmed command list.
    > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The app.asar scan still works regardless.
 6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
 
@@ -104,7 +104,7 @@ Path variables (common defaults — **verify against the actual host**):
 |---|---|---|
 | `$OPENCODE_CONFIG` | `~/.config/opencode/` | `$env:USERPROFILE\.config\opencode\` |
 | `$PROJECT_DIR` | current working directory | current working directory |
-| `$HOST_CONFIG` | `~/.config/<OuterApp>/` | `$env:APPDATA\<OuterApp>\` |
+| `$HOST_CONFIG` | `~/.config/<OuterApp>/` | `$env:APPDATA\<OuterApp>\`（OpenChamber 实测为 `~/.config/openchamber/`，不在 `%APPDATA%`——以现查为准） |
 | `$PACKAGE_CACHE` | host-specific plugin cache dir | host-specific plugin cache dir |
 
 > These are typical values, not guarantees. Always confirm against the machine being inventoried.
@@ -161,7 +161,7 @@ No content after verification → **do not invent, do not omit**: output `表中
     **Never** write deletion consequences ("随插件删除/删了会怎样").
     - ❌ Bad: `简单：看结果。详细：打出本会话数据。`
     - ✅ Good: `简单：看本会话省了多少 token。详细：它立即执行 rtk_gain 工具，把白名单命令经 RTK 改写后省下的 token 量打成账单展示，不问问题、不改配置；适合每次长会话结束时看一眼省了多少。`
-  - **模型链 (表6 only)**: current preset's chain `a→b→c`, + backup presets.
+   - **模型链 (表6 only)**: current preset's chain `a→b→c`, + backup presets. **豁免**：无独立模型配置的核心自带 agent（如 `build`/`plan`）没有链式回退——写宿主当前实际生效的模型（现查，写实值）并注明「单模型，无链式回退」；禁止写"跟随主会话"这类占位话术充当链。
 - Format examples: see `references/format-example.md` (values there are placeholders — replace, never copy).
 - **Usage Guide (`usage-guide.md`)**: after producing the 7 tables, derive a plain-language usage guide from the same rows. Do NOT re-collect evidence. Organize by user scenario, not by type:
 
@@ -197,6 +197,8 @@ No content after verification → **do not invent, do not omit**: output `表中
   ```
   Real-name mode adds a 4th line: `本输出含用户要求的真实项目名，请勿外发。`
 - **JSON** (`output/asset-inventory.json`): standalone file, one element per row: `table, name, source, state, confidence, invoke`. PK = `table`+`name`. Empty table ⇒ `[]`.
+  - **`table` 字段固定为数字 `1`-`7`**（对应表1-表7），**不随输出语言变化**——这是 diff 模式跨运行可比的前提；Markdown 里的「表N」标题负责人读，JSON 的数字负责机器。禁止写成 `表1`/`Table 1` 等本地化字符串。
+  - 分组行、表注、隐藏 agent 不入 JSON；JSON 行集合 = Markdown 数据行集合。
 - **Masking**: default redact API keys, tokens, auth headers, absolute user paths, private project names. Real-name mode only on explicit request + Provenance line.
 - **Diff mode**: user asks "跟上次比变了啥" → ask them to paste previous JSON/Markdown, output only added/removed, keyed by PK. Never re-dump full tables.
 
@@ -212,9 +214,9 @@ No content after verification → **do not invent, do not omit**: output `表中
 8. This skill appears in 表4.
 9. Every `干什么` is detailed (简单一句话 + 详细 2-4 句，基于源 description 展开，含典型用法与关键注意事项；一句话/标签式算不达标).
 10. *(reserved — removed duplicate; see Anti-patterns)*
-11. Every 表6 row has a concrete 模型链 (`a→b→c`), not a placeholder.
+11. Every 表6 row has a concrete 模型链 (`a→b→c`) **或**（无配置链的核心 agent）宿主当前实际模型写实值 + 「单模型，无链式回退」标注；不收占位话术.
 12. 表1/2/4/5/7 rows do NOT carry deletion consequences; 干什么 focuses on 是什么/谁带来/怎么用/注意事项.
-13. JSON PKs match Markdown rows, no duplicates.
+13. JSON PKs match Markdown data rows, no duplicates; `table` field is the fixed numeric `1`-`7` (never localized strings).
 14. Empty tables have declaration line + `[]`.
 15. Commands sit in the right table (原生→表3, 插件→表2, 自建→表4, 外层应用注入命令→表4); outer-app capabilities (non-command) → 表7.
 16. **`usage-guide.md` derived from the same rows** — no re-collection, no invented facts; grouped by scenario/frequency; only `✅可用` items; plain-language "when and why".
