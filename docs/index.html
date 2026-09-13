@@ -4,1287 +4,168 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>asset-inventory — OpenCode 环境全景盘点</title>
-<!-- ─── Liquid Glass 开源库 ─── -->
-<link rel="stylesheet" href="vendor/liquid-glass-core.css">
-<!-- ─── 主题防闪烁：渲染前确定 data-theme + .dark 类 ─── -->
-<script>
-(function() {
-  var t = localStorage.getItem('theme-preference') || 'system';
-  if (t === 'system') {
-    var h = new Date().getHours();
-    t = (h >= 6 && h < 18) ? 'light' : 'dark';
-  }
-  document.documentElement.setAttribute('data-theme', t);
-  if (t === 'dark') document.documentElement.classList.add('dark');
-})();
-</script>
-<!-- ─── SVG 折射滤镜（liquid-glass 依赖） ─── -->
-<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;pointer-events:none">
-  <defs>
-    <filter id="lg-refract-sm" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.012 0.012" numOctaves="3" seed="2" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-    <filter id="lg-refract" color-interpolation-filters="sRGB">
-      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="4" seed="5" result="noise"/>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="28" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </defs>
-</svg>
 <style>
-  /* ═══════════════════════════════════════════════
-     ─── 主题色变量：浅色默认 + 深色覆盖 ───
-     ═══════════════════════════════════════════════ */
   :root {
-    color-scheme: light;
-    --bg: #e8ecf4;
-    --bg-card-solid: #ffffff;
-    --border: rgba(0,0,0,.08);
-    --border-accent: #4f6bcc;
-    --text: #1a1d2e;
-    --text-dim: #5a6078;
-    --accent: #4f6bcc;
-    --accent2: #8b5cf6;
-    --accent3: #059669;
-    --accent4: #db2777;
-    --gradient-hero: linear-gradient(135deg, #c7d2fe 0%, #ddd6fe 40%, #e0e7ff 100%);
-    --hero-blob1: rgba(79,107,203,.3);
-    --hero-blob2: rgba(139,92,246,.25);
-    --gradient-accent: linear-gradient(135deg, #4f6bcc, #8b5cf6);
-    --radius: 12px;
-    --radius-sm: 8px;
-    --shadow-card: 0 2px 16px rgba(0,0,0,.06);
-    --shadow-glow: 0 4px 24px rgba(79,107,203,.08);
-    --font-body: system-ui, -apple-system, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-    --font-mono: "Cascadia Code", "Fira Code", "JetBrains Mono", "SF Mono", Consolas, monospace;
-    --max-w: 1080px;
-    --glass-code-bg: rgba(255,255,255,.45);
-    /* ─── body 渐变光斑——壁纸级色块，边界锐利 ─── */
-    --body-bg:
-      radial-gradient(ellipse 80% 70% at 5%  5%,  rgba(0,120,255,.70) 0%, transparent 28%),
-      radial-gradient(ellipse 65% 55% at 92% 12%, rgba(168,85,247,.65) 0%, transparent 25%),
-      radial-gradient(ellipse 70% 60% at 82% 82%, rgba(16,185,129,.55) 0%, transparent 25%),
-      radial-gradient(ellipse 55% 50% at 12% 88%, rgba(236,72,153,.50) 0%, transparent 25%),
-      radial-gradient(ellipse 60% 45% at 50% 50%, rgba(59,130,246,.40) 0%, transparent 30%),
-      radial-gradient(ellipse 50% 40% at 35% 30%, rgba(251,191,36,.25) 0%, transparent 25%),
-      #e8ecf4;
+    --fg: #1f2328;
+    --muted: #57606a;
+    --bg: #ffffff;
+    --border: #d0d7de;
+    --accent: #0a7d33;
+    --code: #f6f8fa;
   }
-  [data-theme="dark"] {
-    color-scheme: dark;
-    --bg: #0a0a12;
-    --bg-card-solid: #151822;
-    --border: rgba(255,255,255,.08);
-    --border-accent: #2a5cff;
-    --text: #e4e6ed;
-    --text-dim: #8890a4;
-    --accent: #4f8cff;
-    --accent2: #a78bfa;
-    --accent3: #34d399;
-    --accent4: #f472b6;
-    --gradient-hero: linear-gradient(135deg, #0c0e14 0%, #111628 40%, #0e1225 100%);
-    --hero-blob1: rgba(79,140,255,.2);
-    --hero-blob2: rgba(167,139,250,.15);
-    --gradient-accent: linear-gradient(135deg, #4f8cff, #a78bfa);
-    --shadow-card: 0 2px 16px rgba(0,0,0,.35);
-    --shadow-glow: 0 0 40px rgba(79,140,255,.12);
-    --glass-code-bg: rgba(0,0,0,.35);
-    /* ─── body 渐变光斑——深色壁纸级锐利色块 ─── */
-    --body-bg:
-      radial-gradient(ellipse 80% 65% at 8%  8%,  rgba(0,100,255,.75) 0%, transparent 28%),
-      radial-gradient(ellipse 65% 55% at 88% 18%, rgba(168,85,247,.65) 0%, transparent 25%),
-      radial-gradient(ellipse 70% 60% at 80% 80%, rgba(16,185,129,.50) 0%, transparent 25%),
-      radial-gradient(ellipse 55% 50% at 12% 85%, rgba(236,72,153,.45) 0%, transparent 25%),
-      radial-gradient(ellipse 60% 45% at 50% 50%, rgba(59,130,246,.35) 0%, transparent 30%),
-      #0a0a12;
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #e6edf3;
+      --muted: #8b949e;
+      --bg: #0d1117;
+      --border: #30363d;
+      --accent: #3fb950;
+      --code: #161b22;
+    }
   }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-
+  * { box-sizing: border-box; }
   body {
-    font-family: var(--font-body);
-    background: var(--body-bg);
-    color: var(--text);
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  /* ═══════ Liquid Glass 集成 ═══════ */
-  /* 保留 @supports fallback：不支持 backdrop-filter 时退回实色 */
-  .liquid-glass {
-    --lg-radius: var(--radius);
-    /* 玻璃厚度——effect 层越出卡片的量，就是"厚玻璃"的视觉厚度 */
-    --lg-thickness: 20px;
-  }
-  /* ─── 厚玻璃：effect 层越出卡片边界 ─── */
-  /* 原理：backdrop-filter 采样区域越出卡片，边缘处透出的背景是从
-     边界外"拉进来"的内容，天然形成弯曲/放大的厚玻璃畸变感。
-     overflow:hidden 裁掉越出部分，只留边缘的"畸变窗口"。 */
-  .liquid-glass-effect {
-    inset: calc(-1 * var(--lg-thickness));
-    /* SVG 位移滤镜是空转（effect 层无内容可位移），改为 none */
-    filter: none;
-  }
-  /* 浅色主题：不压暗背景（brightness 1.0+），保色；深色主题才适度压暗留景深 */
-  [data-theme="light"] .liquid-glass-effect {
-    -webkit-backdrop-filter: blur(14px) saturate(190%) brightness(1.02) contrast(1.0);
-    backdrop-filter: blur(14px) saturate(190%) brightness(1.02) contrast(1.0);
-  }
-  [data-theme="dark"] .liquid-glass-effect {
-    -webkit-backdrop-filter: blur(14px) saturate(180%) brightness(0.9) contrast(1.02);
-    backdrop-filter: blur(14px) saturate(180%) brightness(0.9) contrast(1.02);
-  }
-  /* 边缘环带增强——只在卡片边缘 8-14px 环带区域施加更强 blur，
-     让边缘畸变比中心明显，正是厚玻璃的特征 */
-  .liquid-glass-effect::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    -webkit-backdrop-filter: blur(20px) saturate(200%);
-    backdrop-filter: blur(20px) saturate(200%);
-    filter: none;
-    /* mask：只显示边缘环带，中心透明 */
-    -webkit-mask:
-      linear-gradient(#000, #000) content-box,
-      linear-gradient(#000, #000);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000, #000) content-box,
-      linear-gradient(#000, #000);
-    mask-composite: exclude;
-    padding: 12px;
-  }
-  /* 浅色主题：tint 层加微弱内阴影增强"厚度感" */
-  [data-theme="light"] .liquid-glass-tint {
-    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.08);
-  }
-  /* ─── 苹果玻璃参数校准 ─── */
-  /* 注意：vendored CSS 用 html:not(.dark)（特异性 0-2-0）做浅色分支，
-     我们的覆写必须用 html[data-theme="..."] 匹配特异性才能生效 */
-  /* 1) 深色主题：regular tint 从 0.134 降到 0.05（几乎全透） */
-  [data-theme="dark"] .lg-regular > .liquid-glass-tint {
-    background: rgba(255, 255, 255, 0.05);
-  }
-  /* 2) 浅色主题：regular tint 从 0.66 降到 0.07（更透，光斑更鲜艳） */
-  [data-theme="light"] .lg-regular > .liquid-glass-tint {
-    background: rgba(255, 255, 255, 0.07);
-  }
-  /* 浅色主题 clear tint 也降（hero install-block） */
-  [data-theme="light"] .liquid-glass:not(.lg-regular) > .liquid-glass-tint {
-    background: rgba(255, 255, 255, 0.06);
-  }
-  /* 3) blur 覆写：clear 6px 保持，regular 从 10px 微调到 12px（轻度磨砂但不奶油化） */
-  .lg-regular {
-    --lg-blur: 12px;
-  }
-  /* 4) 静态弧面高光——shine 层 inset shadow 加强 */
-  html[data-theme="dark"] .liquid-glass-shine {
-    box-shadow:
-      inset 0 20px 20px -16px rgba(255, 255, 255, 0.45),
-      inset 0 -16px 16px -16px rgba(255, 255, 255, 0.3);
-  }
-  html[data-theme="light"] .liquid-glass-shine {
-    --lg-rim-lit: 1;
-    --lg-rim-dark: 0.25;
-    box-shadow:
-      inset 0 20px 20px -16px rgba(255, 255, 255, 0.85),
-      inset 0 -16px 16px -16px rgba(255, 255, 255, 0.55);
-  }
-  /* 5) 强化边缘描边——rim 变量 + 外圈极细亮边 */
-  html[data-theme="dark"] .liquid-glass {
-    --lg-rim-lit: 0.5;
-    --lg-rim-dark: 0.45;
-    box-shadow:
-      0 0 0 0.5px rgba(255, 255, 255, 0.12),
-      0 8px 24px -8px rgba(0, 0, 0, 0.4),
-      0 2px 6px -2px rgba(0, 0, 0, 0.3);
-  }
-  html[data-theme="light"] .liquid-glass {
-    --lg-rim-lit: 1;
-    --lg-rim-dark: 0.35;
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.45),
-      0 8px 24px -8px rgba(0, 0, 0, 0.12),
-      0 2px 6px -2px rgba(0, 0, 0, 0.08);
-  }
-  /* 6) 静态弧面高光层——shine::after 常驻对角渐变反光 */
-  .liquid-glass-shine::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    z-index: 1;
-    pointer-events: none;
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.30) 0%,
-      rgba(255, 255, 255, 0.10) 20%,
-      transparent 45%
-    );
-  }
-  html[data-theme="light"] .liquid-glass-shine::after {
-    background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.22) 0%,
-      rgba(255, 255, 255, 0.06) 20%,
-      transparent 45%
-    );
-  }
-  /* 7) 边缘折射暗示——内边缘极微弱色偏光晕 */
-  html[data-theme="dark"] .liquid-glass-tint {
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  }
-  html[data-theme="light"] .liquid-glass-tint {
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
-  }
-  /* 8) 文字阴影保底——浅色主题 content 层加微弱阴影防干扰 */
-  html[data-theme="light"] .liquid-glass-content {
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.6);
-  }
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .liquid-glass { background: var(--bg-card-solid) !important; }
-    .liquid-glass-effect,
-    .liquid-glass-tint,
-    .liquid-glass-shine,
-    .liquid-glass::before,
-    .liquid-glass::after { display: none !important; }
-  }
-
-  /* ─── 控件容器（右上角） ─── */
-  .controls {
-    position: fixed;
-    top: 20px;
-    right: 24px;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* ─── 分段控件（语言 & 主题） ─── */
-  .segmented {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border: none;
-    border-radius: 20px;
-    padding: 3px;
-    background: rgba(255,255,255,.15);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    backdrop-filter: blur(20px) saturate(180%);
-    position: relative;
     margin: 0;
-    list-style: none;
+    background: var(--bg);
+    color: var(--fg);
+    font: 16px/1.7 system-ui, -apple-system, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   }
-  [data-theme="dark"] .segmented {
-    background: rgba(255,255,255,.08);
-  }
-  .segmented input[type="radio"] {
-    position: absolute;
-    width: 1px; height: 1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-    border: 0;
-  }
-  .segmented label {
-    position: relative;
-    z-index: 1;
-    font-size: 13px;
-    padding: 4px 14px;
-    border-radius: 17px;
-    cursor: pointer;
-    text-align: center;
-    color: var(--text-dim);
-    transition: color .25s;
-    user-select: none;
-    font-weight: 500;
-  }
-  .segmented label:hover { color: var(--text); }
-  .segmented input:checked + label {
-    background: var(--accent);
-    color: #fff;
-    font-weight: 600;
-  }
-
-  /* ─── 主题切换按钮 ─── */
-  .theme-toggle {
-    width: 36px; height: 36px;
-    border-radius: 20px;
-    border: none;
-    background: rgba(255,255,255,.15);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    backdrop-filter: blur(20px) saturate(180%);
-    color: var(--text);
-    font-size: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: box-shadow .25s;
-    padding: 0;
-    line-height: 1;
-  }
-  [data-theme="dark"] .theme-toggle {
-    background: rgba(255,255,255,.08);
-  }
-  .theme-toggle:hover {
-    box-shadow: 0 0 12px rgba(79,140,255,.2);
-  }
-
-  /* ─── Container ─── */
-  .wrap { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
-
-  /* ─── Hero ─── */
-  .hero {
-    background: transparent;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 100px 0 72px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top: -120px; right: -120px;
-    width: 480px; height: 480px;
-    background: radial-gradient(circle, var(--hero-blob1) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero::after {
-    content: "";
-    position: absolute;
-    bottom: -80px; left: -60px;
-    width: 360px; height: 360px;
-    background: radial-gradient(circle, var(--hero-blob2) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(79,140,255,.1);
-    border: 1px solid rgba(79,140,255,.25);
-    border-radius: 20px;
-    padding: 5px 14px;
-    font-size: 13px;
-    color: var(--accent);
-    margin-bottom: 20px;
-    width: fit-content;
-  }
-
-  .hero h1 {
-    font-size: clamp(32px, 5vw, 52px);
-    font-weight: 800;
-    letter-spacing: -1px;
-    line-height: 1.15;
-    margin-bottom: 16px;
-  }
-  .hero h1 .gradient-text {
-    background: var(--gradient-accent);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-sub {
-    font-size: clamp(16px, 2.2vw, 20px);
-    color: var(--text-dim);
-    max-width: 640px;
-    margin-bottom: 40px;
-    line-height: 1.65;
-  }
-
-  /* ─── Install Block 内部布局 ─── */
-  .install-block {
-    max-width: 760px;
-    --lg-radius: var(--radius);
-  }
-  .install-label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 20px;
-    background: rgba(79,140,255,.06);
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-    color: var(--text-dim);
-    gap: 8px;
-  }
-  .install-label .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    background: var(--accent3);
-    flex-shrink: 0;
-  }
-  .install-code-wrap { position: relative; }
-  .install-code {
-    padding: 20px 20px;
-    overflow-x: auto;
-    font-family: var(--font-mono);
-    font-size: 13.5px;
-    line-height: 1.7;
-    color: var(--accent3);
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-    word-break: normal;
-    -webkit-user-select: all;
-    user-select: all;
-    max-height: 260px;
-  }
-  .install-code .no-break { white-space: nowrap; }
-  .copy-btn {
-    position: absolute;
-    top: 12px; right: 12px;
-    background: rgba(79,140,255,.15);
-    border: 1px solid rgba(79,140,255,.3);
-    border-radius: 8px;
-    padding: 6px 14px;
-    font-size: 12px;
-    font-family: var(--font-body);
-    color: var(--accent);
-    cursor: pointer;
-    transition: all .2s;
-    z-index: 2;
-  }
-  .copy-btn:hover { background: rgba(79,140,255,.25); }
-  .copy-btn.copied {
-    background: rgba(52,211,153,.15);
-    border-color: rgba(52,211,153,.4);
-    color: var(--accent3);
-  }
-
-  /* ─── Section ─── */
-  section { padding: 72px 0; }
-  section + section { /* no divider — body bg flows continuously */ }
-
-  .section-label {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--accent);
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
-  .section-title {
-    font-size: clamp(24px, 3.5vw, 36px);
-    font-weight: 700;
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
-  }
-  .section-desc {
-    color: var(--text-dim);
-    font-size: 16px;
-    max-width: 620px;
-    margin-bottom: 40px;
-    line-height: 1.7;
-  }
-
-  /* ─── Feature Cards ─── */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-  }
-  .feature-card {
-    --lg-radius: var(--radius);
-    padding: 24px;
-  }
-  .feature-card:hover {
-    box-shadow: 0 0 0 0.5px rgba(255,255,255,.1), 0 12px 32px -8px rgba(0,0,0,.5), 0 4px 10px -2px rgba(0,0,0,.35);
-  }
-  .feature-card:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .feature-card:focus:not(:focus-visible) { outline: none; }
-
-  .feature-icon {
-    width: 44px; height: 44px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    margin-bottom: 16px;
-    background: rgba(79,140,255,.08);
-    border: 1px solid rgba(79,140,255,.15);
-  }
-
-  /* ─── Story Block ─── */
-  .story {
-    --lg-radius: var(--radius);
-    padding: 40px 36px;
-    max-width: 740px;
-  }
-  .story p {
-    font-size: 16px;
-    line-height: 1.8;
-    color: var(--text-dim);
-  }
-  .story p + p { margin-top: 14px; }
-  .story strong { color: var(--text); }
-
-  /* ─── Use Cases ─── */
-  .usecase-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 14px;
-  }
-  .usecase-item {
-    --lg-radius: var(--radius-sm);
-    padding: 20px 22px;
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-  }
-  .usecase-icon {
-    font-size: 26px;
-    line-height: 1;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  /* ─── Install Guide ─── */
-  .install-guide {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    max-width: 780px;
-  }
-  .install-method {
-    --lg-radius: var(--radius);
-    padding: 28px 24px;
-  }
-  .install-method h3 {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .install-method .tag {
-    font-size: 11px;
-    background: rgba(79,140,255,.12);
-    color: var(--accent);
-    padding: 2px 8px;
-    border-radius: 10px;
-    font-weight: 500;
-  }
-  .install-method p {
-    font-size: 13.5px;
-    color: var(--text-dim);
-    margin-bottom: 14px;
-    line-height: 1.6;
-  }
-  .cmd-block {
-    background: var(--glass-code-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 28px 16px 14px;
-    font-family: var(--font-mono);
-    font-size: 12.5px;
-    line-height: 1.7;
-    color: var(--accent3);
-    overflow-x: auto;
-    white-space: pre;
-    margin-bottom: 8px;
-    position: relative;
-  }
-  .cmd-copy-btn {
-    position: absolute;
-    top: 6px; right: 6px;
-    background: rgba(79,140,255,.12);
-    border: 1px solid rgba(79,140,255,.25);
-    border-radius: 6px;
-    padding: 3px 10px;
-    font-size: 11px;
-    font-family: var(--font-body);
-    color: var(--accent);
-    cursor: pointer;
-    opacity: 0;
-    transition: opacity .2s, background .2s;
-    z-index: 6;
-  }
-  .cmd-block:hover .cmd-copy-btn { opacity: 1; }
-  .cmd-copy-btn:hover { background: rgba(79,140,255,.22); }
-  .cmd-copy-btn.copied {
-    background: rgba(52,211,153,.15);
-    border-color: rgba(52,211,153,.35);
-    color: var(--accent3);
-    opacity: 1;
-  }
-  .cmd-label {
-    font-size: 11px;
-    color: var(--text-dim);
-    margin-bottom: 4px;
-    font-weight: 500;
-  }
-
-  /* ─── Output Preview ─── */
-  .output-row {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-    margin-top: 40px;
-  }
-  @media (max-width: 700px) {
-    .output-row { grid-template-columns: 1fr; }
-  }
-  .output-card {
-    --lg-radius: var(--radius-sm);
-    padding: 22px 20px;
-    text-align: center;
-  }
-  .output-card .file-icon { font-size: 28px; margin-bottom: 10px; }
-  .output-card h4 {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--accent);
-    margin-bottom: 6px;
-  }
-  .output-card p {
-    font-size: 13px;
-    color: var(--text-dim);
-    line-height: 1.55;
-  }
-
-  /* ─── Footer ─── */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 36px 0;
-    text-align: center;
-    color: var(--text-dim);
-    font-size: 13px;
-  }
-  footer a {
-    color: var(--accent);
-    text-decoration: none;
-    transition: color .2s;
-  }
-  footer a:hover { color: var(--accent2); }
-  footer .note { margin-top: 8px; font-size: 12px; opacity: .7; }
-
-  /* ─── Animations ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fade-up {
-    opacity: 0;
-    animation: fadeUp .6s ease forwards;
-  }
-  .fade-up.d1 { animation-delay: .1s; }
-  .fade-up.d2 { animation-delay: .2s; }
-  .fade-up.d3 { animation-delay: .3s; }
-  .fade-up.d4 { animation-delay: .4s; }
-
-  /* ─── Responsive ─── */
-  @media (max-width: 600px) {
-    .hero { min-height: auto; padding: 80px 0 48px; }
-    section { padding: 52px 0; }
-    .features-grid { grid-template-columns: 1fr; }
-    .usecase-list { grid-template-columns: 1fr; }
-    .install-block { max-width: 100%; }
-    .story { padding: 28px 20px; }
-    .controls { top: 12px; right: 12px; gap: 6px; }
-    .segmented label { padding: 3px 10px; font-size: 12px; }
-    .theme-toggle { width: 32px; height: 32px; font-size: 14px; }
-  }
-
-  /* ─── Hidden lang ─── */
+  main { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
+  h1 { font-size: 32px; margin: 0 0 4px; }
+  .tag { color: var(--muted); font-size: 18px; margin: 0 0 28px; }
+  h2 { font-size: 20px; margin: 36px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+  ul { padding-left: 22px; }
+  li { margin: 4px 0; }
+  code { font-family: ui-monospace, Consolas, "Courier New", monospace; background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: .9em; }
+  pre { background: var(--code); border: 1px solid var(--border); border-radius: 6px; padding: 14px; overflow: auto; font-size: 13px; line-height: 1.6; white-space: pre-wrap; }
+  a { color: var(--accent); }
+  .lang { display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 8px; }
+  .lang button { border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 4px; padding: 2px 10px; cursor: pointer; font: inherit; font-size: 13px; }
+  .lang button[aria-pressed="true"] { color: var(--fg); border-color: var(--accent); }
+  .copy { margin-top: 8px; border: 1px solid var(--border); background: transparent; color: var(--accent); border-radius: 4px; padding: 4px 12px; cursor: pointer; font: inherit; font-size: 13px; }
+  footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
   [data-lang="en"] { display: none; }
   html[data-show="en"] [data-lang="zh"] { display: none !important; }
   html[data-show="en"] [data-lang="en"] { display: revert; }
-  html[data-show="en"] .features-grid,
-  html[data-show="en"] .usecase-list,
-  html[data-show="en"] .output-row,
-  html[data-show="en"] .install-guide { display: grid; }
-  html[data-show="en"] .feature-card,
-  html[data-show="en"] .usecase-item,
-  html[data-show="en"] .output-card,
-  html[data-show="en"] .install-method,
-  html[data-show="en"] .story,
-  html[data-show="en"] .install-block,
-  html[data-show="en"] .install-code-wrap { display: block; }
-  html[data-show="en"] .section-label,
-  html[data-show="en"] .section-title,
-  html[data-show="en"] .section-desc,
-  html[data-show="en"] .hero-badge,
-  html[data-show="en"] .hero h1,
-  html[data-show="en"] .hero-sub,
-  html[data-show="en"] .install-label,
-  html[data-show="en"] footer,
-  html[data-show="en"] footer .note { display: block; }
-  html[data-show="en"] footer span[data-lang="zh"],
-  html[data-show="en"] footer .note span[data-lang="zh"] { display: none; }
-
-  /* copy feedback toast */
-  .toast {
-    position: fixed;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--accent3);
-    color: #0c0e14;
-    padding: 10px 24px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    opacity: 0;
-    pointer-events: none;
-    transition: all .3s ease;
-    z-index: 200;
-  }
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
 </style>
 </head>
 <body>
-
-<!-- Toast -->
-<div class="toast" id="toast"></div>
-
-<!-- Controls: 语言分段控件 + 主题切换 -->
-<div class="controls">
-  <fieldset class="segmented" id="langSegmented" role="radiogroup" aria-label="language">
-    <input id="lang-zh" name="language" type="radio" value="zh" checked>
-    <label for="lang-zh">中</label>
-    <input id="lang-en" name="language" type="radio" value="en">
-    <label for="lang-en">EN</label>
-  </fieldset>
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="切换白天/黑夜">🌙</button>
-</div>
-
-<!-- ═══════════ HERO ═══════════ -->
-<section class="hero">
-  <div class="wrap">
-    <div class="hero-badge fade-up">
-      <span data-lang="zh">📦 OpenCode Skill</span>
-      <span data-lang="en">📦 OpenCode Skill</span>
-    </div>
-
-    <h1 class="fade-up d1">
-      <span data-lang="zh">你的 OpenCode 环境<br><span class="gradient-text">到底装了什么？</span></span>
-      <span data-lang="en">What's <span class="gradient-text">actually installed</span><br>in your OpenCode?</span>
-    </h1>
-
-    <p class="hero-sub fade-up d2">
-      <span data-lang="zh">asset-inventory 是一个 OpenCode Skill，装好后跑一条命令，就能自动生成三份文件，盘点本机所有可调用的插件、Skill、命令、MCP、Agent 和外层应用能力，每项都标注了来源——哪里来的、谁装的、能不能用。</span>
-      <span data-lang="en">asset-inventory is an OpenCode Skill. Install it, run one command, and it automatically generates three files: a full inventory of every plugin, skill, command, MCP server, agent, and host capability on this machine — with provenance for each item (where it came from, who installed it, whether it works).</span>
-    </p>
-
-    <!-- Install Block — clear variant (高透，hero 光斑鲜艳) -->
-    <div class="install-block liquid-glass fade-up d3">
-      <div class="liquid-glass-effect"></div>
-      <div class="liquid-glass-tint"></div>
-      <div class="liquid-glass-shine"></div>
-      <div class="liquid-glass-content">
-        <div class="install-label">
-          <span style="display:flex;align-items:center;gap:8px;">
-            <span class="dot"></span>
-            <span data-lang="zh">复制下面这段话，发给 AI，它会自动帮你装好</span>
-            <span data-lang="en">Copy the text below, send it to your AI, and it will install for you</span>
-          </span>
-        </div>
-        <div class="install-code-wrap">
-          <button class="copy-btn" id="copyBtn" onclick="copyInstall()">复制</button>
-          <div class="install-code" id="installCode" data-lang="zh">请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <span class="no-break">&lt;https://github.com/sogeisetsu/asset-inventory&gt;</span>。先问我装到全局还是只装进当前项目。然后克隆或下载该仓库，只复制运行所需的文件——SKILL.md、references/、examples/——到选定的目标位置：全局就装到 ~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\），项目级就装到当前项目内的 .opencode/skills/（没有就创建）。不要复制 README 文件。确认最终路径是 &lt;目标位置&gt;/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。</div>
-          <div class="install-code" id="installCodeEn" data-lang="en">Install the "asset-inventory" OpenCode skill from <span class="no-break">&lt;https://github.com/sogeisetsu/asset-inventory&gt;</span>. First ask me whether to install it globally or into the current project only. Then clone or download the repository and copy only the runtime files — SKILL.md, references/, examples/ — into the chosen target: global skills directory ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\) for global, or .opencode/skills/ inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that SKILL.md ends up at &lt;target&gt;/asset-inventory/SKILL.md. Do not modify any skill file during installation. Report the final path.</div>
-        </div>
-      </div>
-    </div>
+<main>
+  <div class="lang">
+    <button id="btn-zh" aria-pressed="true">中文</button>
+    <button id="btn-en" aria-pressed="false">English</button>
   </div>
-</section>
 
-<!-- ═══════════ FEATURES ═══════════ -->
-<section>
-  <div class="wrap">
-    <div class="section-label" data-lang="zh">功能一览</div>
-    <div class="section-label" data-lang="en">Features</div>
-    <h2 class="section-title" data-lang="zh">核心功能</h2>
-    <h2 class="section-title" data-lang="en">Core Features</h2>
-    <p class="section-desc" data-lang="zh">不靠猜、不靠记忆，直接从机器上实际可调用的能力出发，逐项列出并追溯来源。</p>
-    <p class="section-desc" data-lang="en">No guessing, no memory — it starts from what this machine can actually invoke, listing each item with provenance.</p>
+  <h1>asset-inventory</h1>
+  <p class="tag" data-lang="zh">一条命令，盘清你的 OpenCode 环境——每个插件、Skill、命令、MCP、Agent 与外层应用能力，都带来源追溯。</p>
+  <p class="tag" data-lang="en">One command to inventory your OpenCode setup — every plugin, skill, command, MCP server, agent, and host capability, each with provenance.</p>
 
-    <div class="features-grid">
-      <!-- 三份输出 -->
-      <div class="feature-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="feature-icon">📁</div>
-          <h3 data-lang="zh">三份输出</h3>
-          <h3 data-lang="en">Three Output Files</h3>
-          <p data-lang="zh">inventory.md（7 表清单）、usage-guide.md（按频率重组的使用指南）、asset-inventory.json（机器可读，供 diff/迁移）。</p>
-          <p data-lang="en">inventory.md (7-table inventory), usage-guide.md (usage guide organized by frequency), asset-inventory.json (machine-readable, for diff/migration).</p>
-        </div>
-      </div>
-      <!-- 7 表清单 -->
-      <div class="feature-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="feature-icon">📊</div>
-          <h3 data-lang="zh">7 表清单</h3>
-          <h3 data-lang="en">7-Table Inventory</h3>
-          <p data-lang="zh">插件配套、Skill 命令、原生能力、自定义 Skill、MCP、Agent、外层应用——7 张表覆盖所有类别，每行回答"是什么、谁带来的、怎么用"。</p>
-          <p data-lang="en">Plugins, skills, commands, custom skills, MCP servers, agents, and host capabilities — 7 tables covering every category. Each row answers: what, who brought it, how to use it.</p>
-        </div>
-      </div>
-      <!-- 来源追溯 -->
-      <div class="feature-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="feature-icon">🔍</div>
-          <h3 data-lang="zh">来源追溯</h3>
-          <h3 data-lang="en">Source Provenance</h3>
-          <p data-lang="zh">每个资产都会写明它从哪来的——OpenCode 自带、插件装进来、你自建、还是外层应用注入——绝不写"某个插件"这种含糊说法。</p>
-          <p data-lang="en">Every asset says where it came from — built into OpenCode, brought by a plugin, created by you, or injected by an outer app — never a vague "some plugin".</p>
-        </div>
-      </div>
-      <!-- 四态标注 -->
-      <div class="feature-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="feature-icon">🚦</div>
-          <h3 data-lang="zh">四态标注</h3>
-          <h3 data-lang="en">Four-State Labels</h3>
-          <p data-lang="zh">✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在——一眼看清谁在干活、谁在睡觉、谁压根没装。</p>
-          <p data-lang="en">✅available / ❌disabled / 📦shelf-only / 🚫absent — see at a glance who's working, who's dormant, who was never installed.</p>
-        </div>
-      </div>
-      <!-- 差异模式 -->
-      <div class="feature-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="feature-icon">🔄</div>
-          <h3 data-lang="zh">差异模式</h3>
-          <h3 data-lang="en">Diff Mode</h3>
-          <p data-lang="zh">贴上上次的 JSON，自动对比增减变化——迁移前后、更新前后，一目了然。</p>
-          <p data-lang="en">Paste a previous JSON to auto-compare additions and removals — see changes before and after migration or updates at a glance.</p>
-        </div>
-      </div>
-      <!-- 只读·脱敏 -->
-      <div class="feature-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="feature-icon">🛡️</div>
-          <h3 data-lang="zh">只读 · 脱敏</h3>
-          <h3 data-lang="en">Read-Only · Masked</h3>
-          <p data-lang="zh">盘点过程绝不改动任何配置；默认脱敏 API 密钥、用户路径、私有项目名。</p>
-          <p data-lang="en">Never modifies any configuration during inventory; API keys, user paths, and private project names are masked by default.</p>
-        </div>
-      </div>
-      <!-- 外层应用感知 -->
-      <div class="feature-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="feature-icon">🔬</div>
-          <h3 data-lang="zh">外层应用感知</h3>
-          <h3 data-lang="en">Host-Aware Scanning</h3>
-          <p data-lang="zh">对外层应用包做二进制安全扫描（如 OpenChamber 的 app.asar），抓出普通 grep 漏掉的外层应用注入命令。</p>
-          <p data-lang="en">Binary-safe scan of the host app bundle (e.g. OpenChamber's app.asar) catches host-injected slash commands that plain grep misses.</p>
-        </div>
-      </div>
-    </div>
+  <p data-lang="zh"><strong>主体思想：</strong>盘点的不是磁盘上有哪些文件，而是这台机器<strong>真正能调用</strong>什么。每行回答三个问题——<strong>是什么、谁带来的、怎么用</strong>；来源必须具体到带来者，绝不写"某个插件"。</p>
+  <p data-lang="en"><strong>Core idea:</strong> inventory what the machine can <strong>actually invoke</strong>, not which files exist on disk. Every row answers three questions — <strong>what it is, who brought it in, how to use it</strong>; the source must name the specific bringer, never a vague "some plugin".</p>
 
-    <!-- Output Files Preview -->
-    <div class="output-row">
-      <div class="output-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="file-icon">📘</div>
-          <h4>inventory.md</h4>
-          <p data-lang="zh">一份 Markdown 文件，里面包含 7 张表——插件、Skill、命令、MCP、Agent、外层应用等各类内容，全列在里面</p>
-          <p data-lang="en">A single Markdown file containing 7 tables — plugins, skills, commands, MCP, agents, outer-app capabilities, everything listed inside</p>
-        </div>
-      </div>
-      <div class="output-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="file-icon">📗</div>
-          <h4>usage-guide.md</h4>
-          <p data-lang="zh">按每天必用 / 干活主力 / 按需 / 周期性重组的使用指南</p>
-          <p data-lang="en">Usage guide reorganized by daily-use / main tools / on-demand / periodic</p>
-        </div>
-      </div>
-      <div class="output-card liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="file-icon">📙</div>
-          <h4>asset-inventory.json</h4>
-          <p data-lang="zh">机器可读 JSON，table+name 主键，供 diff 和迁移</p>
-          <p data-lang="en">Machine-readable JSON with table+name primary key, for diff and migration</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <h2 data-lang="zh">产出</h2>
+  <h2 data-lang="en">Outputs</h2>
+  <ul data-lang="zh">
+    <li><code>inventory.md</code> — 7 张表：插件、Skill/命令、原生能力、自定义/外层注入、MCP、Agent、外层应用能力</li>
+    <li><code>usage-guide.md</code> — 按使用频率重排的"什么时候用"指南</li>
+    <li><code>asset-inventory.json</code> — 机器可读，主键 <code>table</code> + <code>name</code>，供 diff 与迁移</li>
+  </ul>
+  <ul data-lang="en">
+    <li><code>inventory.md</code> — 7 tables: plugins, skills/commands, built-ins, custom/host-injected, MCP, agents, host capabilities</li>
+    <li><code>usage-guide.md</code> — a "when to use it" guide organized by frequency</li>
+    <li><code>asset-inventory.json</code> — machine-readable, PK <code>table</code> + <code>name</code>, for diff and migration</li>
+  </ul>
 
-<!-- ═══════════ WHY ═══════════ -->
-<section>
-  <div class="wrap">
-    <div class="section-label" data-lang="zh">为什么会有这个 skill</div>
-    <div class="section-label" data-lang="en">Why it exists</div>
-    <h2 class="section-title" data-lang="zh">为什么需要它</h2>
-    <h2 class="section-title" data-lang="en">Why you need it</h2>
+  <h2 data-lang="zh">特点</h2>
+  <h2 data-lang="en">Highlights</h2>
+  <ul data-lang="zh">
+    <li><strong>来源可追溯</strong>：OpenCode 自带、插件带来、你自建，还是外层应用注入</li>
+    <li><strong>四态标注</strong>：✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在</li>
+    <li><strong>只读脱敏</strong>：不改任何配置，默认打码密钥、路径与私有项目名</li>
+    <li><strong>外层应用感知</strong>：二进制扫描应用包，抓出普通 grep 漏掉的注入命令</li>
+    <li><strong>差异模式</strong>：贴上次 JSON，只输出增删</li>
+  </ul>
+  <ul data-lang="en">
+    <li><strong>Provenance</strong>: built into OpenCode, brought by a plugin, created by you, or injected by a host app</li>
+    <li><strong>Four-state labels</strong>: ✅available / ❌disabled / 📦shelf-only / 🚫absent</li>
+    <li><strong>Read-only and masked</strong>: changes no config; masks keys, paths, and private project names by default</li>
+    <li><strong>Host-aware</strong>: binary-scans the app bundle for injected commands that plain grep misses</li>
+    <li><strong>Diff mode</strong>: paste the previous JSON and get only additions and removals</li>
+  </ul>
 
-    <div class="story liquid-glass lg-regular">
-      <div class="liquid-glass-effect"></div>
-      <div class="liquid-glass-tint"></div>
-      <div class="liquid-glass-shine"></div>
-      <div class="liquid-glass-content">
-        <p data-lang="zh">OpenCode 环境膨胀得很快。几周下来，你装了十几个插件、好几套 Skill、一堆 MCP，还有外层应用自带的各种能力。然后某天你突然想不起来：那个命令是哪个插件带的？那个 Agent 为什么禁用了？换台机器的话，我得装什么？</p>
-        <p data-lang="en">OpenCode environments grow fast. After a few weeks you've installed a dozen plugins, several skill sets, a bunch of MCP servers, and there are all those host-injected capabilities. Then one day you realize: which plugin brought that command? Why is that agent disabled? If I switch machines, what do I need to install?</p>
-        <p data-lang="zh"><strong>asset-inventory</strong> 就是来回答这些问题的。它不是靠你手动填表，而是直接从机器上实际可调用的能力出发——读配置、扫缓存、查注册表、跑命令验证——给你一份可信的完整答案。</p>
-        <p data-lang="en"><strong>asset-inventory</strong> exists to answer these questions. It doesn't ask you to fill in a form — it starts from what this machine can actually invoke: reads configs, scans caches, checks registries, runs commands to verify — and gives you a trustworthy, complete answer.</p>
-      </div>
-    </div>
-  </div>
-</section>
+  <h2 data-lang="zh">安装</h2>
+  <h2 data-lang="en">Install</h2>
+  <p data-lang="zh">把下面这段发给 AI，它会帮你装好。</p>
+  <p data-lang="en">Send the text below to your AI and it will install it for you.</p>
 
-<!-- ═══════════ USE CASES ═══════════ -->
-<section>
-  <div class="wrap">
-    <div class="section-label" data-lang="zh">适用于什么情况</div>
-    <div class="section-label" data-lang="en">Use Cases</div>
-    <h2 class="section-title" data-lang="zh">这 5 种场景，都用得上</h2>
-    <h2 class="section-title" data-lang="en">These 5 scenarios — all covered</h2>
+  <pre id="prompt-zh" data-lang="zh">请帮我安装 OpenCode skill "asset-inventory"，仓库地址 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。
 
-    <div class="usecase-list">
-      <div class="usecase-item liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="usecase-icon">🗺️</div>
-          <div>
-            <h4 data-lang="zh">环境盘点</h4>
-            <h4 data-lang="en">Environment Inventory</h4>
-            <p data-lang="zh">新机器、接手项目、或单纯想知道"我现在到底有什么"。</p>
-            <p data-lang="en">New machine, taking over a project, or just want to know "what do I actually have right now."</p>
-          </div>
-        </div>
-      </div>
-      <div class="usecase-item liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="usecase-icon">🔎</div>
-          <div>
-            <h4 data-lang="zh">排查问题</h4>
-            <h4 data-lang="en">Troubleshooting</h4>
-            <p data-lang="zh">"哪个命令被禁了？"<br>"那个 MCP 是谁装的？"<br>"这个 Agent 为什么用不了？"</p>
-            <p data-lang="en">"Which command is disabled?"<br>"Who installed that MCP?"<br>"Why can't I use that agent?"</p>
-          </div>
-        </div>
-      </div>
-      <div class="usecase-item liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="usecase-icon">🚚</div>
-          <div>
-            <h4 data-lang="zh">换机迁移</h4>
-            <h4 data-lang="en">Machine Migration</h4>
-            <p data-lang="zh">新机器开箱，用 JSON 对比快速确认"还差什么没装"。</p>
-            <p data-lang="en">Fresh machine setup — use JSON diff to quickly confirm "what's still missing."</p>
-          </div>
-        </div>
-      </div>
-      <div class="usecase-item liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="usecase-icon">👥</div>
-          <div>
-            <h4 data-lang="zh">入职交接</h4>
-            <h4 data-lang="en">Onboarding Handoff</h4>
-            <p data-lang="zh">给新同事一份环境清单，少走弯路。</p>
-            <p data-lang="en">Hand a new teammate an environment checklist — fewer dead ends.</p>
-          </div>
-        </div>
-      </div>
-      <div class="usecase-item liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <div class="usecase-icon">📈</div>
-          <div>
-            <h4 data-lang="zh">更新前后对比</h4>
-            <h4 data-lang="en">Pre/Post Update Diff</h4>
-            <p data-lang="zh">插件升级前后跑一次，看增删了哪些能力。</p>
-            <p data-lang="en">Run before and after a plugin upgrade to see what capabilities were added or removed.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+1. 先只问我一个问题：装到全局，还是只装进当前项目。
+2. 获取仓库：优先 `git clone`；如果没有 git 或克隆失败，就改用 GitHub 的 ZIP 下载。
+3. 只把三个运行时项复制到目标位置：
+   - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
+   - 项目级：当前项目下的 .opencode/skills/asset-inventory/
+   目录不存在就创建。不要复制 README、docs、assets、scripts。
+4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
+5. 完成后确认 &lt;目标位置&gt;/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
+6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。</pre>
+  <button class="copy" data-copy="prompt-zh" data-lang="zh">复制安装提示词</button>
 
-<!-- ═══════════ INSTALL ═══════════ -->
-<section>
-  <div class="wrap">
-    <div class="section-label" data-lang="zh">安装方式</div>
-    <div class="section-label" data-lang="en">Installation</div>
-    <h2 class="section-title" data-lang="zh">两种装法，选适合你的</h2>
-    <h2 class="section-title" data-lang="en">Two ways to install — pick what fits</h2>
-    <p class="section-desc" data-lang="zh">全局装 = 所有项目都能用；项目级装 = 只跟着当前项目走。先克隆仓库（或下载 ZIP 解压）得到 <code>asset-inventory/</code> 文件夹，<code>cd</code> 进它里面，只复制三样东西（<code>SKILL.md</code>、<code>references/</code>、<code>examples/</code>——README 等文档不用装）。</p>
-    <p class="section-desc" data-lang="en">Global = available in all projects; project-level = stays with the current project only. First clone the repo (or download &amp; unzip the ZIP) to get an <code>asset-inventory/</code> folder, then <code>cd</code> into it and copy only three things (<code>SKILL.md</code>, <code>references/</code>, <code>examples/</code> — the README and docs are not needed).</p>
+  <pre id="prompt-en" data-lang="en">Install the OpenCode skill "asset-inventory" from &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
 
-    <div class="install-guide">
-      <div class="install-method liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <h3>
-            <span data-lang="zh">🌍 全局安装</span>
-            <span data-lang="en">🌍 Global Install</span>
-            <span class="tag" data-lang="zh">所有项目可用</span>
-            <span class="tag" data-lang="en">All projects</span>
-          </h3>
-          <p data-lang="zh">装到 OpenCode 的全局 skills 目录，每个项目都能调用。</p>
-          <p data-lang="en">Install into OpenCode's global skills directory — available to every project.</p>
-          <div class="cmd-label">macOS / Linux</div>
-          <div class="cmd-block">mkdir -p ~/.config/opencode/skills/asset-inventory && cp -r SKILL.md references examples ~/.config/opencode/skills/asset-inventory/<button class="cmd-copy-btn" onclick="copyCmd(this)">复制</button></div>
-          <div class="cmd-label">Windows (PowerShell)</div>
-          <div class="cmd-block">New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"; Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"<button class="cmd-copy-btn" onclick="copyCmd(this)">复制</button></div>
-        </div>
-      </div>
+1. First ask me exactly one question: install globally, or into the current project only.
+2. Get the repository: prefer `git clone`; if git is unavailable or the clone fails, download the GitHub ZIP instead.
+3. Copy only the three runtime items into the target:
+   - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+   - Project-scoped: .opencode/skills/asset-inventory/ inside the current project.
+   Create the directory if it is missing. Do not copy the README, docs, assets, or scripts.
+4. If the skill already exists at the target, overwrite it (that is an update) — do not ask a second time.
+5. When done, verify &lt;target&gt;/asset-inventory/SKILL.md exists, and read the installed version from its frontmatter `metadata.version`.
+6. Treat the source as read-only and do not modify any skill content. Report only the install location and the version.</pre>
+  <button class="copy" data-copy="prompt-en" data-lang="en">Copy install prompt</button>
 
-      <div class="install-method liquid-glass lg-regular">
-        <div class="liquid-glass-effect"></div>
-        <div class="liquid-glass-tint"></div>
-        <div class="liquid-glass-shine"></div>
-        <div class="liquid-glass-content">
-          <h3>
-            <span data-lang="zh">📁 项目级安装</span>
-            <span data-lang="en">📁 Project-Level Install</span>
-            <span class="tag" data-lang="zh">仅当前项目</span>
-            <span class="tag" data-lang="en">Current project only</span>
-          </h3>
-          <p data-lang="zh">装到当前项目内，跟着项目走，适合团队共享或临时使用。把 <code>&lt;项目根目录&gt;</code> 换成你的项目路径。</p>
-          <p data-lang="en">Install inside the current project — travels with the repo, good for team sharing or temporary use. Replace <code>&lt;project-root&gt;</code> with your project path.</p>
-          <div class="cmd-label">macOS / Linux</div>
-          <div class="cmd-block" data-lang="zh">mkdir -p &lt;项目根目录&gt;/.opencode/skills/asset-inventory && cp -r SKILL.md references examples &lt;项目根目录&gt;/.opencode/skills/asset-inventory/<button class="cmd-copy-btn" onclick="copyCmd(this)">复制</button></div>
-          <div class="cmd-block" data-lang="en">mkdir -p &lt;project-root&gt;/.opencode/skills/asset-inventory && cp -r SKILL.md references examples &lt;project-root&gt;/.opencode/skills/asset-inventory/<button class="cmd-copy-btn" onclick="copyCmd(this)">Copy</button></div>
-          <div class="cmd-label">Windows (PowerShell)</div>
-          <div class="cmd-block" data-lang="zh">New-Item -ItemType Directory -Force -Path "&lt;项目根目录&gt;\.opencode\skills\asset-inventory"; Copy-Item -Recurse SKILL.md, references, examples -Destination "&lt;项目根目录&gt;\.opencode\skills\asset-inventory\"<button class="cmd-copy-btn" onclick="copyCmd(this)">复制</button></div>
-          <div class="cmd-block" data-lang="en">New-Item -ItemType Directory -Force -Path "&lt;project-root&gt;\.opencode\skills\asset-inventory"; Copy-Item -Recurse SKILL.md, references, examples -Destination "&lt;project-root&gt;\.opencode\skills\asset-inventory\"<button class="cmd-copy-btn" onclick="copyCmd(this)">Copy</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <p data-lang="zh">或手动安装（只复制三个运行时项）：</p>
+  <p data-lang="en">Or install manually (copy only the three runtime items):</p>
+  <pre># macOS / Linux
+mkdir -p ~/.config/opencode/skills/asset-inventory &amp;&amp; cp -r SKILL.md references examples ~/.config/opencode/skills/asset-inventory/
 
-<!-- ═══════════ FOOTER ═══════════ -->
-<footer>
-  <div class="wrap">
-    <p>
-      <span data-lang="zh">asset-inventory</span>
-      <span data-lang="en">asset-inventory</span>
-      · <span data-lang="zh">MIT 许可证</span>
-      <span data-lang="en">MIT License</span>
-      · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener"><span data-lang="zh">GitHub 仓库</span><span data-lang="en">GitHub repo</span></a>
-    </p>
-    <p class="note" data-lang="zh">⚠️ 本 skill 仅在 OpenCode（含 OpenChamber 等外层应用）环境中测试通过，其他环境不保证可用。</p>
-    <p class="note" data-lang="en">⚠️ This skill has only been tested in OpenCode (including hosts like OpenChamber). Compatibility with other environments is not guaranteed.</p>
-  </div>
-</footer>
+# Windows (PowerShell)
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"; Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"</pre>
 
+  <footer>
+    asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+</main>
 <script>
-// ─── 主题切换（同步 .dark 类给 liquid-glass） ───
-(function initTheme() {
-  var btn = document.getElementById('themeToggle');
-  function apply(t) {
-    document.documentElement.setAttribute('data-theme', t);
-    document.documentElement.classList.toggle('dark', t === 'dark');
-    btn.textContent = t === 'dark' ? '☀️' : '🌙';
-  }
-  apply(document.documentElement.getAttribute('data-theme') || 'dark');
-
-  btn.addEventListener('click', function() {
-    var cur = document.documentElement.getAttribute('data-theme');
-    var next = cur === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme-preference', next);
-    apply(next);
-  });
-})();
-
-// ─── 语言切换（分段控件，直接切换） ───
-(function initLang() {
-  var radios = document.querySelectorAll('#langSegmented input[type="radio"]');
-  var saved = localStorage.getItem('lang-preference');
-  if (saved) {
-    radios.forEach(function(r) { r.checked = (r.value === saved); });
-  }
-
-  function setLanguage(lang) {
-    var html = document.documentElement;
-    html.setAttribute('data-show', lang);
-    localStorage.setItem('lang-preference', lang);
-    // 标签页标题跟随语言
+(function () {
+  var zh = document.getElementById('btn-zh');
+  var en = document.getElementById('btn-en');
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-show', lang);
+    zh.setAttribute('aria-pressed', String(lang === 'zh'));
+    en.setAttribute('aria-pressed', String(lang === 'en'));
     document.title = lang === 'en'
-      ? 'asset-inventory — Full Inventory of Your OpenCode Setup'
+      ? 'asset-inventory — Inventory Your OpenCode Setup'
       : 'asset-inventory — OpenCode 环境全景盘点';
-    updateCopyBtn(lang);
-    document.querySelectorAll('.fade-up').forEach(function(el) {
-      if (getComputedStyle(el).display !== 'none' && el.style.animationPlayState === 'paused') {
-        el.style.animationPlayState = 'running';
-        observer.unobserve(el);
-      }
-    });
+    try { localStorage.setItem('lang', lang); } catch (e) {}
   }
+  zh.addEventListener('click', function () { setLang('zh'); });
+  en.addEventListener('click', function () { setLang('en'); });
+  var saved = 'zh';
+  try { saved = localStorage.getItem('lang') || 'zh'; } catch (e) {}
+  setLang(saved);
 
-  radios.forEach(function(radio) {
-    radio.addEventListener('change', function() {
-      if (this.checked) setLanguage(this.value);
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var el = document.getElementById(btn.getAttribute('data-copy'));
+      var label = btn.textContent;
+      navigator.clipboard.writeText(el.textContent.trim()).then(function () {
+        btn.textContent = '已复制 ✓';
+        setTimeout(function () { btn.textContent = label; }, 1500);
+      });
     });
   });
-
-  var initLang = document.documentElement.getAttribute('data-show') || 'zh';
-  setLanguage(initLang);
 })();
-
-function updateCopyBtn(lang) {
-  var btn = document.getElementById('copyBtn');
-  btn.textContent = lang === 'zh' ? '复制' : 'Copy';
-  btn.classList.remove('copied');
-}
-
-// ─── Copy Install Text ───
-function copyInstall() {
-  var lang = document.documentElement.getAttribute('data-show') || 'zh';
-  var el = lang === 'en' ? document.getElementById('installCodeEn') : document.getElementById('installCode');
-  var text = el.textContent.trim();
-  var btn = document.getElementById('copyBtn');
-  var toast = document.getElementById('toast');
-
-  function showSuccess() {
-    btn.classList.add('copied');
-    btn.textContent = lang === 'zh' ? '已复制 ✓' : 'Copied ✓';
-    toast.textContent = lang === 'zh' ? '已复制到剪贴板' : 'Copied to clipboard';
-    toast.classList.add('show');
-    setTimeout(function() {
-      toast.classList.remove('show');
-      btn.classList.remove('copied');
-      updateCopyBtn(lang);
-    }, 2000);
-  }
-
-  navigator.clipboard.writeText(text).then(showSuccess).catch(function() {
-    var ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showSuccess();
-  });
-}
-
-// ─── Copy cmd-block text ───
-function copyCmd(btn) {
-  var block = btn.closest('.cmd-block');
-  var clone = block.cloneNode(true);
-  clone.querySelector('.cmd-copy-btn').remove();
-  var text = clone.textContent.trim();
-  var lang = document.documentElement.getAttribute('data-show') || 'zh';
-  var toast = document.getElementById('toast');
-
-  function showSuccess() {
-    btn.classList.add('copied');
-    btn.textContent = lang === 'zh' ? '已复制 ✓' : 'Copied ✓';
-    toast.textContent = lang === 'zh' ? '已复制到剪贴板' : 'Copied to clipboard';
-    toast.classList.add('show');
-    setTimeout(function() {
-      toast.classList.remove('show');
-      btn.classList.remove('copied');
-      btn.textContent = lang === 'zh' ? '复制' : 'Copy';
-    }, 2000);
-  }
-
-  navigator.clipboard.writeText(text).then(showSuccess).catch(function() {
-    var ta = document.createElement('textarea');
-    ta.value = text;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    showSuccess();
-  });
-}
-
-// ─── Intersection Observer for fade-up ───
-var observer = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (e.isIntersecting) {
-      e.target.style.animationPlayState = 'running';
-      observer.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12 });
-
-document.querySelectorAll('.fade-up').forEach(function(el) {
-  el.style.animationPlayState = 'paused';
-  observer.observe(el);
-});
-
-// hero items play immediately
-document.querySelectorAll('.hero .fade-up').forEach(function(el) {
-  el.style.animationPlayState = 'running';
-});
-
-// ─── 鼠标跟随高光（liquid-glass 使用 --mx/--my） ───
-if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  document.querySelectorAll('.liquid-glass').forEach(function(card) {
-    var ticking = false;
-    card.addEventListener('mousemove', function(e) {
-      if (!ticking) {
-        requestAnimationFrame(function() {
-          var rect = card.getBoundingClientRect();
-          card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
-          card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
-  });
-}
 </script>
 </body>
 </html>

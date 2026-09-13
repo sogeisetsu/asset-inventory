@@ -1,4 +1,19 @@
+<div align="center">
+
+<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+
 # Asset Inventory
+
+**Know exactly what your OpenCode setup can actually invoke — every plugin, skill, command, MCP server, agent, and host capability, each with provenance.**
+
+[![License: MIT](assets/badge-license.svg)](LICENSE)
+[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
+
+[English](README.md) · [Chinese](README-ZH.md)
+
+<img src="assets/banner.svg" alt="asset-inventory banner" width="100%">
+
+</div>
 
 **asset-inventory** is an OpenCode skill that inventories your setup in one shot — every plugin, skill, command, MCP server, agent, and outer-app capability on your machine, each with **provenance** (where it came from). For every asset it answers three questions: **what it is, who brought it in, how to use it**.
 
@@ -55,7 +70,17 @@ Copy-Item -Recurse SKILL.md, references, examples -Destination "<project-root>\.
 Paste this prompt into an AI coding assistant and let it install for you:
 
 ```text
-Install the "asset-inventory" OpenCode skill from <https://github.com/sogeisetsu/asset-inventory>. First ask me whether to install it globally or into the current project only. Then clone or download the repository and copy only the runtime files — SKILL.md, references/, examples/ — into the chosen target: global skills directory ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\) for global, or .opencode/skills/ inside the current project for project-scoped (create the directory if missing). Do not copy the README files. Verify that SKILL.md ends up at <target>/asset-inventory/SKILL.md. Do not modify any skill file during installation. Report the final path.
+Install the OpenCode skill "asset-inventory" from <https://github.com/sogeisetsu/asset-inventory>.
+
+1. First ask me exactly one question: install globally, or into the current project only.
+2. Get the repository: prefer `git clone`; if git is unavailable or the clone fails, download the GitHub ZIP instead.
+3. Copy only the three runtime items into the target:
+   - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+   - Project-scoped: .opencode/skills/asset-inventory/ inside the current project.
+   Create the directory if it is missing. Do not copy the README, docs, assets, or scripts.
+4. If the skill already exists at the target, overwrite it (that is an update) — do not ask a second time.
+5. When done, verify <target>/asset-inventory/SKILL.md exists, and read the installed version from its frontmatter `metadata.version`.
+6. Treat the source as read-only and do not modify any skill content. Report only the install location and the version.
 ```
 
 ## Updating
@@ -160,17 +185,25 @@ asset-inventory/
 ├── SKILL.md                    # the skill (execution skeleton + rules)
 ├── update.ps1                  # one-command update script
 ├── README.md                   # English documentation (this file)
-├── README-zh.md                # Chinese documentation
-├── CHANGELOG.md                # version history
-├── CONTRIBUTING.md             # contribution guidelines
-├── references/
-│   ├── format-example.md       # 7-table cell format reference
-│   ├── host-commands.md        # outer-app command scan method
-│   ├── troubleshooting.md      # common issues and solutions
-│   └── usage-guide.md          # usage-guide format reference
-└── examples/
-    └── inventory-example.md    # desensitized output example
+├── README-ZH.md                # Chinese documentation
+├── CHANGELOG.md                # version history (English)
+├── CONTRIBUTING.md             # contribution guidelines (English)
+├── LICENSE                     # MIT
+├── references/                 # skill format & scan-method references
+├── examples/                   # desensitized output example
+├── assets/                     # local SVG icon / banner / badges (generated)
+├── scripts/
+│   ├── check-docs.mjs          # docs / links / frontmatter validation
+│   └── generate-assets.mjs     # regenerates assets/*.svg
+├── docs/                       # GitHub Pages + release notes
+└── zh/                         # all Chinese docs except README-ZH.md
+    ├── CHANGELOG-ZH.md
+    ├── CONTRIBUTING-ZH.md
+    ├── LICENSE-ZH.txt
+    └── release-notes-v1.1.0-ZH.md
 ```
+
+Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) and `AGENTS.md` are gitignored and never published.
 
 ## Compatibility
 
