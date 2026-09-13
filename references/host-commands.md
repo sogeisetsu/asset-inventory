@@ -1,46 +1,47 @@
-# 外层应用扫描方法
+# Outer-app scan methods
 
-## 如何发现注入命令（必做，普通 grep 会漏二进制）
+## How to find injected commands (mandatory — plain grep misses binaries)
 
-外层应用注入的斜杠命令可能藏在：
-1. **应用包二进制**（`app.asar`、`web-dist` 等）— 最常见
-2. **配置文件**（`settings.json` 等）— 较少见
-3. **注册表/内部存储**（Electron DIPS/SQLite）— 需要专门工具
+Host-injected slash commands may hide in:
 
-**通用原则：** 不要预设任何命令列表。以扫描结果为准。
+1. **App bundle binaries** (`app.asar`, `web-dist`, etc.) — most common
+2. **Config files** (`settings.json`, etc.) — less common
+3. **Registry / internal storage** (Electron DIPS/SQLite) — needs specialized tools
 
-## 应用包二进制扫描（Electron 类应用）
+**General rule:** never assume any command list. Trust the scan result.
 
-**原理：** 在二进制文件中搜索 `/xxx` 字面量。用字节匹配，不用正则。
+## App bundle binary scan (Electron-style apps)
 
-**Node.js（推荐）：**
+**Principle:** search the binary for `/xxx` literals. Match bytes, not regex.
+
+**Node.js (recommended):**
 ```js
-const b = require('fs').readFileSync('<外层应用包/app.asar>');
-// 列出你想验证的命令（从其他来源获知的，或全量扫描）
+const b = require('fs').readFileSync('<outer-app bundle/app.asar>');
+// List the commands you want to verify (known from other sources, or scan all)
 ['/catch-up','/plan-feature','/weigh'].forEach(t =>
   console.log(t, b.indexOf(Buffer.from(t)) >= 0 ? 'FOUND' : 'absent'));
 ```
 
-**PowerShell：**
+**PowerShell:**
 ```powershell
-$b = [IO.File]::ReadAllBytes('<外层应用包/app.asar>')
+$b = [IO.File]::ReadAllBytes('<outer-app bundle/app.asar>')
 $text = [System.Text.Encoding]::UTF8.GetString($b)
 @('/catch-up','/plan-feature','/weigh') | ForEach-Object {
     "$_ $(if($text.Contains($_)){'FOUND'}else{'absent'})"
 }
 ```
 
-> **注意：** PowerShell 的 `Contains()` 对 60MB+ 文件可能较慢。Node.js 的 `Buffer.indexOf` 更快更可靠。
+> **Note:** PowerShell's `Contains()` can be slow on 60MB+ files. Node.js `Buffer.indexOf` is faster and more reliable.
 
-## 全量扫描（不知道有哪些命令时）
+## Full scan (when you don't know which commands exist)
 
-如果不知道该验证哪些命令，可以先全量扫描：
+If you don't know which commands to verify, scan everything first:
 
-**Node.js：**
+**Node.js:**
 ```js
-const b = require('fs').readFileSync('<外层应用包/app.asar>');
+const b = require('fs').readFileSync('<outer-app bundle/app.asar>');
 const text = b.toString('utf8');
-// 找所有 / 开头的斜杠命令模式
+// Find all slash-command patterns starting with /
 const matches = text.match(/\/[a-z][a-z0-9-]{2,}/g);
 if (matches) {
   const unique = [...new Set(matches)].sort();
@@ -49,49 +50,49 @@ if (matches) {
 }
 ```
 
-**PowerShell（慢，建议用 Node.js）：**
+**PowerShell (slow, prefer Node.js):**
 ```powershell
-$b = [IO.File]::ReadAllBytes('<外层应用包/app.asar>')
+$b = [IO.File]::ReadAllBytes('<outer-app bundle/app.asar>')
 $text = [System.Text.Encoding]::UTF8.GetString($b)
 $matches = [regex]::Matches($text, '/[a-z][a-z0-9]{2,}')
 $matches | ForEach-Object { $_.Value } | Sort-Object -Unique
 ```
 
-> **警告：** 全量扫描会返回大量结果（包括代码注释、字符串常量中的路径等）。需要人工判断哪些是真正的斜杠命令。
+> **Warning:** a full scan returns a lot of noise (code comments, path strings, etc.). Human judgment is needed to tell which are real slash commands.
 
-## 配置文件扫描（辅助手段）
+## Config-file scan (secondary)
 
-如果外层应用有配置文件，检查其中是否有命令注册相关的键：
+If the outer app has a config file, check it for command-registration keys:
 
 ```powershell
-$configPath = "$env:USERPROFILE\.config\<外层应用名>\settings.json"
+$configPath = "$env:USERPROFILE\.config\<OuterApp>\settings.json"
 if (Test-Path $configPath) {
     $config = Get-Content $configPath -Raw | ConvertFrom-Json
-    $config.PSObject.Properties | Where-Object { 
-        $_.Name -match 'prompt|command|slash|magic' 
+    $config.PSObject.Properties | Where-Object {
+        $_.Name -match 'prompt|command|slash|magic'
     } | ForEach-Object {
         Write-Host "$($_.Name): $($_.Value)"
     }
 }
 ```
 
-> **注意：** 配置文件中可能没有命令列表（如 OpenChamber），命令是写死在应用包里的。配置文件扫描只是辅助手段。
+> **Note:** the config file may not contain a command list (e.g. OpenChamber) — the commands are baked into the app bundle. A config scan is only a secondary measure.
 
-## 盘点要求
+## Inventory requirements
 
-1. **不要预设任何命令列表** — 每次盘点必须现扫，以扫描结果为准
-2. **不要假设外层应用的格式** — 先确认是什么技术栈，再用对应方法
-3. **不要假设配置键名** — `magicPrompts` 只是 OpenChamber 的键名，其他外层应用可能用不同的键
-4. **来源一律写** `外层应用注入，<具体发现方式>（<路径>）`
-5. **找不到就说找不到** — 不编造、不推测
+1. **Never assume any command list** — every inventory must scan fresh and trust the result.
+2. **Never assume the outer app's format** — first determine the tech stack, then use the matching method.
+3. **Never assume config key names** — `magicPrompts` is only OpenChamber's key name; other outer apps may use different keys.
+4. **Always write the source as** `host-injected, <how it was found> (<path>)`.
+5. **If you can't find it, say so** — don't fabricate or guess.
 
-## 常见外层应用（仅供参考）
+## Common outer apps (reference only)
 
-| 应用 | 技术栈 | 扫描目标 |
+| App | Tech stack | Scan target |
 |---|---|---|
-| OpenChamber | Electron | `app.asar`（命令写死在包里，不在配置文件） |
-| 其他 Electron 应用 | Electron | 应用安装目录下的 `app.asar` 或 `resources/` |
-| Tauri 应用 | Tauri | `web-dist/`、`src-tauri/` 配置 |
-| 原生应用 | 各异 | 安装目录、配置目录、系统注册表 |
+| OpenChamber | Electron | `app.asar` (commands are baked into the bundle, not the config file) |
+| Other Electron apps | Electron | `app.asar` or `resources/` under the install dir |
+| Tauri apps | Tauri | `web-dist/`, `src-tauri/` config |
+| Native apps | varies | install dir, config dir, system registry |
 
-> 以上仅为参考，实际盘点时以现查为准。
+> The above is reference only; trust what you observe at inventory time.

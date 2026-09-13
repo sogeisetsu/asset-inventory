@@ -1,70 +1,70 @@
-# 资产盘点示例（脱敏，供格式参考）
+# Inventory example (desensitized, for format reference)
 
-> 本文件是 asset-inventory skill 的输出示例，展示 7 表结构与"来源三段式"写法。
-> 示例值为脱敏占位，不代表任何真实机器；每行须按 skill 规则现查后替换。
-> `干什么`必须达到本文件所示详细度：简单一句话 + 详细 2-4 句，一句话版算不达标。
+> This file is an output example for the asset-inventory skill, showing the 7-table structure and the "three-part source" style.
+> Example values are desensitized placeholders and do not represent any real machine; every row must be replaced with values you look up fresh per the skill rules.
+> `What it does` must reach the level of detail shown here: a one-sentence Simple plus a 2-4 sentence Detailed. One-liners do not pass.
 
-## 表1 插件与配套软件
+## Table 1 — Plugins & companion software
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| 示例外层应用（真名，如 OpenChamber） | 外层应用官方，安装包 `resources/` + 配置 `$HOST_CONFIG/` | 不用叫，开机自带 | 每次打开工作台时 | 简单：桌面工作台。详细：它管项目、会话、定时任务、模型偏好和页内浏览器，是所有外层应用能力的总入口；同时向 opencode 注入一批 `/` 命令与会话、浏览器工具，盘点时以它托管的 opencode 进程为准。 |
-| 示例插件@1.0.0 | 第三方插件，`opencode.jsonc:plugin[]`，源码 `<repo>` MIT | 不用叫，自动生效 | 换模型、换分工时 | 简单：包工头团队。详细：它带来 N 个 Skill、M 个 Agent 与模型预设，多步任务自动拆派整合；换分工、换模型链时找它。 |
+| Example outer app (real name, e.g. OpenChamber) | outer app official, install bundle `resources/` + config `$HOST_CONFIG/` | nothing to call, on from launch | every time you open the workspace | Simple: the desktop workspace. Detailed: it manages projects, sessions, scheduled tasks, model preferences, and the in-page browser, and is the entry point to every host capability; it also injects a batch of `/` commands plus session and browser tools into opencode. When inventorying, treat the opencode process it hosts as ground truth. |
+| example-plugin@1.0.0 | third-party plugin, `opencode.jsonc:plugin[]`, source `<repo>` MIT | nothing to call, active automatically | when switching models or roles | Simple: a foreman's team. Detailed: it brings N skills, M agents, and model presets, and auto-splits/dispatches multi-step tasks; reach for it when changing roles or model chains. |
 
-## 表2 各软件/插件带来的 Skill 与命令
+## Table 2 — Skills & commands each software/plugin brings
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| example-skill | 示例插件 包 `src/skills/example` | 看话自动干，或 `/example:skill` | 需要某类流程化处理时 | 简单：一句话用途。详细：基于 SKILL.md 实际 description 展开 2-4 句，讲清接管后具体做什么、输入输出是什么；日常命中场景自动触发，也可显式点名调用 |
-| /loop | 示例插件 注册命令（dist `hooks/loop-command`） | `/loop` | 反复试错直到通过时 | 简单：自动"执行-验证-迭代"循环。详细：先问清 goal、成功标准、成功类型与最大尝试次数，再派执行 agent 干、验证 agent 验，失败带历史重试直到通过或次数用尽；循环状态写盘 |
-| /example | 示例插件提供工具，命令文件 `$OPENCODE_CONFIG/command/example.md` | `/example` | 想看某结果时 | 简单：看本会话的某项账单数据。详细：它立即执行插件提供的后台工具，把结果打成表格展示，不问问题、不改配置；适合长会话结束时看一眼 |
+| example-skill | example plugin package `src/skills/example` | auto-triggers on intent, or `/example:skill` | when you need a particular kind of flow | Simple: one-line purpose. Detailed: expand 2-4 sentences from the real SKILL.md description, explaining what it does once it takes over and what its inputs/outputs are; it auto-triggers on matching situations, and can also be invoked by name. |
+| /loop | example plugin registers command (dist `hooks/loop-command`) | `/loop` | when repeatedly trying until it passes | Simple: an automatic "run–verify–iterate" loop. Detailed: it first asks for the goal, success criteria, success type, and max attempts, then dispatches an executor agent and a verifier agent; on failure it retries with history until it passes or attempts run out. Loop state is written to disk. |
+| /example | example plugin provides the tool; command file `$OPENCODE_CONFIG/command/example.md` | `/example` | when you want to see a particular result | Simple: see some bill data for this session. Detailed: it immediately runs the background tool the plugin provides and prints the result as a table; it asks nothing and changes no config. Best glanced at when a long session ends. |
 
-## 表3 原生命令与原生 Skill
+## Table 3 — Built-in commands & built-in skills
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| /undo | 核心自带，官方 TUI 文档 | `/undo` | 改错反悔时，需 git | 简单：后悔药。详细：它撤销上一条消息，并通过 Git 回滚这条消息产生的文件改动；反悔之后可用 `/redo` 恢复。项目非 git 仓库时不可用，这是最常见的坑。 |
-| /new | 核心自带，官方 TUI 文档 | `/new` | 一件事做完怕污染时，需 git | 简单：开新局。详细：它另起一个干净会话，别名 /clear，避免旧上下文污染新任务；旧会话保留，可随时切回。 |
-| 示例 builtin Skill | 核心 builtin | 自动 | 说"改工具自身"时 | 简单：只调自己。详细：它走安全流程处理工具自身变更，分两步确认再动手；日常改业务代码不会触发。 |
+| /undo | built-in, official TUI docs | `/undo` | when you want to take back a mistake; needs git | Simple: undo. Detailed: it reverts the last message and rolls back the file changes that message produced via Git; `/redo` restores it afterward. It is unavailable when the project is not a git repo — the most common pitfall. |
+| /new | built-in, official TUI docs | `/new` | when one task is done and you don't want pollution; needs git | Simple: a fresh start. Detailed: it opens a clean session, aliased `/clear`, so old context doesn't pollute the next task; the old session is kept and can be switched back to anytime. |
+| Example builtin skill | core builtin | automatic | when you say "change the tool itself" | Simple: it only touches itself. Detailed: it follows a safety flow for changes to the tool itself, confirming in two steps before acting; everyday business-code changes do not trigger it. |
 
-## 表4 自定义 Skill、自定义命令与外层应用注入命令
+## Table 4 — Custom skills, custom commands, and host-injected commands
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| 示例自建 Skill | 本地自建，上游 `<repo>` `<协议>`，依赖 `<CLI>` | 自动或 `/example:skill` | 需要某类处理时 | 简单：一句话用途。详细：基于 SKILL.md 实际 description 展开 2-4 句，讲清触发场景与做法；依赖的 CLI 须事先装好，未装时调用处报错 |
-| /status | 全局自定义，`$OPENCODE_CONFIG/command/status.md` | `/status` | 回来先看盘时 | 简单：一屏定位。详细：它收集当前分支、干净度与近 8 笔提交，存在活文档时一并读取，然后按"分支、阶段、下一步"三段输出；不深挖 diff、不读设计文档，只做快速定位 |
-| /catch-up | 外层应用注入，二进制扫描 `<app.asar>` 发现 | `/catch-up` | 每次回来断片时 | 简单：补课。详细：它把分支提交、PR 状态和未提交改动汇总成 branch-aware 上下文，给出可扫读的总结和下一步；多会话来回切换时最高频 |
-| /plan-feature | 外层应用注入，二进制扫描 `<app.asar>` 发现 | `/plan-feature` | 做新功能动键盘前 | 简单：先画图。详细：它引导你先探索代码库，分批澄清需求，然后输出实现计划；全程不直接写码，规划确认后再动手 |
-| /craft-goal | 外层应用注入，二进制扫描 `<app.asar>` 发现 | `/craft-goal` | 目标含糊时 | 简单：磨目标。详细：它把模糊想法、任务通过多轮引导变成清晰、可验证的 Goal，可直接派给执行方 |
-| /workspace-review | 外层应用注入，二进制扫描 `<app.asar>` 发现 | `/workspace-review` | 改完没提交时 | 简单：审改动。详细：它审查工作区 diff 是否达标、正确、合理，按严重度分类输出；适合提交前自查 |
-| /weigh | 外层应用注入，二进制扫描 `<app.asar>` 发现 | `/weigh` | 两方案僵持时 | 简单：摆利弊。详细：它先查代码，然后给出 2-3 个方案加取舍加推荐；只给结论不写计划不写码 |
-| /debug | 外层应用注入，二进制扫描 `<app.asar>` 发现 | `/debug` | 测试红了修不好时 | 简单：找根因。详细：它做引导式根因分析，定位后再修，禁止盲目试错；修不好、反复红时用 |
-| /summary | 外层应用注入，二进制扫描 `<app.asar>` 发现 | `/summary` | 要交接时 | 简单：写交接。详细：它输出非破坏性会话摘要，不压缩历史，供交接给人或新会话；原会话不受影响 |
-| /explore | 外层应用注入，二进制扫描 `<app.asar>` 发现 | `/explore` | 进陌生目录时 | 简单：导览。详细：它结构化讲解仓库方位、主模块、模块关系，并指从哪开始读；进陌生项目第一用 |
+| Example user-built skill | local, upstream `<repo>` `<license>`, depends on `<CLI>` | automatic, or `/example:skill` | when you need a particular kind of processing | Simple: one-line purpose. Detailed: expand 2-4 sentences from the real SKILL.md description, explaining the trigger scenario and how it works; the CLI it depends on must be installed first, or it errors at the call site. |
+| /status | global custom, `$OPENCODE_CONFIG/command/status.md` | `/status` | when you want a quick status check on return | Simple: locate everything in one screen. Detailed: it collects the current branch, cleanliness, and the last 8 commits, and reads any living doc if present, then prints three sections: branch / phase / next step. It does not dig into diffs or read design docs — just a fast orientation. |
+| /catch-up | host-injected, found by binary scan of `<app.asar>` | `/catch-up` | the first thing when you come back and have lost context | Simple: catch up. Detailed: it summarizes branch commits, PR status, and uncommitted changes into branch-aware context and gives a skimmable summary plus next steps; highest frequency when hopping between sessions. |
+| /plan-feature | host-injected, found by binary scan of `<app.asar>` | `/plan-feature` | before you start coding a new feature | Simple: draw the map first. Detailed: it guides you to explore the codebase, clarifies requirements in batches, then outputs an implementation plan; it writes no code throughout, and you act after the plan is confirmed. |
+| /craft-goal | host-injected, found by binary scan of `<app.asar>` | `/craft-goal` | when the goal is vague | Simple: sharpen the goal. Detailed: it turns vague ideas and tasks into a clear, verifiable Goal through multiple rounds of guidance, ready to hand to an executor. |
+| /workspace-review | host-injected, found by binary scan of `<app.asar>` | `/workspace-review` | after changes, before committing | Simple: review the changes. Detailed: it reviews whether the workspace diff meets the bar, is correct, and is reasonable, and outputs by severity; good for a self-check before committing. |
+| /weigh | host-injected, found by binary scan of `<app.asar>` | `/weigh` | when two options are deadlocked | Simple: lay out the trade-offs. Detailed: it checks the code first, then gives 2-3 options with trade-offs and a recommendation; conclusions only — no plan, no code. |
+| /debug | host-injected, found by binary scan of `<app.asar>` | `/debug` | when tests are red and won't fix | Simple: find the root cause. Detailed: it does guided root-cause analysis and fixes only after locating the cause, forbidding blind trial-and-error; use it when a fix fails repeatedly. |
+| /summary | host-injected, found by binary scan of `<app.asar>` | `/summary` | when you need a handoff | Simple: write a handoff. Detailed: it outputs a non-destructive session summary without compressing history, for handing off to a person or a new session; the original session is unaffected. |
+| /explore | host-injected, found by binary scan of `<app.asar>` | `/explore` | when entering an unfamiliar directory | Simple: a tour. Detailed: it explains the repo's layout, main modules, and module relationships, and points out where to start reading; the first thing to run in an unfamiliar project. |
 
-## 表5 MCP
+## Table 5 — MCP
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| 示例MCP | 远端MCP，`mcp.example.com`，全局配置 `opencode.jsonc:mcp` | Agent 自调 | 需要联网查官方文档时 | 简单：联网查。详细：人不用叫，Agent 在需要现行文档时自动调它取实时结果；认证头含 key，已脱敏处理相关 Skill 未知。 |
-| 示例本地MCP | 本地MCP，`example-mcp` 命令 | Agent 自调 | 需要本地能力时 | 简单：本地工具。详细：它把本地命令包装成 Agent 可调的工具，需要某类本地能力时自动触发；命令缺失时调用失败。相关 Skill 未知。 |
+| ExampleMCP | remote MCP, `mcp.example.com`, global config `opencode.jsonc:mcp` | Agent calls it | when you need to look up official docs online | Simple: look things up online. Detailed: humans don't call it; the Agent invokes it automatically when it needs current docs. The auth header contains a key, already masked. Related skill unknown. |
+| Example local MCP | local MCP, `example-mcp` command | Agent calls it | when you need local capabilities | Simple: a local tool. Detailed: it wraps local commands as tools the Agent can call, triggered automatically when that local capability is needed; a missing command makes the call fail. Related skill unknown. |
 
-## 表6 Agent
+## Table 6 — Agents
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 | 模型链 |
+| Name | Source | How to call | When to use | What it does | Model chain |
 |---|---|---|---|---|---|
-| build | 核心自带（primary）✅实测 | Tab 默认 | 执行改动时 | 简单：主力。详细：它是默认 primary，全部工具放开，负责实现需求、改文件、跑命令；日常所有改动都经它动手，规划类任务除外。 | <宿主defaultModel 实值现查>（单模型，无链式回退） |
-| 示例Agent | 示例插件（插件包）✅实测 | 自动接管 | 任何多步活时 | 简单：包工头。详细：它拆活派活再整合，只调度不写码，把子任务结果拼回最终答案；多步任务命中场景自动接管，也可显式点名。 | `opencode-go/模型A → longcat/模型B → opencode/模型C`（当前预设现查）；备用预设：预设2、预设3 |
+| build | built-in (primary) ✅verified | default Tab | when executing changes | Simple: the workhorse. Detailed: it is the default primary with all tools enabled, responsible for implementing requirements, editing files, and running commands; all everyday changes go through it, except planning tasks. | `<host defaultModel, look up the real value>` (single model, no chain fallback) |
+| Example agent | example plugin (plugin package) ✅verified | auto-takeover | on any multi-step job | Simple: the foreman. Detailed: it splits work, dispatches it, and reassembles results; it only coordinates and does not write code, and stitches sub-task results into the final answer. It auto-takes-over on matching multi-step tasks and can be invoked by name. | `opencode-go/modelA → longcat/modelB → opencode/modelC` (current preset, look up); backup presets: preset2, preset3 |
 
-> 注：隐藏系统 agent（compaction/title/summary）存在且自动运行，但 UI 不可选，不作为可用行列出。
+> Note: hidden system agents (compaction/title/summary) exist and run automatically, but are not selectable in the UI and are not listed as available rows.
 
-## 表7 外层应用
+## Table 7 — Host capabilities
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| 全局行为规则 | 外层应用设置 `$HOST_CONFIG/` 全局行为 | 看话自动干 | 所有会话 | 简单：家规。详细：它给所有会话立规矩，例如先验证再查文档、不可逆操作先计划确认；每次回答前自动生效，不用点名 |
-| 页内浏览器 | 外层应用工具 | Agent 调时 | 要看登录态页面时 | 简单：用你的浏览器看。详细：Agent 在需要时调用它开页、读内容、点击、截图，全程带用户真实登录态；人不用叫 |
+| Global behavior rules | host settings `$HOST_CONFIG/` global behavior | auto-triggers on intent | all sessions | Simple: house rules. Detailed: it sets rules for every session, e.g. verify before consulting docs, and plan-and-confirm before irreversible operations; it takes effect before every reply, with no invocation needed. |
+| In-page browser | host tool | when the Agent calls it | when you need to see a logged-in page | Simple: see through your browser. Detailed: the Agent calls it as needed to open pages, read content, click, and screenshot, all carrying the user's real login state; humans don't call it. |
 
 ---
 
-**口诀：资产盘点三问——是什么、谁带来、怎么用；来源必写具体带来者，命令调谁的工具归谁。**
+**Mnemonic: the three inventory questions — what it is, who brought it, how to use it; always name the specific bringer, and a command belongs to whoever owns the tool it invokes.**

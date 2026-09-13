@@ -1,42 +1,42 @@
 # Troubleshooting
 
-## 常见问题
+## Common issues
 
-### Skill 找不到（`/asset-inventory` 命令不出现）
+### Skill not found (the `/asset-inventory` command doesn't appear)
 
-1. 检查安装位置：
-   - 全局：`~/.config/opencode/skills/asset-inventory/SKILL.md` 应存在
-   - 项目级：`<项目根目录>/.opencode/skills/asset-inventory/SKILL.md` 应存在
-2. 检查 SKILL.md frontmatter 是否完整（`name`、`version`、`description` 字段）
-3. 重启 OpenCode 后重试
+1. Check the install location:
+   - Global: `~/.config/opencode/skills/asset-inventory/SKILL.md` should exist
+   - Project-scoped: `<project-root>/.opencode/skills/asset-inventory/SKILL.md` should exist
+2. Check that the SKILL.md frontmatter is complete (`name`, `description`, `license`, `metadata` fields)
+3. Restart OpenCode and try again
 
-### 输出未生成（`output/` 目录为空）
+### No output generated (the `output/` directory is empty)
 
-1. 检查当前目录是否有写权限
-2. 检查 `output/` 目录是否存在（不存在会自动创建）
-3. 如果是精扫模式（如 `/asset-inventory mcp`），确认参数拼写正确
+1. Check that the current directory is writable
+2. Check whether the `output/` directory exists (it is created automatically if missing)
+3. For a targeted mode (e.g. `/asset-inventory mcp`), confirm the argument is spelled correctly
 
-### 盘点结果不全
+### Inventory results are incomplete
 
-1. 插件相关：检查 `$OPENCODE_CONFIG/opencode.jsonc` 的 `plugin[]` 配置
-2. 外层应用命令：需要对外层应用包做二进制安全扫描（见 `references/host-commands.md`）
-3. Agent：运行 `opencode agent list` 和 `opencode --pure agent list` 对比结果
-4. MCP：检查 `opencode.jsonc` 的 `mcp` 配置段
+1. Plugins: check the `plugin[]` config in `$OPENCODE_CONFIG/opencode.jsonc`
+2. Host commands: you need a binary-safe scan of the outer app bundle (see `references/host-commands.md`)
+3. Agents: run `opencode agent list` and `opencode --pure agent list` and compare
+4. MCP: check the `mcp` section of `opencode.jsonc`
 
-### 版本号读取失败
+### Version read failure
 
-`update.ps1` 从 SKILL.md frontmatter 的 `version:` 字段读取版本号。如果读不到：
-1. 检查 frontmatter 格式（必须是 `version: x.y.z`，注意冒号后有空格）
-2. 检查文件编码（UTF-8 with BOM 也可，但纯 ASCII 最稳）
+`update.ps1` reads the version from the `metadata.version` field of the SKILL.md frontmatter. If it can't read it:
+1. Check the frontmatter format (`version: x.y.z` under `metadata:`, with a space after the colon)
+2. Check the file encoding (UTF-8 with BOM also works, but plain ASCII is safest)
 
-### Diff 模式不工作
+### Diff mode doesn't work
 
-1. 必须先有上一次的 `asset-inventory.json`
-2. 把 JSON 内容贴给 skill（不要只贴文件路径）
-3. 只对比 `table` + `name` 作为主键
+1. You must have a previous `asset-inventory.json`
+2. Paste the JSON content to the skill (don't paste just the file path)
+3. Compare only on `table` + `name` as the primary key
 
-### 多语言输出不一致
+### Inconsistent multilingual output
 
-1. 语言跟随用户最后一次输入的语言
-2. Provenance 行也应跟随输出语言（中文输出用中文 Provenance，英文用英文）
-3. 表头、状态标记、单元格内容全部跟随用户语言
+1. Language follows the language of the user's last message
+2. The Provenance lines should also follow the output language (Chinese output uses Chinese Provenance, English uses English)
+3. Table headers, state markers, and cell content all follow the user's language

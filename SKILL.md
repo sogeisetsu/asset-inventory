@@ -1,44 +1,56 @@
 ---
 name: asset-inventory
-version: 1.3.0
-description: Inventory every plugin, companion app, skill, command, MCP server, agent, and host capability on this machine's OpenCode/OpenChamber setup, with provenance for each item. Use when the user asks "列一下我有什么插件/Skill/命令/MCP/Agent"、"哪个被禁用了"、"谁带进来的", or wants a migration/onboarding checklist. Outputs 7 tables plus a machine-readable JSON file. Never invent assets, versions, or model names — verify everything on this machine.
+description: Inventory every plugin, companion app, skill, command, MCP server, agent, and host capability on this machine's OpenCode/OpenChamber setup, with provenance for each item. Use when the user asks to list their plugins, skills, commands, MCP servers, or agents; asks which one is disabled; asks who brought a given asset in; or wants a migration/onboarding checklist. Outputs 7 tables plus a machine-readable JSON file. Never invent assets, versions, or model names — verify everything on this machine.
 license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
+  version: 1.3.0
 ---
 
 # Asset Inventory
 
-Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers: **是什么、谁带来的、怎么用**.
+Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers three questions: **what it is, who brought it in, how to use it**.
+
+> **Language rule — read this first: output follows the user's language.** A request in Chinese produces a fully Chinese deliverable; a request in English produces English. The skill's own instructions stay English. Fixed strings (table headers, state markers, confidence suffixes) must come from `references/glossary.json` for the chosen language. Details in [Output Language](#output-language).
+
+## Output Language
+
+This skill's instructions are written in English, but **output must follow the user's language**.
+
+- If the user writes in Chinese, or asks for a Chinese result, produce the whole deliverable in Chinese — every table header, cell value, state marker, provenance line, and the usage guide.
+- If the user writes in English, produce it in English. Any other language works the same way (Japanese→Japanese, German→German, …).
+- Keep technical terms, paths, command names, asset names, and field names in their original form.
+- When in doubt, mirror the language of the user's last message, or ask.
+- **Use the fixed strings from `references/glossary.json`** for the chosen language: `columns` / `columnsAgent` (headers), `state` markers, `confidence` suffixes, `tableTitles`, `emptyTable`, `unknown`, and `provenance`. Do not improvise these strings; they must stay identical across runs so diff mode stays comparable.
 
 ## Quick Reference
 
-**一句话触发：** `/asset-inventory` 或自然语言 "列一下我有什么插件/Skill/命令/MCP/Agent"
+**One-line trigger:** `/asset-inventory`, or natural language such as "list my plugins / skills / commands / MCP / agents".
 
-**三份产物（同一批证据，不重复收集）：**
+**Three deliverables (one body of evidence, never re-collected):**
 
-| 文件 | 内容 |
+| File | Content |
 |---|---|
-| `output/inventory.md` | 7 张表：插件 → 各软件带来的Skill/命令 → 原生命令 → 自定义/外层注入 → MCP → Agent → 外层应用 |
-| `output/usage-guide.md` | 使用指南：按场景/频率（每天必用 / 干活主力 / 按需 / 周期性） |
-| `output/asset-inventory.json` | 机器可读 JSON，PK = `table` + `name` |
+| `output/inventory.md` | 7 tables: plugins → skills/commands each brings → built-ins → custom/host-injected → MCP → agents → host capabilities |
+| `output/usage-guide.md` | Usage guide by scenario/frequency (daily / main tools / on-demand / periodic) |
+| `output/asset-inventory.json` | Machine-readable JSON, PK = `table` + `name` |
 
-**精扫模式：** `/asset-inventory mcp` | `agents` | `hosts` | `skills` | `diff` | `usage`
+**Targeted modes:** `/asset-inventory mcp` | `agents` | `hosts` | `skills` | `diff` | `usage`
 
-**每行必答三问：** 是什么（名称）· 谁带来的（来源三段式）· 怎么用（何时用 + 调用路径）
+**Three questions per row:** what it is (name) · who brought it in (three-part source) · how to use it (when to use + invocation path)
 
 ---
 
 ## Output
 
-三份产物从**同一批证据**派生（不重复收集）。详细格式见各自 reference 文件：
+The three deliverables are derived from **the same body of evidence** (never re-collected). Detailed formats live in the reference files:
 
-- **`inventory.md`** — 7 张表。格式见 `references/format-example.md`。
-- **`usage-guide.md`** — 从 7 表派生的使用指南。格式见 `references/usage-guide.md`。
-- **`asset-inventory.json`** — 机器可读 JSON，PK = `table` + `name`。格式见下方 Output 段。
+- **`inventory.md`** — the 7 tables. Format: `references/format-example.md`.
+- **`usage-guide.md`** — a usage guide derived from the 7 tables. Format: `references/usage-guide.md`.
+- **`asset-inventory.json`** — machine-readable JSON, PK = `table` + `name`. Format: see the Output step under Procedure.
 
-使用指南**绝不重新收集证据**——它只是同一批行按场景/频率的第二视图。
+The usage guide **never re-collects evidence** — it is a second view of the same rows by scenario/frequency.
 
 ## Targeting
 
@@ -53,102 +65,103 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 | `/asset-inventory usage` | Full scan, usage guide only | `usage-guide.md` only |
 
 Rules:
-- With a target, **skip unrelated evidence collection** (e.g. `mcp` skips plugin dist scan, `agents` skips outer-app bundle). Language, cell conventions, source classification, masking rules, and `output/` path all stay the same.
-- `diff` is equivalent to natural-language diff mode: ask user to paste previous JSON, output only added/removed by PK. Never re-dump full tables.
-- `usage` still does full scan (usage guide must derive from the same rows), but only writes `usage-guide.md`, not `inventory.md` or JSON.
-- Unrecognized target → fall back to full scan, note "unknown target, fell back to full scan" at the end.
+- With a target, **skip unrelated evidence collection** (e.g. `mcp` skips the plugin dist scan, `agents` skips the outer-app bundle). Language, cell conventions, source classification, masking rules, and the `output/` path all stay the same.
+- `diff` is equivalent to natural-language diff mode: ask the user to paste the previous JSON, output only added/removed by PK. Never re-dump full tables.
+- `usage` still does a full scan (the usage guide must derive from the same rows), but only writes `usage-guide.md`, not `inventory.md` or JSON.
+- Unrecognized target → fall back to full scan and note "unknown target, fell back to full scan" at the end.
 
 ---
 
 ## The Rule
 
-Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`名称｜来源｜怎么叫｜何时用｜干什么`); **表6 Agent has 6 columns** (`名称｜来源｜怎么叫｜何时用｜干什么｜模型链`).
+Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How to call | When to use | What it does`); **Table 6 (Agents) has 6 columns** (`… | Model chain`). Localize the header text to the output language using `references/glossary.json` (`columns` / `columnsAgent`).
 
-### 表格概览
+### Table Overview
 
-| 表 | 名称 | 覆盖什么 |
+| # | Table | Covers |
 |---|---|---|
-| 1 | 插件与配套软件 | 软件/插件本体（host、plugins、companion apps）。每行一个软件。**名称必须是软件的真名**（如 `OpenChamber`、`@rezamonangg/opencode-rtk@0.4.0`），不能用占位符（如 `外层桌面应用`）；从安装路径/配置命名反查实名。 |
-| 2 | 各软件/插件带来的 Skill 与命令 | 按提供软件分组：**每行一个 skill/命令，不加汇总行**（软件本体已在表1，汇总行冗余）。命令归属看功能（调谁的工具归谁）——`/rtk-gain` → `@rezamonangg/opencode-rtk`。插件通过 hook 注册的斜杠命令也列于此（如 `/loop`，源码在插件 dist `hooks/loop-command`），来源写 `<插件名> 注册命令（dist hooks/…）`。**分组方式**：每个软件行块前可加粗体分组行（名称列只写软件名，其余列为空）；分组行不是数据行——JSON 不含分组行，行数统计不计。要么全程用分组行，要么全程不用，同一次运行内不得混用。表4 的「本地自建 / 用户命令 / 外层应用注入」分组行同理。 |
-| 3 | 原生命令与原生 Skill | **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + docs list) and built-in skills. If none, empty-table declaration. |
-| 4 | 自定义 Skill、命令与外层应用注入命令 | user-created skills (upstream + deps), user commands, **and outer-app-injected commands** (source `外层应用注入`). Each expanded, never merged. **This skill itself MUST appear here.** |
-| 5 | MCP | every MCP server (global + project), local/remote, enabled state, auth-masking state. User-built MCPs with source. Related skills only when verified — else `未知`, never fabricate. 若 MCP 有已知别名/工具名前缀（如 grep_app → 别名 `gh_grep`），在 `来源` 或 `怎么叫` 中写明. |
-| 6 | Agent | selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌已禁用` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **模型链 column is mandatory**: default model chain from the current preset, looked up fresh (`a→b→c`), + backup preset names. **行序强制：核心自带 primary → 插件包 primary → 核心自带 subagent → 插件包 subagent；组内按名称字母序。** |
-| 7 | 外层应用 | outer-app-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with 表1/表2. **行名从固定能力类别清单取，跨运行保持稳定**（名称可按输出语言翻译，但类别构成固定）：① 全局行为规则 ② 模型偏好管理 ③ 会话与定时任务动作 ④ 页内浏览器 ⑤ 托管进程管理 ⑥ 提示优化 ⑦ Skill 市场目录。机器上不存在的类别不列行，禁止自造新类别名（新能力先归入最近类别，`干什么` 里说明）。 |
+| 1 | Plugins & companion software | The software/plugins themselves (hosts, plugins, companion apps). One row per software. **The name must be the software's real name** (e.g. `OpenChamber`, `@rezamonangg/opencode-rtk@0.4.0`), never a placeholder (e.g. "outer desktop app"); reverse-look-up real names from install paths or config names. |
+| 2 | Skills & commands each software/plugin brings | Grouped by providing software: **one row per skill/command, no summary rows** (the software itself is already in Table 1; summary rows are redundant). Command ownership follows the tool it invokes (`/rtk-gain` → `@rezamonangg/opencode-rtk`). Slash commands a plugin registers via hooks also go here (e.g. `/loop`, source in the plugin dist `hooks/loop-command`); source = `<plugin> registers command (dist hooks/…)`. **Grouping:** you may prefix each software's block with a bold group row (name column holds only the software name, other columns empty); a group row is not a data row — JSON excludes group rows and row counts ignore them. Either use group rows throughout or not at all; never mix them within one run. The "local / user-command / host-injected" group rows in Table 4 follow the same rule. |
+| 3 | Built-in commands & built-in skills | **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + the docs list) and built-in skills. If none, write an empty-table declaration. |
+| 4 | Custom skills, commands, and host-injected commands | user-created skills (upstream + deps), user commands, **and outer-app-injected commands** (source `host-injected`). Each expanded, never merged. **This skill itself MUST appear here.** |
+| 5 | MCP | every MCP server (global + project), local/remote, enabled state, auth-masking state. User-built MCPs with source. Related skills only when verified — else `unknown`, never fabricate. If an MCP has a known alias/tool-name prefix (e.g. grep_app → alias `gh_grep`), state it in the `Source` or `How to call` cell. |
+| 6 | Agents | selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌disabled` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **The Model-chain column is mandatory**: the default model chain from the current preset, looked up fresh (`a→b→c`), plus backup preset names. **Row order is enforced: core primary → plugin primary → core subagent → plugin subagent; alphabetical within each group.** |
+| 7 | Host capabilities | outer-app-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with Table 1/Table 2. **Row names come from a fixed capability-category list and stay stable across runs** (names may be translated into the output language, but the category set is fixed): ① global behavior rules ② model-preference management ③ session & scheduled-task actions ④ in-page browser ⑤ managed-process management ⑥ prompt optimization ⑦ skill marketplace catalog. Do not list a category that does not exist on the machine, and never invent new category names (fold a new capability into the nearest category and explain it in `What it does`). |
 
-### 单元格规范
+### Cell Conventions
 
-- **名称**: one consistent shape per asset type — NO suffix words, NO redundancy:
-  - Command → `/command`（裸斜杠命令，不加"命令"二字；别名只在 `怎么叫` 里写）。
-  - Skill → `skill-name`（技能名，不加斜杠；斜杠调用属于 `怎么叫`）。
-  - Plugin/software → real product name（`OpenChamber`、`@rezamonangg/opencode-rtk@0.4.0`）。
-  - Agent → `agent-name`；MCP → `mcp-name`；host capability → capability name。
-  - 表2 名称 = 子项本身的名字（`/loop`、`clonedeps`、`/rtk-gain`），**不带插件名前缀**（归属已由 `来源` 列和分组体现）。
-- **来源**: three-part shape. 见下方 Source Classification。
-- **怎么叫**: how the user can actually reach it — **list ALL real invocation paths, never one only**:
-  - Command → the literal `/command` (aliases in parens). Never `看话自动干`.
-  - Skill → both paths: `看话自动干，或 /skill名` (skills auto-trigger on description match AND are slash-invocable). Never bare `看话自动干` when a slash name exists.
-  - Agent → `Tab 切换` / `自动接管` / `@agent名`.
-  - MCP → `Agent 自调` (+ known tool-name prefix/alias, e.g. `grep_app_* / gh_grep_*`).
-  - Software/host capability → `装完自动生效` / `不用叫，开机自带` / `Agent 调时`.
-- **何时用**: concrete scenario with conditions (`需 git`, `很贵`, `Win 专用`). No bare `按需`.
-- **干什么**: **detailed, never one-liners** — shape `简单：一句话。详细：<2-4 句>`.
-  The 详细 part MUST be expanded from the source's actual description
+- **Name**: one consistent shape per asset type — NO suffix words, NO redundancy:
+  - Command → `/command` (bare slash command; do not append the word "command"; aliases go only in `How to call`).
+  - Skill → `skill-name` (skill name, no slash; slash invocation belongs in `How to call`).
+  - Plugin/software → real product name (`OpenChamber`, `@rezamonangg/opencode-rtk@0.4.0`).
+  - Agent → `agent-name`; MCP → `mcp-name`; host capability → capability name.
+  - Table 2 name = the child's own name (`/loop`, `clonedeps`, `/rtk-gain`), **without a plugin prefix** (ownership is already shown by the `Source` column and grouping).
+- **Source**: three-part shape. See Source Classification below.
+- **How to call**: how the user can actually reach it — **list ALL real invocation paths, never just one**:
+  - Command → the literal `/command` (aliases in parens). Never "auto-runs on intent".
+  - Skill → both paths: `auto-triggers on intent, or /skill-name` (skills auto-trigger on description match AND are slash-invocable). Never bare "auto-triggers" when a slash name exists.
+  - Agent → `Tab switch` / `auto-takeover` / `@agent-name`.
+  - MCP → `Agent calls it` (+ known tool-name prefix/alias, e.g. `grep_app_* / gh_grep_*`).
+  - Software/host capability → `active once installed` / `nothing to call, on from launch` / `when the Agent calls it`.
+- **When to use**: concrete scenario with conditions (e.g. `needs git`, `expensive`, `Windows-only`). Never a bare "on demand".
+- **What it does**: **detailed, never one-liners** — shape `Simple: one sentence. Detailed: <2-4 sentences>`.
+  The Detailed part MUST be expanded from the source's actual description
   (`SKILL.md` frontmatter `description`, `command/*.md` frontmatter + body,
   official doc wording, `magicPrompts` usage text), paraphrased into readable
-  Chinese, covering: what it actually does, how it is typically invoked,
-  and key caveats (`需 git`, `很贵`, `依赖某 CLI 且已装/未装`, `走什么模型链`).
-  **Never** write deletion consequences ("随插件删除/删了会怎样").
-  - ❌ Bad: `简单：看结果。详细：打出本会话数据。`
-  - ✅ Good: `简单：看本会话省了多少 token。详细：它立即执行 rtk_gain 工具，把白名单命令经 RTK 改写后省下的 token 量打成账单展示，不问问题、不改配置；适合每次长会话结束时看一眼省了多少。`
-- **模型链 (表6 only)**: current preset's chain `a→b→c`, + backup presets. **豁免**：无独立模型配置的核心自带 agent（如 `build`/`plan`）没有链式回退——写宿主当前实际生效的模型（现查，写实值）并注明「单模型，无链式回退」；禁止写"跟随主会话"这类占位话术充当链。
+  prose in the output language, covering: what it actually does, how it is
+  typically invoked, and key caveats (`needs git`, `expensive`, `depends on a CLI
+  that is/isn't installed`, `which model chain it uses`).
+  **Never** write deletion consequences ("goes away when the plugin is removed" / "what happens if you delete it").
+  - ❌ Bad: `Simple: see results. Detailed: prints this session's data.`
+  - ✅ Good: `Simple: see how many tokens this session saved. Detailed: it immediately runs the rtk_gain tool and prints a bill of the tokens saved after whitelisted commands were rewritten through RTK; it asks nothing and changes no config. Best glanced at when a long session ends.`
+- **Model chain (Table 6 only)**: the current preset's chain `a→b→c`, plus backup presets. **Exemption**: core-bundled agents without their own model config (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback"; never write placeholder phrasing like "follows the main session" as if it were a chain.
 
-### 干什么格式要求（必读）
+### What-it-does format (mandatory)
 
-干什么是表格中最关键的单元格——它告诉用户"这个东西到底干什么"。格式必须是：
+`What it does` is the most critical cell in a table — it tells the user what the thing actually does. The format must be:
 
 ```
-简单：一句话概括。详细：2-4 句展开，基于源 SKILL.md description / 命令文档 / magicPrompts 文本改写，覆盖：做什么、怎么触发、有什么坑。
+Simple: one-sentence summary. Detailed: 2-4 sentences expanded from the source SKILL.md description / command docs / magicPrompts text, covering: what it does, how it is triggered, and its caveats.
 ```
 
-**展开来源优先级：**
+**Expansion source priority:**
 1. `SKILL.md` frontmatter `description`
 2. `command/*.md` frontmatter + body
-3. 官方文档 wording
+3. official documentation wording
 4. `magicPrompts` usage text
 
-**禁止：**
-- ❌ 一句话/标签式（`简单：看结果。详细：打出本会话数据。`）
-- ❌ 删除后果（"随插件删除/删了会怎样"）
-- ❌ 占位符（`简单：TODO。详细：待补充。`）
+**Forbidden:**
+- ❌ one-liner / label-style (`Simple: see results. Detailed: prints this session's data.`)
+- ❌ deletion consequences ("goes away when the plugin is removed")
+- ❌ placeholders (`Simple: TODO. Detailed: TBD.`)
 
 ### Source Classification
 
-**来源 must name the specific bringer, never a bare category.** Shape: `带来者名称 + 注册位置 + 上游/协议`.
+**Source must name the specific bringer, never a bare category.** Shape: `bringer name + registration location + upstream/license`.
 
-| 来源写法（示例） | 适用 |
+| Source form (examples) | Applies to |
 |---|---|
-| `核心自带，官方 TUI 文档` | built-in |
-| `第三方插件，opencode.jsonc:plugin[]，源码 <repo> <协议>` | npm plugin |
-| `外层应用官方，安装包 <dir> + 配置 $HOST_CONFIG/` | outer app (host) |
-| `<插件名> 包 <src/skills/<name>>` | plugin-bundled skill |
-| `本地自建，整合/上游 <repo> <协议>` | user-created skill |
-| `全局配置 command/<name>.md` | user command |
-| `外层应用注入，二进制扫描 <bundle> 发现` | outer-app-injected command |
-| `<MCP名>（远端MCP，<url>）` / `<MCP名>（本地MCP，<cmd>）` | MCP server |
+| `built-in, official TUI docs` | built-in |
+| `third-party plugin, opencode.jsonc:plugin[], source <repo> <license>` | npm plugin |
+| `outer app official, install bundle <dir> + config $HOST_CONFIG/` | outer app (host) |
+| `<plugin> package <src/skills/<name>>` | plugin-bundled skill |
+| `local, integrated/upstream <repo> <license>` | user-created skill |
+| `global config command/<name>.md` | user command |
+| `host-injected, found by binary scan of <bundle>` | outer-app-injected command |
+| `<mcp-name> (remote MCP, <url>)` / `<mcp-name> (local MCP, <cmd>)` | MCP server |
 
-Suffix every source with confidence: `✅实测` / `✅文档` / `⚠️推断`. Append state:
+Suffix every source with confidence: `✅verified` / `✅docs` / `⚠️inferred`. Append state:
 
-| 中文标记 | English marker | 含义 |
-|---|---|---|
-| `✅可用` | `✅available` | actually invokable. |
-| `❌已禁用` | `❌disabled` | explicitly disabled in config; **quote the config line**. |
-| `📦仅货架未装` | `📦shelf-only` | marketplace/cache/docs only, not registered, not invokable. |
-| `🚫不存在` | `🚫absent` | absent everywhere. Never pad tables. |
+| Marker | Meaning |
+|---|---|
+| `✅available` | actually invokable. |
+| `❌disabled` | explicitly disabled in config; **quote the config line**. |
+| `📦shelf-only` | marketplace/cache/docs only, not registered, not invokable. |
+| `🚫absent` | absent everywhere. Never pad tables. |
 
-> **State markers follow the output language**: use the 中文 column when outputting in Chinese; use the English column when outputting in English (and likewise for other languages).
+> **State markers follow the output language**: use the exact marker strings from `references/glossary.json` for the target language (English: `✅available` / `❌disabled` / `📦shelf-only` / `🚫absent`).
 
-Multi-source items: record the **direct bringer**; push indirect provenance into `干什么`. **Resolution vs disk:** on-disk-but-unregistered = unavailable (say so); registered-but-broken (missing command/env/probe fail) = `⚠️推断` + failure class in a table note.
+Multi-source items: record the **direct bringer**; push indirect provenance into `What it does`. **Resolution vs disk:** on-disk-but-unregistered = unavailable (say so); registered-but-broken (missing command/env/probe fail) = `⚠️inferred` + failure class in a table note.
 
 ---
 
@@ -156,16 +169,16 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
 
 ### 1. Discover (remap only this section on a new host/CLI)
 
-1. **Declared config**: `$OPENCODE_CONFIG/opencode.jsonc`, `package.json:dependencies`, `tui.json`（用户目录或项目目录都可能出现，需现查）.
+1. **Declared config**: `$OPENCODE_CONFIG/opencode.jsonc`, `package.json:dependencies`, `tui.json` (may appear in either the user directory or the project directory — look them up fresh).
 2. **User directory**: `$OPENCODE_CONFIG/command/`, first 15 lines of each `$OPENCODE_CONFIG/skills/*/SKILL.md`.
 3. **Project overlay**: `$PROJECT_DIR/.opencode/`, project-level MCP/plugin additions.
 4. **Plugin packages**: evidence sources are **remappable per host**. Try, in order:
    - **Installed plugin cache** (`$PACKAGE_CACHE/packages/*/`) — list `src/skills/` (packaged skills) AND scan `dist/*.js` for `registerCommand`/`COMMAND_NAME` hook registrations (plugin-registered `/` commands like `/loop` live there, not in `command/`).
-   - **Plugin self-managed manifest** (e.g. `.oh-my-opencode-slim/skills-manifest.json`) — tells `✅可用` (synced to global skills) from `📦仅货架未装` (in package but not synced).
+   - **Plugin self-managed manifest** (e.g. `.oh-my-opencode-slim/skills-manifest.json`) — tells `✅available` (synced to global skills) from `📦shelf-only` (in package but not synced).
    - **`package.json:dependencies`** and the plugin's own dist/hooks referenced from `opencode.jsonc:plugin[]`.
-   
+
    Use whichever sources exist on the host being inventoried; never assume a single fixed path.
-5. **外层应用注入**: `$HOST_CONFIG/` settings, and **binary-safe scan of the outer app bundle** for `/xxx` slash-command literals — plain grep misses binaries. The bundle may be `app.asar` (Electron), `web-dist`, or other formats depending on the outer app's tech stack. See `references/host-commands.md` for the scan method.
+5. **Host-injected**: `$HOST_CONFIG/` settings, and a **binary-safe scan of the outer app bundle** for `/xxx` slash-command literals — plain grep misses binaries. The bundle may be `app.asar` (Electron), `web-dist`, or other formats depending on the outer app's tech stack. See `references/host-commands.md` for the scan method.
    > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The bundle scan still works regardless.
 6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
 
@@ -175,16 +188,16 @@ Path variables (common defaults — **verify against the actual host**):
 |---|---|---|
 | `$OPENCODE_CONFIG` | `~/.config/opencode/` | `$env:USERPROFILE\.config\opencode\` |
 | `$PROJECT_DIR` | current working directory | current working directory |
-| `$HOST_CONFIG` | `~/.config/<OuterApp>/` | `$env:APPDATA\<OuterApp>\`（OpenChamber 实测为 `~/.config/openchamber/`，不在 `%APPDATA%`——以现查为准） |
+| `$HOST_CONFIG` | `~/.config/<OuterApp>/` | `$env:APPDATA\<OuterApp>\` (OpenChamber was observed at `~/.config/openchamber/`, not `%APPDATA%` — trust what you observe) |
 | `$PACKAGE_CACHE` | host-specific plugin cache dir | host-specific plugin cache dir |
 
 > These are typical values, not guarantees. Always confirm against the machine being inventoried.
 
 ### 2. Verify
 
-Cheapest first: (1) direct — TUI autocomplete, host browser, read-only listing, the two `agent list` commands; (2) official docs — `opencode.ai/docs/tui#commands` (full command list), `opencode.ai/docs/agents`; (3) source, last resort — plugin cache registration tables, host `agent-tool/*.js`, app bundles. Docs may lead local version — local ground truth wins.
+Cheapest first: (1) direct — TUI autocomplete, host browser, read-only listing, the two `agent list` commands; (2) official docs — `opencode.ai/docs/tui#commands` (full command list), `opencode.ai/docs/agents`; (3) source, last resort — plugin cache registration tables, host `agent-tool/*.js`, app bundles. Docs may lead the local version — local ground truth wins.
 
-Versions/models/counts: look up fresh, order manifest → install-path → lockfile/marketplace → `未知`. Never from memory.
+Versions/models/counts: look up fresh, order manifest → install-path → lockfile/marketplace → `unknown`. Never from memory.
 
 Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't match the actual `agent list` name (e.g. `explorer`), **the `agent list` ground truth wins**. Note the mismatch in a table footnote and don't invent a row for the stale config name.
 
@@ -192,19 +205,19 @@ Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't ma
 
 | Scenario | Action |
 |---|---|
-| Plugin cache unreadable | `🚫不存在` + table note: `插件缓存读取失败（<error>）` |
-| Outer app bundle scan fails | 表注说明失败原因；跳过该来源，不编造 |
-| `opencode agent list` returns empty | 检查 `opencode --pure agent list`；仍空则写"未检测到可选 agent" |
-| MCP server unreachable | `⚠️推断` + note: `探活失败（<error>）` |
-| Config file missing or malformed | 表注说明缺失；不猜测默认值 |
-| Version unknown after all sources exhausted | Write `未知` — never invent |
-| Language mismatch (user asks in English, config is Chinese) | Follow user's language for output; use English for technical terms |
+| Plugin cache unreadable | `🚫absent` + table note: `plugin cache unreadable (<error>)` |
+| Outer app bundle scan fails | note the failure reason in a table note; skip that source, don't fabricate |
+| `opencode agent list` returns empty | check `opencode --pure agent list`; if still empty, write "no selectable agents detected" |
+| MCP server unreachable | `⚠️inferred` + note: `liveness probe failed (<error>)` |
+| Config file missing or malformed | note the gap in a table note; don't guess defaults |
+| Version unknown after all sources exhausted | write `unknown` — never invent |
+| Language mismatch (user asks in English, config is Chinese) | follow the user's language for output; use English for technical terms |
 
-**Rule:** When in doubt, write what you observed — never fabricate. A `⚠️推断` with explanation is always better than a confident `✅实测` on unverified data.
+**Rule:** When in doubt, write what you observed — never fabricate. A `⚠️inferred` with an explanation is always better than a confident `✅verified` on unverified data.
 
 ### 4. Empty tables
 
-No content after verification → **do not invent, do not omit**: output `表中无可用行（现查日期）`; JSON = `[]`.
+No content after verification → **do not invent, do not omit**: output `no usable rows in this table (as of <lookup date>)`; JSON = `[]`.
 
 ### 5. Output
 
@@ -216,29 +229,22 @@ No content after verification → **do not invent, do not omit**: output `表中
   - `output/inventory.md` — the 7-table inventory below.
   - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
   - `output/asset-inventory.json` — standalone JSON, one element per row.
-- **Language follows the user**: every table header, cell value, state marker, and the usage guide must be written in the same language the user asked in (中文→中文, English→English, 日本語→日本語, Deutsch→Deutsch, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (表1-5/7 five columns, 表6 six), but the headers themselves (e.g. 名称/来源/怎么叫/何时用/干什么 → Name/Source/How to call/When/What it does), all cell content, state markers (e.g. `✅可用`→`✅available`, `❌已禁用`→`❌disabled`, `📦仅货架未装`→`📦shelf-only`, `🚫不存在`→`🚫absent`), and prose are translated into the user's language. When in doubt, ask or mirror the last user message.
-- Compact tables, blank line between tables, fixed headers, rows alphabetical (表2 grouped by software), one entry per cell.
+- **Language follows the user**: every table header, cell value, state marker, and the usage guide must be written in the same language the user asked in (Chinese→Chinese, English→English, Japanese→Japanese, German→German, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (Tables 1-5/7 five columns, Table 6 six), but the header text, all cell content, state markers, and prose are translated into the user's language, using the exact fixed strings in `references/glossary.json`. When in doubt, ask or mirror the last user message.
+- Compact tables, blank line between tables, fixed headers, rows alphabetical (Table 2 grouped by software), one entry per cell.
 - Format examples: see `references/format-example.md` (values there are placeholders — replace, never copy).
 - **Usage Guide (`usage-guide.md`)**: after producing the 7 tables, derive a plain-language usage guide from the same rows. Do NOT re-collect evidence. Organize by user scenario, not by type. See `references/usage-guide.md` for format.
-- End: one-line mnemonic + **Provenance** (3 lines, follows output language):
-  - Chinese:
-    ```
-    盘点时间：现查填写｜预设：现查填写｜命令：`opencode agent list` + `opencode --pure agent list` 已跑
-    未解析：如实列（如某插件缓存读不到），无则写"无"
-    本表由 asset-inventory 生成（自包含）
-    ```
-  - English:
-    ```
-    Inventory time: fill after scan | Preset: fill after scan | Commands: `opencode agent list` + `opencode --pure agent list` run
-    Unresolved: list honestly (e.g. plugin cache unreadable), or "none"
-    Generated by asset-inventory (self-contained)
-    ```
-  Real-name mode adds a 4th line: `本输出含用户要求的真实项目名，请勿外发。` / `This output contains user-requested real project names — do not share externally.`
+- End: one-line mnemonic + **Provenance** (3 lines, in the output language; exact templates in `references/glossary.json` → `provenance`):
+  ```
+  Inventory time: <fill after scan> | Preset: <fill after scan> | Commands: `opencode agent list` + `opencode --pure agent list` run
+  Unresolved: list honestly (e.g. plugin cache unreadable), or "none"
+  Generated by asset-inventory (self-contained)
+  ```
+  Real-name mode adds a 4th line: `This output contains user-requested real project names — do not share externally.` (localized template: `references/glossary.json` → `provenanceRealName`).
 - **JSON** (`output/asset-inventory.json`): standalone file, one element per row: `table, name, source, state, confidence, invoke`. PK = `table`+`name`. Empty table ⇒ `[]`.
-  - **`table` 字段固定为数字 `1`-`7`**（对应表1-表7），**不随输出语言变化**——这是 diff 模式跨运行可比的前提；Markdown 里的「表N」标题负责人读，JSON 的数字负责机器。禁止写成 `表1`/`Table 1` 等本地化字符串。
-  - 分组行、表注、隐藏 agent 不入 JSON；JSON 行集合 = Markdown 数据行集合。
+  - **The `table` field is always the numeric `1`-`7`** (matching Tables 1-7) and **does not change with the output language** — this is what makes diff mode comparable across runs. The Markdown "Table N" heading serves human readers; the JSON number serves machines. Never write `Table 1` or any localized string there.
+  - Group rows, table notes, and hidden agents are excluded from JSON; the JSON row set = the Markdown data-row set.
 - **Masking**: default redact API keys, tokens, auth headers, absolute user paths, private project names. Real-name mode only on explicit request + Provenance line.
-- **Diff mode**: user asks "跟上次比变了啥" → ask them to paste previous JSON/Markdown, output only added/removed, keyed by PK. Never re-dump full tables.
+- **Diff mode**: user asks "what changed since last time" → ask them to paste the previous JSON/Markdown, output only added/removed, keyed by PK. Never re-dump full tables.
 
 ---
 
@@ -247,61 +253,61 @@ No content after verification → **do not invent, do not omit**: output `表中
 Run this checklist before outputting. Every item must pass.
 
 ### All Tables
-- [ ] Exactly 7 tables; 表1-5/7 five columns, 表6 six (含模型链); headers consistent.
-- [ ] Every 来源 names the specific bringer, with confidence suffix.
+- [ ] Exactly 7 tables; Tables 1-5/7 five columns, Table 6 six (including Model chain); headers consistent.
+- [ ] Every `Source` names the specific bringer, with a confidence suffix.
 - [ ] No absolute paths, plaintext keys/tokens, or real project names (unless real-name mode + 4th Provenance line).
 - [ ] Versions/models/counts looked up fresh.
-- [ ] JSON PKs match Markdown data rows, no duplicates; `table` field is the fixed numeric `1`-`7` (never localized strings).
-- [ ] Empty tables have declaration line + `[]`.
-- [ ] 名称 column is uniform per asset type: commands are bare `/command` (no `命令` suffix), skills bare `skill-name` (no `/`), 表2 rows bare child name (no plugin prefix), software real names. No mixed styles.
-- [ ] Every `怎么叫` lists ALL real invocation paths. No bare `看话自动干`.
+- [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).
+- [ ] Empty tables have a declaration line + `[]`.
+- [ ] The `Name` column is uniform per asset type: commands are bare `/command` (no "command" suffix), skills bare `skill-name` (no `/`), Table 2 rows bare child name (no plugin prefix), software real names. No mixed styles.
+- [ ] Every `How to call` lists ALL real invocation paths. No bare "auto-triggers on intent".
 
-### 表1 插件与配套软件
+### Table 1 — Plugins & companion software
 - [ ] Software names are real names (e.g. `OpenChamber`), never placeholders.
 
-### 表2 各软件/插件带来的 Skill 与命令
-- [ ] Commands sit in the right table (原生→表3, 插件→表2, 自建→表4, 外层应用注入命令→表4).
-- [ ] No summary rows duplicating 表1 software entries.
+### Table 2 — Skills & commands each software/plugin brings
+- [ ] Commands sit in the right table (built-in→Table 3, plugin→Table 2, user→Table 4, host-injected→Table 4).
+- [ ] No summary rows duplicating Table 1 software entries.
 
-### 表3 原生命令与原生 Skill
-- [ ] Lists **all** built-in commands from docs, not a handful.
+### Table 3 — Built-in commands & built-in skills
+- [ ] Lists **all** built-in commands from the docs, not a handful.
 
-### 表4 自定义 Skill、命令与外层应用注入命令
-- [ ] Includes outer-app-injected commands (source `外层应用注入`).
-- [ ] This skill appears in 表4.
+### Table 4 — Custom skills, commands, and host-injected commands
+- [ ] Includes outer-app-injected commands (source `host-injected`).
+- [ ] This skill appears in Table 4.
 
-### 表5 MCP
+### Table 5 — MCP
 - [ ] Rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
 
-### 表6 Agent
-- [ ] Every row has a concrete 模型链 (`a→b→c`) **or**（无配置链的核心 agent）宿主当前实际模型写实值 + 「单模型，无链式回退」标注. 不收占位话术.
-- [ ] Row order: 核心自带 primary → 插件包 primary → 核心自带 subagent → 插件包 subagent, alphabetical within group.
+### Table 6 — Agents
+- [ ] Every row has a concrete Model chain (`a→b→c`) **or** (for a core agent with no configured chain) the host's currently effective real model + a "single model, no chain fallback" note. Placeholder phrasing does not count.
+- [ ] Row order: core primary → plugin primary → core subagent → plugin subagent, alphabetical within each group.
 
-### 表7 外层应用
-- [ ] No duplication with 表1/表2; outer-app capabilities (non-command) → 表7.
+### Table 7 — Host capabilities
+- [ ] No duplication with Table 1/Table 2; outer-app capabilities (non-command) → Table 7.
 
-### 干什么 & 使用指南
-- [ ] Every `干什么` is detailed: 简单一句话 + 详细 2-4 句，基于源 description 展开，含典型用法与关键注意事项. 一句话/标签式算不达标.
-- [ ] 表1/2/4/5/7 rows do NOT carry deletion consequences; 干什么 focuses on 是什么/谁带来/怎么用/注意事项.
-- [ ] `usage-guide.md` derived from the same rows — no re-collection, no invented facts; grouped by scenario/frequency; only `✅可用` items; plain-language "when and why".
+### What it does & Usage Guide
+- [ ] Every `What it does` is detailed: a one-sentence Simple plus a 2-4 sentence Detailed, expanded from the source description, including typical usage and key caveats. One-liners/labels do not pass.
+- [ ] Tables 1/2/4/5/7 rows do NOT carry deletion consequences; `What it does` focuses on what/who/how/caveats.
+- [ ] `usage-guide.md` is derived from the same rows — no re-collection, no invented facts; grouped by scenario/frequency; only `✅available` items; plain-language "when and why".
 
 ---
 
 ## Anti-patterns
 
-以下行为会导致盘点结果不可信。Quality Checklist 覆盖的项不重复列出。
+These behaviors make an inventory untrustworthy. Items already covered by the Quality Checklist are not repeated here.
 
-- Inventing a version, model chain, count, or a `📦仅货架未装` item to fill a table.
-- Writing an inference as `✅实测`; writing "unknown" as a fact.
-- Stopping 表3 at one or two example commands instead of the full list.
+- Inventing a version, model chain, count, or a `📦shelf-only` item to fill a table.
+- Writing an inference as `✅verified`; writing "unknown" as a fact.
+- Stopping Table 3 at one or two example commands instead of the full list.
 - Cramming multiple commands into one cell, or merging distinct user commands into one row.
 - Fabricating an MCP "related skill" you never verified.
 - Treating a user's casually-named software as fact — verify first (`📦`/`🚫` if absent).
-- Writing `插件包`/`本地自建` as a source without naming the actual plugin/software.
-- Skipping the binary scan of the outer app bundle — silently drops the whole outer-app-injected class.
+- Writing a bare `plugin package`/`local` as a source without naming the actual plugin/software.
+- Skipping the binary scan of the outer app bundle — silently drops the whole host-injected class.
 - Copying example rows from `references/format-example.md` as literal output.
 - Editing any skill/command/agent/MCP/config during the inventory. Read-only.
-- Scrambling 表6 order (core primary should precede plugin primary, primary precedes subagent).
-- Omitting a known MCP alias/tool-name prefix from 表5.
+- Scrambling Table 6 order (core primary should precede plugin primary; primary precedes subagent).
+- Omitting a known MCP alias/tool-name prefix from Table 5.
 - Missing plugin-registered slash commands (`/loop`) because the scan stopped at `command/` and never read the plugin dist `hooks/`.
 - Writing run output anywhere outside `output/` (baselines or state files onto the machine being inventoried).
