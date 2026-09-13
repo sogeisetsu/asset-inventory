@@ -4,6 +4,13 @@
 interview/
 output/
 
+# ---- 个人 / 机器相关配置（不入库；可共享的约定放 CONTRIBUTING.md） ----
+/AGENTS.md
+
+# ---- 本地中文指南 / 对读版（不入库，仅在本地使用） ----
+zh/skill-zh.md
+zh/repo-init-guide-zh.md
+
 # ---- 依赖 ----
 node_modules/
 
