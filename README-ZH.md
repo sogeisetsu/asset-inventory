@@ -27,6 +27,13 @@ OpenCode 环境膨胀得很快。几周后你就忘了自己装了什么、*从�
 
 ## 安装
 
+> **推荐：全局安装。** 这个 skill 是通用工具，用来了解和清理你的 OpenCode 环境——它不绑定任何单个项目。装一次到全局 skills 目录，之后就不用再管它。
+>
+> - **为什么推荐全局：** 只装一份、只更新一份、只维护一份（不用给每个项目各拷一份），而且随处可用。
+> - **全局安装的效果：** 装好后，`/asset-inventory`（以及自然语言触发）在**任何项目、任何会话**里都能用。产物依旧写进你当前运行它的那个项目——就算是全局安装，输出也落在被盘点项目的 `output/` 里，而不是 skill 自己的目录。
+>
+> 只有当你确实想让它只待在某一个仓库里（例如通过版本控制分享给该仓库的协作者）时，才选**项目级**。
+
 **第一步：把仓库弄到本地。** 二选一：
 
 ```sh
@@ -64,8 +71,6 @@ Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE
 New-Item -ItemType Directory -Force -Path "<项目根目录>\.opencode\skills\asset-inventory"
 Copy-Item -Recurse SKILL.md, references, examples -Destination "<项目根目录>\.opencode\skills\asset-inventory\"
 ```
-
-> 不确定选哪个？选**全局**——skill 输出跟着你运行的项目走，不管 skill 本身装在哪。
 
 ### 用 AI 自动安装
 

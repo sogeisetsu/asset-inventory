@@ -28,6 +28,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 - **CONTRIBUTING.md** — contribution guidelines.
 
 ### Changed
+- **README install guidance** — both READMEs now prominently recommend a global install at the top of the Install section, explaining why (one copy to install and update, available everywhere) and the effect (usable in every project and session; output still lands in the current project).
 - **Options kept at the repo root** — `update.ps1` stays where it is (it is the user-facing one-command updater); `scripts/` holds dev tooling only (`check-docs.mjs`, `generate-assets.mjs`).
 - **`check-docs.mjs` CJK scope widened** — now also enforces English on `SKILL.md`, `references/`, and `examples/`; only the local `AGENTS.md` stays exempt.
 - **`references/troubleshooting.md`** — the version-read note now points at `metadata.version`.

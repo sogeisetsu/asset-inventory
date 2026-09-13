@@ -27,6 +27,13 @@ OpenCode setups grow fast. Within weeks you forget what you installed, *where it
 
 ## Install
 
+> **Recommended: install globally.** This skill is a general tool for understanding and cleaning up your OpenCode setup — it is not tied to any single project. Install it once in the global skills directory and forget about it.
+>
+> - **Why global:** one copy to install, update, and keep in sync (instead of a separate copy per project), and it is available everywhere.
+> - **What you get:** after a global install, `/asset-inventory` (and the natural-language triggers) works in **every** project and session. Output still lands in whichever project you run it in — even installed globally, the skill writes to that project's `output/`, never to the skill's own folder.
+>
+> Choose **project-scoped** only if you specifically want the skill to live inside one repository (e.g. to share it with that repo's collaborators through version control).
+
 **Step 1 — get the repository locally.** Either:
 
 ```sh
@@ -62,8 +69,6 @@ Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE
 New-Item -ItemType Directory -Force -Path "<project-root>\.opencode\skills\asset-inventory"
 Copy-Item -Recurse SKILL.md, references, examples -Destination "<project-root>\.opencode\skills\asset-inventory\"
 ```
-
-> Not sure? Go with **global** — the skill writes its output into whatever project you run it in, regardless of where the skill itself lives.
 
 ### Auto-install via AI
 

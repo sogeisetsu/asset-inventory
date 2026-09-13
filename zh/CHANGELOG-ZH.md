@@ -30,6 +30,7 @@
 - **CONTRIBUTING.md** —— 贡献指南。
 
 ### Changed
+- **README 安装指引** —— 中英 README 均在"安装"段顶部显著推荐全局安装，说明原因（只装一份、只更新一份，随处可用）与效果（任何项目、任何会话都能用；产物仍落在当前项目）。
 - **脚本位置保持根目录** —— `update.ps1` 不移动（它是面向用户的一键更新入口）；`scripts/` 只放开发工具（`check-docs.mjs`、`generate-assets.mjs`）。
 - **`check-docs.mjs` CJK 范围收紧** —— 现同时约束 `SKILL.md`、`references/`、`examples/`；仅本地 `AGENTS.md` 豁免。
 - **`references/troubleshooting.md`** —— 版本读取说明改为 `metadata.version`。
