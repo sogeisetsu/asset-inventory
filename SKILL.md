@@ -5,7 +5,7 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.5.0
+  version: 1.6.0
 ---
 
 # Asset Inventory
@@ -86,7 +86,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 | 2 | Skills & commands each software/plugin brings | Grouped by providing software: **one row per skill/command, no summary rows** (the software itself is already in Table 1; summary rows are redundant). Command ownership follows the tool it invokes (`/rtk-gain` → `@rezamonangg/opencode-rtk`). Slash commands a plugin registers via hooks also go here (e.g. `/loop`, source in the plugin dist `hooks/loop-command`); source = `<plugin> registers command (dist hooks/…)`. **Grouping:** you may prefix each software's block with a bold group row (name column holds only the software name, other columns empty); a group row is not a data row — JSON excludes group rows and row counts ignore them. Either use group rows throughout or not at all; never mix them within one run. The "local / user-command / host-injected" group rows in Table 4 follow the same rule. |
 | 3 | Built-in commands & built-in skills | **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + the docs list) and built-in skills. If none, write an empty-table declaration. |
 | 4 | Custom skills, commands, and host-injected commands | user-created skills (upstream + deps), user commands, **and outer-app-injected commands** (source `host-injected`). Each expanded, never merged. **This skill itself MUST appear here.** |
-| 5 | MCP | every MCP server (global + project), local/remote, enabled state, auth-masking state. User-built MCPs with source. Related skills only when verified — else `unknown`, never fabricate. If an MCP has a known alias/tool-name prefix (e.g. grep_app → alias `gh_grep`), state it in the `Source` or `How to call` cell. |
+| 5 | MCP | **every** MCP server (global + project), local/remote, enabled state, auth-masking state. **A single-row table is almost always wrong** — re-read the config's `mcp` keys and match the count. User-built MCPs with source. Related skills only when verified — else `unknown`, never fabricate. If an MCP has a known alias/tool-name prefix (e.g. grep_app → alias `gh_grep`), state it in the `Source` or `How to call` cell. |
 | 6 | Agents | selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌disabled` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **The Model-chain column is mandatory**: the default model chain from the current preset, looked up fresh (`a→b→c`), plus backup preset names. **Row order is enforced: core primary → plugin primary → core subagent → plugin subagent; alphabetical within each group.** |
 | 7 | Host capabilities | outer-app-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with Table 1/Table 2. **Row names come from a fixed capability-category list and stay stable across runs** (names may be translated into the output language, but the category set is fixed): ① global behavior rules ② model-preference management ③ session & scheduled-task actions ④ in-page browser ⑤ managed-process management ⑥ prompt optimization ⑦ skill marketplace catalog. Do not list a category that does not exist on the machine, and never invent new category names (fold a new capability into the nearest category and explain it in `What it does`). |
 
@@ -106,18 +106,20 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
   - MCP → `Agent calls it` (+ known tool-name prefix/alias, e.g. `grep_app_* / gh_grep_*`).
   - Software/host capability → `active once installed` / `nothing to call, on from launch` / `when the Agent calls it`.
 - **When to use**: concrete scenario with conditions (e.g. `needs git`, `expensive`, `Windows-only`). Never a bare "on demand".
-- **What it does**: **detailed, never one-liners** — shape `Simple: one sentence. Detailed: <2-4 sentences>`. Full rules in [What-it-does format](#what-it-does-format-mandatory) below.
+- **What it does**: **one detailed paragraph, never a one-liner and never split into "Simple / Detailed"**. Full rules in [What-it-does format](#what-it-does-format-mandatory) below.
 - **Model chain (Table 6 only)**: the current preset's chain `a→b→c`, plus backup presets. **Exemption**: core-bundled agents without their own model config (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback"; never write placeholder phrasing like "follows the main session" as if it were a chain.
 
 ### What-it-does format (mandatory)
 
-`What it does` is the most critical cell in a table — it tells the user what the thing actually does. The format must be:
+`What it does` is the most critical cell in a table — it tells the user what the thing actually does. Write it as **one detailed, readable paragraph** — never a one-liner, never a label, and **never split into "Simple / Detailed" parts**.
 
-```
-Simple: one-sentence summary. Detailed: 2-4 sentences expanded from the source SKILL.md description / command docs / magicPrompts text, covering: what it does, how it is triggered, and its caveats.
-```
+Every paragraph MUST answer these three things, in flowing prose (not a numbered list inside the cell):
 
-The Detailed part MUST be expanded from the source's actual description (`SKILL.md` frontmatter `description`, `command/*.md` frontmatter + body, official doc wording, `magicPrompts` usage text), paraphrased into readable prose in the output language, covering what it actually does, how it is typically invoked, and key caveats (`needs git`, `expensive`, `depends on a CLI that is/isn't installed`, `which model chain it uses`).
+1. **How it is invoked** — what the user or Agent actually does to trigger it.
+2. **When to use it** — the concrete situation where it earns its keep.
+3. **What happens after** — the observable effect once it runs, plus caveats (`needs git`, `expensive`, `depends on a CLI that is/isn't installed`, `which model chain it uses`).
+
+Expand from the source's actual description (`SKILL.md` frontmatter `description`, `command/*.md` frontmatter + body, official doc wording, `magicPrompts` usage text), paraphrased into readable prose in the output language. Aim for 2-5 sentences — enough to be genuinely useful, not padding.
 
 **Expansion source priority:**
 1. `SKILL.md` frontmatter `description`
@@ -126,11 +128,14 @@ The Detailed part MUST be expanded from the source's actual description (`SKILL.
 4. `magicPrompts` usage text
 
 **Forbidden:**
-- ❌ one-liner / label-style (`Simple: see results. Detailed: prints this session's data.`)
-- ❌ deletion consequences (`Simple: goes away when the plugin is removed.`)
-- ❌ placeholders (`Simple: TODO. Detailed: TBD.`)
+- ❌ one-liner / label-style (`see results` / `prints this session's data`)
+- ❌ a `Simple: … Detailed: …` split — the cell is one paragraph
+- ❌ deletion consequences (`goes away when the plugin is removed`)
+- ❌ placeholders (`TODO` / `TBD`)
 
-✅ Good: `Simple: see how many tokens this session saved. Detailed: it immediately runs the rtk_gain tool and prints a bill of the tokens saved after whitelisted commands were rewritten through RTK; it asks nothing and changes no config. Best glanced at when a long session ends.`
+✅ Good (EN): `You reach it at the end of a long session; it immediately runs the rtk_gain tool and prints a bill of the tokens saved after whitelisted commands were rewritten through RTK. It asks nothing and changes no config — glance at it when you want to confirm the rewrites actually paid off.`
+
+For a Chinese deliverable the same content is written in Chinese, in the same one-paragraph shape — never as a `Simple / Detailed` pair.
 
 ### Source Classification
 
@@ -177,7 +182,12 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
    Use whichever sources exist on the host being inventoried; never assume a single fixed path.
 5. **Host-injected**: `$HOST_CONFIG/` settings, and a **binary-safe scan of the outer app bundle** for `/xxx` slash-command literals — plain grep misses binaries. The bundle may be `app.asar` (Electron), `web-dist`, or other formats depending on the outer app's tech stack. See `references/host-commands.md` for the scan method.
    > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The bundle scan still works regardless.
-6. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
+6. **MCP servers — enumerate ALL of them, never just one**: read every `mcp` key from the global config (`$OPENCODE_CONFIG/opencode.jsonc` → `mcp`), then the project overlay (`$PROJECT_DIR/.opencode/`), and merge. For each key you MUST emit a row — local and remote alike, enabled and disabled alike.
+   - **Count assertion (mandatory):** after building Table 5, re-read the config's `mcp` object and compare its key count with your row count. They must match. If they differ, you dropped servers — go back and add them.
+   - **Never stop at the first MCP.** A single-row Table 5 is a red flag, not a result: most setups have several (e.g. `websearch`, `context7`, `grep_app`, `pdf-mcp`, `PaddleOCR-VL-*`).
+   - The config may not be strict JSON (comments / trailing commas) — strip `//` comments before parsing, or read the `mcp` block directly. Do not skip a server because the file fails to parse strictly.
+   - A disabled server is still a row, with `❌disabled` and the config line quoted.
+7. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
 
 Path variables (common defaults — **verify against the actual host**):
 
@@ -229,7 +239,7 @@ No content after verification → **do not invent, do not omit**: output `no usa
 - **Language follows the user**: every table header, cell value, state marker, and the usage guide must be written in the same language the user asked in (Chinese→Chinese, English→English, Japanese→Japanese, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (Tables 1-5/7 five columns, Table 6 six), but the header text, all cell content, state markers, and prose are translated into the user's language, using the exact fixed strings in `references/glossary.json`. For a language without a glossary entry, derive the strings from the `en` block and note it in Provenance. When in doubt, ask or mirror the last user message.
 - Compact tables, blank line between tables, fixed headers, rows alphabetical (Table 2 grouped by software), one entry per cell.
 - Format examples: see `references/format-example.md` (values there are placeholders — replace, never copy).
-- **Usage Guide (`usage-guide.md`)**: after producing the 7 tables, derive a plain-language usage guide from the same rows. Do NOT re-collect evidence. Organize by user scenario, not by type. See `references/usage-guide.md` for format.
+- **Usage Guide (`usage-guide.md`)**: after producing the 7 tables, derive a plain-language usage guide from the same rows. Do NOT re-collect evidence. Organize by user scenario, not by type. **Pick a mode first:** Mode A (generic) when the project is empty, Mode B (adapt the framing to the project, without over-coupling) when it already has real work. See `references/usage-guide.md` for both modes and the format.
 - End: one-line mnemonic + **Provenance** (3 lines, in the output language; exact templates in `references/glossary.json` → `provenance`):
   ```
   Inventory time: <fill after scan> | Preset: <fill after scan> | Commands: `opencode agent list` + `opencode --pure agent list` run
@@ -260,6 +270,7 @@ These behaviors make an inventory untrustworthy. Items already covered by the Qu
 - Stopping Table 3 at one or two example commands instead of the full list.
 - Cramming multiple commands into one cell, or merging distinct user commands into one row.
 - Fabricating an MCP "related skill" you never verified.
+- Listing only one MCP server and stopping — Table 5 must match the config's `mcp` key count. A one-row Table 5 means servers were dropped.
 - Treating a user's casually-named software as fact — verify first (`📦`/`🚫` if absent).
 - Writing a bare `plugin package`/`local` as a source without naming the actual plugin/software.
 - Skipping the binary scan of the outer app bundle — silently drops the whole host-injected class.

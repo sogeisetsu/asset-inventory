@@ -47,8 +47,8 @@
       "provenanceRealName": "This output contains user-requested real project names — do not share externally."
     },
     "zh": {
-      "columns": ["名称", "来源", "怎么叫", "何时用", "干什么"],
-      "columnsAgent": ["名称", "来源", "怎么叫", "何时用", "干什么", "模型链"],
+      "columns": ["名称", "来源", "调用方式", "何时用", "干什么"],
+      "columnsAgent": ["名称", "来源", "调用方式", "何时用", "干什么", "模型链"],
       "tableTitles": {
         "1": "插件与配套软件",
         "2": "各软件/插件带来的 Skill 与命令",

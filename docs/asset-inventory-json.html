@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>asset-inventory.json — asset-inventory</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-title-en="asset-inventory.json — asset-inventory" data-title-zh="asset-inventory.json — asset-inventory">
+<main>
+  <div class="lang">
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a></p>
+
+  <h1>asset-inventory.json</h1>
+  <p class="tag" data-lang="en">The same 7 tables, machine-readable — for diffing and migration.</p>
+  <p class="tag" data-lang="zh">与 7 张表等价、机器可读 —— 用于差异对比与迁移。</p>
+
+  <h2 data-lang="en">What it is</h2>
+  <h2 data-lang="zh">它是什么</h2>
+  <p data-lang="en">A standalone JSON array with <strong>one element per Markdown data row</strong>. Its primary key is <code>table</code> + <code>name</code>. The <code>table</code> field is always the numeric <code>1</code>–<code>7</code> and never changes with the output language — that is what makes cross-run diffing possible even when the tables themselves are written in a different language.</p>
+  <p data-lang="zh">一个独立的 JSON 数组，<strong>每个 Markdown 数据行对应一个元素</strong>。主键为 <code>table</code> + <code>name</code>。<code>table</code> 字段恒为数字 <code>1</code>–<code>7</code>，不随输出语言变化 —— 这正是能跨运行做差异对比的原因，即使表格本身换成了另一种语言。</p>
+
+  <h2 data-lang="en">Fields</h2>
+  <h2 data-lang="zh">字段</h2>
+  <table class="facts">
+    <tr><th>table</th><td data-lang="en">numeric 1–7 — the table this row belongs to (never localized)</td><td data-lang="zh">数字 1–7 —— 该行所属的表（不本地化）</td></tr>
+    <tr><th>name</th><td data-lang="en">the asset name, as shown in the Markdown</td><td data-lang="zh">资产名，与 Markdown 中一致</td></tr>
+    <tr><th>source</th><td data-lang="en">the three-part provenance with confidence</td><td data-lang="zh">三段式来源，含可信度</td></tr>
+    <tr><th>state</th><td data-lang="en">✅available / ❌disabled / 📦shelf-only / 🚫absent</td><td data-lang="zh">✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在</td></tr>
+    <tr><th>confidence</th><td data-lang="en">✅verified / ✅docs / ⚠️inferred</td><td data-lang="zh">✅实测 / ✅文档 / ⚠️推断</td></tr>
+    <tr><th>invoke</th><td data-lang="en">the invocation path(s)</td><td data-lang="zh">调用路径</td></tr>
+  </table>
+
+  <h2 data-lang="en">Diff mode</h2>
+  <h2 data-lang="zh">差异模式</h2>
+  <p data-lang="en">Ask "what changed since last time?" and paste the previous JSON — you get only the <strong>added</strong> and <strong>removed</strong> rows, keyed by <code>table</code> + <code>name</code>. The full tables are never re-dumped.</p>
+  <p data-lang="zh">问"和上次比有什么变化？"并贴入上一次的 JSON —— 只会得到按 <code>table</code> + <code>name</code> 键控的<strong>新增</strong>与<strong>删除</strong>行，绝不重新倾倒完整表格。</p>
+
+  <h2 data-lang="en">Example</h2>
+  <h2 data-lang="zh">示例</h2>
+  <div class="example">
+    <div class="bar">output/asset-inventory.json</div>
+    <pre data-lang="en" data-copy="json-en">[
+  {"table": 1, "name": "OpenChamber", "source": "outer app official, install bundle + config $HOST_CONFIG/", "state": "✅available", "confidence": "✅verified", "invoke": "nothing to call, on from launch"},
+  {"table": 2, "name": "/rtk-gain", "source": "@rezamonangg/opencode-rtk registers command (dist hooks/)", "state": "✅available", "confidence": "✅verified", "invoke": "/rtk-gain"},
+  {"table": 3, "name": "/compact", "source": "built-in, official TUI docs", "state": "✅available", "confidence": "✅docs", "invoke": "/compact"},
+  {"table": 5, "name": "websearch", "source": "remote MCP, mcp.exa.ai, global config opencode.jsonc:mcp.websearch", "state": "✅available", "confidence": "✅verified", "invoke": "Agent calls it (tools websearch_*)"},
+  {"table": 6, "name": "build", "source": "built-in (primary)", "state": "✅available", "confidence": "✅verified", "invoke": "default Tab"}
+]</pre>
+    <pre data-lang="zh" data-copy="json-zh">[
+  {"table": 1, "name": "OpenChamber", "source": "外层应用官方，安装包 + 配置 $HOST_CONFIG/", "state": "✅可用", "confidence": "✅实测", "invoke": "不用叫，开机自带"},
+  {"table": 2, "name": "/rtk-gain", "source": "@rezamonangg/opencode-rtk 注册命令（dist hooks/）", "state": "✅可用", "confidence": "✅实测", "invoke": "/rtk-gain"},
+  {"table": 3, "name": "/compact", "source": "核心自带，官方 TUI 文档", "state": "✅可用", "confidence": "✅文档", "invoke": "/compact"},
+  {"table": 5, "name": "websearch", "source": "远端 MCP，mcp.exa.ai，全局配置 opencode.jsonc:mcp.websearch", "state": "✅可用", "confidence": "✅实测", "invoke": "Agent 自调（工具 websearch_*）"},
+  {"table": 6, "name": "build", "source": "核心自带（primary）", "state": "✅可用", "confidence": "✅实测", "invoke": "默认 Tab"}
+]</pre>
+  </div>
+
+  <p data-lang="en"><strong>Note:</strong> the <code>table</code> value is always the number — that keeps JSON stable and diffable even when the human-facing tables are in another language.</p>
+  <p data-lang="zh"><strong>注意：</strong><code>table</code> 恒为数字 —— 这样即使面向人的表格换成了另一种语言，JSON 仍保持稳定、可对比。</p>
+
+  <footer>
+    asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+</main>
+<script src="lang.js"></script>
+</body>
+</html>

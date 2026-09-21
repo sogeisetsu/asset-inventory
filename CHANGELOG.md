@@ -6,6 +6,27 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.6.0] - 2026-09-22
+
+### Fixed
+- **MCP servers were silently dropped** — the skill could list one MCP server and stop, even when the config had five. `Discover` now has an explicit MCP step: read every `mcp` key (global + project), emit a row per key, and **assert the row count against the config's key count**. A one-row Table 5 is now called out as a red flag, in both the table spec and the checklist.
+- **`update.ps1` nested directories** — `Copy-Item -Recurse` into an existing target nested the source inside it, so repeated updates grew `references/references/…`. The target is now removed before copying.
+- **`update.ps1` backup step failed and polluted the install** — the backup directory was never created (causing a write error), and backups were written *inside* the skill directory, becoming part of the installed skill and re-nesting later. Backups now go to a sibling directory and are created before use.
+
+### Changed
+- **`What it does` is now one detailed paragraph** — the `Simple: … Detailed: …` split is gone. Every cell must be a single flowing paragraph covering three things: how it is invoked, when to use it, and what happens after (with caveats). Updated in `SKILL.md`, `references/checklist.md`, and all 26 example cells in `references/format-example.md`.
+- **Usage guide has two modes** — **Mode A** (generic) when the project is empty, **Mode B** when it has real work: anchor the framing to the project's general shape *without over-coupling* (no file paths, no private code; tool facts never change). Documented in `references/usage-guide.md` with a comparison table.
+- **Chinese column renamed** — the invocation column's Chinese header changed from its old colloquial form to a more formal, precise term (`references/glossary.json`; see the Chinese changelog for the exact strings).
+- **`check-docs.mjs` now validates HTML links** — `docs/*.html` `href`/`src` targets must resolve, so the new landing-page structure is protected.
+
+### Added
+- **Landing page is English-first** — `docs/index.html` opens in English by default; the language toggle switches to Chinese and the choice persists across pages.
+- **Output detail pages** — the three deliverables on the landing page are now linked cards, each opening a dedicated page (`docs/inventory.html`, `docs/usage-guide.html`, `docs/asset-inventory-json.html`) with a detailed description and a real example.
+- **Favicon** — `docs/favicon.svg`, wired into every page.
+- **Shared assets** — `docs/style.css` and `docs/lang.js` keep all pages consistent.
+
+---
+
 ## [1.5.0] - 2026-09-21
 
 ### Added

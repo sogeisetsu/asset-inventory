@@ -50,6 +50,7 @@ const PAIRS = [
   ['docs/release-notes-v1.3.0.md', 'zh/release-notes-v1.3.0-ZH.md'],
   ['docs/release-notes-v1.4.0.md', 'zh/release-notes-v1.4.0-ZH.md'],
   ['docs/release-notes-v1.5.0.md', 'zh/release-notes-v1.5.0-ZH.md'],
+  ['docs/release-notes-v1.6.0.md', 'zh/release-notes-v1.6.0-ZH.md'],
 ];
 
 // Gitignored local copies compared by mtime (source, local copy).
@@ -102,7 +103,33 @@ function stripFences(text) {
 
 const LINK_RE = /\]\(([^()\s]+)\)/g;
 const IMG_RE = /<img\b[^>]*\bsrc=["']([^"']+)["']/gi;
+// HTML: href="..." and src="..." on any element (used by docs/*.html).
+const HTML_HREF_RE = /\b(?:href|src)\s*=\s*["']([^"']+)["']/gi;
 const EXTERNAL = /^(https?:|mailto:|tel:|data:|#|\/\/)/i;
+
+async function checkHtmlLinks(file, raw) {
+  const targets = [];
+  let m;
+  HTML_HREF_RE.lastIndex = 0;
+  while ((m = HTML_HREF_RE.exec(raw))) targets.push(m[1]);
+
+  for (const rawTarget of targets) {
+    const target = rawTarget.trim();
+    if (!target || EXTERNAL.test(target)) continue;
+    const noAnchor = target.split('#')[0].split('?')[0];
+    if (!noAnchor) continue;
+    let decoded = noAnchor;
+    try {
+      decoded = decodeURIComponent(noAnchor);
+    } catch {
+      // Keep the raw form if it is not valid URL encoding.
+    }
+    const abs = path.resolve(path.dirname(file), decoded);
+    if (!(await exists(abs))) {
+      err(`broken link in ${rel(file)}: ${target}`);
+    }
+  }
+}
 
 async function checkLinks(file, raw) {
   const text = stripFences(raw);
@@ -342,6 +369,7 @@ async function checkReferenceIntegrity() {
 async function main() {
   const allFiles = await walk(ROOT);
   const mdFiles = allFiles.filter((f) => f.endsWith('.md'));
+  const htmlFiles = allFiles.filter((f) => f.endsWith('.html'));
 
   // 1, 4, 5
   for (const file of mdFiles) {
@@ -352,6 +380,12 @@ async function main() {
       const count = (raw.match(/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/g) || []).length;
       err(`CJK characters found in English doc ${rel(file)} (${count})`);
     }
+  }
+
+  // 1b: HTML pages (docs/*.html) — validate href/src targets resolve.
+  for (const file of htmlFiles) {
+    const raw = await fs.readFile(file, 'utf8');
+    await checkHtmlLinks(file, raw);
   }
 
   // 2
