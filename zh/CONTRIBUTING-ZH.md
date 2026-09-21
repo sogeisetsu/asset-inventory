@@ -101,6 +101,14 @@ asset-inventory/
 
 若往 `references/glossary.json` 新增语言，必须给它**与 `en` 块完全相同的键集** —— 校验会逐语言报告缺失或多余的键。每个语言块都必须包含这些键：`columns`、`columnsAgent`、`tableTitles`、`state`、`confidence`、`emptyTable`、`unknown`、`threeQuestions`、`provenance`、`provenanceRealName`。
 
+### 分支规则
+
+**不要在 `master` 上直接改动。** 每次改动先拉一个分支，在分支上完成并自测通过，确认无误后再合并回 `master`。
+- 分支命名沿用既有风格：`feat/vX.Y.Z`、`fix/...`、`docs/...`、`chore/...`。
+- 合并前跑 `node scripts/check-docs.mjs`（动过样本再加 `node scripts/build-sample-pages.mjs --check`）。
+- 合并后按下面的版本规则打 tag / 建 Release。
+- 例外：`AGENTS.md` 等 gitignored 本地文件不受此限。
+
 ### 提交粒度
 
 **一个逻辑变更 = 一次提交。** 不要把不相关的改动攒成一个大提交，也不要"全部做完才提交一次"——改完一项就提交一项，提交信息写清这一项做了什么。相关联却可独立成篇的改动（如"新增文件"与"精简引用它的文档"）也各成一次提交。每次提交前跑 `node scripts/check-docs.mjs`。

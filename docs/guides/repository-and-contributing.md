@@ -48,11 +48,12 @@ Only `SKILL.md` and `references/` are shipped to the skill's install location. E
 
 ## ✅ Contributing
 
-See [`CONTRIBUTING.md`](../../CONTRIBUTING.md). Before opening a pull request:
+See [`CONTRIBUTING.md`](../../CONTRIBUTING.md). Work on a branch — never change `master` directly — and merge it back once the checks pass. Before opening a pull request:
 
 ```sh
 node scripts/check-docs.mjs
 node --check scripts/*.mjs
+node scripts/build-sample-pages.mjs --check
 ```
 
 The docs check resolves links (Markdown **and** HTML), checks EN/ZH pairs, validates frontmatter, flags CJK in English docs, verifies version consistency across `SKILL.md` / both changelogs, checks glossary structure, and confirms every `references/*` named in `SKILL.md` exists.
