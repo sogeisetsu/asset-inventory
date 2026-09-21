@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page not found — asset-inventory</title>
+<style>
+  body { margin: 0; background: #fbfdf8; color: #191c19;
+    font-family: "Roboto", system-ui, -apple-system, "Segoe UI", "Noto Sans SC", sans-serif; }
+  main { max-width: 640px; margin: 0 auto; padding: 72px 20px; line-height: 1.6; }
+  h1 { font-size: 1.5rem; font-weight: 500; margin: 0 0 8px; }
+  p { margin: 8px 0; color: #424940; }
+  a { color: #0b6b3a; }
+  code { font-family: ui-monospace, Consolas, monospace; background: #e9ece6;
+    padding: 2px 6px; border-radius: 4px; font-size: .9em; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #111411; color: #e1e3de; }
+    p { color: #c2c9c0; } a { color: #8cd8a5; } code { background: #272b27; }
+  }
+</style>
+<script>
+  (function () {
+    var moved = /\/release-notes-(v\d+\.\d+\.\d+)\.md$/;
+    if (moved.test(location.pathname)) {
+      location.replace(location.pathname.replace(moved, '/release-notes/release-notes-$1.md'));
+      return;
+    }
+    var home = document.getElementById('home');
+    if (home) home.href = location.origin + '/' + (location.pathname.split('/')[1] || '') + '/';
+  })();
+</script>
+</head>
+<body>
+<main>
+  <h1>Page not found</h1>
+  <p>This page doesn't exist. If you followed an old release-notes link, those files now live under <code>release-notes/</code>.</p>
+  <p><a id="home" href="index.html">Go to the overview</a></p>
+</main>
+</body>
+</html>

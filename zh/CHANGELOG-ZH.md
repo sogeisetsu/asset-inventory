@@ -8,6 +8,13 @@
 
 ---
 
+## [1.10.1] - 2026-09-22
+
+### 修复
+- **旧的 release notes 地址不再 404** —— `docs/404.html` 会把 `/release-notes-vX.Y.Z.md` 跳到 `/release-notes/release-notes-vX.Y.Z.md`；GitHub Pages 是静态托管，无法做服务端跳转。
+
+---
+
 ## [1.10.0] - 2026-09-22
 
 ### 新增
