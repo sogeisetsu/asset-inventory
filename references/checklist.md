@@ -10,6 +10,7 @@ Run this checklist before outputting. Every item must pass.
 
 - [ ] Exactly 7 tables; Tables 1-5/7 five columns, Table 6 six (including Model chain); headers consistent.
 - [ ] Every `Source` names the specific bringer, with a confidence suffix.
+- [ ] No skill in the global skills dir is called `local` until the plugin manifest has been checked — a `managed`/`customized` entry means the plugin is the bringer.
 - [ ] No absolute paths, plaintext keys/tokens, or real project names (unless real-name mode + 4th Provenance line).
 - [ ] Versions/models/counts looked up fresh.
 - [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).
@@ -44,7 +45,8 @@ Run this checklist before outputting. Every item must pass.
 
 ## Table 6 — Agents
 
-- [ ] Every row has a concrete Model chain (`a→b→c`) **or** (for a core agent with no configured chain) the host's currently effective real model + a "single model, no chain fallback" note. Placeholder phrasing does not count.
+- [ ] Every row has a concrete Model chain (`a→b→c`) **or** (for a **core agent only**, with no configured chain) the host's currently effective real model + a "single model, no chain fallback" note. Placeholder phrasing does not count.
+- [ ] The active preset's array-valued `<agent>.model` entries were expanded into chains — not flattened to "single model". If several plugin agents all read "single model", re-read the preset file.
 - [ ] Row order: core primary → plugin primary → core subagent → plugin subagent, alphabetical within each group.
 
 ## Table 7 — Host capabilities

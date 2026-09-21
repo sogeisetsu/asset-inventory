@@ -87,7 +87,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 | 3 | Built-in commands & built-in skills | **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + the docs list) and built-in skills. If none, write an empty-table declaration. |
 | 4 | Custom skills, commands, and host-injected commands | user-created skills (upstream + deps), user commands, **and outer-app-injected commands** (source `host-injected`). Each expanded, never merged. **This skill itself MUST appear here.** |
 | 5 | MCP | **every** MCP server (global + project), local/remote, enabled state, auth-masking state. **A single-row table is almost always wrong** — re-read the config's `mcp` keys and match the count. User-built MCPs with source. Related skills only when verified — else `unknown`, never fabricate. If an MCP has a known alias/tool-name prefix (e.g. grep_app → alias `gh_grep`), state it in the `Source` or `How to call` cell. |
-| 6 | Agents | selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌disabled` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **The Model-chain column is mandatory**: the default model chain from the current preset, looked up fresh (`a→b→c`), plus backup preset names. **Row order is enforced: core primary → plugin primary → core subagent → plugin subagent; alphabetical within each group.** |
+| 6 | Agents | selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌disabled` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **The Model-chain column is mandatory**: read the active preset in the plugin's preset file — its `<agent>.model` may be a string or an array, and an **array is the chain**. Plus backup preset names. **A preset full of arrays must never render as "single model" for every agent.** **Row order is enforced: core primary → plugin primary → core subagent → plugin subagent; alphabetical within each group.** |
 | 7 | Host capabilities | outer-app-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with Table 1/Table 2. **Row names come from a fixed capability-category list and stay stable across runs** (names may be translated into the output language, but the category set is fixed): ① global behavior rules ② model-preference management ③ session & scheduled-task actions ④ in-page browser ⑤ managed-process management ⑥ prompt optimization ⑦ skill marketplace catalog. Do not list a category that does not exist on the machine, and never invent new category names (fold a new capability into the nearest category and explain it in `What it does`). |
 
 ### Cell Conventions
@@ -107,7 +107,9 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
   - Software/host capability → `active once installed` / `nothing to call, on from launch` / `when the Agent calls it`.
 - **When to use**: concrete scenario with conditions (e.g. `needs git`, `expensive`, `Windows-only`). Never a bare "on demand".
 - **What it does**: **one detailed paragraph, never a one-liner and never split into "Simple / Detailed"**. Full rules in [What-it-does format](#what-it-does-format-mandatory) below.
-- **Model chain (Table 6 only)**: the current preset's chain `a→b→c`, plus backup presets. **Exemption**: core-bundled agents without their own model config (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback"; never write placeholder phrasing like "follows the main session" as if it were a chain.
+- **Model chain (Table 6 only)**: the chain comes from the **active preset** in the plugin's preset file (e.g. `.oh-my-opencode-slim/oh-my-opencode-slim.json` → `preset` names the active one, `presets.<name>.<agent>.model` holds it). **That value may be a string OR an array** — an array *is* the chain, in order (`["a","b","c"]` → `a → b → c`). Never flatten an array to a single model, and never report "single model" for a plugin agent whose preset lists an array.
+  **Exemption — core-bundled agents only**: agents that ship with the host and have no preset entry (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback". This exemption **does not apply to plugin agents**; if a plugin agent's chain cannot be read, write `unknown ⚠️inferred`, never "single model".
+  Also record the backup preset names (the other keys under `presets`).
 
 ### What-it-does format (mandatory)
 
@@ -147,10 +149,15 @@ For a Chinese deliverable the same content is written in Chinese, in the same on
 | `third-party plugin, opencode.jsonc:plugin[], source <repo> <license>` | npm plugin |
 | `outer app official, install bundle <dir> + config $HOST_CONFIG/` | outer app (host) |
 | `<plugin> package <src/skills/<name>>` | plugin-bundled skill |
-| `local, integrated/upstream <repo> <license>` | user-created skill |
+| `<plugin> manages skill (skills-manifest.json, status <managed/customized>, v<version>)` | plugin-managed skill installed into the global skills dir |
+| `local, upstream <repo> <license>` — **only with a verified repo URL** | genuinely user-authored skill |
 | `global config command/<name>.md` | user command |
 | `host-injected, found by binary scan of <bundle>` | outer-app-injected command |
 | `<mcp-name> (remote MCP, <url>)` / `<mcp-name> (local MCP, <cmd>)` | MCP server |
+
+> **A skill in the global skills dir is NOT automatically "local".** Many arrive from a plugin that installs and manages them. Before writing `local`, check the plugin self-managed manifest (e.g. `.oh-my-opencode-slim/skills-manifest.json`): a `status` of `managed`/`customized` with a `packageVersion` means the **plugin is the bringer**, not the user.
+>
+> **Never infer a repo URL from a skill's folder name.** A directory called `clonedeps` does not imply `github.com/<user>/clonedeps`. The `local, upstream <repo>` form requires a URL you actually saw (in the skill content, a manifest, or the plugin's config). If you cannot verify it, write the real bringer, or `local (repo unverified) ⚠️inferred` — never a fabricated URL.
 
 Suffix every source with confidence: `✅verified` / `✅docs` / `⚠️inferred`. Append state:
 
@@ -176,10 +183,11 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
 3. **Project overlay**: `$PROJECT_DIR/.opencode/`, project-level MCP/plugin additions.
 4. **Plugin packages**: evidence sources are **remappable per host**. Try, in order:
    - **Installed plugin cache** (`$PACKAGE_CACHE/packages/*/`) — list `src/skills/` (packaged skills) AND scan `dist/*.js` for `registerCommand`/`COMMAND_NAME` hook registrations (plugin-registered `/` commands like `/loop` live there, not in `command/`).
-   - **Plugin self-managed manifest** (e.g. `.oh-my-opencode-slim/skills-manifest.json`) — tells `✅available` (synced to global skills) from `📦shelf-only` (in package but not synced).
+   - **Plugin self-managed manifest** (e.g. `.oh-my-opencode-slim/skills-manifest.json`) — **read this before calling any global skill "local"**. It maps each managed skill to its `status` (`managed` / `customized`) and `packageVersion`, which names the plugin as the bringer and distinguishes `✅available` (synced to global skills) from `📦shelf-only` (in package but not synced).
    - **`package.json:dependencies`** and the plugin's own dist/hooks referenced from `opencode.jsonc:plugin[]`.
 
    Use whichever sources exist on the host being inventoried; never assume a single fixed path.
+   > **Attribution rule:** for each skill found in the global skills dir, first ask "did a plugin install this?" — if a manifest lists it, or the skill's directory matches a plugin the config declares, the **plugin is the bringer** and the source is `<plugin> manages skill (skills-manifest.json, status …, v…)`, not `local`.
 5. **Host-injected**: `$HOST_CONFIG/` settings, and a **binary-safe scan of the outer app bundle** for `/xxx` slash-command literals — plain grep misses binaries. The bundle may be `app.asar` (Electron), `web-dist`, or other formats depending on the outer app's tech stack. See `references/host-commands.md` for the scan method.
    > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The bundle scan still works regardless.
 6. **MCP servers — enumerate ALL of them, never just one**: read every `mcp` key from the global config (`$OPENCODE_CONFIG/opencode.jsonc` → `mcp`), then the project overlay (`$PROJECT_DIR/.opencode/`), and merge. For each key you MUST emit a row — local and remote alike, enabled and disabled alike.
@@ -187,7 +195,8 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
    - **Never stop at the first MCP.** A single-row Table 5 is a red flag, not a result: most setups have several (e.g. `websearch`, `context7`, `grep_app`, `pdf-mcp`, `PaddleOCR-VL-*`).
    - The config may not be strict JSON (comments / trailing commas) — strip `//` comments before parsing, or read the `mcp` block directly. Do not skip a server because the file fails to parse strictly.
    - A disabled server is still a row, with `❌disabled` and the config line quoted.
-7. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
+7. **Agent model chains**: read the plugin's preset file (`$OPENCODE_CONFIG/oh-my-opencode-slim.json` or equivalent → `preset` + `presets`). The active preset's `<agent>.model` gives each plugin agent's chain; an **array is the chain**, a string is a single model. Record the other preset names as backups. Do not guess — if the file is absent, write `unknown` for plugin agents.
+8. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
 
 Path variables (common defaults — **verify against the actual host**):
 
@@ -273,10 +282,13 @@ These behaviors make an inventory untrustworthy. Items already covered by the Qu
 - Listing only one MCP server and stopping — Table 5 must match the config's `mcp` key count. A one-row Table 5 means servers were dropped.
 - Treating a user's casually-named software as fact — verify first (`📦`/`🚫` if absent).
 - Writing a bare `plugin package`/`local` as a source without naming the actual plugin/software.
+- Calling a plugin-managed skill "local" — check the plugin's `skills-manifest.json` (or the plugin config) first; the plugin is the bringer.
+- Inventing an upstream repo URL from a skill's folder name (`clonedeps` → `github.com/<user>/clonedeps`). A repo form requires a URL you actually saw, else write the real bringer or `local (repo unverified) ⚠️inferred`.
 - Skipping the binary scan of the outer app bundle — silently drops the whole host-injected class.
 - Copying example rows from `references/format-example.md` as literal output.
 - Editing any skill/command/agent/MCP/config during the inventory. Read-only.
 - Scrambling Table 6 order (core primary should precede plugin primary; primary precedes subagent).
+- Reporting every agent as "single model, no chain fallback" when the active preset actually lists arrays — read the preset file and expand each array into its chain.
 - Omitting a known MCP alias/tool-name prefix from Table 5.
 - Missing plugin-registered slash commands (`/loop`) because the scan stopped at `command/` and never read the plugin dist `hooks/`.
 - Writing run output anywhere outside `output/` (baselines or state files onto the machine being inventoried).
