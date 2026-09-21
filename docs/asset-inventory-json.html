@@ -41,25 +41,38 @@
   <p data-lang="en">Ask "what changed since last time?" and paste the previous JSON — you get only the <strong>added</strong> and <strong>removed</strong> rows, keyed by <code>table</code> + <code>name</code>. The full tables are never re-dumped.</p>
   <p data-lang="zh">问"和上次比有什么变化？"并贴入上一次的 JSON —— 只会得到按 <code>table</code> + <code>name</code> 键控的<strong>新增</strong>与<strong>删除</strong>行，绝不重新倾倒完整表格。</p>
 
-  <h2 data-lang="en">Example</h2>
-  <h2 data-lang="zh">示例</h2>
+  <h2 data-lang="en">Example (rendered)</h2>
+  <h2 data-lang="zh">示例（渲染效果）</h2>
+  <p data-lang="en">One element per row — shown line by line so each record is readable.</p>
+  <p data-lang="zh">每行一个元素 —— 逐行展示，方便阅读。</p>
+
   <div class="example">
-    <div class="bar">output/asset-inventory.json</div>
-    <pre data-lang="en" data-copy="json-en">[
-  {"table": 1, "name": "OpenChamber", "source": "outer app official, install bundle + config $HOST_CONFIG/", "state": "✅available", "confidence": "✅verified", "invoke": "nothing to call, on from launch"},
-  {"table": 2, "name": "/rtk-gain", "source": "@rezamonangg/opencode-rtk registers command (dist hooks/)", "state": "✅available", "confidence": "✅verified", "invoke": "/rtk-gain"},
-  {"table": 3, "name": "/compact", "source": "built-in, official TUI docs", "state": "✅available", "confidence": "✅docs", "invoke": "/compact"},
-  {"table": 5, "name": "websearch", "source": "remote MCP, mcp.exa.ai, global config opencode.jsonc:mcp.websearch", "state": "✅available", "confidence": "✅verified", "invoke": "Agent calls it (tools websearch_*)"},
-  {"table": 6, "name": "build", "source": "built-in (primary)", "state": "✅available", "confidence": "✅verified", "invoke": "default Tab"}
+    <div class="bar">docs/samples/asset-inventory.json</div>
+    <pre class="json-view" data-lang="en" data-copy="json-en">[
+  { "table": 1, "name": "OpenChamber",        "state": "✅available", "confidence": "✅verified", "invoke": "nothing to call, on from launch" }
+  { "table": 2, "name": "/rtk-gain",          "state": "✅available", "confidence": "✅verified", "invoke": "/rtk-gain" }
+  { "table": 3, "name": "/compact",           "state": "✅available", "confidence": "✅docs",     "invoke": "/compact" }
+  { "table": 5, "name": "websearch",          "state": "✅available", "confidence": "✅verified", "invoke": "Agent calls it (tools websearch_*)" }
+  { "table": 5, "name": "context7",           "state": "✅available", "confidence": "✅verified", "invoke": "Agent calls it (tools context7_*)" }
+  { "table": 5, "name": "pdf-mcp",            "state": "✅available", "confidence": "✅verified", "invoke": "Agent calls it (tools pdf_*)" }
+  { "table": 6, "name": "build",              "state": "✅available", "confidence": "✅verified", "invoke": "default Tab" }
+  { "table": 6, "name": "orchestrator",       "state": "✅available", "confidence": "✅verified", "invoke": "auto-takeover" }
 ]</pre>
-    <pre data-lang="zh" data-copy="json-zh">[
-  {"table": 1, "name": "OpenChamber", "source": "外层应用官方，安装包 + 配置 $HOST_CONFIG/", "state": "✅可用", "confidence": "✅实测", "invoke": "不用叫，开机自带"},
-  {"table": 2, "name": "/rtk-gain", "source": "@rezamonangg/opencode-rtk 注册命令（dist hooks/）", "state": "✅可用", "confidence": "✅实测", "invoke": "/rtk-gain"},
-  {"table": 3, "name": "/compact", "source": "核心自带，官方 TUI 文档", "state": "✅可用", "confidence": "✅文档", "invoke": "/compact"},
-  {"table": 5, "name": "websearch", "source": "远端 MCP，mcp.exa.ai，全局配置 opencode.jsonc:mcp.websearch", "state": "✅可用", "confidence": "✅实测", "invoke": "Agent 自调（工具 websearch_*）"},
-  {"table": 6, "name": "build", "source": "核心自带（primary）", "state": "✅可用", "confidence": "✅实测", "invoke": "默认 Tab"}
+    <pre class="json-view" data-lang="zh" data-copy="json-zh">[
+  { "table": 1, "name": "OpenChamber",        "state": "✅可用", "confidence": "✅实测", "invoke": "不用叫，开机自带" }
+  { "table": 2, "name": "/rtk-gain",          "state": "✅可用", "confidence": "✅实测", "invoke": "/rtk-gain" }
+  { "table": 3, "name": "/compact",           "state": "✅可用", "confidence": "✅文档", "invoke": "/compact" }
+  { "table": 5, "name": "websearch",          "state": "✅可用", "confidence": "✅实测", "invoke": "Agent 自调（工具 websearch_*）" }
+  { "table": 5, "name": "context7",           "state": "✅可用", "confidence": "✅实测", "invoke": "Agent 自调（工具 context7_*）" }
+  { "table": 5, "name": "pdf-mcp",            "state": "✅可用", "confidence": "✅实测", "invoke": "Agent 自调（工具 pdf_*）" }
+  { "table": 6, "name": "build",              "state": "✅可用", "confidence": "✅实测", "invoke": "默认 Tab" }
+  { "table": 6, "name": "orchestrator",       "state": "✅可用", "confidence": "✅实测", "invoke": "自动接管" }
 ]</pre>
   </div>
+
+  <p data-lang="en">Full sample: <a href="samples/asset-inventory.json">docs/samples/asset-inventory.json</a></p>
+  <p data-lang="zh">完整示例：<a href="samples/asset-inventory.json">docs/samples/asset-inventory.json</a></p>
+
 
   <p data-lang="en"><strong>Note:</strong> the <code>table</code> value is always the number — that keeps JSON stable and diffable even when the human-facing tables are in another language.</p>
   <p data-lang="zh"><strong>注意：</strong><code>table</code> 恒为数字 —— 这样即使面向人的表格换成了另一种语言，JSON 仍保持稳定、可对比。</p>
