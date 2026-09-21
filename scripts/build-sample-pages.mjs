@@ -204,7 +204,7 @@ function main() {
   let stale = 0;
   for (const page of PAGES) {
     const file = path.join(DOCS, page.html);
-    const raw = readFileSync(file, 'utf8');
+    const raw = readFileSync(file, 'utf8').replace(/\r\n/g, '\n');
     const next = injectInto(raw, renderPageContent(page), page.html);
     if (next === raw) continue;
     if (check) {
