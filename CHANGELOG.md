@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.10.1] - 2026-09-22
+
+### Fixed
+- **Old release-note URLs no longer 404** — `docs/404.html` redirects `/release-notes-vX.Y.Z.md` to `/release-notes/release-notes-vX.Y.Z.md`; GitHub Pages is static and cannot issue server-side redirects.
+
+---
+
 ## [1.10.0] - 2026-09-22
 
 ### Added
