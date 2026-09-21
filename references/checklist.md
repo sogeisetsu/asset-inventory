@@ -37,6 +37,9 @@ Run this checklist before outputting. Every item must pass.
 
 ## Table 5 — MCP
 
+- [ ] **Row count equals the number of `mcp` keys in the config** (global + project merged). If you listed fewer, you dropped servers — go back.
+- [ ] A single-row table has been double-checked against the config — it is the exception, not the norm.
+- [ ] Every server is listed: local and remote, enabled and disabled (`❌disabled` with the config line quoted).
 - [ ] Rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
 
 ## Table 6 — Agents
@@ -50,9 +53,10 @@ Run this checklist before outputting. Every item must pass.
 
 ## What it does & Usage Guide
 
-- [ ] Every `What it does` is detailed: a one-sentence Simple plus a 2-4 sentence Detailed, expanded from the source description, including typical usage and key caveats. One-liners/labels do not pass.
+- [ ] Every `What it does` is **one detailed paragraph** (no `Simple: … Detailed: …` split) answering: how it is invoked, when to use it, and what happens after (with caveats). One-liners/labels do not pass.
 - [ ] Tables 1/2/4/5/7 rows do NOT carry deletion consequences; `What it does` focuses on what/who/how/caveats.
 - [ ] `usage-guide.md` is derived from the same rows — no re-collection, no invented facts; grouped by scenario/frequency; only `✅available` items; plain-language "when and why".
+- [ ] The usage guide picked the right mode: generic (Mode A) for an empty project, project-anchored (Mode B) for a non-empty one — and in Mode B the tool facts are unchanged, with no real file paths or private code pasted in.
 
 ## Language & Fixed Strings
 

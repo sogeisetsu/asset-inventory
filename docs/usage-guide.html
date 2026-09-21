@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>usage-guide.md — asset-inventory</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-title-en="usage-guide.md — asset-inventory" data-title-zh="usage-guide.md — asset-inventory">
+<main>
+  <div class="lang">
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a></p>
+
+  <h1>usage-guide.md</h1>
+  <p class="tag" data-lang="en">A plain-language "when to use it" guide, by scenario and frequency.</p>
+  <p class="tag" data-lang="zh">按场景与频率重排的"什么时候用"指南。</p>
+
+  <h2 data-lang="en">What it is</h2>
+  <h2 data-lang="zh">它是什么</h2>
+  <p data-lang="en">A <strong>second view of the same rows</strong> — not a new scan. It groups the tools you actually have by how often you would reach for them (daily → main tools → on-demand → periodic), in plain language, so you know when and why to use each one. Only <code>✅available</code> tools appear.</p>
+  <p data-lang="zh">它是<strong>同一批数据的第二个视角</strong>，不是重新扫描。把你真正拥有的工具按使用频率重排（每天必用 → 主力工具 → 按需 → 定期），用大白话讲清"什么时候用、为什么用"。只收录 <code>✅可用</code> 的工具。</p>
+
+  <h2 data-lang="en">Two modes</h2>
+  <h2 data-lang="zh">两种模式</h2>
+  <table class="facts">
+    <tr><th data-lang="en">Mode A</th><th data-lang="zh">模式 A</th>
+      <td data-lang="en">Project is empty → generic, machine-level guide</td>
+      <td data-lang="zh">项目为空 → 通用、机器级指南</td></tr>
+    <tr><th data-lang="en">Mode B</th><th data-lang="zh">模式 B</th>
+      <td data-lang="en">Project has real work → anchor the framing to the project, without over-coupling (no file paths, no private code; tool facts unchanged)</td>
+      <td data-lang="zh">项目非空 → 把场景锚定到你的项目，但不过度耦合（不贴文件路径、不引私有代码；工具事实不变）</td></tr>
+  </table>
+
+  <h2 data-lang="en">Example</h2>
+  <h2 data-lang="zh">示例</h2>
+  <div class="example">
+    <div class="bar">output/usage-guide.md</div>
+    <pre data-lang="en"># Usage guide: when to use these commands/skills
+
+> Updated 2026-09-09, based on this machine's opencode environment and active plugins (preset: opencode-go/mimo-v2.5).
+
+## Daily (highest frequency)
+
+**`/catch-up`** — the first thing to run every time you return to a project. It silently checks the git state (in-progress diffs, PR review status, recent commits) and tells you where you left off and how to resume. If you hop between sessions a lot, this is your highest-frequency command.
+
+**`/compact`** — use it when a session gets long and context is about to overflow. It compresses the session history with AI so you can keep working, instead of being forced to start a fresh session and lose context.
+
+## Main tools
+
+| Command | When to use |
+|---|---|
+| `/deepwork` | Complex multi-phase tasks. A deep workflow with review gates; expensive |
+| `/loop` | Repeatedly trying until it passes. Auto-dispatches a fixer to iterate |
+
+## On demand
+
+| Command | When to use |
+|---|---|
+| `/debug` | When a bug won't fix; do root-cause investigation before fixing |
+| `/weigh` | When several options are unclear; compare trade-offs |</pre>
+    <pre data-lang="zh"># 使用指南：这些命令/技能什么时候用
+
+> 更新于 2026-09-09，基于本机 opencode 环境与当前生效插件（预设名：opencode-go/mimo-v2.5）。
+
+## 每天必用（最高频）
+
+**`/catch-up`** — 每次回到项目第一件事。它静默检查 git 状态（进行中 diff、PR 评审状态、最近提交），然后告诉你"上次干到哪、从哪继续"。你多会话来回切换，这是最高频的命令。
+
+**`/compact`** — 会话聊长了、上下文快爆时用。它用 AI 压缩会话历史，让你能继续干活，而不是被迫开新会话丢上下文。
+
+## 主力工具
+
+| 命令 | 何时用 |
+|---|---|
+| `/deepwork` | 复杂多阶段任务。带审查关卡的深度工作流；很贵 |
+| `/loop` | 反复尝试直到通过。自动派 fixer 迭代 |
+
+## 按需使用
+
+| 命令 | 何时用 |
+|---|---|
+| `/debug` | 修不好的 bug；先做根因调查再修 |
+| `/weigh` | 几个方案拿不定；对比权衡 |</pre>
+  </div>
+
+  <footer>
+    asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+</main>
+<script src="lang.js"></script>
+</body>
+</html>

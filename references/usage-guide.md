@@ -56,3 +56,36 @@
 3. Flag pitfalls: `needs git`, `expensive`, `Windows-only`, `first thing on return`.
 4. Include only `✅available` items; `❌disabled`, `📦shelf-only`, and `🚫absent` never appear.
 5. It may be derived from the 7 tables, but **never re-collect evidence and never invent** — the same facts, a different view.
+
+## Two modes — empty project vs. non-empty project
+
+The guide has two shapes. Decide which one applies **before** writing anything, by looking at the current project (does it already contain real work — source files, commits, docs, a stack?).
+
+### Mode A — the project is empty (or brand new)
+
+Write the guide exactly as the sample above: **generic, machine-level**. Describe each tool by what it is and when anyone would reach for it, in plain language. No project-specific references, because there is nothing to reference yet.
+
+### Mode B — the project is non-empty
+
+The user is looking at this guide **while working in their own project**, so make it feel familiar and immediately useful — but keep the coupling loose. The rule is:
+
+> **Adapt the framing, not the facts.**
+
+- **Anchor the "when to use" to the project's shape, in general terms** — e.g. "this repo is a TypeScript monorepo" rather than "your `packages/api/src/routes/orders.ts:42`". A general anchor helps the user recognize the situation; a pinpoint path is over-coupling and goes stale the moment the file moves.
+- **Use the project's language and vocabulary** for the *scenario*, not the tool description. The tool's own facts (name, source, invocation, caveats) still come from the 7 tables unchanged.
+- **Do not invent project facts.** Read the project's manifest / README / top-level layout to learn its stack and shape; if you cannot tell, stay at Mode A rather than guessing.
+- **Do not rename or re-scope the tools.** You are choosing better examples and a more familiar ordering — never changing what a tool does.
+- **Keep it recognizable to a newcomer.** The guide should still make sense if the reader has not memorized the repo layout; project flavor is seasoning, not the meal.
+
+What changes between modes, concretely:
+
+| | Mode A (empty project) | Mode B (non-empty project) |
+|---|---|---|
+| Opening line | machine-level preset/environment | same, plus one line naming the project's general shape (language / kind of repo) |
+| "When to use" | general scenario | the same scenario, anchored to *this kind* of project ("when you add a cross-package dependency in this monorepo…") |
+| Examples | neutral ("build the project skeleton") | drawn from the project's domain, kept generic enough to stay true ("add a new subcommand to this CLI") |
+| Ordering | by universal frequency | by this project's likely frequency (e.g. a docs repo leads with writing tools, a library repo with test/refactor tools) |
+| Tool facts | unchanged | **unchanged** — name, source, invoke path, caveats never change |
+
+**Never** do any of these in Mode B: paste real file paths or line numbers, quote the project's private code, imply a tool is project-specific when it is not, or reorder so aggressively that the guide stops matching the 7 tables.
+

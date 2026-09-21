@@ -146,12 +146,17 @@ if (Test-Path $oldSkill) {
 
   # --- backup existing files ---
   if (-not $NoBackup -and $oldVersion -and $oldVersion -ne $newVersion) {
-    $backupDir = Join-Path $installDir "backup.$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+    # Backups live NEXT TO the install dir, never inside it — a backup inside the
+    # skill dir would be copied into the skill and re-nested on the next update.
+    $backupRoot = Split-Path -Parent $installDir
+    $backupDir = Join-Path $backupRoot "$(Split-Path -Leaf $installDir).backup-$oldVersion-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
+    New-Item -ItemType Directory -Force -Path $backupDir | Out-Null
     Write-Host "  Backing up to: $backupDir" -ForegroundColor DarkGray
     foreach ($item in $runtimeFiles) {
       $src = Join-Path $installDir $item
       if (Test-Path $src) {
         $dst = Join-Path $backupDir $item
+        if (Test-Path $dst) { Remove-Item -Recurse -Force -Path $dst }
         Copy-Item -Recurse -Force -Path $src -Destination $dst
       }
     }
@@ -160,6 +165,9 @@ if (Test-Path $oldSkill) {
 }
 
 # --- copy files ---
+# Note: Copy-Item -Recurse into an existing directory nests the source inside it
+# (references/references/...). Remove the target first, then copy, so repeated
+# updates never accumulate nested duplicates.
 foreach ($item in $runtimeFiles) {
   $src = Join-Path $RepoRoot $item
   $dst = Join-Path $installDir $item
@@ -167,12 +175,26 @@ foreach ($item in $runtimeFiles) {
     Write-Warning "Source not found: $src — skipping"
     continue
   }
+  if (Test-Path $dst) {
+    Remove-Item -Recurse -Force -Path $dst
+  }
   if (Test-Path $src -PathType Container) {
     Copy-Item -Recurse -Force -Path $src -Destination $dst
   } else {
     Copy-Item -Force -Path $src -Destination $dst
   }
   Write-Host "  Copied: $item"
+}
+
+# --- prune stale runtime dirs (e.g. a directory that is no longer shipped) ---
+$knownRuntime = @('SKILL.md', 'references')
+$staleCandidates = @('examples')
+foreach ($stale in $staleCandidates) {
+  $stalePath = Join-Path $installDir $stale
+  if ((Test-Path $stalePath) -and ($knownRuntime -notcontains $stale)) {
+    Write-Host "  Removing stale item no longer shipped: $stale" -ForegroundColor DarkGray
+    Remove-Item -Recurse -Force -Path $stalePath
+  }
 }
 
 # --- verify ---

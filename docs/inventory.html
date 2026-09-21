@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>inventory.md — asset-inventory</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-title-en="inventory.md — asset-inventory" data-title-zh="inventory.md — asset-inventory">
+<main>
+  <div class="lang">
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
+  </div>
+
+  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a></p>
+
+  <h1>inventory.md</h1>
+  <p class="tag" data-lang="en">The 7-table inventory — the main deliverable.</p>
+  <p class="tag" data-lang="zh">7 张表的盘点清单 —— 主产物。</p>
+
+  <h2 data-lang="en">What it is</h2>
+  <h2 data-lang="zh">它是什么</h2>
+  <p data-lang="en"><code>inventory.md</code> is the core output: one Markdown file containing <strong>7 fixed tables</strong> that map everything your machine can actually invoke. Tables 1–5 and 7 have five columns (<code>Name | Source | How to call | When to use | What it does</code>); Table 6 (Agents) adds a sixth, <code>Model chain</code>.</p>
+  <p data-lang="zh"><code>inventory.md</code> 是核心产物：一个 Markdown 文件，含 <strong>7 张固定表</strong>，把本机真正能调用的一切列出来。表 1–5、7 为五列（<code>名称 | 来源 | 调用方式 | 何时用 | 干什么</code>）；表 6（Agent）多一列 <code>模型链</code>。</p>
+
+  <h2 data-lang="en">The 7 tables</h2>
+  <h2 data-lang="zh">7 张表</h2>
+  <table class="facts">
+    <tr><th>1</th><td data-lang="en">Plugins &amp; companion software — real product names</td><td data-lang="zh">插件与配套软件 —— 用真实产品名</td></tr>
+    <tr><th>2</th><td data-lang="en">Skills &amp; commands each software/plugin brings</td><td data-lang="zh">各软件/插件带来的 Skill 与命令</td></tr>
+    <tr><th>3</th><td data-lang="en">Built-in commands &amp; built-in skills</td><td data-lang="zh">原生命令与原生 Skill</td></tr>
+    <tr><th>4</th><td data-lang="en">Custom skills, commands &amp; host-injected commands</td><td data-lang="zh">自定义 Skill、命令与外层应用注入命令</td></tr>
+    <tr><th>5</th><td data-lang="en">MCP — every server, local &amp; remote</td><td data-lang="zh">MCP —— 每个 server，本地与远端</td></tr>
+    <tr><th>6</th><td data-lang="en">Agents — with their model chains</td><td data-lang="zh">Agent —— 含模型链</td></tr>
+    <tr><th>7</th><td data-lang="en">Host capabilities — behavior rules, browser, etc.</td><td data-lang="zh">外层应用能力 —— 行为规则、浏览器等</td></tr>
+  </table>
+
+  <h2 data-lang="en">Key conventions</h2>
+  <h2 data-lang="zh">关键约定</h2>
+  <ul data-lang="en">
+    <li><strong>State markers:</strong> ✅available / ❌disabled / 📦shelf-only / 🚫absent — localized to the output language.</li>
+    <li><strong>Confidence:</strong> ✅verified / ✅docs / ⚠️inferred appended to every source.</li>
+    <li><strong>What it does</strong> is one detailed paragraph answering: how to invoke, when to use, and what happens after.</li>
+    <li><strong>Read-only:</strong> the skill never edits your config; keys, tokens, and private paths are masked by default.</li>
+  </ul>
+  <ul data-lang="zh">
+    <li><strong>状态标记：</strong>✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在 —— 随输出语言变化。</li>
+    <li><strong>可信度：</strong>每个来源后附 ✅实测 / ✅文档 / ⚠️推断。</li>
+    <li><strong>干什么</strong>是一段详细文字，回答：怎么调用、何时用、用了之后会发生什么。</li>
+    <li><strong>只读：</strong>skill 绝不改动你的配置；密钥、token、私有路径默认打码。</li>
+  </ul>
+
+  <h2 data-lang="en">Example</h2>
+  <h2 data-lang="zh">示例</h2>
+  <div class="example">
+    <div class="bar">output/inventory.md</div>
+    <pre id="ex" data-lang="en">## Table 5 — MCP
+
+| Name | Source | How to call | When to use | What it does |
+|---|---|---|---|---|
+| websearch | remote MCP, `mcp.exa.ai`, global config `opencode.jsonc:mcp.websearch` ✅verified | Agent calls it (tools `websearch_*`) | when you need live web results | Humans don't call it — the Agent invokes it automatically when it needs current information, returning clean text; reach for it for docs, news, or technical lookups. |
+| context7 | remote MCP, `mcp.context7.com`, global config `opencode.jsonc:mcp.context7` ✅verified | Agent calls it (tools `context7_*`) | when you need up-to-date library docs | Humans don't call it — the Agent uses it to pull current library/framework documentation instead of relying on memory; the auth header contains a key, already masked. |
+| pdf-mcp | local MCP, `pdf-mcp` command ✅verified | Agent calls it (tools `pdf_*`) | when you need to read or search a PDF | Humans don't call it — the Agent uses it to extract text, search, and pull tables out of PDFs, with SQLite-backed caching; reading-only, never for form filling.</pre>
+    <pre id="ex2" data-lang="zh">## 表5 MCP
+
+| 名称 | 来源 | 调用方式 | 何时用 | 干什么 |
+|---|---|---|---|---|
+| websearch | 远端 MCP，`mcp.exa.ai`，全局配置 `opencode.jsonc:mcp.websearch` ✅实测 | Agent 自调（工具 `websearch_*`） | 需要联网实时搜索时 | 人不用叫，Agent 在需要实时信息时自动调它，返回清洁文本；查文档、查新闻、查技术细节时用。 |
+| context7 | 远端 MCP，`mcp.context7.com`，全局配置 `opencode.jsonc:mcp.context7` ✅实测 | Agent 自调（工具 `context7_*`） | 需要最新的库/框架文档时 | 人不用叫，Agent 用它拉取最新的库文档而不是靠记忆；其 auth 头含密钥，已打码。 |
+| pdf-mcp | 本地 MCP，`pdf-mcp` 命令 ✅实测 | Agent 自调（工具 `pdf_*`） | 需要读取或检索 PDF 时 | 人不用叫，Agent 用它提取文本、检索、抽取表格，带 SQLite 缓存；只读用途，不做表单填写。 |</pre>
+  </div>
+
+  <footer>
+    asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+</main>
+<script src="lang.js"></script>
+</body>
+</html>

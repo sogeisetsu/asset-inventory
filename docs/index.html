@@ -1,90 +1,65 @@
-﻿<!DOCTYPE html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>asset-inventory — OpenCode 环境全景盘点</title>
-<style>
-  :root {
-    --fg: #1f2328;
-    --muted: #57606a;
-    --bg: #ffffff;
-    --border: #d0d7de;
-    --accent: #0a7d33;
-    --code: #f6f8fa;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --fg: #e6edf3;
-      --muted: #8b949e;
-      --bg: #0d1117;
-      --border: #30363d;
-      --accent: #3fb950;
-      --code: #161b22;
-    }
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--fg);
-    font: 16px/1.7 system-ui, -apple-system, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-  }
-  main { max-width: 760px; margin: 0 auto; padding: 48px 20px 64px; }
-  h1 { font-size: 32px; margin: 0 0 4px; }
-  .tag { color: var(--muted); font-size: 18px; margin: 0 0 28px; }
-  h2 { font-size: 20px; margin: 36px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
-  ul { padding-left: 22px; }
-  li { margin: 4px 0; }
-  code { font-family: ui-monospace, Consolas, "Courier New", monospace; background: var(--code); padding: 1px 5px; border-radius: 4px; font-size: .9em; }
-  pre { background: var(--code); border: 1px solid var(--border); border-radius: 6px; padding: 14px; overflow: auto; font-size: 13px; line-height: 1.6; white-space: pre-wrap; }
-  a { color: var(--accent); }
-  .lang { display: flex; gap: 8px; justify-content: flex-end; margin-bottom: 8px; }
-  .lang button { border: 1px solid var(--border); background: transparent; color: var(--muted); border-radius: 4px; padding: 2px 10px; cursor: pointer; font: inherit; font-size: 13px; }
-  .lang button[aria-pressed="true"] { color: var(--fg); border-color: var(--accent); }
-  .copy { margin-top: 8px; border: 1px solid var(--border); background: transparent; color: var(--accent); border-radius: 4px; padding: 4px 12px; cursor: pointer; font: inherit; font-size: 13px; }
-  footer { margin-top: 44px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 13px; }
-  [data-lang="en"] { display: none; }
-  html[data-show="en"] [data-lang="zh"] { display: none !important; }
-  html[data-show="en"] [data-lang="en"] { display: revert; }
-</style>
+<title>asset-inventory — Inventory Your OpenCode Setup</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-title-en="asset-inventory — Inventory Your OpenCode Setup" data-title-zh="asset-inventory — OpenCode 环境全景盘点">
 <main>
   <div class="lang">
-    <button id="btn-zh" aria-pressed="true">中文</button>
-    <button id="btn-en" aria-pressed="false">English</button>
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+    <button id="btn-en" onclick="setLang('en')">English</button>
   </div>
 
   <h1>asset-inventory</h1>
-  <p class="tag" data-lang="zh">一条命令，盘清你的 OpenCode 环境——每个插件、Skill、命令、MCP、Agent 与外层应用能力，都带来源追溯。</p>
   <p class="tag" data-lang="en">One command to inventory your OpenCode setup — every plugin, skill, command, MCP server, agent, and host capability, each with provenance.</p>
+  <p class="tag" data-lang="zh">一条命令，盘清你的 OpenCode 环境——每个插件、Skill、命令、MCP、Agent 与外层应用能力，都带来源追溯。</p>
 
-  <p data-lang="zh"><strong>主体思想：</strong>盘点的不是磁盘上有哪些文件，而是这台机器<strong>真正能调用</strong>什么。每行回答三个问题——<strong>是什么、谁带来的、怎么用</strong>；来源必须具体到带来者，绝不写"某个插件"。</p>
   <p data-lang="en"><strong>Core idea:</strong> inventory what the machine can <strong>actually invoke</strong>, not which files exist on disk. Every row answers three questions — <strong>what it is, who brought it in, how to use it</strong>; the source must name the specific bringer, never a vague "some plugin".</p>
+  <p data-lang="zh"><strong>主体思想：</strong>盘点的不是磁盘上有哪些文件，而是这台机器<strong>真正能调用</strong>什么。每行回答三个问题——<strong>是什么、谁带来的、怎么用</strong>；来源必须具体到带来者，绝不写"某个插件"。</p>
 
-  <h2 data-lang="zh">产出</h2>
   <h2 data-lang="en">Outputs</h2>
-  <ul data-lang="zh">
-    <li><code>inventory.md</code> — 7 张表：插件、Skill/命令、原生能力、自定义/外层注入、MCP、Agent、外层应用能力</li>
-    <li><code>usage-guide.md</code> — 按使用频率重排的"什么时候用"指南</li>
-    <li><code>asset-inventory.json</code> — 机器可读，主键 <code>table</code> + <code>name</code>，供 diff 与迁移</li>
+  <h2 data-lang="zh">产出</h2>
+  <ul class="outputs" data-lang="en">
+    <li><a class="card" href="inventory.html">
+      <div class="fname">inventory.md</div>
+      <div class="desc">7 tables: plugins, skills/commands, built-ins, custom/host-injected, MCP, agents, host capabilities</div>
+      <div class="go">View details &amp; example →</div>
+    </a></li>
+    <li><a class="card" href="usage-guide.html">
+      <div class="fname">usage-guide.md</div>
+      <div class="desc">a plain-language "when to use it" guide, organized by scenario and frequency</div>
+      <div class="go">View details &amp; example →</div>
+    </a></li>
+    <li><a class="card" href="asset-inventory-json.html">
+      <div class="fname">asset-inventory.json</div>
+      <div class="desc">machine-readable rows (PK: table + name), for diffing and migration</div>
+      <div class="go">View details &amp; example →</div>
+    </a></li>
   </ul>
-  <ul data-lang="en">
-    <li><code>inventory.md</code> — 7 tables: plugins, skills/commands, built-ins, custom/host-injected, MCP, agents, host capabilities</li>
-    <li><code>usage-guide.md</code> — a "when to use it" guide organized by frequency</li>
-    <li><code>asset-inventory.json</code> — machine-readable, PK <code>table</code> + <code>name</code>, for diff and migration</li>
+  <ul class="outputs" data-lang="zh">
+    <li><a class="card" href="inventory.html">
+      <div class="fname">inventory.md</div>
+      <div class="desc">7 张表：插件、Skill/命令、原生能力、自定义/外层注入、MCP、Agent、外层应用能力</div>
+      <div class="go">查看详情与示例 →</div>
+    </a></li>
+    <li><a class="card" href="usage-guide.html">
+      <div class="fname">usage-guide.md</div>
+      <div class="desc">按场景与频率重排的"什么时候用"大白话指南</div>
+      <div class="go">查看详情与示例 →</div>
+    </a></li>
+    <li><a class="card" href="asset-inventory-json.html">
+      <div class="fname">asset-inventory.json</div>
+      <div class="desc">机器可读的行（主键 table + name），供 diff 与迁移</div>
+      <div class="go">查看详情与示例 →</div>
+    </a></li>
   </ul>
 
-  <h2 data-lang="zh">特点</h2>
   <h2 data-lang="en">Highlights</h2>
-  <ul data-lang="zh">
-    <li><strong>来源可追溯</strong>：OpenCode 自带、插件带来、你自建，还是外层应用注入</li>
-    <li><strong>四态标注</strong>：✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在</li>
-    <li><strong>只读脱敏</strong>：不改任何配置，默认打码密钥、路径与私有项目名</li>
-    <li><strong>外层应用感知</strong>：二进制扫描应用包，抓出普通 grep 漏掉的注入命令</li>
-    <li><strong>差异模式</strong>：贴上次 JSON，只输出增删</li>
-  </ul>
+  <h2 data-lang="zh">特点</h2>
   <ul data-lang="en">
     <li><strong>Provenance</strong>: built into OpenCode, brought by a plugin, created by you, or injected by a host app</li>
     <li><strong>Four-state labels</strong>: ✅available / ❌disabled / 📦shelf-only / 🚫absent</li>
@@ -92,30 +67,24 @@
     <li><strong>Host-aware</strong>: binary-scans the app bundle for injected commands that plain grep misses</li>
     <li><strong>Diff mode</strong>: paste the previous JSON and get only additions and removals</li>
   </ul>
+  <ul data-lang="zh">
+    <li><strong>来源可追溯</strong>：OpenCode 自带、插件带来、你自建，还是外层应用注入</li>
+    <li><strong>四态标注</strong>：✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在</li>
+    <li><strong>只读脱敏</strong>：不改任何配置，默认打码密钥、路径与私有项目名</li>
+    <li><strong>外层应用感知</strong>：二进制扫描应用包，抓出普通 grep 漏掉的注入命令</li>
+    <li><strong>差异模式</strong>：贴上次 JSON，只输出增删</li>
+  </ul>
 
-  <h2 data-lang="zh">安装</h2>
   <h2 data-lang="en">Install</h2>
-  <p data-lang="zh">把下面这段发给 AI，它会帮你装好。</p>
+  <h2 data-lang="zh">安装</h2>
   <p data-lang="en">Send the text below to your AI and it will install it for you.</p>
-
-  <pre id="prompt-zh" data-lang="zh">请帮我安装 OpenCode skill "asset-inventory"，仓库地址 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。
-
-1. 先只问我一个问题：装到全局，还是只装进当前项目。
-2. 获取仓库：优先 `git clone`；如果没有 git 或克隆失败，就改用 GitHub 的 ZIP 下载。
-3. 只把三个运行时项复制到目标位置：
-   - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
-   - 项目级：当前项目下的 .opencode/skills/asset-inventory/
-   目录不存在就创建。不要复制 README、docs、assets、scripts。
-4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
-5. 完成后确认 &lt;目标位置&gt;/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
-6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。</pre>
-  <button class="copy" data-copy="prompt-zh" data-lang="zh">复制安装提示词</button>
+  <p data-lang="zh">把下面这段发给 AI，它会帮你装好。</p>
 
   <pre id="prompt-en" data-lang="en">Install the OpenCode skill "asset-inventory" from &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
 
 1. First ask me exactly one question: install globally, or into the current project only.
 2. Get the repository: prefer `git clone`; if git is unavailable or the clone fails, download the GitHub ZIP instead.
-3. Copy only the three runtime items into the target:
+3. Copy only the two runtime items (SKILL.md and references/) into the target:
    - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - Project-scoped: .opencode/skills/asset-inventory/ inside the current project.
    Create the directory if it is missing. Do not copy the README, docs, assets, or scripts.
@@ -124,48 +93,31 @@
 6. Treat the source as read-only and do not modify any skill content. Report only the install location and the version.</pre>
   <button class="copy" data-copy="prompt-en" data-lang="en">Copy install prompt</button>
 
-  <p data-lang="zh">或手动安装（只复制三个运行时项）：</p>
-  <p data-lang="en">Or install manually (copy only the three runtime items):</p>
+  <pre id="prompt-zh" data-lang="zh">请帮我安装 OpenCode skill "asset-inventory"，仓库地址 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。
+
+1. 先只问我一个问题：装到全局，还是只装进当前项目。
+2. 获取仓库：优先 `git clone`；如果没有 git 或克隆失败，就改用 GitHub 的 ZIP 下载。
+3. 只把两个运行时项（SKILL.md 和 references/）复制到目标位置：
+   - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
+   - 项目级：当前项目下的 .opencode/skills/asset-inventory/
+   目录不存在就创建。不要复制 README、docs、assets、scripts。
+4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
+5. 完成后确认 &lt;目标位置&gt;/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
+6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。</pre>
+  <button class="copy" data-copy="prompt-zh" data-lang="zh">复制安装提示词</button>
+
+  <p data-lang="en">Or install manually (copy only the two runtime items):</p>
+  <p data-lang="zh">或手动安装（只复制两个运行时项）：</p>
   <pre># macOS / Linux
-mkdir -p ~/.config/opencode/skills/asset-inventory &amp;&amp; cp -r SKILL.md references examples ~/.config/opencode/skills/asset-inventory/
+mkdir -p ~/.config/opencode/skills/asset-inventory &amp;&amp; cp -r SKILL.md references ~/.config/opencode/skills/asset-inventory/
 
 # Windows (PowerShell)
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"; Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"</pre>
+New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"; Copy-Item -Recurse SKILL.md, references -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"</pre>
 
   <footer>
     asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>
   </footer>
 </main>
-<script>
-(function () {
-  var zh = document.getElementById('btn-zh');
-  var en = document.getElementById('btn-en');
-  function setLang(lang) {
-    document.documentElement.setAttribute('data-show', lang);
-    zh.setAttribute('aria-pressed', String(lang === 'zh'));
-    en.setAttribute('aria-pressed', String(lang === 'en'));
-    document.title = lang === 'en'
-      ? 'asset-inventory — Inventory Your OpenCode Setup'
-      : 'asset-inventory — OpenCode 环境全景盘点';
-    try { localStorage.setItem('lang', lang); } catch (e) {}
-  }
-  zh.addEventListener('click', function () { setLang('zh'); });
-  en.addEventListener('click', function () { setLang('en'); });
-  var saved = 'zh';
-  try { saved = localStorage.getItem('lang') || 'zh'; } catch (e) {}
-  setLang(saved);
-
-  document.querySelectorAll('.copy').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var el = document.getElementById(btn.getAttribute('data-copy'));
-      var label = btn.textContent;
-      navigator.clipboard.writeText(el.textContent.trim()).then(function () {
-        btn.textContent = '已复制 ✓';
-        setTimeout(function () { btn.textContent = label; }, 1500);
-      });
-    });
-  });
-})();
-</script>
+<script src="lang.js"></script>
 </body>
 </html>
