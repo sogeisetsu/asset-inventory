@@ -23,7 +23,7 @@
 /asset-inventory
 ```
 
-装好 skill 后直接调用，无需配置。加参数可只盘点一部分 —— `/asset-inventory mcp`、`agents`、`hosts`、`skills`、`diff`、`usage`。
+装好 skill 后直接调用，无需配置。加参数可只盘点一部分 —— `/asset-inventory mcp`、`agents`、`hosts`、`skills`、`diff`、`usage`。每个参数具体扫什么、写哪些文件，见[盘点模式](docs/guides/how-it-works.md#targeting)。
 
 ## 📦 安装
 
