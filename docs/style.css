@@ -149,22 +149,12 @@ footer {
   color: var(--md-on-surface-variant); font-size: .8125rem;
 }
 
-/* ---- Language visibility ---- */
+/* ---- Language visibility ----
+   Elements carry `data-lang`. lang.js groups consecutive same-tag/same-class
+   siblings into translation slots and marks the chosen one with `.i18n-on`,
+   falling back to English when the chosen language has no translation. */
 [data-lang] { display: none; }
-html[data-show="en"] [data-lang="en"],
-html[data-show="zh"] [data-lang="zh"],
-html[data-show="ja"] [data-lang="ja"],
-html[data-show="ko"] [data-lang="ko"],
-html[data-show="ru"] [data-lang="ru"],
-html[data-show="ar"] [data-lang="ar"],
-html[data-show="es"] [data-lang="es"] { display: revert; }
-html[data-show="en"] [data-lang]:not([data-lang="en"]),
-html[data-show="zh"] [data-lang]:not([data-lang="zh"]),
-html[data-show="ja"] [data-lang]:not([data-lang="ja"]),
-html[data-show="ko"] [data-lang]:not([data-lang="ko"]),
-html[data-show="ru"] [data-lang]:not([data-lang="ru"]),
-html[data-show="ar"] [data-lang]:not([data-lang="ar"]),
-html[data-show="es"] [data-lang]:not([data-lang="es"]) { display: none !important; }
+[data-lang].i18n-on { display: revert; }
 
 /* ---- RTL (Arabic) ---- */
 html[dir="rtl"] { direction: rtl; }

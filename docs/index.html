@@ -161,7 +161,8 @@
   <p data-lang="ar">أرسل النص أدناه إلى الذكاء الاصطناعي وسيثبّته لك.</p>
   <p data-lang="es">Envía el siguiente texto a tu IA y lo instalará por ti.</p>
 
-  <pre id="prompt-en" data-lang="en">Install the OpenCode skill "asset-inventory" from &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
+  <div class="prompt-block" data-lang="en">
+    <pre id="prompt-en">Install the OpenCode skill "asset-inventory" from &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
 
 1. First ask me exactly one question: install globally, or into the current project only.
 2. Get the repository: prefer `git clone`; if git is unavailable or the clone fails, download the GitHub ZIP instead.
@@ -172,9 +173,11 @@
 4. If the skill already exists at the target, overwrite it (that is an update) — do not ask a second time.
 5. When done, verify &lt;target&gt;/asset-inventory/SKILL.md exists, and read the installed version from its frontmatter `metadata.version`.
 6. Treat the source as read-only and do not modify any skill content. Report only the install location and the version.</pre>
-  <button class="copy" data-copy="prompt-en" data-lang="en">Copy install prompt</button>
+    <button class="copy" data-copy="prompt-en">Copy install prompt</button>
+  </div>
 
-  <pre id="prompt-zh" data-lang="zh">请帮我安装 OpenCode skill "asset-inventory"，仓库地址 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。
+  <div class="prompt-block" data-lang="zh">
+    <pre id="prompt-zh">请帮我安装 OpenCode skill "asset-inventory"，仓库地址 &lt;https://github.com/sogeisetsu/asset-inventory&gt;。
 
 1. 先只问我一个问题：装到全局，还是只装进当前项目。
 2. 获取仓库：优先 `git clone`；如果没有 git 或克隆失败，就改用 GitHub 的 ZIP 下载。
@@ -185,9 +188,11 @@
 4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
 5. 完成后确认 &lt;目标位置&gt;/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
 6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。</pre>
-  <button class="copy" data-copy="prompt-zh" data-lang="zh">复制安装提示词</button>
+    <button class="copy" data-copy="prompt-zh">复制安装提示词</button>
+  </div>
 
-  <pre id="prompt-ja" data-lang="ja">OpenCode スキル "asset-inventory" を &lt;https://github.com/sogeisetsu/asset-inventory&gt; からインストールしてください。
+  <div class="prompt-block" data-lang="ja">
+    <pre id="prompt-ja">OpenCode スキル "asset-inventory" を &lt;https://github.com/sogeisetsu/asset-inventory&gt; からインストールしてください。
 
 1. まず質問は 1 つだけ：グローバルに入れるか、今のプロジェクトだけか。
 2. リポジトリ取得：`git clone` を優先。git が無い／失敗する場合は GitHub の ZIP を使う。
@@ -198,9 +203,11 @@
 4. 既に同名スキルがあれば上書き（更新）し、二度目は聞かない。
 5. 完了後 &lt;target&gt;/asset-inventory/SKILL.md の存在を確認し、frontmatter の `metadata.version` を読む。
 6. ソースは読み取り専用として扱い、内容を変更しない。報告はインストール先と版のみ。</pre>
-  <button class="copy" data-copy="prompt-ja" data-lang="ja">インストール文をコピー</button>
+    <button class="copy" data-copy="prompt-ja">インストール文をコピー</button>
+  </div>
 
-  <pre id="prompt-ko" data-lang="ko">OpenCode 스킬 "asset-inventory"를 &lt;https://github.com/sogeisetsu/asset-inventory&gt; 에서 설치해 주세요.
+  <div class="prompt-block" data-lang="ko">
+    <pre id="prompt-ko">OpenCode 스킬 "asset-inventory"를 &lt;https://github.com/sogeisetsu/asset-inventory&gt; 에서 설치해 주세요.
 
 1. 먼저 한 가지만 물어보세요: 전역 설치인지, 현재 프로젝트에만 설치인지.
 2. 저장소 확보: `git clone` 우선, git이 없거나 실패하면 GitHub ZIP을 사용.
@@ -211,9 +218,11 @@
 4. 같은 스킬이 이미 있으면 덮어쓰기(업데이트)하고 두 번 묻지 않음.
 5. 완료 후 &lt;target&gt;/asset-inventory/SKILL.md 존재를 확인하고 frontmatter의 `metadata.version`을 읽음.
 6. 소스는 읽기 전용으로 취급하고 내용을 수정하지 않음. 보고는 설치 위치와 버전만.</pre>
-  <button class="copy" data-copy="prompt-ko" data-lang="ko">설치 문구 복사</button>
+    <button class="copy" data-copy="prompt-ko">설치 문구 복사</button>
+  </div>
 
-  <pre id="prompt-ru" data-lang="ru">Установите навык OpenCode "asset-inventory" из &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
+  <div class="prompt-block" data-lang="ru">
+    <pre id="prompt-ru">Установите навык OpenCode "asset-inventory" из &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
 
 1. Сначала задайте ровно один вопрос: глобально или только в текущий проект.
 2. Получите репозиторий: предпочтительно `git clone`; если git нет или клонирование не удалось — скачайте ZIP с GitHub.
@@ -224,9 +233,11 @@
 4. Если навык уже есть — перезапишите (это обновление), не спрашивайте второй раз.
 5. По завершении убедитесь, что &lt;target&gt;/asset-inventory/SKILL.md существует, и прочитайте установленную версию из `metadata.version`.
 6. Считайте источник только для чтения и не меняйте содержимое. Сообщите только путь установки и версию.</pre>
-  <button class="copy" data-copy="prompt-ru" data-lang="ru">Скопировать текст установки</button>
+    <button class="copy" data-copy="prompt-ru">Скопировать текст установки</button>
+  </div>
 
-  <pre id="prompt-ar" data-lang="ar">ثبّت مهارة OpenCode باسم "asset-inventory" من &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
+  <div class="prompt-block" data-lang="ar">
+    <pre id="prompt-ar">ثبّت مهارة OpenCode باسم "asset-inventory" من &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
 
 ١. اسألني سؤالاً واحدًا فقط: التثبيت عامًّا أم داخل المشروع الحالي فقط.
 ٢. احصل على المستودع: يُفضّل `git clone`؛ وإن تعذّر git أو فشل الاستنساخ فاستخدم ملف ZIP من GitHub.
@@ -237,9 +248,11 @@
 ٤. إن كانت المهارة موجودة فاستبدلها (هذا تحديث)، ولا تسأل مرة ثانية.
 ٥. عند الانتهاء تحقق من وجود &lt;target&gt;/asset-inventory/SKILL.md واقرأ الإصدار من `metadata.version`.
 ٦. اعتبر المصدر للقراءة فقط ولا تعدّل أي محتوى. أبلغ فقط عن مسار التثبيت والإصدار.</pre>
-  <button class="copy" data-copy="prompt-ar" data-lang="ar">نسخ نص التثبيت</button>
+    <button class="copy" data-copy="prompt-ar">نسخ نص التثبيت</button>
+  </div>
 
-  <pre id="prompt-es" data-lang="es">Instala el skill de OpenCode "asset-inventory" desde &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
+  <div class="prompt-block" data-lang="es">
+    <pre id="prompt-es">Instala el skill de OpenCode "asset-inventory" desde &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
 
 1. Primero hazme exactamente una pregunta: ¿instalación global o solo en el proyecto actual?
 2. Obtén el repositorio: prefiere `git clone`; si no hay git o falla, descarga el ZIP de GitHub.
@@ -250,7 +263,8 @@
 4. Si el skill ya existe, sobrescríbelo (es una actualización); no preguntes otra vez.
 5. Al terminar, verifica que exista &lt;target&gt;/asset-inventory/SKILL.md y lee la versión instalada de `metadata.version`.
 6. Trata el origen como solo lectura y no modifiques ningún contenido. Informa solo la ubicación y la versión.</pre>
-  <button class="copy" data-copy="prompt-es" data-lang="es">Copiar texto de instalación</button>
+    <button class="copy" data-copy="prompt-es">Copiar texto de instalación</button>
+  </div>
 
   <p data-lang="en">Or install manually (copy only the two runtime items):</p>
   <p data-lang="zh">或手动安装（只复制两个运行时项）：</p>

@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.7.4] - 2026-09-22
+
+### Fixed
+- **Docs site showed a bare frame with no content for ja/ko/ru/ar/es.** Untranslated body content is now resolved at runtime: `lang.js` groups consecutive `data-lang` siblings into translation slots and shows the chosen language, falling back to English when that language has no translation. Frame and headings stay in the chosen language; the install prompts were wrapped per language so only the selected one shows.
+
+---
+
 ## [1.7.3] - 2026-09-22
 
 ### Added
