@@ -6,6 +6,38 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.10.0] - 2026-09-22
+
+### Added
+- **Bilingual release notes** — `docs/release-notes/release-notes-v1.10.0.md` and its Chinese counterpart, now in the dedicated release-notes folders.
+
+### Changed
+- Documentation-site and repository tidy-up: release notes in `docs/release-notes/` + `zh/release-notes/` (1.9.2), the language-stacking fix and per-tab language choice (1.9.3), and the detail-page polish (1.9.4).
+
+---
+
+## [1.9.4] - 2026-09-22
+
+### Changed
+- **Detail pages cleaned up** — dropped the file-path bar above each rendered sample (the generator no longer emits it), gave the definition tables (`.facts`) real cell borders, and capped the JSON sample's height with a scrollbar instead of one very long page.
+
+---
+
+## [1.9.3] - 2026-09-22
+
+### Fixed
+- **Language stacking on the docs pages** — the toggle grouped translations by `className`, which included the `.i18n-on` class it had just added, so a second switch split each slot and rendered several languages at once. Grouping now ignores `i18n-on`.
+- **Language choice is per-tab** — `sessionStorage` instead of `localStorage`, so a fresh visit starts in English again.
+
+---
+
+## [1.9.2] - 2026-09-22
+
+### Changed
+- **Release notes moved into their own folders** — `docs/release-notes/` and `zh/release-notes/`, with `check-docs`'s pair table, the repository trees, and every cross-link updated.
+
+---
+
 ## [1.9.1] - 2026-09-22
 
 ### Changed

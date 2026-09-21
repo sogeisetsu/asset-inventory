@@ -43,12 +43,12 @@ asset-inventory/
 │   ├── check-docs.mjs          # Doc/link/frontmatter validation
 │   └── generate-assets.mjs     # Regenerates assets/*.svg
 ├── docs/                       # GitHub Pages + release notes
+│   └── release-notes/          # English release notes
 └── zh/                         # All Chinese docs except README-ZH.md
     ├── CHANGELOG-ZH.md
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
-    ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md├── release-notes-v1.5.0-ZH.md├── release-notes-v1.6.0-ZH.md└── release-notes-v1.7.0-ZH.md
+    └── release-notes/          # Chinese release notes
 ```
 
 Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) and `AGENTS.md` are gitignored and never committed.

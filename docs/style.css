@@ -188,15 +188,8 @@ html[dir="rtl"] ul { padding-left: 0; padding-right: 22px; }
 
 /* Rendered code/sample surface */
 .example { margin: 16px 0; }
-.example .bar {
-  background: var(--md-surface-container-high);
-  border: 1px solid var(--md-outline-variant); border-bottom: 0;
-  border-radius: var(--md-shape-md) var(--md-shape-md) 0 0;
-  padding: 8px 14px; font-size: .75rem; color: var(--md-on-surface-variant);
-  font-family: var(--md-mono);
-}
 .example pre {
-  margin: 0; border-radius: 0 0 var(--md-shape-md) var(--md-shape-md);
+  margin: 0; border-radius: var(--md-shape-md);
 }
 
 /* Rendered Markdown table (C5) */
@@ -216,17 +209,19 @@ table.md-table th {
 }
 
 /* JSON line view (C5) */
-.json-view { margin: 0; }
+.json-view { margin: 0; max-height: 560px; overflow: auto; }
 .json-view .row { display: block; padding: 3px 0; }
 .json-view .k { color: var(--md-primary); }
 .json-view .s { color: var(--md-on-surface); }
 
 /* Facts table (definition-style) */
 .facts { border-collapse: collapse; width: 100%; }
-.facts th {
-  text-align: left; padding: 6px 14px 6px 0; vertical-align: top;
-  white-space: nowrap; color: var(--md-on-surface-variant); font-weight: 500;
-  font-family: var(--md-mono); font-size: .8125rem;
+.facts th, .facts td {
+  border: 1px solid var(--md-outline-variant); padding: 6px 12px; vertical-align: top;
 }
-.facts td { padding: 6px 0; vertical-align: top; }
-html[dir="rtl"] .facts th { padding: 6px 0 6px 14px; text-align: right; }
+.facts th {
+  text-align: left; white-space: nowrap; color: var(--md-on-surface-variant);
+  font-weight: 500; font-family: var(--md-mono); font-size: .8125rem;
+  background: var(--md-surface-container-high);
+}
+html[dir="rtl"] .facts th { text-align: right; }

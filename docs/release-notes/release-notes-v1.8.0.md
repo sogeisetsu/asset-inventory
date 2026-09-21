@@ -1,6 +1,6 @@
 <!--
   Release notes for v1.8.0 (English). Paste into the GitHub Release body.
-  Chinese version: zh/release-notes-v1.8.0-ZH.md
+  Chinese version: ../../zh/release-notes/release-notes-v1.8.0-ZH.md
   Release: v1.8.0 — asset-inventory (sogeisetsu/asset-inventory)
 -->
 
@@ -23,4 +23,4 @@ The skill's fixed output strings now cover all seven languages the documentation
 
 ## License
 
-MIT — see [LICENSE](../LICENSE).
+MIT — see [LICENSE](../../LICENSE).

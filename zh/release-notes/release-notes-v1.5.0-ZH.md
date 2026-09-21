@@ -1,5 +1,5 @@
 <!--
-  v1.5.0 release notes（中文）。英文版见 ../docs/release-notes-v1.5.0.md
+  v1.5.0 release notes（中文）。英文版见 ../../docs/release-notes/release-notes-v1.5.0.md
   Release: v1.5.0 — asset-inventory (sogeisetsu/asset-inventory)
 -->
 
@@ -48,4 +48,4 @@
 
 ## 许可证
 
-MIT — 见 [LICENSE](../LICENSE)。
+MIT — 见 [LICENSE](../../LICENSE)。

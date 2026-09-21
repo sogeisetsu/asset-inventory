@@ -38,8 +38,10 @@ asset-inventory/
 │   └── generate-assets.mjs     # regenerates assets/*.svg
 ├── docs/                       # GitHub Pages + release notes + guides + samples
 │   ├── guides/                 # these long-form guides
+│   ├── release-notes/          # English release notes
 │   └── samples/                # example output (English; zh/ holds the Chinese set)
 └── zh/                         # all Chinese docs except README-ZH.md
+    └── release-notes/          # Chinese release notes
 ```
 
 ## 🧩 Runtime vs. development
