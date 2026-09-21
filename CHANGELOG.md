@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.1] - 2026-09-22
+
+### Fixed
+- **Recurring output defects fixed at the rule level** (never by hand-editing `output/`): `SKILL.md` now requires home-path masking (`~` / `%USERPROFILE%`) in the Markdown **and** the JSON, merges a plugin skill with its same-named registered command into **one** row, names config-disabled agents that `agent list` never exposes, and records unregistered skill-/plugin-like residue in the Provenance **Unresolved** line with the observed reason. `references/checklist.md` gained matching items.
+
+---
+
 ## [1.11.0] - 2026-09-22
 
 ### Added
