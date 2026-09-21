@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.9.3] - 2026-09-22
+
+### Fixed
+- **Language stacking on the docs pages** — the toggle grouped translations by `className`, which included the `.i18n-on` class it had just added, so a second switch split each slot and rendered several languages at once. Grouping now ignores `i18n-on`.
+- **Language choice is per-tab** — `sessionStorage` instead of `localStorage`, so a fresh visit starts in English again.
+
+---
+
 ## [1.9.2] - 2026-09-22
 
 ### Changed

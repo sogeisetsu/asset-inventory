@@ -1,6 +1,6 @@
 /* asset-inventory docs — shared language toggle + copy buttons.
    English is the default. Supported: en, zh, ja, ko, ru, ar, es.
-   The choice is remembered in localStorage across pages.
+   The choice is remembered in sessionStorage for the current tab, across pages.
    Arabic switches the document to RTL.
 
    Translations are grouped at runtime: consecutive same-tag/same-class siblings
@@ -16,10 +16,17 @@
 
   var parentSeq = 0;
 
+  function classKey(el) {
+    var raw = el.getAttribute ? el.getAttribute('class') || '' : '';
+    var parts = raw.split(/\s+/).filter(function (c) { return c && c !== 'i18n-on'; });
+    parts.sort();
+    return parts.join(' ');
+  }
+
   function signature(el) {
     var parent = el.parentNode;
     if (parent && parent.__i18nId === undefined) parent.__i18nId = (parentSeq += 1);
-    return (parent ? parent.__i18nId : 0) + '|' + el.tagName + '|' + (el.className || '');
+    return (parent ? parent.__i18nId : 0) + '|' + el.tagName + '|' + classKey(el);
   }
 
   function markTranslations(lang) {
@@ -69,12 +76,12 @@
   }
 
   window.setLang = function (lang) {
-    try { localStorage.setItem('lang', lang); } catch (e) {}
+    try { sessionStorage.setItem('lang', lang); } catch (e) {}
     apply(lang);
   };
 
   var saved = DEFAULT_LANG;
-  try { saved = localStorage.getItem('lang') || DEFAULT_LANG; } catch (e) {}
+  try { saved = sessionStorage.getItem('lang') || DEFAULT_LANG; } catch (e) {}
   apply(saved);
 
   var COPIED = {

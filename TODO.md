@@ -18,6 +18,7 @@
 | 1.9.0 | minor | Sample pages: generator script, rendered Markdown/JSON, `docs/samples/` restructure | ✅ | ✅ | ✅ done |
 | 1.9.1 | patch | Document the branch rule (CONTRIBUTING + repository guide) | ✅ | — | ✅ done |
 | 1.9.2 | patch | Release notes moved into docs/release-notes/ + zh/release-notes/ | ✅ | — | ✅ done |
+| 1.9.3 | patch | Fix language stacking + per-tab language (sessionStorage) | ✅ | — | ✅ done |
 
 ## Details
 
