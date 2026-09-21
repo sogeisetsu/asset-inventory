@@ -1,0 +1,234 @@
+[
+  {
+    "table": 1,
+    "name": "OpenChamber",
+    "source": "外层应用官方，安装包 resources/ + 配置 $HOST_CONFIG/",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "不用叫，开机自带"
+  },
+  {
+    "table": 1,
+    "name": "@rezamonangg/opencode-rtk",
+    "source": "第三方插件，opencode.jsonc:plugin[]",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "不用叫，自动生效"
+  },
+  {
+    "table": 1,
+    "name": "oh-my-opencode-slim@2.2.18",
+    "source": "第三方插件，opencode.jsonc:plugin[]",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "不用叫，自动生效"
+  },
+  {
+    "table": 2,
+    "name": "simplify",
+    "source": "oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "看话自动干，或 /simplify"
+  },
+  {
+    "table": 2,
+    "name": "codemap",
+    "source": "oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "看话自动干，或 /codemap"
+  },
+  {
+    "table": 2,
+    "name": "clonedeps",
+    "source": "oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "看话自动干，或 /clonedeps"
+  },
+  {
+    "table": 2,
+    "name": "deepwork",
+    "source": "oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "看话自动干，或 /deepwork"
+  },
+  {
+    "table": 2,
+    "name": "/rtk-gain",
+    "source": "@rezamonangg/opencode-rtk 注册命令（dist hooks/）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "/rtk-gain"
+  },
+  {
+    "table": 3,
+    "name": "/compact",
+    "source": "核心自带，官方 TUI 文档",
+    "state": "✅可用",
+    "confidence": "✅文档",
+    "invoke": "/compact"
+  },
+  {
+    "table": 3,
+    "name": "/undo",
+    "source": "核心自带，官方 TUI 文档",
+    "state": "✅可用",
+    "confidence": "✅文档",
+    "invoke": "/undo"
+  },
+  {
+    "table": 3,
+    "name": "/new",
+    "source": "核心自带，官方 TUI 文档",
+    "state": "✅可用",
+    "confidence": "✅文档",
+    "invoke": "/new"
+  },
+  {
+    "table": 4,
+    "name": "asset-inventory",
+    "source": "本地自建，上游 github.com/sogeisetsu/asset-inventory MIT",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "看话自动干，或 /asset-inventory"
+  },
+  {
+    "table": 4,
+    "name": "/catch-up",
+    "source": "host-injected，二进制扫描 <app.asar> 发现",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "/catch-up"
+  },
+  {
+    "table": 4,
+    "name": "/debug",
+    "source": "host-injected，二进制扫描 <app.asar> 发现",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "/debug"
+  },
+  {
+    "table": 5,
+    "name": "websearch",
+    "source": "远端 MCP，mcp.exa.ai，全局配置 opencode.jsonc:mcp.websearch",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "Agent 自调（工具 websearch_*）"
+  },
+  {
+    "table": 5,
+    "name": "context7",
+    "source": "远端 MCP，mcp.context7.com，全局配置 opencode.jsonc:mcp.context7",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "Agent 自调（工具 context7_*）"
+  },
+  {
+    "table": 5,
+    "name": "grep_app",
+    "source": "远端 MCP，mcp.grep.app，全局配置 opencode.jsonc:mcp.grep_app",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "Agent 自调（工具 grep_app_* / gh_grep_*）"
+  },
+  {
+    "table": 5,
+    "name": "PaddleOCR-VL-1.6",
+    "source": "本地 MCP，paddleocr_mcp.exe，全局配置 opencode.jsonc:mcp.PaddleOCR-VL-1.6",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "Agent 自调（工具 PaddleOCR_VL_*）"
+  },
+  {
+    "table": 5,
+    "name": "pdf-mcp",
+    "source": "本地 MCP，pdf-mcp 命令，全局配置 opencode.jsonc:mcp.pdf-mcp",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "Agent 自调（工具 pdf_*）"
+  },
+  {
+    "table": 6,
+    "name": "build",
+    "source": "核心自带（primary）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "默认 Tab"
+  },
+  {
+    "table": 6,
+    "name": "plan",
+    "source": "核心自带（primary）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "Tab 切换"
+  },
+  {
+    "table": 6,
+    "name": "orchestrator",
+    "source": "oh-my-opencode-slim（plugin package，primary）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "自动接管"
+  },
+  {
+    "table": 6,
+    "name": "oracle",
+    "source": "oh-my-opencode-slim（plugin package，subagent）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "自动接管"
+  },
+  {
+    "table": 6,
+    "name": "explorer",
+    "source": "oh-my-opencode-slim（plugin package，subagent）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "自动接管"
+  },
+  {
+    "table": 6,
+    "name": "librarian",
+    "source": "oh-my-opencode-slim（plugin package，subagent）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "自动接管"
+  },
+  {
+    "table": 6,
+    "name": "fixer",
+    "source": "oh-my-opencode-slim（plugin package，subagent）",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "自动接管"
+  },
+  {
+    "table": 7,
+    "name": "全局行为规则",
+    "source": "宿主设置 $HOST_CONFIG/ global behavior",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "看话自动干"
+  },
+  {
+    "table": 7,
+    "name": "模型偏好管理",
+    "source": "宿主设置 $HOST_CONFIG/ model preferences",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "在应用里切换"
+  },
+  {
+    "table": 7,
+    "name": "内嵌浏览器",
+    "source": "宿主工具",
+    "state": "✅可用",
+    "confidence": "✅实测",
+    "invoke": "Agent 调用时"
+  }
+]

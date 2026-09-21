@@ -48,7 +48,7 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md├── release-notes-v1.5.0-ZH.md└── release-notes-v1.6.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md├── release-notes-v1.5.0-ZH.md├── release-notes-v1.6.0-ZH.md└── release-notes-v1.7.0-ZH.md
 ```
 
 Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) and `AGENTS.md` are gitignored and never committed.
@@ -98,6 +98,20 @@ Three places must stay in lockstep, and `check-docs.mjs` now enforces it:
 A mismatch fails the check. The release heading must be `## [x.y.z]` (the date after it is not compared).
 
 If you add a language to `references/glossary.json`, give it **the same key set as the `en` block** — the check reports any missing or extra key per language. Every language block must expose the same keys: `columns`, `columnsAgent`, `tableTitles`, `state`, `confidence`, `emptyTable`, `unknown`, `threeQuestions`, `provenance`, `provenanceRealName`.
+
+### Commit granularity
+
+**One logical change per commit.** Do not bundle unrelated work into one commit, and do not hold everything until the "end" — commit each change as it is finished, with a message that says what that change did. Two related-but-separable changes (e.g. "add a file" and "trim the docs that referenced it") are two commits. Run `node scripts/check-docs.mjs` before each commit.
+
+### Tags and releases
+
+| Level | Action |
+|---|---|
+| **PATCH** (`1.0.x`) | **git tag only** — no GitHub Release |
+| **MINOR** (`1.x.0`) | git tag **and** a GitHub Release |
+| **MAJOR** (`x.0.0`) | git tag **and** a GitHub Release |
+
+**If a change meets the minor bar, it must get a minor tag and a Release — a patch tag is not enough.** GitHub Releases exist only for minor/major versions; patches live as tags alone.
 
 ## License
 

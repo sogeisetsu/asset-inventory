@@ -6,6 +6,26 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.7.0] - 2026-09-22
+
+### Added
+- **Seven-language documentation** — the landing page and all detail pages now support English, Chinese, Japanese, Korean, Russian, Arabic (with RTL), and Spanish; the choice persists across pages.
+- **Localized READMEs** — `README-JA.md`, `README-KO.md`, `README-RU.md`, `README-AR.md`, `README-ES.md`, joining the English and Chinese ones, each cross-linking the full set.
+- **`docs/guides/`** — long-form documentation (`how-it-works.md`, `install-and-update.md`, `repository-and-contributing.md`), linked from the READMEs.
+- **`docs/samples/`** — published example output (`inventory.md`, `usage-guide.md`, `asset-inventory.json`), linked from the READMEs so users can see the final artifacts.
+- **Material Design 3 restyle** for the landing and detail pages (color roles, elevation, shape scale, segmented language toggle).
+- **New `check-docs` validations** — HTML `href`/`src` links, and a check that all seven localized READMEs exist and cross-link.
+
+### Changed
+- **READMEs slimmed** — both the English and Chinese README are now concise landing pages with emoji; detail moved into `docs/guides/`.
+- **Landing-page examples are rendered** — the inventory sample shows as a real table and the JSON as line-by-line records, instead of raw code blocks.
+- **`CONTRIBUTING.md` / `zh/CONTRIBUTING-ZH.md`** — document the commit-granularity rule and the tag/release policy (PATCH = tag only; MINOR/MAJOR = tag + Release).
+
+### Fixed
+- **Copy-button feedback** on the docs site followed a hardcoded Chinese string even in English; it now follows the active language.
+
+---
+
 ## [1.6.1] - 2026-09-22
 
 ### Fixed

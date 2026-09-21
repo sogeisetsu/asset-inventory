@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,59 +7,94 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-title-en="asset-inventory — Inventory Your OpenCode Setup" data-title-zh="asset-inventory — OpenCode 环境全景盘点">
+<body
+  data-title-en="asset-inventory — Inventory Your OpenCode Setup"
+  data-title-zh="asset-inventory — OpenCode 环境全景盘点"
+  data-title-ja="asset-inventory — OpenCode 環境の棚卸し"
+  data-title-ko="asset-inventory — OpenCode 환경 인벤토리"
+  data-title-ru="asset-inventory — инвентаризация окружения OpenCode"
+  data-title-ar="asset-inventory — جرد إعداد OpenCode"
+  data-title-es="asset-inventory — Inventario de tu entorno OpenCode">
 <main>
   <div class="lang">
-    <button id="btn-zh" onclick="setLang('zh')">中文</button>
     <button id="btn-en" onclick="setLang('en')">English</button>
+    <button id="btn-zh" onclick="setLang('zh')">中文</button>
+    <button id="btn-ja" onclick="setLang('ja')">日本語</button>
+    <button id="btn-ko" onclick="setLang('ko')">한국어</button>
+    <button id="btn-ru" onclick="setLang('ru')">Русский</button>
+    <button id="btn-ar" onclick="setLang('ar')">العربية</button>
+    <button id="btn-es" onclick="setLang('es')">Español</button>
   </div>
 
   <h1>asset-inventory</h1>
   <p class="tag" data-lang="en">One command to inventory your OpenCode setup — every plugin, skill, command, MCP server, agent, and host capability, each with provenance.</p>
   <p class="tag" data-lang="zh">一条命令，盘清你的 OpenCode 环境——每个插件、Skill、命令、MCP、Agent 与外层应用能力，都带来源追溯。</p>
+  <p class="tag" data-lang="ja">1 つのコマンドで OpenCode 環境を棚卸し — プラグイン、スキル、コマンド、MCP サーバー、エージェント、ホスト機能を、出所つきで。</p>
+  <p class="tag" data-lang="ko">명령 하나로 OpenCode 환경을 점검 — 모든 플러그인, 스킬, 명령, MCP 서버, 에이전트, 호스트 기능을 출처와 함께.</p>
+  <p class="tag" data-lang="ru">Одна команда — и всё ваше окружение OpenCode учтено: плагины, навыки, команды, MCP-серверы, агенты и возможности хоста, с указанием происхождения.</p>
+  <p class="tag" data-lang="ar">أمر واحد لجرد إعداد OpenCode الخاص بك — كل إضافة ومهارة وأمر وخادم MCP ووكيل وقدرة مضيفة، مع بيان المصدر.</p>
+  <p class="tag" data-lang="es">Un solo comando para inventariar tu entorno de OpenCode: cada plugin, skill, comando, servidor MCP, agente y capacidad del host, con su procedencia.</p>
 
   <p data-lang="en"><strong>Core idea:</strong> inventory what the machine can <strong>actually invoke</strong>, not which files exist on disk. Every row answers three questions — <strong>what it is, who brought it in, how to use it</strong>; the source must name the specific bringer, never a vague "some plugin".</p>
   <p data-lang="zh"><strong>主体思想：</strong>盘点的不是磁盘上有哪些文件，而是这台机器<strong>真正能调用</strong>什么。每行回答三个问题——<strong>是什么、谁带来的、怎么用</strong>；来源必须具体到带来者，绝不写"某个插件"。</p>
+  <p data-lang="ja"><strong>基本方針：</strong>ディスク上のファイルではなく、この環境が<strong>実際に呼び出せる</strong>ものを棚卸しします。各行は<strong>何か・誰が持ち込んだか・どう使うか</strong>の 3 問に答えます。出所は必ず具体的な提供元を名指しし、「とあるプラグイン」とは書きません。</p>
+  <p data-lang="ko"><strong>핵심 사상:</strong> 디스크에 있는 파일이 아니라 이 환경이 <strong>실제로 호출할 수 있는</strong> 것을 점검합니다. 각 행은 <strong>무엇인지 · 누가 가져왔는지 · 어떻게 쓰는지</strong> 세 가지에 답하며, 출처는 반드시 구체적인 제공자를 밝힙니다.</p>
+  <p data-lang="ru"><strong>Главная идея:</strong> учитывается не то, какие файлы лежат на диске, а то, что машина <strong>реально может вызвать</strong>. Каждая строка отвечает на три вопроса — <strong>что это, кто это принёс, как этим пользоваться</strong>; источник всегда называет конкретного поставщика.</p>
+  <p data-lang="ar"><strong>الفكرة الجوهرية:</strong> الجرد لما يمكن للجهاز <strong>استدعاؤه فعلاً</strong>، لا لما يوجد على القرص. كل سطر يجيب عن ثلاثة أسئلة — <strong>ما هو، ومن جاء به، وكيف يُستخدم</strong>؛ ويجب أن يسمّي المصدر الجهة المحددة.</p>
+  <p data-lang="es"><strong>Idea central:</strong> se inventaría lo que la máquina <strong>puede invocar de verdad</strong>, no los archivos que hay en disco. Cada fila responde a tres preguntas: <strong>qué es, quién lo trajo y cómo se usa</strong>; la fuente nombra siempre al proveedor concreto.</p>
 
   <h2 data-lang="en">Outputs</h2>
   <h2 data-lang="zh">产出</h2>
+  <h2 data-lang="ja">出力</h2>
+  <h2 data-lang="ko">산출물</h2>
+  <h2 data-lang="ru">Результаты</h2>
+  <h2 data-lang="ar">النواتج</h2>
+  <h2 data-lang="es">Resultados</h2>
+
   <ul class="outputs" data-lang="en">
-    <li><a class="card" href="inventory.html">
-      <div class="fname">inventory.md</div>
-      <div class="desc">7 tables: plugins, skills/commands, built-ins, custom/host-injected, MCP, agents, host capabilities</div>
-      <div class="go">View details &amp; example →</div>
-    </a></li>
-    <li><a class="card" href="usage-guide.html">
-      <div class="fname">usage-guide.md</div>
-      <div class="desc">a plain-language "when to use it" guide, organized by scenario and frequency</div>
-      <div class="go">View details &amp; example →</div>
-    </a></li>
-    <li><a class="card" href="asset-inventory-json.html">
-      <div class="fname">asset-inventory.json</div>
-      <div class="desc">machine-readable rows (PK: table + name), for diffing and migration</div>
-      <div class="go">View details &amp; example →</div>
-    </a></li>
+    <li><a class="card" href="inventory.html"><div class="fname">inventory.md</div><div class="desc">7 tables: plugins, skills/commands, built-ins, custom/host-injected, MCP, agents, host capabilities</div><div class="go">View details &amp; example →</div></a></li>
+    <li><a class="card" href="usage-guide.html"><div class="fname">usage-guide.md</div><div class="desc">a plain-language "when to use it" guide, by scenario and frequency</div><div class="go">View details &amp; example →</div></a></li>
+    <li><a class="card" href="asset-inventory-json.html"><div class="fname">asset-inventory.json</div><div class="desc">machine-readable rows (PK: table + name), for diffing and migration</div><div class="go">View details &amp; example →</div></a></li>
   </ul>
   <ul class="outputs" data-lang="zh">
-    <li><a class="card" href="inventory.html">
-      <div class="fname">inventory.md</div>
-      <div class="desc">7 张表：插件、Skill/命令、原生能力、自定义/外层注入、MCP、Agent、外层应用能力</div>
-      <div class="go">查看详情与示例 →</div>
-    </a></li>
-    <li><a class="card" href="usage-guide.html">
-      <div class="fname">usage-guide.md</div>
-      <div class="desc">按场景与频率重排的"什么时候用"大白话指南</div>
-      <div class="go">查看详情与示例 →</div>
-    </a></li>
-    <li><a class="card" href="asset-inventory-json.html">
-      <div class="fname">asset-inventory.json</div>
-      <div class="desc">机器可读的行（主键 table + name），供 diff 与迁移</div>
-      <div class="go">查看详情与示例 →</div>
-    </a></li>
+    <li><a class="card" href="inventory.html"><div class="fname">inventory.md</div><div class="desc">7 张表：插件、Skill/命令、原生能力、自定义/外层注入、MCP、Agent、外层应用能力</div><div class="go">查看详情与示例 →</div></a></li>
+    <li><a class="card" href="usage-guide.html"><div class="fname">usage-guide.md</div><div class="desc">按场景与频率重排的"什么时候用"大白话指南</div><div class="go">查看详情与示例 →</div></a></li>
+    <li><a class="card" href="asset-inventory-json.html"><div class="fname">asset-inventory.json</div><div class="desc">机器可读的行（主键 table + name），供 diff 与迁移</div><div class="go">查看详情与示例 →</div></a></li>
+  </ul>
+  <ul class="outputs" data-lang="ja">
+    <li><a class="card" href="inventory.html"><div class="fname">inventory.md</div><div class="desc">7 つの表：プラグイン、スキル/コマンド、組み込み、カスタム/注入、MCP、エージェント、ホスト機能</div><div class="go">詳細と例を見る →</div></a></li>
+    <li><a class="card" href="usage-guide.html"><div class="fname">usage-guide.md</div><div class="desc">場面と頻度で並べ替えた「いつ使うか」の平易なガイド</div><div class="go">詳細と例を見る →</div></a></li>
+    <li><a class="card" href="asset-inventory-json.html"><div class="fname">asset-inventory.json</div><div class="desc">機械可読な行（主キー table + name）。差分と移行に</div><div class="go">詳細と例を見る →</div></a></li>
+  </ul>
+  <ul class="outputs" data-lang="ko">
+    <li><a class="card" href="inventory.html"><div class="fname">inventory.md</div><div class="desc">7개 표: 플러그인, 스킬/명령, 내장, 사용자 정의/주입, MCP, 에이전트, 호스트 기능</div><div class="go">상세와 예시 보기 →</div></a></li>
+    <li><a class="card" href="usage-guide.html"><div class="fname">usage-guide.md</div><div class="desc">상황과 빈도로 정리한 "언제 쓰는가" 안내</div><div class="go">상세와 예시 보기 →</div></a></li>
+    <li><a class="card" href="asset-inventory-json.html"><div class="fname">asset-inventory.json</div><div class="desc">기계가 읽는 행(기본 키 table + name), diff와 이전용</div><div class="go">상세와 예시 보기 →</div></a></li>
+  </ul>
+  <ul class="outputs" data-lang="ru">
+    <li><a class="card" href="inventory.html"><div class="fname">inventory.md</div><div class="desc">7 таблиц: плагины, навыки/команды, встроенное, пользовательское/внедрённое, MCP, агенты, возможности хоста</div><div class="go">Подробности и пример →</div></a></li>
+    <li><a class="card" href="usage-guide.html"><div class="fname">usage-guide.md</div><div class="desc">простое руководство «когда что использовать», по сценариям и частоте</div><div class="go">Подробности и пример →</div></a></li>
+    <li><a class="card" href="asset-inventory-json.html"><div class="fname">asset-inventory.json</div><div class="desc">машиночитаемые строки (ключ table + name), для diff и миграции</div><div class="go">Подробности и пример →</div></a></li>
+  </ul>
+  <ul class="outputs" data-lang="ar">
+    <li><a class="card" href="inventory.html"><div class="fname">inventory.md</div><div class="desc">٧ جداول: الإضافات، المهارات/الأوامر، المدمج، المخصص/المحقون، MCP، الوكلاء، قدرات المضيف</div><div class="go">عرض التفاصيل والمثال ←</div></a></li>
+    <li><a class="card" href="usage-guide.html"><div class="fname">usage-guide.md</div><div class="desc">دليل مبسّط «متى تستخدمه» حسب السيناريو والتكرار</div><div class="go">عرض التفاصيل والمثال ←</div></a></li>
+    <li><a class="card" href="asset-inventory-json.html"><div class="fname">asset-inventory.json</div><div class="desc">صفوف مقروءة آليًا (المفتاح table + name)، للمقارنة والترحيل</div><div class="go">عرض التفاصيل والمثال ←</div></a></li>
+  </ul>
+  <ul class="outputs" data-lang="es">
+    <li><a class="card" href="inventory.html"><div class="fname">inventory.md</div><div class="desc">7 tablas: plugins, skills/comandos, integrados, propios/inyectados, MCP, agentes, capacidades del host</div><div class="go">Ver detalles y ejemplo →</div></a></li>
+    <li><a class="card" href="usage-guide.html"><div class="fname">usage-guide.md</div><div class="desc">una guía sencilla de «cuándo usarlo», por escenario y frecuencia</div><div class="go">Ver detalles y ejemplo →</div></a></li>
+    <li><a class="card" href="asset-inventory-json.html"><div class="fname">asset-inventory.json</div><div class="desc">filas legibles por máquina (clave table + name), para diff y migración</div><div class="go">Ver detalles y ejemplo →</div></a></li>
   </ul>
 
   <h2 data-lang="en">Highlights</h2>
   <h2 data-lang="zh">特点</h2>
+  <h2 data-lang="ja">特長</h2>
+  <h2 data-lang="ko">특징</h2>
+  <h2 data-lang="ru">Особенности</h2>
+  <h2 data-lang="ar">المزايا</h2>
+  <h2 data-lang="es">Aspectos destacados</h2>
+
   <ul data-lang="en">
     <li><strong>Provenance</strong>: built into OpenCode, brought by a plugin, created by you, or injected by a host app</li>
     <li><strong>Four-state labels</strong>: ✅available / ❌disabled / 📦shelf-only / 🚫absent</li>
@@ -74,11 +109,57 @@
     <li><strong>外层应用感知</strong>：二进制扫描应用包，抓出普通 grep 漏掉的注入命令</li>
     <li><strong>差异模式</strong>：贴上次 JSON，只输出增删</li>
   </ul>
+  <ul data-lang="ja">
+    <li><strong>出所が追える</strong>：OpenCode 組み込み・プラグイン提供・自作・ホスト注入</li>
+    <li><strong>4 状態ラベル</strong>：✅利用可 / ❌無効 / 📦未導入 / 🚫存在しない</li>
+    <li><strong>読み取り専用・マスク</strong>：設定を変えず、鍵・パス・私有プロジェクト名を既定で伏せます</li>
+    <li><strong>ホスト対応</strong>：アプリのバンドルをバイナリ走査し、grep では拾えない注入コマンドを検出</li>
+    <li><strong>差分モード</strong>：前回の JSON を貼ると追加・削除だけを出力</li>
+  </ul>
+  <ul data-lang="ko">
+    <li><strong>출처 추적</strong>: OpenCode 내장, 플러그인 제공, 직접 작성, 호스트 주입</li>
+    <li><strong>4가지 상태</strong>: ✅사용 가능 / ❌비활성 / 📦미설치 / 🚫없음</li>
+    <li><strong>읽기 전용·마스킹</strong>: 설정을 바꾸지 않고 키·경로·비공개 프로젝트명을 가립니다</li>
+    <li><strong>호스트 인식</strong>: 앱 번들을 바이너리 스캔해 일반 grep이 놓치는 주입 명령을 찾습니다</li>
+    <li><strong>Diff 모드</strong>: 이전 JSON을 붙이면 추가·삭제만 출력</li>
+  </ul>
+  <ul data-lang="ru">
+    <li><strong>Прослеживаемость</strong>: встроено в OpenCode, принесено плагином, создано вами или внедрено хостом</li>
+    <li><strong>Четыре состояния</strong>: ✅доступно / ❌отключено / 📦только на полке / 🚫отсутствует</li>
+    <li><strong>Только чтение и маскирование</strong>: не меняет конфиг; скрывает ключи, пути и приватные имена</li>
+    <li><strong>Учёт хоста</strong>: бинарный скан бандла приложения находит внедрённые команды, которые пропускает grep</li>
+    <li><strong>Режим diff</strong>: вставьте прошлый JSON и получите только добавления и удаления</li>
+  </ul>
+  <ul data-lang="ar">
+    <li><strong>تتبّع المصدر</strong>: مدمج في OpenCode، أو من إضافة، أو من إنشائك، أو محقون من التطبيق المضيف</li>
+    <li><strong>أربع حالات</strong>: ✅متاح / ❌معطّل / 📦غير مثبّت / 🚫غير موجود</li>
+    <li><strong>قراءة فقط وإخفاء</strong>: لا يغيّر أي إعداد، ويخفي المفاتيح والمسارات والأسماء الخاصة</li>
+    <li><strong>واعٍ بالمضيف</strong>: يفحص حزمة التطبيق ثنائيًا ليجد الأوامر المحقونة التي يفوتها grep</li>
+    <li><strong>وضع المقارنة</strong>: الصق JSON السابق لتحصل على الإضافات والحذف فقط</li>
+  </ul>
+  <ul data-lang="es">
+    <li><strong>Procedencia</strong>: integrado en OpenCode, aportado por un plugin, creado por ti o inyectado por el host</li>
+    <li><strong>Cuatro estados</strong>: ✅disponible / ❌deshabilitado / 📦solo en estante / 🚫ausente</li>
+    <li><strong>Solo lectura y enmascarado</strong>: no cambia la configuración; oculta claves, rutas y nombres privados</li>
+    <li><strong>Consciente del host</strong>: escanea el binario del paquete y halla comandos inyectados que grep no ve</li>
+    <li><strong>Modo diff</strong>: pega el JSON anterior y obtén solo altas y bajas</li>
+  </ul>
 
   <h2 data-lang="en">Install</h2>
   <h2 data-lang="zh">安装</h2>
+  <h2 data-lang="ja">インストール</h2>
+  <h2 data-lang="ko">설치</h2>
+  <h2 data-lang="ru">Установка</h2>
+  <h2 data-lang="ar">التثبيت</h2>
+  <h2 data-lang="es">Instalación</h2>
+
   <p data-lang="en">Send the text below to your AI and it will install it for you.</p>
   <p data-lang="zh">把下面这段发给 AI，它会帮你装好。</p>
+  <p data-lang="ja">下のテキストを AI に送れば、インストールしてくれます。</p>
+  <p data-lang="ko">아래 텍스트를 AI에게 보내면 설치해 줍니다.</p>
+  <p data-lang="ru">Отправьте текст ниже своему ИИ — он установит всё сам.</p>
+  <p data-lang="ar">أرسل النص أدناه إلى الذكاء الاصطناعي وسيثبّته لك.</p>
+  <p data-lang="es">Envía el siguiente texto a tu IA y lo instalará por ti.</p>
 
   <pre id="prompt-en" data-lang="en">Install the OpenCode skill "asset-inventory" from &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
 
@@ -106,8 +187,78 @@
 6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。</pre>
   <button class="copy" data-copy="prompt-zh" data-lang="zh">复制安装提示词</button>
 
+  <pre id="prompt-ja" data-lang="ja">OpenCode スキル "asset-inventory" を &lt;https://github.com/sogeisetsu/asset-inventory&gt; からインストールしてください。
+
+1. まず質問は 1 つだけ：グローバルに入れるか、今のプロジェクトだけか。
+2. リポジトリ取得：`git clone` を優先。git が無い／失敗する場合は GitHub の ZIP を使う。
+3. 実行時に必要な 2 点（SKILL.md と references/）だけをコピー：
+   - グローバル：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
+   - プロジェクト単位：現在のプロジェクト内 .opencode/skills/asset-inventory/
+   無ければ作成。README・docs・assets・scripts はコピーしない。
+4. 既に同名スキルがあれば上書き（更新）し、二度目は聞かない。
+5. 完了後 &lt;target&gt;/asset-inventory/SKILL.md の存在を確認し、frontmatter の `metadata.version` を読む。
+6. ソースは読み取り専用として扱い、内容を変更しない。報告はインストール先と版のみ。</pre>
+  <button class="copy" data-copy="prompt-ja" data-lang="ja">インストール文をコピー</button>
+
+  <pre id="prompt-ko" data-lang="ko">OpenCode 스킬 "asset-inventory"를 &lt;https://github.com/sogeisetsu/asset-inventory&gt; 에서 설치해 주세요.
+
+1. 먼저 한 가지만 물어보세요: 전역 설치인지, 현재 프로젝트에만 설치인지.
+2. 저장소 확보: `git clone` 우선, git이 없거나 실패하면 GitHub ZIP을 사용.
+3. 런타임 항목 두 개(SKILL.md와 references/)만 대상에 복사:
+   - 전역: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+   - 프로젝트: 현재 프로젝트의 .opencode/skills/asset-inventory/
+   없으면 생성. README·docs·assets·scripts는 복사하지 않음.
+4. 같은 스킬이 이미 있으면 덮어쓰기(업데이트)하고 두 번 묻지 않음.
+5. 완료 후 &lt;target&gt;/asset-inventory/SKILL.md 존재를 확인하고 frontmatter의 `metadata.version`을 읽음.
+6. 소스는 읽기 전용으로 취급하고 내용을 수정하지 않음. 보고는 설치 위치와 버전만.</pre>
+  <button class="copy" data-copy="prompt-ko" data-lang="ko">설치 문구 복사</button>
+
+  <pre id="prompt-ru" data-lang="ru">Установите навык OpenCode "asset-inventory" из &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
+
+1. Сначала задайте ровно один вопрос: глобально или только в текущий проект.
+2. Получите репозиторий: предпочтительно `git clone`; если git нет или клонирование не удалось — скачайте ZIP с GitHub.
+3. Скопируйте только два рабочих элемента (SKILL.md и references/):
+   - Глобально: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+   - В проект: .opencode/skills/asset-inventory/ внутри текущего проекта.
+   Создайте каталог при отсутствии. Не копируйте README, docs, assets, scripts.
+4. Если навык уже есть — перезапишите (это обновление), не спрашивайте второй раз.
+5. По завершении убедитесь, что &lt;target&gt;/asset-inventory/SKILL.md существует, и прочитайте установленную версию из `metadata.version`.
+6. Считайте источник только для чтения и не меняйте содержимое. Сообщите только путь установки и версию.</pre>
+  <button class="copy" data-copy="prompt-ru" data-lang="ru">Скопировать текст установки</button>
+
+  <pre id="prompt-ar" data-lang="ar">ثبّت مهارة OpenCode باسم "asset-inventory" من &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
+
+١. اسألني سؤالاً واحدًا فقط: التثبيت عامًّا أم داخل المشروع الحالي فقط.
+٢. احصل على المستودع: يُفضّل `git clone`؛ وإن تعذّر git أو فشل الاستنساخ فاستخدم ملف ZIP من GitHub.
+٣. انسخ عنصرين تشغيليين فقط (SKILL.md و references/) إلى الهدف:
+   - عام: ~/.config/opencode/skills/asset-inventory/ (ويندوز: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+   - داخل المشروع: .opencode/skills/asset-inventory/
+   أنشئ المجلد إن لم يوجد. لا تنسخ README أو docs أو assets أو scripts.
+٤. إن كانت المهارة موجودة فاستبدلها (هذا تحديث)، ولا تسأل مرة ثانية.
+٥. عند الانتهاء تحقق من وجود &lt;target&gt;/asset-inventory/SKILL.md واقرأ الإصدار من `metadata.version`.
+٦. اعتبر المصدر للقراءة فقط ولا تعدّل أي محتوى. أبلغ فقط عن مسار التثبيت والإصدار.</pre>
+  <button class="copy" data-copy="prompt-ar" data-lang="ar">نسخ نص التثبيت</button>
+
+  <pre id="prompt-es" data-lang="es">Instala el skill de OpenCode "asset-inventory" desde &lt;https://github.com/sogeisetsu/asset-inventory&gt;.
+
+1. Primero hazme exactamente una pregunta: ¿instalación global o solo en el proyecto actual?
+2. Obtén el repositorio: prefiere `git clone`; si no hay git o falla, descarga el ZIP de GitHub.
+3. Copia solo los dos elementos de ejecución (SKILL.md y references/):
+   - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+   - En el proyecto: .opencode/skills/asset-inventory/ dentro del proyecto actual.
+   Crea el directorio si falta. No copies README, docs, assets ni scripts.
+4. Si el skill ya existe, sobrescríbelo (es una actualización); no preguntes otra vez.
+5. Al terminar, verifica que exista &lt;target&gt;/asset-inventory/SKILL.md y lee la versión instalada de `metadata.version`.
+6. Trata el origen como solo lectura y no modifiques ningún contenido. Informa solo la ubicación y la versión.</pre>
+  <button class="copy" data-copy="prompt-es" data-lang="es">Copiar texto de instalación</button>
+
   <p data-lang="en">Or install manually (copy only the two runtime items):</p>
   <p data-lang="zh">或手动安装（只复制两个运行时项）：</p>
+  <p data-lang="ja">または手動で（実行時の 2 点のみコピー）：</p>
+  <p data-lang="ko">또는 수동 설치(런타임 항목 두 개만 복사):</p>
+  <p data-lang="ru">Или установите вручную (только два рабочих элемента):</p>
+  <p data-lang="ar">أو التثبيت يدويًا (انسخ العنصرين التشغيليين فقط):</p>
+  <p data-lang="es">O instala manualmente (solo los dos elementos de ejecución):</p>
   <pre># macOS / Linux
 mkdir -p ~/.config/opencode/skills/asset-inventory &amp;&amp; cp -r SKILL.md references ~/.config/opencode/skills/asset-inventory/
 

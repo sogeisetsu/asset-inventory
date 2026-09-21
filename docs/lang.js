@@ -1,16 +1,22 @@
 /* asset-inventory docs — shared language toggle + copy buttons.
-   English is the default; the user can switch to Chinese.
-   The choice is remembered in localStorage across pages. */
+   English is the default. Supported: en, zh, ja, ko, ru, ar, es.
+   The choice is remembered in localStorage across pages.
+   Arabic switches the document to RTL. */
 (function () {
   var html = document.documentElement;
   var DEFAULT_LANG = 'en';
+  var LANGS = ['en', 'zh', 'ja', 'ko', 'ru', 'ar', 'es'];
+  var RTL = ['ar'];
 
   function apply(lang) {
+    if (LANGS.indexOf(lang) === -1) lang = DEFAULT_LANG;
     html.setAttribute('data-show', lang);
-    var zh = document.getElementById('btn-zh');
-    var en = document.getElementById('btn-en');
-    if (zh) zh.setAttribute('aria-pressed', String(lang === 'zh'));
-    if (en) en.setAttribute('aria-pressed', String(lang === 'en'));
+    html.setAttribute('lang', lang);
+    html.setAttribute('dir', RTL.indexOf(lang) !== -1 ? 'rtl' : 'ltr');
+    LANGS.forEach(function (l) {
+      var btn = document.getElementById('btn-' + l);
+      if (btn) btn.setAttribute('aria-pressed', String(l === lang));
+    });
     var t = document.body.getAttribute('data-title-' + lang);
     if (t) document.title = t;
   }
@@ -24,13 +30,18 @@
   try { saved = localStorage.getItem('lang') || DEFAULT_LANG; } catch (e) {}
   apply(saved);
 
+  var COPIED = {
+    en: 'Copied ✓', zh: '已复制 ✓', ja: 'コピーしました ✓', ko: '복사됨 ✓',
+    ru: 'Скопировано ✓', ar: 'تم النسخ ✓', es: 'Copiado ✓'
+  };
   document.querySelectorAll('.copy').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var el = document.getElementById(btn.getAttribute('data-copy'));
       if (!el) return;
       var label = btn.textContent;
+      var lang = html.getAttribute('data-show') || DEFAULT_LANG;
       navigator.clipboard.writeText(el.textContent.trim()).then(function () {
-        btn.textContent = '已复制 / Copied ✓';
+        btn.textContent = COPIED[lang] || COPIED.en;
         setTimeout(function () { btn.textContent = label; }, 1500);
       });
     });

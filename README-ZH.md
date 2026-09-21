@@ -2,239 +2,86 @@
 
 <img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
-# Asset Inventory
+# 🗃️ Asset Inventory
 
-**一眼看清你的 OpenCode 环境到底能调用什么——每一项资产都带来源追溯。**
+**一眼看清你的 OpenCode 环境真正能调用什么 —— 每个插件、Skill、命令、MCP、Agent 与外层应用能力，都带来源追溯。**
 
 [![License: MIT](assets/badge-license.svg)](LICENSE)
-[![OpenCode Skill](assets/badge-opencode.svg)](#适用范围与兼容性)
+[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
 
-[English](README.md) · [简体中文](README-ZH.md)
+[English](README.md) · [中文](README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
 <img src="assets/banner-zh.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
-**asset-inventory** 是一个 OpenCode Skill：一次扫清你机器上的 OpenCode 环境——所有插件、Skill、命令、MCP、Agent 和外层应用能力，每一项都带**来源追溯**（它从哪来的）。对每个资产回答三问：**是什么、谁带来的、怎么用**。
+**asset-inventory** 是一个 OpenCode skill，一条命令盘清你的环境 —— 本机的每个插件、Skill、命令、MCP、Agent 与外层应用能力，都带**来源追溯**（它从哪来）。每行回答三个问题：**是什么、谁带来的、怎么用**。🎯
 
-## 这是什么
-
-OpenCode 环境膨胀得很快。几周后你就忘了自己装了什么、*从哪来的*、*什么时候该用*。这个 skill 按需产出一份可信的完整答案——而且从不瞎编。一次扫描就能把你机器上**真正能调用**的一切（不只是盘上的文件）映射成三份文件：
-
-- **`inventory.md`** — 一份 Markdown 文件，里面包含 7 张表：插件、Skill、命令、MCP、Agent、外层应用能力等各类内容，全部按固定 7 张表列全。
-- **`usage-guide.md`** — 大白话"什么时候用"指南：按场景/频率讲每样东西何时用、为什么用。
-- **`asset-inventory.json`** — 机器可读的 JSON：同一批数据的结构化形式，供程序处理/对比。
-
-## 安装
-
-> **推荐：全局安装。** 这个 skill 是通用工具，用来了解和清理你的 OpenCode 环境——它不绑定任何单个项目。装一次到全局 skills 目录，之后就不用再管它。
->
-> - **为什么推荐全局：** 只装一份、只更新一份、只维护一份（不用给每个项目各拷一份），而且随处可用。
-> - **全局安装的效果：** 装好后，`/asset-inventory`（以及自然语言触发）在**任何项目、任何会话**里都能用。产物依旧写进你当前运行它的那个项目——就算是全局安装，输出也落在被盘点项目的 `output/` 里，而不是 skill 自己的目录。
->
-> 只有当你确实想让它只待在某一个仓库里（例如通过版本控制分享给该仓库的协作者）时，才选**项目级**。
-
-**第一步：把仓库弄到本地。** 二选一：
-
-```sh
-# 克隆（推荐）
-git clone https://github.com/sogeisetsu/asset-inventory.git
-```
-
-或者从 GitHub 页面 **Code → Download ZIP** 下载并解压。之后你会得到一个 `asset-inventory/` 文件夹。
-
-**第二步：进入 `asset-inventory/` 文件夹，只复制两样东西**（`SKILL.md`、`references/`——README、docs、scripts 等不用装）到目标位置：
-
-| 范围 | 什么时候选 | 目标位置 |
-|---|---|---|
-| **全局** | 每个项目都能用 | `~/.config/opencode/skills/`（Windows：`$env:USERPROFILE\.config\opencode\skills\`） |
-| **项目级** | 只给一个项目用 | 那个项目根目录下的 `.opencode/skills/` |
-
-先 `cd` 进 `asset-inventory/` 再执行（下面的命令都在这个文件夹里运行）：
-
-```sh
-# 全局（macOS / Linux）
-mkdir -p ~/.config/opencode/skills/asset-inventory
-cp -r SKILL.md references ~/.config/opencode/skills/asset-inventory/
-
-# 项目级（macOS / Linux）——把 <项目根目录> 换成你的项目路径
-mkdir -p <项目根目录>/.opencode/skills/asset-inventory
-cp -r SKILL.md references <项目根目录>/.opencode/skills/asset-inventory/
-```
-
-```powershell
-# 全局（PowerShell）
-New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"
-Copy-Item -Recurse SKILL.md, references -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"
-
-# 项目级（PowerShell）——把 <项目根目录> 换成你的项目路径
-New-Item -ItemType Directory -Force -Path "<项目根目录>\.opencode\skills\asset-inventory"
-Copy-Item -Recurse SKILL.md, references -Destination "<项目根目录>\.opencode\skills\asset-inventory\"
-```
-
-### 用 AI 自动安装
-
-如果你用 AI 编程助手，直接把下面这段话复制给它，让它帮你装：
-
-```text
-请帮我安装 OpenCode skill "asset-inventory"，仓库地址 <https://github.com/sogeisetsu/asset-inventory>。
-
-1. 先只问我一个问题：装到全局，还是只装进当前项目。
-2. 获取仓库：优先 `git clone`；如果没有 git 或克隆失败，就改用 GitHub 的 ZIP 下载。
-3. 只把三个运行时项复制到目标位置：
-   - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
-   - 项目级：当前项目下的 .opencode/skills/asset-inventory/
-   目录不存在就创建。不要复制 README、docs、assets、scripts。
-4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
-5. 完成后确认 <目标位置>/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
-6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。
-```
-
-## 更新
-
-已安装过？拉最新版并覆盖：
-
-```sh
-cd asset-inventory && pwsh ./update.ps1
-```
-
-脚本自动检测安装位置（全局 `~/.config/opencode/skills/asset-inventory/` 或项目级目录），执行 `git pull`，然后覆盖三个运行时文件。会报告更新前后的版本号，确认更新成功。
-
-**项目级**安装需要显式指定目标：
-
-```sh
-pwsh ./update.ps1 -Target /path/to/your-project/.opencode/skills/asset-inventory
-```
-
-也可以重新跑一遍[安装](#安装)命令——覆盖安装是幂等的。
-
-## 快速上手
-
-装好 skill（选一种范围），直接调用，无需任何配置：
+## 🚀 快速开始
 
 ```
 /asset-inventory
 ```
 
-这一条命令就会端到端跑完整个盘点。只想盘某一部分？在命令后加参数——见[斜杠命令](#斜杠命令)。
+装好 skill 后直接调用，无需配置。加参数可只盘点一部分 —— `/asset-inventory mcp`、`agents`、`hosts`、`skills`、`diff`、`usage`。
 
-## 斜杠命令
+## 📦 安装
 
-装好后，OpenCode 会自动把 skill 按它的名字注册成斜杠命令。在输入框敲 `/` 选中 `asset-inventory`，或打开 `/skills` 对话框选择它即可。
+> 🌍 **推荐全局安装。** 只装一份、只更新一份，在任何项目都可用。
 
-7 张表依次是：**1** 插件与配套软件 · **2** 各软件/插件带来的 Skill 与命令 · **3** 原生命令与原生 Skill · **4** 自定义 Skill、命令与外层应用注入命令 · **5** MCP · **6** Agent（含默认模型链） · **7** 外层应用能力。各表具体覆盖什么 → [看 `inventory.md` 里的 7 张表](#inventorymd-里的-7-张表)
+```sh
+git clone https://github.com/sogeisetsu/asset-inventory.git
+cd asset-inventory
+# 只把 SKILL.md + references/ 复制到 skills 目录
+```
 
-| 命令 | 干什么 | 产物 |
-|---|---|---|
-| `/asset-inventory` | 全量盘点：7 张表全出 | `inventory.md` + `usage-guide.md` + `asset-inventory.json` |
-| `/asset-inventory mcp` | 只盘 MCP（表5） | `inventory.md`（仅表5）+ `asset-inventory.json`（仅表5行） |
-| `/asset-inventory agents` | 只盘 Agent（表6） | `inventory.md`（仅表6）+ `asset-inventory.json`（仅表6行） |
-| `/asset-inventory hosts` | 只盘外层应用能力（表7） | `inventory.md`（仅表7）+ `asset-inventory.json`（仅表7行） |
-| `/asset-inventory skills` | 只盘 Skill 与命令（表2–4） | `inventory.md`（仅表2–4）+ `asset-inventory.json`（仅表2–4行） |
-| `/asset-inventory diff` | 差异模式 | 只出按主键增减的项（请贴上次 JSON） |
-| `/asset-inventory usage` | 全量扫描，但只生成使用指南 | 仅 `usage-guide.md` |
+- **全局：** `~/.config/opencode/skills/asset-inventory/`
+- **项目级：** `<项目根目录>/.opencode/skills/asset-inventory/`
 
-精扫（`mcp`、`agents`、`hosts`、`skills`）只写 `inventory.md`（限该表）+ 对应的 JSON 行，并跳过无关的证据收集步骤。
+📖 完整步骤（各平台）+ AI 自动安装 + 更新 → **[安装与更新](docs/guides/install-and-update.md)**
 
-## 用法
-
-- **斜杠命令**：见上表。加参数可精扫某一类。
-- **自然语言**——直接说，任意措辞：
-  - "列一下我有什么插件/Skill/命令/MCP/Agent"
-  - "哪个被禁用了"
-  - "谁带进来的"
-  - "跟上次比变了啥"（差异模式——把上次的 JSON 贴给我）
-
-skill 会往**当前项目根目录**的 `output/` 写入产物，描述你机器的真实情况。
-
-## 你会得到什么
+## 📤 产出
 
 ```
-当前项目根目录\
+你的项目根目录/
 └── output/
-    ├── inventory.md        # 7 表清单
-    ├── usage-guide.md      # 使用指南（每天必用 / 干活主力 / 按需 / 周期性）
-    └── asset-inventory.json # 机器可读行（主键：table + name）
+    ├── inventory.md         # 7 张表盘点
+    ├── usage-guide.md       # 按场景与频率的"什么时候用"指南
+    └── asset-inventory.json # 机器可读的行（主键 table + name）
 ```
 
-> 注意：产物落在"被盘点的项目"根目录，不是 skill 安装目录——全局安装后，输出跟着你的项目走。
+👀 **看真实示例：** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json)
 
-### `inventory.md` 里的 7 张表
+## ✨ 特点
 
-`inventory.md` 就是上面 `output/` 里的第一份文件——一份 Markdown 文档，所有资产按下面 7 张表组织：
+- 🧭 **来源可追溯** —— OpenCode 自带、插件带来、你自建，还是外层应用注入。插件管理的 skill 会归功于插件，绝不误标"本地自建"。
+- 🚦 **四态标注** —— ✅可用 / ❌已禁用 / 📦仅货架未装 / 🚫不存在
+- 🔒 **只读脱敏** —— 不改任何配置；默认打码密钥、路径与私有项目名
+- 🖥️ **外层应用感知** —— 二进制扫描应用包，抓出普通 grep 漏掉的注入命令
+- 🔀 **差异模式** —— 贴上次 JSON，只输出增删
+- 🌐 **多语言输出** —— 交付物跟随你的语言（中、英、日……）
 
-| # | 表 | 覆盖什么 |
-|---|---|---|
-| 1 | 插件与配套软件 | 软件/插件本体，写实名 |
-| 2 | 各软件/插件带来的 Skill 与命令 | 每个 skill/命令按"谁提供的"分组 |
-| 3 | 原生命令与原生 Skill | 内置 TUI 命令与 Skill |
-| 4 | 自定义 Skill、命令与外层应用注入命令 | 你自建的 + 外层应用注入的命令 |
-| 5 | MCP | 所有 MCP 服务器（全局+项目）、本地/远端、启用态 |
-| 6 | Agent | 所有 Agent，带默认模型链（`a→b→c`） |
-| 7 | 外层应用 | 外层应用能力（行为规则、浏览器等） |
+## 📚 详细文档
 
-### 来源可追溯，不瞎编
-
-清单里每一项都会写清楚它是**从哪来的**——是 OpenCode 自带的、某个插件装进来的、你自己建的，还是外层应用（如 OpenChamber）注入的——绝不写"某个插件"这种含糊说法。每一项还会标出当前状态：能用、被禁用、只是货架上没装、还是压根不存在。
-
-### 三份文件，一批证据
-
-`inventory.md`、`usage-guide.md`、`asset-inventory.json` 都从**同一次扫描**派生——不重复收集。使用指南把同一批行按场景和频率重排（"每样东西什么时候用、为什么用"），绝不重新收集或编造事实。
-
-## 关于「外层应用」（宿主 / host）
-
-本 skill 的一些表和来源里会出现**外层应用**这个词——它指的是包裹 OpenCode 引擎、额外注入命令与能力的桌面程序（例如 **OpenChamber**）。英文资料里有时叫 **host**。我们中文用**外层应用**而不用生硬的"宿主"，因为"宿主"看不出它是什么。看到"外层应用"，就理解为：*包在 OpenCode 外面、自己带一堆斜杠命令和功能的桌面 App*。
-
-## 仓库布局
-
-```
-asset-inventory/
-├── SKILL.md                    # skill 主体（规则与流程）
-├── update.ps1                  # 一键更新脚本
-├── README.md                   # 英文文档
-├── README-ZH.md                # 中文文档（本文件）
-├── CHANGELOG.md                # 版本历史（英文）
-├── CONTRIBUTING.md             # 贡献指南（英文）
-├── LICENSE                     # MIT
-├── references/                 # skill 格式与扫描方法参考
-├── assets/                     # 本地 SVG 图标 / banner / 徽章（脚本生成）
-├── scripts/
-│   ├── check-docs.mjs          # 文档 / 链接 / frontmatter 校验
-│   └── generate-assets.mjs     # 重新生成 assets/*.svg
-├── docs/                       # GitHub Pages + release notes
-└── zh/                         # 除 README-ZH.md 外的所有中文文档
-    ├── CHANGELOG-ZH.md
-    ├── CONTRIBUTING-ZH.md
-    ├── LICENSE-ZH.txt
-    ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md├── release-notes-v1.5.0-ZH.md└── release-notes-v1.6.0-ZH.md
-```
-
-本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）与 `AGENTS.md` 已被 gitignore，不会发布。
-
-### 该读哪个文件？
-
-| 你想… | 读 |
+| 文档 | 内容 |
 |---|---|
-| 了解 skill 规则 / 改行为 | `SKILL.md` |
-| 看某张表单元格的确切格式 | `references/format-example.md` |
-| 知道输出前的全部检查项 | `references/checklist.md` |
-| 新增语言 / 固定输出字符串 | `references/glossary.json` |
-| 支持新的外层应用 / 宿主 | `references/host-commands.md` |
-| 使用指南的格式 | `references/usage-guide.md` |
-| 排查运行失败 | `references/troubleshooting.md` |
-| 安装或更新 | `README-ZH.md`（本文件）· `update.ps1 -Help` |
-| 贡献 / 发布 | `CONTRIBUTING.md` · `CHANGELOG.md` |
+| 🧠 [它如何工作](docs/guides/how-it-works.md) | 主体思想、7 张表、来源追溯、三份产物 |
+| 📦 [安装与更新](docs/guides/install-and-update.md) | 各平台、AI 自动安装、`update.ps1` 选项 |
+| 🧭 [仓库与贡献](docs/guides/repository-and-contributing.md) | 该读哪个文件、目录结构、贡献、版本规则 |
 
-`references/` 是随 skill 一起分发的运行时参考文件；`scripts/`、`docs/`、`zh/` 仅供开发侧使用。
+## 🔗 链接
 
+- 🖥️ **落地页：** <https://sogeisetsu.github.io/asset-inventory/>
+- 🖼️ **斜杠命令与用法：** 见 [它如何工作](docs/guides/how-it-works.md)
+- 📝 **更新日志：** [zh/CHANGELOG-ZH.md](zh/CHANGELOG-ZH.md)
+- 🤝 **贡献指南：** [CONTRIBUTING.md](CONTRIBUTING.md)
 
-## 适用范围与兼容性
+## ✅ 适用范围与兼容性
 
-**适用范围：本 skill 目前只在 OpenCode 中测试过**（含包裹 OpenCode 的外层应用，如 OpenChamber）。**未在其他 AI 编程助手中验证**（Claude Code、Cursor、Windsurf 等）——在这些软件中能否生效无法确定，也不做支持。
+**范围：本 skill 只在 OpenCode 中测试过**（含包装 OpenCode 的外层应用，如 OpenChamber）。**未在其他 AI 编程助手中验证**（Claude Code、Cursor、Windsurf 等）。
 
-需要 [OpenCode](https://opencode.ai)（skill 经原生 `skill` 工具按需加载）。
+需要 [OpenCode](https://opencode.ai)（skill 通过原生 `skill` 工具按需加载）。
 
-## 许可证
+## 📄 许可证
 
-MIT — 见 [LICENSE](LICENSE)。参考中文译本见 [`zh/LICENSE-ZH.txt`](zh/LICENSE-ZH.txt)（非官方译文，仅供阅读；以英文原文为准）。
+MIT —— 见 [LICENSE](LICENSE)。

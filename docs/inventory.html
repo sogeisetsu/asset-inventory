@@ -7,26 +7,38 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-title-en="inventory.md — asset-inventory" data-title-zh="inventory.md — asset-inventory">
+<body data-title-en="inventory.md — asset-inventory" data-title-zh="inventory.md — asset-inventory" data-title-ja="inventory.md — asset-inventory" data-title-ko="inventory.md — asset-inventory" data-title-ru="inventory.md — asset-inventory" data-title-ar="inventory.md — asset-inventory" data-title-es="inventory.md — asset-inventory">
 <main>
-  <div class="lang">
-    <button id="btn-zh" onclick="setLang('zh')">中文</button>
-    <button id="btn-en" onclick="setLang('en')">English</button>
-  </div>
+  <div class="lang"><button id="btn-en" onclick="setLang('en')">English</button><button id="btn-zh" onclick="setLang('zh')">中文</button><button id="btn-ja" onclick="setLang('ja')">日本語</button><button id="btn-ko" onclick="setLang('ko')">한국어</button><button id="btn-ru" onclick="setLang('ru')">Русский</button><button id="btn-ar" onclick="setLang('ar')">العربية</button><button id="btn-es" onclick="setLang('es')">Español</button></div>
 
-  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a></p>
+  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a><a href="index.html" data-lang="ja">← 概要へ戻る</a><a href="index.html" data-lang="ko">← 개요로 돌아가기</a><a href="index.html" data-lang="ru">← К обзору</a><a href="index.html" data-lang="ar">← العودة إلى النظرة العامة</a><a href="index.html" data-lang="es">← Volver al resumen</a></p>
 
   <h1>inventory.md</h1>
   <p class="tag" data-lang="en">The 7-table inventory — the main deliverable.</p>
   <p class="tag" data-lang="zh">7 张表的盘点清单 —— 主产物。</p>
+  <p class="tag" data-lang="ja">7 表の棚卸し — 主要な成果物。</p>
+  <p class="tag" data-lang="ko">7개 표 인벤토리 — 핵심 산출물.</p>
+  <p class="tag" data-lang="ru">Инвентаризация из 7 таблиц — главный результат.</p>
+  <p class="tag" data-lang="ar">جرد من ٧ جداول — الناتج الرئيسي.</p>
+  <p class="tag" data-lang="es">El inventario de 7 tablas: el resultado principal.</p>
 
   <h2 data-lang="en">What it is</h2>
   <h2 data-lang="zh">它是什么</h2>
+  <h2 data-lang="ja">何か</h2>
+  <h2 data-lang="ko">무엇인가</h2>
+  <h2 data-lang="ru">Что это</h2>
+  <h2 data-lang="ar">ما هو</h2>
+  <h2 data-lang="es">Qué es</h2>
   <p data-lang="en"><code>inventory.md</code> is the core output: one Markdown file containing <strong>7 fixed tables</strong> that map everything your machine can actually invoke. Tables 1–5 and 7 have five columns (<code>Name | Source | How to call | When to use | What it does</code>); Table 6 (Agents) adds a sixth, <code>Model chain</code>.</p>
   <p data-lang="zh"><code>inventory.md</code> 是核心产物：一个 Markdown 文件，含 <strong>7 张固定表</strong>，把本机真正能调用的一切列出来。表 1–5、7 为五列（<code>名称 | 来源 | 调用方式 | 何时用 | 干什么</code>）；表 6（Agent）多一列 <code>模型链</code>。</p>
 
   <h2 data-lang="en">The 7 tables</h2>
   <h2 data-lang="zh">7 张表</h2>
+  <h2 data-lang="ja">7 つの表</h2>
+  <h2 data-lang="ko">7개 표</h2>
+  <h2 data-lang="ru">7 таблиц</h2>
+  <h2 data-lang="ar">الجداول السبعة</h2>
+  <h2 data-lang="es">Las 7 tablas</h2>
   <table class="facts">
     <tr><th>1</th><td data-lang="en">Plugins &amp; companion software — real product names</td><td data-lang="zh">插件与配套软件 —— 用真实产品名</td></tr>
     <tr><th>2</th><td data-lang="en">Skills &amp; commands each software/plugin brings</td><td data-lang="zh">各软件/插件带来的 Skill 与命令</td></tr>
@@ -39,6 +51,11 @@
 
   <h2 data-lang="en">Key conventions</h2>
   <h2 data-lang="zh">关键约定</h2>
+  <h2 data-lang="ja">主な規約</h2>
+  <h2 data-lang="ko">핵심 규칙</h2>
+  <h2 data-lang="ru">Ключевые соглашения</h2>
+  <h2 data-lang="ar">الأعراف الأساسية</h2>
+  <h2 data-lang="es">Convenciones clave</h2>
   <ul data-lang="en">
     <li><strong>State markers:</strong> ✅available / ❌disabled / 📦shelf-only / 🚫absent — localized to the output language.</li>
     <li><strong>Confidence:</strong> ✅verified / ✅docs / ⚠️inferred appended to every source.</li>
@@ -52,25 +69,45 @@
     <li><strong>只读：</strong>skill 绝不改动你的配置；密钥、token、私有路径默认打码。</li>
   </ul>
 
-  <h2 data-lang="en">Example</h2>
-  <h2 data-lang="zh">示例</h2>
-  <div class="example">
-    <div class="bar">output/inventory.md</div>
-    <pre id="ex" data-lang="en">## Table 5 — MCP
+  <h2 data-lang="en">Example (rendered)</h2>
+  <h2 data-lang="zh">示例（渲染效果）</h2>
+  <h2 data-lang="ja">例（描画）</h2>
+  <h2 data-lang="ko">예시(렌더링)</h2>
+  <h2 data-lang="ru">Пример (отрендеренный)</h2>
+  <h2 data-lang="ar">مثال (معروض)</h2>
+  <h2 data-lang="es">Ejemplo (renderizado)</h2>
+  <p data-lang="en">This is how Table 5 looks when rendered — the real file is Markdown, shown here as a table for readability.</p>
+  <p data-lang="zh">这是表 5 渲染后的样子 —— 真实文件是 Markdown，这里用表格展示以便阅读。</p>
 
-| Name | Source | How to call | When to use | What it does |
-|---|---|---|---|---|
-| websearch | remote MCP, `mcp.exa.ai`, global config `opencode.jsonc:mcp.websearch` ✅verified | Agent calls it (tools `websearch_*`) | when you need live web results | Humans don't call it — the Agent invokes it automatically when it needs current information, returning clean text; reach for it for docs, news, or technical lookups. |
-| context7 | remote MCP, `mcp.context7.com`, global config `opencode.jsonc:mcp.context7` ✅verified | Agent calls it (tools `context7_*`) | when you need up-to-date library docs | Humans don't call it — the Agent uses it to pull current library/framework documentation instead of relying on memory; the auth header contains a key, already masked. |
-| pdf-mcp | local MCP, `pdf-mcp` command ✅verified | Agent calls it (tools `pdf_*`) | when you need to read or search a PDF | Humans don't call it — the Agent uses it to extract text, search, and pull tables out of PDFs, with SQLite-backed caching; reading-only, never for form filling.</pre>
-    <pre id="ex2" data-lang="zh">## 表5 MCP
-
-| 名称 | 来源 | 调用方式 | 何时用 | 干什么 |
-|---|---|---|---|---|
-| websearch | 远端 MCP，`mcp.exa.ai`，全局配置 `opencode.jsonc:mcp.websearch` ✅实测 | Agent 自调（工具 `websearch_*`） | 需要联网实时搜索时 | 人不用叫，Agent 在需要实时信息时自动调它，返回清洁文本；查文档、查新闻、查技术细节时用。 |
-| context7 | 远端 MCP，`mcp.context7.com`，全局配置 `opencode.jsonc:mcp.context7` ✅实测 | Agent 自调（工具 `context7_*`） | 需要最新的库/框架文档时 | 人不用叫，Agent 用它拉取最新的库文档而不是靠记忆；其 auth 头含密钥，已打码。 |
-| pdf-mcp | 本地 MCP，`pdf-mcp` 命令 ✅实测 | Agent 自调（工具 `pdf_*`） | 需要读取或检索 PDF 时 | 人不用叫，Agent 用它提取文本、检索、抽取表格，带 SQLite 缓存；只读用途，不做表单填写。 |</pre>
+  <div class="md-table-wrap" data-lang="en">
+    <table class="md-table">
+      <thead><tr><th>Name</th><th>Source</th><th>How to call</th><th>When to use</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td>websearch</td><td>remote MCP, <code>mcp.exa.ai</code>, global config <code>opencode.jsonc:mcp.websearch</code> ✅verified</td><td>Agent calls it (tools <code>websearch_*</code>)</td><td>when you need live web results</td><td>Humans don't call it — the Agent invokes it automatically when it needs current information, returning clean text; reach for it for docs, news, or technical lookups.</td></tr>
+        <tr><td>context7</td><td>remote MCP, <code>mcp.context7.com</code>, global config <code>opencode.jsonc:mcp.context7</code> ✅verified</td><td>Agent calls it (tools <code>context7_*</code>)</td><td>when you need up-to-date library docs</td><td>Humans don't call it — the Agent uses it to pull current library/framework documentation instead of relying on memory; the auth header contains a key, already masked.</td></tr>
+        <tr><td>grep_app</td><td>remote MCP, <code>mcp.grep.app</code>, global config <code>opencode.jsonc:mcp.grep_app</code> ✅verified</td><td>Agent calls it (tools <code>grep_app_*</code> / <code>gh_grep_*</code>)</td><td>when you want real usage in open-source code</td><td>Humans don't call it — the Agent searches over a million public repos for real code; good for finding how a library is actually used in production.</td></tr>
+        <tr><td>PaddleOCR-VL-1.6</td><td>local MCP, <code>paddleocr_mcp.exe</code>, global config <code>opencode.jsonc:mcp.PaddleOCR-VL-1.6</code> ✅verified</td><td>Agent calls it (tools <code>PaddleOCR_VL_*</code>)</td><td>when you need OCR on scanned PDFs</td><td>Humans don't call it — the Agent uses it for OCR; PDFs with a text layer should go through text extraction first.</td></tr>
+        <tr><td>pdf-mcp</td><td>local MCP, <code>pdf-mcp</code> command, global config <code>opencode.jsonc:mcp.pdf-mcp</code> ✅verified</td><td>Agent calls it (tools <code>pdf_*</code>)</td><td>when you need to read or search a PDF</td><td>Humans don't call it — the Agent extracts text, searches, and pulls tables and TOCs out of PDFs, with SQLite-backed caching; read-only.</td></tr>
+      </tbody>
+    </table>
   </div>
+
+  <div class="md-table-wrap" data-lang="zh">
+    <table class="md-table">
+      <thead><tr><th>名称</th><th>来源</th><th>调用方式</th><th>何时用</th><th>干什么</th></tr></thead>
+      <tbody>
+        <tr><td>websearch</td><td>远端 MCP，<code>mcp.exa.ai</code>，全局配置 <code>opencode.jsonc:mcp.websearch</code> ✅实测</td><td>Agent 自调（工具 <code>websearch_*</code>）</td><td>需要联网实时搜索时</td><td>人不用叫，Agent 在需要实时信息时自动调它，返回清洁文本；查文档、查新闻、查技术细节时用。</td></tr>
+        <tr><td>context7</td><td>远端 MCP，<code>mcp.context7.com</code>，全局配置 <code>opencode.jsonc:mcp.context7</code> ✅实测</td><td>Agent 自调（工具 <code>context7_*</code>）</td><td>需要最新的库/框架文档时</td><td>人不用叫，Agent 用它拉取最新的库文档而不是靠记忆；其 auth 头含密钥，已打码。</td></tr>
+        <tr><td>grep_app</td><td>远端 MCP，<code>mcp.grep.app</code>，全局配置 <code>opencode.jsonc:mcp.grep_app</code> ✅实测</td><td>Agent 自调（工具 <code>grep_app_*</code> / <code>gh_grep_*</code>）</td><td>想在真实开源代码里找用法时</td><td>人不用叫，Agent 用它检索上百万公开仓库的真实代码；适合找某个库的实际用法或生产环境示例。</td></tr>
+        <tr><td>PaddleOCR-VL-1.6</td><td>本地 MCP，<code>paddleocr_mcp.exe</code>，全局配置 <code>opencode.jsonc:mcp.PaddleOCR-VL-1.6</code> ✅实测</td><td>Agent 自调（工具 <code>PaddleOCR_VL_*</code>）</td><td>需要识别图片型/扫描版 PDF 时</td><td>人不用叫，Agent 用它做 OCR 解析；有文字层的 PDF 应先走文本提取，无文字层再用它。</td></tr>
+        <tr><td>pdf-mcp</td><td>本地 MCP，<code>pdf-mcp</code> 命令，全局配置 <code>opencode.jsonc:mcp.pdf-mcp</code> ✅实测</td><td>Agent 自调（工具 <code>pdf_*</code>）</td><td>需要读取、检索或抽取 PDF 内容时</td><td>人不用叫，Agent 用它提取文本、检索、拉取表格与目录，带 SQLite 缓存；只读用途。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p data-lang="en">Full sample: <a href="samples/inventory.md">docs/samples/inventory.md</a></p>
+  <p data-lang="zh">完整示例：<a href="samples/inventory.md">docs/samples/inventory.md</a></p>
+
 
   <footer>
     asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>

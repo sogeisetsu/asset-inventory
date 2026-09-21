@@ -50,7 +50,7 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md├── release-notes-v1.5.0-ZH.md└── release-notes-v1.6.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md├── release-notes-v1.5.0-ZH.md├── release-notes-v1.6.0-ZH.md└── release-notes-v1.7.0-ZH.md
 ```
 
 本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）与 `AGENTS.md` 已被 gitignore，永不入库。
@@ -100,6 +100,20 @@ asset-inventory/
 任一不一致都会导致校验失败。发布标题格式必须为 `## [x.y.z]`（其后的日期不参与比对）。
 
 若往 `references/glossary.json` 新增语言，必须给它**与 `en` 块完全相同的键集** —— 校验会逐语言报告缺失或多余的键。每个语言块都必须包含这些键：`columns`、`columnsAgent`、`tableTitles`、`state`、`confidence`、`emptyTable`、`unknown`、`threeQuestions`、`provenance`、`provenanceRealName`。
+
+### 提交粒度
+
+**一个逻辑变更 = 一次提交。** 不要把不相关的改动攒成一个大提交，也不要"全部做完才提交一次"——改完一项就提交一项，提交信息写清这一项做了什么。相关联却可独立成篇的改动（如"新增文件"与"精简引用它的文档"）也各成一次提交。每次提交前跑 `node scripts/check-docs.mjs`。
+
+### tag 与 release
+
+| 级别 | 动作 |
+|---|---|
+| **PATCH**（`1.0.x`） | **只打 git tag** —— 不建 GitHub Release |
+| **MINOR**（`1.x.0`） | 打 git tag **并**建 GitHub Release |
+| **MAJOR**（`x.0.0`） | 打 git tag **并**建 GitHub Release |
+
+**只要改动达到 minor 标准，就必须打 minor tag 并建 Release——只打 patch tag 不够。** GitHub Release 只为 minor/major 而建；patch 仅以 tag 形式存在。
 
 ## 许可证
 
