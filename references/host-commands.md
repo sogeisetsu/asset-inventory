@@ -1,5 +1,16 @@
 # Outer-app scan methods
 
+## Path variables (common defaults — verify against the actual host)
+
+| Variable | macOS / Linux | Windows (PowerShell) |
+|---|---|---|
+| `$OPENCODE_CONFIG` | `~/.config/opencode/` | `$env:USERPROFILE\.config\opencode\` |
+| `$PROJECT_DIR` | current working directory | current working directory |
+| `$HOST_CONFIG` | `~/.config/<OuterApp>/` | `$env:APPDATA\<OuterApp>\` (OpenChamber was observed at `~/.config/openchamber/`, not `%APPDATA%` — trust what you observe) |
+| `$PACKAGE_CACHE` | host-specific plugin cache dir | host-specific plugin cache dir |
+
+> These are typical values, not guarantees. Always confirm against the machine being inventoried.
+
 ## How to find injected commands (mandatory — plain grep misses binaries)
 
 Host-injected slash commands may hide in:
