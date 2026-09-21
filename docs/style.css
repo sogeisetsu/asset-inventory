@@ -28,6 +28,10 @@
   --md-shape-xl: 28px;
   --md-shape-full: 999px;
 
+  /* ---- Motion ---- */
+  --md-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --md-ease-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+
   /* ---- Elevation ---- */
   --md-elev-1: 0 1px 2px rgba(0,0,0,.30), 0 1px 3px 1px rgba(0,0,0,.15);
   --md-elev-2: 0 1px 2px rgba(0,0,0,.30), 0 2px 6px 2px rgba(0,0,0,.15);
@@ -122,9 +126,18 @@ a:hover { text-decoration: underline; }
   border: 0; background: transparent; color: var(--md-on-surface-variant);
   border-radius: var(--md-shape-full); padding: 6px 14px;
   cursor: pointer; font: inherit; font-size: .8125rem;
-  transition: background .15s ease, color .15s ease;
+  transition: background .15s var(--md-ease-standard), color .15s var(--md-ease-standard);
 }
 .lang button:hover { background: var(--md-surface-container-high); }
+.lang button:active { background: var(--md-surface-container-high); }
+.lang button::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0));
+  pointer-events: none; transition: background-image .15s var(--md-ease-standard);
+}
+.lang button { position: relative; }
+.lang button:hover::after { background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08)); }
+.lang button:active::after { background-image: linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12)); }
 .lang button[aria-pressed="true"] {
   background: var(--md-secondary-container);
   color: var(--md-on-secondary-container);
@@ -138,10 +151,18 @@ a:hover { text-decoration: underline; }
   background: var(--md-primary-container); color: var(--md-on-primary-container);
   padding: 10px 22px; cursor: pointer; font: inherit;
   font-size: .875rem; font-weight: 500;
-  transition: box-shadow .15s ease, filter .15s ease;
+  transition: box-shadow .15s var(--md-ease-standard), filter .15s var(--md-ease-standard);
 }
 .copy:hover, .btn:hover { box-shadow: var(--md-elev-1); filter: brightness(1.02); }
 .copy:active, .btn:active { box-shadow: none; }
+.copy, .btn { position: relative; }
+.copy::after, .btn::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0));
+  pointer-events: none; transition: background-image .15s var(--md-ease-standard);
+}
+.copy:hover::after, .btn:hover::after { background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08)); }
+.copy:active::after, .btn:active::after { background-image: linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12)); }
 
 footer {
   margin-top: 56px; padding-top: 18px;
@@ -160,6 +181,16 @@ footer {
 html[dir="rtl"] { direction: rtl; }
 html[dir="rtl"] ul { padding-left: 0; padding-right: 22px; }
 
+/* ---- Keyboard focus indicator ---- */
+a:focus-visible,
+.lang button:focus-visible,
+.copy:focus-visible,
+.btn:focus-visible,
+.outputs a.card:focus-visible {
+  outline: 2px solid var(--md-primary);
+  outline-offset: 2px;
+}
+
 /* ---- Output cards: Material elevated cards ---- */
 .outputs { list-style: none; padding: 0; margin: 16px 0; }
 .outputs li { margin: 12px 0; }
@@ -168,8 +199,16 @@ html[dir="rtl"] ul { padding-left: 0; padding-right: 22px; }
   background: var(--md-surface-container);
   border-radius: var(--md-shape-md);
   padding: 16px 18px; text-decoration: none; color: inherit;
-  transition: box-shadow .15s ease, background .15s ease;
+  transition: box-shadow .15s var(--md-ease-standard), background .15s var(--md-ease-standard);
+  position: relative;
 }
+.outputs a.card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0));
+  pointer-events: none; transition: background-image .15s var(--md-ease-standard);
+}
+.outputs a.card:hover::after { background-image: linear-gradient(rgba(0,0,0,.08), rgba(0,0,0,.08)); }
+.outputs a.card:active::after { background-image: linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12)); }
 .outputs a.card:hover {
   box-shadow: var(--md-elev-2);
   background: var(--md-surface-container-high);
@@ -186,10 +225,47 @@ html[dir="rtl"] ul { padding-left: 0; padding-right: 22px; }
 .crumb { font-size: .8125rem; color: var(--md-on-surface-variant); margin-bottom: 12px; }
 .crumb a { color: var(--md-on-surface-variant); }
 
-/* Rendered code/sample surface */
-.example { margin: 16px 0; }
+/* ---- Example panel: M3 outlined container for rendered samples ---- */
+.example {
+  background: var(--md-surface-container);
+  border: 1px solid var(--md-outline-variant);
+  border-radius: var(--md-shape-lg);
+  padding: 20px;
+  margin: 16px 0;
+}
+.example > :first-child { margin-top: 0; }
+.example > :last-child { margin-bottom: 0; }
+
+/* Localised caption (no HTML change) */
+.example::before {
+  content: "Rendered sample";
+  display: block;
+  margin-bottom: 10px;
+  font-size: .6875rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--md-on-surface-variant);
+}
+.example[data-lang="en"]::before { content: "Rendered sample"; }
+.example[data-lang="zh"]::before { content: "渲染示例"; }
+.example[data-lang="ja"]::before { content: "描画例"; }
+.example[data-lang="ko"]::before { content: "렌더링 예시"; }
+.example[data-lang="ru"]::before { content: "Пример (отрендерено)"; }
+.example[data-lang="ar"]::before { content: "مثال معروض"; }
+.example[data-lang="es"]::before { content: "Ejemplo (renderizado)"; }
+html[dir="rtl"] .example::before  { text-align: right; }
+
+/* Demote inner headings inside the panel */
+.example h1 { font-size: 1.25rem; font-weight: 500; margin: 0 0 8px; }
+.example h2 { font-size: 1.05rem; font-weight: 500; margin: 24px 0 8px; }
+
+/* Code surfaces inside the panel */
 .example pre {
-  margin: 0; border-radius: var(--md-shape-md);
+  border: 0;
+  margin: 0;
+  background: var(--md-surface-container-high);
+  border-radius: var(--md-shape-md);
 }
 
 /* Rendered Markdown table (C5) */
@@ -225,3 +301,20 @@ table.md-table th {
   background: var(--md-surface-container-high);
 }
 html[dir="rtl"] .facts th { text-align: right; }
+
+/* ---- Dark mode: M3 state-layer overlays (white overlay instead of black) ---- */
+@media (prefers-color-scheme: dark) {
+  .lang button:hover::after,
+  .lang button:active::after,
+  .copy:hover::after, .copy:active::after,
+  .btn:hover::after, .btn:active::after,
+  .outputs a.card:hover::after,
+  .outputs a.card:active::after { background-image: none; }
+
+  .lang button:hover::after { background-image: linear-gradient(rgba(255,255,255,.08), rgba(255,255,255,.08)); }
+  .lang button:active::after { background-image: linear-gradient(rgba(255,255,255,.12), rgba(255,255,255,.12)); }
+  .copy:hover::after, .btn:hover::after { background-image: linear-gradient(rgba(255,255,255,.08), rgba(255,255,255,.08)); }
+  .copy:active::after, .btn:active::after { background-image: linear-gradient(rgba(255,255,255,.12), rgba(255,255,255,.12)); }
+  .outputs a.card:hover::after { background-image: linear-gradient(rgba(255,255,255,.08), rgba(255,255,255,.08)); }
+  .outputs a.card:active::after { background-image: linear-gradient(rgba(255,255,255,.12), rgba(255,255,255,.12)); }
+}
