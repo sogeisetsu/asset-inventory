@@ -139,10 +139,9 @@ function renderJson(text) {
   return `<pre class="json-view">${body}</pre>`;
 }
 
-function exampleBlock(lang, bar, body) {
+function exampleBlock(lang, body) {
   return [
     `<div class="example" data-lang="${lang}">`,
-    `  <div class="bar">${bar}</div>`,
     body,
     '</div>',
   ].join('\n');
@@ -152,17 +151,14 @@ const PAGES = [
   {
     html: 'inventory.html',
     kind: 'inventory',
-    bar: { en: 'docs/samples/inventory.md', zh: 'docs/samples/zh/inventory.md' },
   },
   {
     html: 'usage-guide.html',
     kind: 'usage',
-    bar: { en: 'docs/samples/usage-guide.md', zh: 'docs/samples/zh/usage-guide.md' },
   },
   {
     html: 'asset-inventory-json.html',
     kind: 'json',
-    bar: { en: 'docs/samples/asset-inventory.json', zh: 'docs/samples/zh/asset-inventory.json' },
   },
 ];
 
@@ -187,7 +183,7 @@ function buildBlock(page, lang) {
     ? 'zh/asset-inventory.json'
     : page.html === 'inventory.html' ? 'zh/inventory.md' : 'zh/usage-guide.md';
   const source = lang === 'en' ? en : read(zhPath);
-  return exampleBlock(lang, page.bar[lang], bodyFor(page.kind, source));
+  return exampleBlock(lang, bodyFor(page.kind, source));
 }
 
 function renderPageContent(page) {

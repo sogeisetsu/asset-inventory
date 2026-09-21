@@ -19,6 +19,7 @@
 | 1.9.1 | patch | Document the branch rule (CONTRIBUTING + repository guide) | ✅ | — | ✅ done |
 | 1.9.2 | patch | Release notes moved into docs/release-notes/ + zh/release-notes/ | ✅ | — | ✅ done |
 | 1.9.3 | patch | Fix language stacking + per-tab language (sessionStorage) | ✅ | — | ✅ done |
+| 1.9.4 | patch | Detail pages: drop sample bar, add .facts borders, cap JSON height | ✅ | — | ✅ done |
 
 ## Details
 

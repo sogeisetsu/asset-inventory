@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.9.4] - 2026-09-22
+
+### Changed
+- **Detail pages cleaned up** — dropped the file-path bar above each rendered sample (the generator no longer emits it), gave the definition tables (`.facts`) real cell borders, and capped the JSON sample's height with a scrollbar instead of one very long page.
+
+---
+
 ## [1.9.3] - 2026-09-22
 
 ### Fixed

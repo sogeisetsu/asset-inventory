@@ -18,6 +18,7 @@
 | 1.9.1 | patch | 将分支规则写入文档（CONTRIBUTING + 仓库指南） | ✅ | — | ✅ 已完成 |
 | 1.9.2 | patch | release notes 移入 docs/release-notes/ 与 zh/release-notes/ | ✅ | — | ✅ 已完成 |
 | 1.9.3 | patch | 修复语言叠加、语言选择改为按标签页（sessionStorage） | ✅ | — | ✅ 已完成 |
+| 1.9.4 | patch | 详情页：去掉示例 bar、.facts 加边框、JSON 限高 | ✅ | — | ✅ 已完成 |
 
 ## 详情
 
