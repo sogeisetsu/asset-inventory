@@ -22,6 +22,7 @@
 | 1.9.4 | patch | Detail pages: drop sample bar, add .facts borders, cap JSON height | ✅ | — | ✅ done |
 | 1.10.0 | minor | Docs-site fixes + release-notes reorg, bilingual release notes | ✅ | ✅ | ✅ done |
 | 1.10.1 | patch | 404 redirect for old release-note URLs | ✅ | — | ✅ done |
+| 1.10.2 | patch | Docs site M3 polish + example panel; Targeting docs (EN/ZH) | ✅ | — | ✅ done |
 
 ## Details
 

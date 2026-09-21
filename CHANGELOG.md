@@ -6,6 +6,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.10.2] - 2026-09-22
+
+### Added
+- **Targeting docs** — `docs/guides/how-it-works.md` gains a "Targeting" section: what each argument (`mcp` / `agents` / `hosts` / `skills` / `diff` / `usage`) scans and what it writes. `README.md` and `README-ZH.md` link to it from the quick-start argument line.
+
+### Changed
+- **Docs-site M3 polish** — the rendered sample is now an M3 panel (surface + outline + radius) with a localized caption and demoted inner headings; added hover state layers, a visible keyboard focus ring, and M3 easing curves.
+
+---
+
 ## [1.10.1] - 2026-09-22
 
 ### Fixed
