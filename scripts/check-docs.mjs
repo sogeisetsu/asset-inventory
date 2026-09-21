@@ -53,6 +53,17 @@ const PAIRS = [
   ['docs/release-notes-v1.6.0.md', 'zh/release-notes-v1.6.0-ZH.md'],
 ];
 
+// Localized READMEs that must all exist and cross-link each other.
+const README_LOCALES = [
+  'README.md',
+  'README-ZH.md',
+  'README-JA.md',
+  'README-KO.md',
+  'README-RU.md',
+  'README-AR.md',
+  'README-ES.md',
+];
+
 // Gitignored local copies compared by mtime (source, local copy).
 const LOCAL_PAIRS = [['SKILL.md', 'zh/skill-zh.md']];
 
@@ -373,6 +384,23 @@ async function checkReferenceIntegrity() {
   }
 }
 
+async function checkReadmeLocales() {
+  // 9. Every localized README exists and links to the whole locale set.
+  for (const relPath of README_LOCALES) {
+    const abs = path.join(ROOT, relPath);
+    if (!(await exists(abs))) {
+      err(`readme locales: missing ${relPath}`);
+      continue;
+    }
+    const raw = await fs.readFile(abs, 'utf8');
+    for (const target of README_LOCALES) {
+      if (!raw.includes(`](${target})`)) {
+        warn(`readme locales: ${relPath} does not link to ${target}`);
+      }
+    }
+  }
+}
+
 async function main() {
   const allFiles = await walk(ROOT);
   const mdFiles = allFiles.filter((f) => f.endsWith('.md'));
@@ -444,6 +472,7 @@ async function main() {
   await checkVersionConsistency();
   await checkReferenceIntegrity();
   await checkGlossaryStructure();
+  await checkReadmeLocales();
 
   for (const w of warnings) console.warn(`warning: ${w}`);
   for (const e of errors) console.error(`error: ${e}`);
