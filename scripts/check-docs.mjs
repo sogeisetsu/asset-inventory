@@ -197,6 +197,8 @@ const CJK = /[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/;
 function isEnglishDoc(relPath) {
   if (relPath.startsWith('zh/')) return false;
   if (/(^|\/)[^/]*-ZH\.md$/i.test(relPath)) return false;
+  // Any non-English locale README (README-JA.md, README-KO.md, …) is exempt.
+  if (/(^|\/)README-[A-Za-z]{2,3}\.md$/i.test(relPath)) return false;
   if (LOCAL_ONLY_DOCS.includes(relPath)) return false;
   if (OUTPUT_LANGUAGE_DIRS.some((d) => relPath.startsWith(d))) return false;
   return relPath.endsWith('.md');
@@ -381,9 +383,18 @@ async function main() {
     const raw = await fs.readFile(file, 'utf8');
     await checkLinks(file, raw);
     checkFrontmatter(file, raw);
-    if (isEnglishDoc(rel(file)) && CJK.test(raw)) {
-      const count = (raw.match(/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/g) || []).length;
-      err(`CJK characters found in English doc ${rel(file)} (${count})`);
+    if (isEnglishDoc(rel(file))) {
+      // The language-navigation row legitimately contains language names in
+      // their own scripts (中文, 日本語, 한국어, …). Strip such rows before the
+      // CJK scan so only real prose is checked.
+      const prose = raw
+        .split(/\r?\n/)
+        .filter((l) => !/\]\(README-[A-Z]{2}\.md\)/.test(l) && !/\]\(README\.md\)/.test(l))
+        .join('\n');
+      if (CJK.test(prose)) {
+        const count = (prose.match(/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/g) || []).length;
+        err(`CJK characters found in English doc ${rel(file)} (${count})`);
+      }
     }
   }
 
