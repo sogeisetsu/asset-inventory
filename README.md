@@ -23,7 +23,7 @@
 /asset-inventory
 ```
 
-Install the skill (one scope), then invoke it. No configuration needed. Append an argument to target part of your setup — `/asset-inventory mcp`, `agents`, `hosts`, `skills`, `diff`, `usage`.
+Install the skill (one scope), then invoke it. No configuration needed. Append an argument to target part of your setup — `/asset-inventory mcp`, `agents`, `hosts`, `skills`, `diff`, `usage`. See [Targeting](docs/guides/how-it-works.md#targeting) for what each argument scans and what it writes.
 
 ## 📦 Install
 
