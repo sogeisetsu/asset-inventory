@@ -99,6 +99,14 @@ A mismatch fails the check. The release heading must be `## [x.y.z]` (the date a
 
 If you add a language to `references/glossary.json`, give it **the same key set as the `en` block** — the check reports any missing or extra key per language. Every language block must expose the same keys: `columns`, `columnsAgent`, `tableTitles`, `state`, `confidence`, `emptyTable`, `unknown`, `threeQuestions`, `provenance`, `provenanceRealName`.
 
+### Branching
+
+**Do not change `master` directly.** Cut a branch for every change, finish and self-check it there, and merge back into `master` only once it is verifiably correct.
+- Name branches in the existing style: `feat/vX.Y.Z`, `fix/...`, `docs/...`, `chore/...`.
+- Run `node scripts/check-docs.mjs` before merging (add `node scripts/build-sample-pages.mjs --check` if you touched the samples).
+- Tag / create the Release after the merge, per the version rules below.
+- Exception: gitignored local files (such as `AGENTS.md`) are not affected.
+
 ### Commit granularity
 
 **One logical change per commit.** Do not bundle unrelated work into one commit, and do not hold everything until the "end" — commit each change as it is finished, with a message that says what that change did. Two related-but-separable changes (e.g. "add a file" and "trim the docs that referenced it") are two commits. Run `node scripts/check-docs.mjs` before each commit.

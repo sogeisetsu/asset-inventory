@@ -16,6 +16,7 @@
 | 1.7.4 | patch | Docs site: English fallback for untranslated content (fix "frame with no content") | ✅ | — | ✅ done |
 | 1.8.0 | minor | Glossary: add `ko` / `ru` / `ar` / `es` fixed strings (7 languages) | ✅ | ✅ | ✅ done |
 | 1.9.0 | minor | Sample pages: generator script, rendered Markdown/JSON, `docs/samples/` restructure | ✅ | ✅ | ✅ done |
+| 1.9.1 | patch | Document the branch rule (CONTRIBUTING + repository guide) | ✅ | — | ✅ done |
 
 ## Details
 

@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.9.1] - 2026-09-22
+
+### Changed
+- **Branching rule documented** (`CONTRIBUTING.md`, `zh/CONTRIBUTING-ZH.md`, and the repository guide) — do not change `master` directly; work on a branch and merge it back only once the checks pass.
+
+---
+
 ## [1.9.0] - 2026-09-22
 
 ### Added
