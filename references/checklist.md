@@ -42,6 +42,7 @@ Run this checklist before outputting. Every item must pass.
 - [ ] A single-row table has been double-checked against the config — it is the exception, not the norm.
 - [ ] Every server is listed: local and remote, enabled and disabled (`❌disabled` with the config line quoted).
 - [ ] Rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
+- [ ] Every MCP row lists its **real invocation paths** — ask-by-name (`use <name>`), the tool prefix, an MCP Prompt (`/prompt-name`) if it exposes one, or its own CLI/HTTP endpoint — never a blanket "the Agent calls it" / "the human doesn't call it".
 
 ## Table 6 — Agents
 

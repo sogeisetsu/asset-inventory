@@ -11,7 +11,7 @@
 | Version | Level | Summary | Tag | Release | Status |
 |---|---|---|---|---|---|
 | 1.7.1 | patch | Rollout plan + tag/release policy clarified | ✅ | — | ✅ done |
-| 1.7.2 | patch | MCP invocation facts corrected (skill rule + every sample) | ⬜ | — | ⬜ todo |
+| 1.7.2 | patch | MCP invocation facts corrected (skill rule + every sample) | ✅ | — | ✅ done |
 | 1.7.3 | patch | README cleanup: drop title emoji, add "Install via AI", move non-EN/ZH READMEs into `readmes/` | ⬜ | — | ⬜ todo |
 | 1.7.4 | patch | Docs site: English fallback for untranslated content (fix "frame with no content") | ⬜ | — | ⬜ todo |
 | 1.8.0 | minor | Glossary: add `ko` / `ru` / `ar` / `es` fixed strings (7 languages) | ⬜ | ⬜ | ⬜ todo |
@@ -56,5 +56,6 @@ the detail-page titles.
 
 ## Next step
 
-1.7.1 is done. Next: **1.7.2 — correct the MCP invocation facts**, then work down
-the ladder. Bump `SKILL.md` + both changelogs together for each tag.
+1.7.2 is done. Next: **1.7.3 — README cleanup** (drop title emoji, add "Install via
+AI", move non-EN/ZH READMEs into `readmes/`), then work down the ladder. Bump
+`SKILL.md` + both changelogs together for each tag.

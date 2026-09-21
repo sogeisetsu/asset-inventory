@@ -5,7 +5,7 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.7.1
+  version: 1.7.2
 ---
 
 # Asset Inventory
@@ -86,7 +86,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 | 2 | Skills & commands each software/plugin brings | Grouped by providing software: **one row per skill/command, no summary rows** (the software itself is already in Table 1; summary rows are redundant). Command ownership follows the tool it invokes (`/rtk-gain` → `@rezamonangg/opencode-rtk`). Slash commands a plugin registers via hooks also go here (e.g. `/loop`, source in the plugin dist `hooks/loop-command`); source = `<plugin> registers command (dist hooks/…)`. **Grouping:** you may prefix each software's block with a bold group row (name column holds only the software name, other columns empty); a group row is not a data row — JSON excludes group rows and row counts ignore them. Either use group rows throughout or not at all; never mix them within one run. The "local / user-command / host-injected" group rows in Table 4 follow the same rule. |
 | 3 | Built-in commands & built-in skills | **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + the docs list) and built-in skills. If none, write an empty-table declaration. |
 | 4 | Custom skills, commands, and host-injected commands | user-created skills (upstream + deps), user commands, **and outer-app-injected commands** (source `host-injected`). Each expanded, never merged. **This skill itself MUST appear here.** |
-| 5 | MCP | **every** MCP server (global + project), local/remote, enabled state, auth-masking state. **A single-row table is almost always wrong** — re-read the config's `mcp` keys and match the count. User-built MCPs with source. Related skills only when verified — else `unknown`, never fabricate. If an MCP has a known alias/tool-name prefix (e.g. grep_app → alias `gh_grep`), state it in the `Source` or `How to call` cell. |
+| 5 | MCP | **every** MCP server (global + project), local/remote, enabled state, auth-masking state. **A single-row table is almost always wrong** — re-read the config's `mcp` keys and match the count. User-built MCPs with source. Related skills only when verified — else `unknown`, never fabricate. If an MCP has a known alias/tool-name prefix (e.g. grep_app → alias `gh_grep`), state it in the `Source` or `How to call` cell. Record how a human reaches it too (ask-by-name, an MCP Prompt if it exposes one, or its own CLI/HTTP endpoint) — never only "the Agent calls it". |
 | 6 | Agents | selectable/invocable agents (native primary `build`/`plan`, native subagents, plugin-provided, custom; disabled ones `❌disabled` + config line). **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **The Model-chain column is mandatory**: read the active preset in the plugin's preset file — its `<agent>.model` may be a string or an array, and an **array is the chain**. Plus backup preset names. **A preset full of arrays must never render as "single model" for every agent.** **Row order is enforced: core primary → plugin primary → core subagent → plugin subagent; alphabetical within each group.** |
 | 7 | Host capabilities | outer-app-injected capabilities (behavior rules, model prefs, session/task actions, in-page browser, managed processes, prompt optimization, skill marketplace). No duplication with Table 1/Table 2. **Row names come from a fixed capability-category list and stay stable across runs** (names may be translated into the output language, but the category set is fixed): ① global behavior rules ② model-preference management ③ session & scheduled-task actions ④ in-page browser ⑤ managed-process management ⑥ prompt optimization ⑦ skill marketplace catalog. Do not list a category that does not exist on the machine, and never invent new category names (fold a new capability into the nearest category and explain it in `What it does`). |
 
@@ -103,7 +103,12 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
   - Command → the literal `/command` (aliases in parens). Never "auto-runs on intent".
   - Skill → both paths: `auto-triggers on intent, or /skill-name` (skills auto-trigger on description match AND are slash-invocable). Never bare "auto-triggers" when a slash name exists.
   - Agent → `Tab switch` / `auto-takeover` / `@agent-name`.
-  - MCP → `Agent calls it` (+ known tool-name prefix/alias, e.g. `grep_app_* / gh_grep_*`).
+  - MCP → **list every real invocation path, never just one** — a prompt reaches any MCP tool by name:
+    - **ask by name** — the documented way a human reaches it: `use context7`, or `use the gh_grep tool`; the Agent then calls the tool.
+    - **Agent calls it** — the tool is exposed to the model as `<server>_<tool>` (e.g. `grep_app_*` / `gh_grep_*`).
+    - **MCP Prompt** — if the server exposes Prompts, OpenCode registers them as slash commands `/prompt-name` (a genuinely human-direct entry point); state it only when verified.
+    - **standalone CLI/HTTP** — some servers also ship their own command or endpoint (e.g. a local `pdf-mcp` command, the remote `mcp.context7.com` URL) reachable outside OpenCode; mention it only when verified.
+    - **Never** write "the human doesn't call it" or any "Agent-only" claim on an MCP row.
   - Software/host capability → `active once installed` / `nothing to call, on from launch` / `when the Agent calls it`.
 - **When to use**: concrete scenario with conditions (e.g. `needs git`, `expensive`, `Windows-only`). Never a bare "on demand".
 - **What it does**: **one detailed paragraph, never a one-liner and never split into "Simple / Detailed"**. Full rules in [What-it-does format](#what-it-does-format-mandatory) below.
@@ -195,6 +200,7 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
    - **Never stop at the first MCP.** A single-row Table 5 is a red flag, not a result: most setups have several (e.g. `websearch`, `context7`, `grep_app`, `pdf-mcp`, `PaddleOCR-VL-*`).
    - The config may not be strict JSON (comments / trailing commas) — strip `//` comments before parsing, or read the `mcp` block directly. Do not skip a server because the file fails to parse strictly.
    - A disabled server is still a row, with `❌disabled` and the config line quoted.
+   - **Invocation paths, not a blanket "Agent calls it":** for each server note (a) that a human can ask for it by name (`use <name>`), (b) its tool-name prefix, (c) whether it exposes **MCP Prompts** (those become `/prompt-name` slash commands), and (d) whether it ships its own CLI/HTTP endpoint. Report what you verified; never assert "the human doesn't call it".
 7. **Agent model chains**: read the plugin's preset file (`$OPENCODE_CONFIG/oh-my-opencode-slim.json` or equivalent → `preset` + `presets`). The active preset's `<agent>.model` gives each plugin agent's chain; an **array is the chain**, a string is a single model. Record the other preset names as backups. Do not guess — if the file is absent, write `unknown` for plugin agents.
 8. **Runtime listing**: `opencode agent list` vs `opencode --pure agent list`, TUI `/` autocomplete. **Run the outer app's own opencode binary**, not the system-wide one — they can differ.
 
@@ -280,6 +286,7 @@ These behaviors make an inventory untrustworthy. Items already covered by the Qu
 - Cramming multiple commands into one cell, or merging distinct user commands into one row.
 - Fabricating an MCP "related skill" you never verified.
 - Listing only one MCP server and stopping — Table 5 must match the config's `mcp` key count. A one-row Table 5 means servers were dropped.
+- Calling every MCP "Agent-only" ("the human doesn't call it") — a human reaches an MCP by asking its name in a prompt, MCP Prompts become `/prompt-name` slash commands, and some servers ship their own CLI/HTTP endpoint.
 - Treating a user's casually-named software as fact — verify first (`📦`/`🚫` if absent).
 - Writing a bare `plugin package`/`local` as a source without naming the actual plugin/software.
 - Calling a plugin-managed skill "local" — check the plugin's `skills-manifest.json` (or the plugin config) first; the plugin is the bringer.

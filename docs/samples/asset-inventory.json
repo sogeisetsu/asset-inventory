@@ -117,7 +117,7 @@
     "source": "远端 MCP，mcp.exa.ai，全局配置 opencode.jsonc:mcp.websearch",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "Agent 自调（工具 websearch_*）"
+    "invoke": "点名调用（\"use websearch\"），或 Agent 自调（工具 websearch_*）"
   },
   {
     "table": 5,
@@ -125,7 +125,7 @@
     "source": "远端 MCP，mcp.context7.com，全局配置 opencode.jsonc:mcp.context7",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "Agent 自调（工具 context7_*）"
+    "invoke": "点名调用（\"use context7\"），或 Agent 自调（工具 context7_*）"
   },
   {
     "table": 5,
@@ -133,7 +133,7 @@
     "source": "远端 MCP，mcp.grep.app，全局配置 opencode.jsonc:mcp.grep_app",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "Agent 自调（工具 grep_app_* / gh_grep_*）"
+    "invoke": "点名调用（\"use gh_grep\"），或 Agent 自调（工具 grep_app_* / gh_grep_*）"
   },
   {
     "table": 5,
@@ -141,7 +141,7 @@
     "source": "本地 MCP，paddleocr_mcp.exe，全局配置 opencode.jsonc:mcp.PaddleOCR-VL-1.6",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "Agent 自调（工具 PaddleOCR_VL_*）"
+    "invoke": "点名调用（\"use PaddleOCR-VL-1.6\"），或 Agent 自调（工具 PaddleOCR_VL_*）"
   },
   {
     "table": 5,
@@ -149,7 +149,7 @@
     "source": "本地 MCP，pdf-mcp 命令，全局配置 opencode.jsonc:mcp.pdf-mcp",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "Agent 自调（工具 pdf_*）"
+    "invoke": "点名调用（\"use pdf-mcp\"），或 Agent 自调（工具 pdf_*）"
   },
   {
     "table": 6,

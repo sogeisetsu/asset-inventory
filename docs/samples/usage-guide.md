@@ -47,4 +47,4 @@
 - `/new`、`/sessions`、`/undo`、`/redo` 内部通过 git 管理文件改动，项目必须是 git 仓库。
 - Skill 也能按名调用（如 `/codemap`、`/simplify`），同时会看话自动触发。
 - 昂贵的工具（deepwork、codemap、oracle）只在明确需要时用；日常小改别去碰。
-- **MCP（websearch / context7 / grep_app / PaddleOCR-VL-1.6 / pdf-mcp）不用手动叫**，Agent 会自动调用，所以不列在"每天必用"里。
+- **MCP（websearch / context7 / grep_app / PaddleOCR-VL-1.6 / pdf-mcp）可以点名调用**（如 "use context7"），Agent 在需要时也会自调，所以不列在"每天必用"里。

@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.7.2] - 2026-09-22
+
+### Fixed
+- **MCP invocation was described as Agent-only.** The skill and every sample claimed a human never calls an MCP server. `SKILL.md` now requires listing all real paths — ask-by-name (`use context7`), the Agent's tool call (`<server>_<tool>`), an MCP Prompt registered as `/prompt-name`, or the server's own CLI/HTTP endpoint — and forbids blanket "the human doesn't call it" claims. `references/checklist.md` gained a matching item, and all samples (`inventory.md`, `usage-guide.md`, `asset-inventory.json`, the docs-site examples) were updated.
+
+---
+
 ## [1.7.1] - 2026-09-22
 
 ### Added

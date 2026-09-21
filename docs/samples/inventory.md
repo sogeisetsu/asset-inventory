@@ -42,11 +42,11 @@
 
 | 名称 | 来源 | 调用方式 | 何时用 | 干什么 |
 |---|---|---|---|---|
-| websearch | 远端 MCP，`mcp.exa.ai`，全局配置 `opencode.jsonc:mcp.websearch` ✅实测 | Agent 自调（工具 `websearch_*`） | 需要联网实时搜索时 | 人不用叫，Agent 在需要实时信息时自动调它，返回清洁文本；查文档、查新闻、查技术细节时用。 |
-| context7 | 远端 MCP，`mcp.context7.com`，全局配置 `opencode.jsonc:mcp.context7` ✅实测 | Agent 自调（工具 `context7_*`） | 需要最新的库/框架文档时 | 人不用叫，Agent 用它拉取最新的库文档而不是靠记忆；其 auth 头含密钥，已打码。 |
-| grep_app | 远端 MCP，`mcp.grep.app`，全局配置 `opencode.jsonc:mcp.grep_app` ✅实测 | Agent 自调（工具 `grep_app_*` / `gh_grep_*`） | 想在真实开源代码里找用法时 | 人不用叫，Agent 用它检索上百万公开仓库的真实代码；适合找某个库的实际用法或生产环境示例。 |
-| PaddleOCR-VL-1.6 | 本地 MCP，`paddleocr_mcp.exe`，全局配置 `opencode.jsonc:mcp.PaddleOCR-VL-1.6` ✅实测 | Agent 自调（工具 `PaddleOCR_VL_*`） | 需要识别图片型/扫描版 PDF 时 | 人不用叫，Agent 用它做 OCR 解析；有文字层的 PDF 应先走文本提取，无文字层再用它。 |
-| pdf-mcp | 本地 MCP，`pdf-mcp` 命令，全局配置 `opencode.jsonc:mcp.pdf-mcp` ✅实测 | Agent 自调（工具 `pdf_*`） | 需要读取、检索或抽取 PDF 内容时 | 人不用叫，Agent 用它提取文本、检索、拉取表格与目录，带 SQLite 缓存；只读用途，不做表单填写或签名。 |
+| websearch | 远端 MCP，`mcp.exa.ai`，全局配置 `opencode.jsonc:mcp.websearch` ✅实测 | 点名调用（"use websearch"），或 Agent 自调（工具 `websearch_*`） | 需要联网实时搜索时 | 你可以点名调用它，Agent 在需要实时信息时也会自动调它，返回清洁文本；查文档、查新闻、查技术细节时用。 |
+| context7 | 远端 MCP，`mcp.context7.com`，全局配置 `opencode.jsonc:mcp.context7` ✅实测 | 点名调用（"use context7"），或 Agent 自调（工具 `context7_*`） | 需要最新的库/框架文档时 | 你可以点名调用它，Agent 也会用它拉取最新的库文档而不是靠记忆；其 auth 头含密钥，已打码。 |
+| grep_app | 远端 MCP，`mcp.grep.app`，全局配置 `opencode.jsonc:mcp.grep_app` ✅实测 | 点名调用（"use gh_grep"），或 Agent 自调（工具 `grep_app_*` / `gh_grep_*`） | 想在真实开源代码里找用法时 | 你可以点名调用它，Agent 也会用它检索上百万公开仓库的真实代码；适合找某个库的实际用法或生产环境示例。 |
+| PaddleOCR-VL-1.6 | 本地 MCP，`paddleocr_mcp.exe`，全局配置 `opencode.jsonc:mcp.PaddleOCR-VL-1.6` ✅实测 | 点名调用（"use PaddleOCR-VL-1.6"），或 Agent 自调（工具 `PaddleOCR_VL_*`） | 需要识别图片型/扫描版 PDF 时 | 你可以点名调用它，Agent 也会用它做 OCR 解析；有文字层的 PDF 应先走文本提取，无文字层再用它。 |
+| pdf-mcp | 本地 MCP，`pdf-mcp` 命令，全局配置 `opencode.jsonc:mcp.pdf-mcp` ✅实测 | 点名调用（"use pdf-mcp"），或 Agent 自调（工具 `pdf_*`） | 需要读取、检索或抽取 PDF 内容时 | 你可以点名调用它，Agent 也会用它提取文本、检索、拉取表格与目录，带 SQLite 缓存；只读用途，不做表单填写或签名。 |
 
 ## 表6 Agent
 
@@ -68,7 +68,7 @@
 |---|---|---|---|---|
 | 全局行为规则 | 宿主设置 `$HOST_CONFIG/` global behavior ✅实测 | 看话自动干 | 所有会话 | 它在每次回复前自动生效、无需调用；它为每个会话设定家规，例如先验证再查文档、不可逆操作先计划后确认。没有要叫的东西——它就是一直在生效。 |
 | 模型偏好管理 | 宿主设置 `$HOST_CONFIG/` model preferences ✅实测 | 在应用里切换 | 想换默认模型或预设时 | 它在应用界面里管理模型偏好，切换后对后续会话生效；想换默认模型或预设时在这里改，不用碰配置文件。 |
-| 内嵌浏览器 | 宿主工具 ✅实测 | Agent 调用时 | 需要看已登录的页面时 | 人不用叫，Agent 按需用它打开页面、读内容、点击、截图，全程带着你真实的登录态；当任务依赖只有登录浏览器才能看到的页面时用它。 |
+| 内嵌浏览器 | 宿主工具 ✅实测 | Agent 调用时 | 需要看已登录的页面时 | Agent 按需用它打开页面、读内容、点击、截图，全程带着你真实的登录态；当任务依赖只有登录浏览器才能看到的页面时用它。 |
 
 ---
 

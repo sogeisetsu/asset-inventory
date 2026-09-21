@@ -8,6 +8,13 @@
 
 ---
 
+## [1.7.2] - 2026-09-22
+
+### 修复
+- **MCP 调用被描述成"只能由 Agent 调用"。** skill 与全部样例都声称人永远不会调用 MCP。`SKILL.md` 现要求列出所有真实调用路径 —— 点名调用（`use context7`）、Agent 的工具调用（`<server>_<tool>`）、MCP Prompt 注册成的 `/prompt-name`，或服务器自带的 CLI/HTTP 端点 —— 并禁止"人不会调用"这类笼统断言。`references/checklist.md` 增加对应检查项，全部样例（`inventory.md`、`usage-guide.md`、`asset-inventory.json`、站点示例）已同步。
+
+---
+
 ## [1.7.1] - 2026-09-22
 
 ### 新增
