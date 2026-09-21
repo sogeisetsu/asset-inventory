@@ -8,6 +8,26 @@
 
 ---
 
+## [1.7.0] - 2026-09-22
+
+### Added
+- **七语言文档** —— 落地页与所有详情页现支持英、中、日、韩、俄、阿拉伯（含 RTL）、西七种语言；选择跨页面保持。
+- **多语言 README** —— 新增 `README-JA.md`、`README-KO.md`、`README-RU.md`、`README-AR.md`、`README-ES.md`，与英文、中文版本互链成一套。
+- **`docs/guides/`** —— 长文文档（`how-it-works.md`、`install-and-update.md`、`repository-and-contributing.md`），从 README 链接进入。
+- **`docs/samples/`** —— 公开的示例产物（`inventory.md`、`usage-guide.md`、`asset-inventory.json`），README 有超链接，用户可先看清最终产物。
+- **Material Design 3 重构** —— 落地页与详情页改为 MD3 风格（颜色角色、阴影层级、圆角、分段式语言切换）。
+- **`check-docs` 新增校验** —— HTML 的 `href`/`src` 链接，以及七份本地化 README 的存在性与互链。
+
+### Changed
+- **README 精简** —— 中英 README 改为简洁的落地页并加入 emoji；细节移入 `docs/guides/`。
+- **落地页示例改为渲染效果** —— 盘点示例以真实表格展示，JSON 逐行展示，不再是裸代码块。
+- **`CONTRIBUTING.md` / `zh/CONTRIBUTING-ZH.md`** —— 写明提交粒度规则与 tag/release 策略（PATCH 只打 tag；MINOR/MAJOR 打 tag 并建 Release）。
+
+### Fixed
+- **复制按钮反馈**在英文界面下仍显示硬编码中文；现跟随当前语言。
+
+---
+
 ## [1.6.1] - 2026-09-22
 
 ### Fixed

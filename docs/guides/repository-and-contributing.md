@@ -25,6 +25,7 @@ asset-inventory/
 ├── update.ps1                  # one-command update script
 ├── README.md                   # English documentation (this file)
 ├── README-ZH.md                # Chinese documentation
+├── README-JA.md / -KO / -RU / -AR / -ES   # localized READMEs
 ├── CHANGELOG.md                # version history (English)
 ├── CONTRIBUTING.md             # contribution guidelines (English)
 ├── LICENSE                     # MIT
