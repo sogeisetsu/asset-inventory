@@ -29,8 +29,11 @@
       var el = document.getElementById(btn.getAttribute('data-copy'));
       if (!el) return;
       var label = btn.textContent;
+      // Feedback follows the active language, never a hardcoded string.
+      var lang = html.getAttribute('data-show') || DEFAULT_LANG;
+      var COPIED = { en: 'Copied ✓', zh: '已复制 ✓', ja: 'コピーしました ✓', ko: '복사됨 ✓', ru: 'Скопировано ✓', ar: 'تم النسخ ✓', es: 'Copiado ✓' };
       navigator.clipboard.writeText(el.textContent.trim()).then(function () {
-        btn.textContent = '已复制 / Copied ✓';
+        btn.textContent = COPIED[lang] || COPIED.en;
         setTimeout(function () { btn.textContent = label; }, 1500);
       });
     });
