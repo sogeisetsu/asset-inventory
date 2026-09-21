@@ -8,6 +8,24 @@
 
 ---
 
+## [1.5.0] - 2026-09-21
+
+### Added
+- **语言声明校验**（`check-docs.mjs`）—— 解析 `SKILL.md` 的 "Fixed-string languages" 行，若其中声称的语言（如 `ja`）在 `references/glossary.json` 中没有对应块则失败。堵住了 v1.4.0 那个"声称有 `ja` 却无 `ja` 数据"的漏洞。
+- **引用完整性校验**（`check-docs.mjs`）—— `SKILL.md` 里提到的每个 `references/<name>` 必须存在，且 `references/checklist.md` 至少保留 20 个清单项（防止编辑时无声丢失）。
+- **日语 glossary 块**（`references/glossary.json` → `ja`）—— 现已真正落地；`en` / `zh` / `ja` 三者各含相同的 10 个键。
+- **`update.ps1 -Help`** —— 显示用法、选项与安装位置，不改动任何文件。
+- **两个 README 新增"该读哪个文件？"导航** —— 把常见意图映射到对应文件。
+
+### Changed
+- **`references/format-example.md` 与 `examples/inventory-example.md` 合并** —— 两者近乎重复（17 行完全相同，约 3,932 共享字节）。现合为一个文件；运行时集合变为 `SKILL.md` + `references/`，`update.ps1`、两个 README、两个 CONTRIBUTING 均不再提及 `examples/`。
+- **`SKILL.md` 的 "What it does" 规则合并** —— Cell Conventions 的条目不再重复整套规则，改为指向专门的 "What-it-does format (mandatory)" 段。
+
+### Removed
+- **`examples/inventory-example.md`** —— 作为 `references/format-example.md` 的重复文件删除。运行时载荷由 60,390 B 降至 55,250 B（约 8.5%，全量读取约省 1,285 tokens）。
+
+---
+
 ## [1.4.0] - 2026-09-21
 
 ### Added

@@ -9,7 +9,7 @@
 1. Fork 仓库
 2. 建分支：`git checkout -b improve/your-change`
 3. 做修改
-4. 本地测试：把 `SKILL.md`、`references/`、`examples/` 复制到你的 skills 目录
+4. 本地测试：把 `SKILL.md`、`references/` 复制到你的 skills 目录
 5. 跑 `/asset-inventory` 验证能正常工作
 6. 提交 pull request
 
@@ -40,7 +40,6 @@ asset-inventory/
 ├── LICENSE                     # MIT
 ├── update.ps1                  # 一键更新脚本
 ├── references/                 # skill 格式与扫描方法参考
-├── examples/                   # 脱敏输出示例
 ├── assets/                     # 本地 SVG 图标 / banner / 徽章（脚本生成）
 ├── scripts/
 │   ├── check-docs.mjs          # 文档 / 链接 / frontmatter 校验
@@ -51,8 +50,7 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md
-    └── release-notes-v1.4.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md└── release-notes-v1.5.0-ZH.md
 ```
 
 本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）与 `AGENTS.md` 已被 gitignore，永不入库。

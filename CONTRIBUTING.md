@@ -7,7 +7,7 @@ Thanks for your interest in improving this skill! Here's how to contribute.
 1. Fork the repository
 2. Create a branch: `git checkout -b improve/your-change`
 3. Make your changes
-4. Test by installing locally: copy `SKILL.md`, `references/`, `examples/` to your skills directory
+4. Test by installing locally: copy `SKILL.md` and `references/` to your skills directory
 5. Run `/asset-inventory` to verify it works
 6. Submit a pull request
 
@@ -38,7 +38,6 @@ asset-inventory/
 ├── LICENSE                     # MIT
 ├── update.ps1                  # One-command update script
 ├── references/                 # Skill format & scan-method references
-├── examples/                   # Desensitized output example
 ├── assets/                     # Local SVG icon / banner / badges (generated)
 ├── scripts/
 │   ├── check-docs.mjs          # Doc/link/frontmatter validation
@@ -49,8 +48,7 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md
-    └── release-notes-v1.4.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md└── release-notes-v1.5.0-ZH.md
 ```
 
 Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) and `AGENTS.md` are gitignored and never committed.

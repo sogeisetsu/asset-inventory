@@ -43,7 +43,7 @@ git clone https://github.com/sogeisetsu/asset-inventory.git
 
 或者从 GitHub 页面 **Code → Download ZIP** 下载并解压。之后你会得到一个 `asset-inventory/` 文件夹。
 
-**第二步：进入 `asset-inventory/` 文件夹，只复制三样东西**（`SKILL.md`、`references/`、`examples/`——README、docs 等文档不用装）到目标位置：
+**第二步：进入 `asset-inventory/` 文件夹，只复制两样东西**（`SKILL.md`、`references/`——README、docs、scripts 等不用装）到目标位置：
 
 | 范围 | 什么时候选 | 目标位置 |
 |---|---|---|
@@ -55,21 +55,21 @@ git clone https://github.com/sogeisetsu/asset-inventory.git
 ```sh
 # 全局（macOS / Linux）
 mkdir -p ~/.config/opencode/skills/asset-inventory
-cp -r SKILL.md references examples ~/.config/opencode/skills/asset-inventory/
+cp -r SKILL.md references ~/.config/opencode/skills/asset-inventory/
 
 # 项目级（macOS / Linux）——把 <项目根目录> 换成你的项目路径
 mkdir -p <项目根目录>/.opencode/skills/asset-inventory
-cp -r SKILL.md references examples <项目根目录>/.opencode/skills/asset-inventory/
+cp -r SKILL.md references <项目根目录>/.opencode/skills/asset-inventory/
 ```
 
 ```powershell
 # 全局（PowerShell）
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"
-Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"
+Copy-Item -Recurse SKILL.md, references -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"
 
 # 项目级（PowerShell）——把 <项目根目录> 换成你的项目路径
 New-Item -ItemType Directory -Force -Path "<项目根目录>\.opencode\skills\asset-inventory"
-Copy-Item -Recurse SKILL.md, references, examples -Destination "<项目根目录>\.opencode\skills\asset-inventory\"
+Copy-Item -Recurse SKILL.md, references -Destination "<项目根目录>\.opencode\skills\asset-inventory\"
 ```
 
 ### 用 AI 自动安装
@@ -197,7 +197,6 @@ asset-inventory/
 ├── CONTRIBUTING.md             # 贡献指南（英文）
 ├── LICENSE                     # MIT
 ├── references/                 # skill 格式与扫描方法参考
-├── examples/                   # 脱敏输出示例
 ├── assets/                     # 本地 SVG 图标 / banner / 徽章（脚本生成）
 ├── scripts/
 │   ├── check-docs.mjs          # 文档 / 链接 / frontmatter 校验
@@ -208,11 +207,27 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md
-    └── release-notes-v1.4.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md└── release-notes-v1.5.0-ZH.md
 ```
 
 本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）与 `AGENTS.md` 已被 gitignore，不会发布。
+
+### 该读哪个文件？
+
+| 你想… | 读 |
+|---|---|
+| 了解 skill 规则 / 改行为 | `SKILL.md` |
+| 看某张表单元格的确切格式 | `references/format-example.md` |
+| 知道输出前的全部检查项 | `references/checklist.md` |
+| 新增语言 / 固定输出字符串 | `references/glossary.json` |
+| 支持新的外层应用 / 宿主 | `references/host-commands.md` |
+| 使用指南的格式 | `references/usage-guide.md` |
+| 排查运行失败 | `references/troubleshooting.md` |
+| 安装或更新 | `README-ZH.md`（本文件）· `update.ps1 -Help` |
+| 贡献 / 发布 | `CONTRIBUTING.md` · `CHANGELOG.md` |
+
+`references/` 是随 skill 一起分发的运行时参考文件；`scripts/`、`docs/`、`zh/` 仅供开发侧使用。
+
 
 ## 适用范围与兼容性
 

@@ -1,12 +1,15 @@
 # Format examples (not facts — replace with values you look up at output time)
 
-These rows define the **format only** — replace every value with observed results; never copy them. `What it does` must reach the level of detail shown here: a one-sentence Simple plus a 2-4 sentence Detailed (including how it works, typical usage, and key caveats). One-liners do not pass. Consult this file only when you are unsure how a cell should read.
+These rows define the **format only** — replace every value with observed results; never copy them. Example values are desensitized placeholders and do not represent any real machine. `What it does` must reach the level of detail shown here: a one-sentence Simple plus a 2-4 sentence Detailed (including how it works, typical usage, and key caveats). One-liners do not pass. Consult this file only when you are unsure how a cell should read.
+
+> This single file is both the format reference and the desensitized output example. Row counts are illustrative — a real run has as many rows as the machine actually has.
 
 ## Table 1 — Plugins & companion software (5 columns)
 
 | Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
 | Example outer app (real name, e.g. OpenChamber) | outer app official, install bundle `resources/` + config `$HOST_CONFIG/` | nothing to call, on from launch | every time you open the workspace | Simple: the desktop workspace. Detailed: it manages projects, sessions, scheduled tasks, model preferences, and the in-page browser, and is the entry point to every host capability; it also injects a batch of `/` commands plus session and browser tools into opencode. When inventorying, treat the opencode process it hosts as ground truth. |
+| example-plugin@1.0.0 | third-party plugin, `opencode.jsonc:plugin[]`, source `<repo>` MIT | nothing to call, active automatically | when switching models or roles | Simple: a foreman's team. Detailed: it brings N skills, M agents, and model presets, and auto-splits/dispatches multi-step tasks; reach for it when changing roles or model chains. |
 
 ## Table 2 — Skills & commands each software/plugin brings (5 columns, no summary rows)
 
@@ -21,6 +24,7 @@ These rows define the **format only** — replace every value with observed resu
 | Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
 | /undo | built-in, official TUI docs | `/undo` | when you want to take back a mistake; needs git | Simple: undo. Detailed: it reverts the last message and rolls back the file changes that message produced via Git; `/redo` restores it afterward. It is unavailable when the project is not a git repo — the most common pitfall. |
+| /new | built-in, official TUI docs | `/new` | when one task is done and you don't want pollution; needs git | Simple: a fresh start. Detailed: it opens a clean session, aliased `/clear`, so old context doesn't pollute the next task; the old session is kept and can be switched back to anytime. |
 | Example builtin skill | core builtin | automatic | when you say "change the tool itself" | Simple: it only touches itself. Detailed: it follows a safety flow for changes to the tool itself, confirming in two steps before acting; everyday business-code changes do not trigger it. |
 
 ## Table 4 — Custom skills, commands, and host-injected commands (5 columns)
@@ -30,12 +34,20 @@ These rows define the **format only** — replace every value with observed resu
 | Example user-built skill | local, upstream `<repo>` `<license>`, depends on `<CLI>` | automatic, or `/example:skill` | when you need a particular kind of processing | Simple: one-line purpose. Detailed: expand 2-4 sentences from the real SKILL.md description, explaining the trigger scenario and how it works; the CLI it depends on must be installed first, or it errors at the call site. |
 | /status | global custom, `$OPENCODE_CONFIG/command/status.md` | `/status` | when you want a quick status check on return | Simple: locate everything in one screen. Detailed: it collects the current branch, cleanliness, and the last 8 commits, and reads any living doc if present, then prints three sections: branch / phase / next step. It does not dig into diffs or read design docs — just a fast orientation. |
 | /catch-up | host-injected, found by binary scan of `<app.asar>` | `/catch-up` | the first thing to run whenever you come back and have lost context | Simple: catch up. Detailed: it summarizes current-branch commits, PR status, and uncommitted changes into branch-aware context and gives a skimmable summary plus next steps; it is the highest-frequency command when hopping between sessions. |
+| /plan-feature | host-injected, found by binary scan of `<app.asar>` | `/plan-feature` | before you start coding a new feature | Simple: draw the map first. Detailed: it guides you to explore the codebase, clarifies requirements in batches, then outputs an implementation plan; it writes no code throughout, and you act after the plan is confirmed. |
+| /craft-goal | host-injected, found by binary scan of `<app.asar>` | `/craft-goal` | when the goal is vague | Simple: sharpen the goal. Detailed: it turns vague ideas and tasks into a clear, verifiable Goal through multiple rounds of guidance, ready to hand to an executor. |
+| /workspace-review | host-injected, found by binary scan of `<app.asar>` | `/workspace-review` | after changes, before committing | Simple: review the changes. Detailed: it reviews whether the workspace diff meets the bar, is correct, and is reasonable, and outputs by severity; good for a self-check before committing. |
+| /weigh | host-injected, found by binary scan of `<app.asar>` | `/weigh` | when two options are deadlocked | Simple: lay out the trade-offs. Detailed: it checks the code first, then gives 2-3 options with trade-offs and a recommendation; conclusions only — no plan, no code. |
+| /debug | host-injected, found by binary scan of `<app.asar>` | `/debug` | when tests are red and won't fix | Simple: find the root cause. Detailed: it does guided root-cause analysis and fixes only after locating the cause, forbidding blind trial-and-error; use it when a fix fails repeatedly. |
+| /summary | host-injected, found by binary scan of `<app.asar>` | `/summary` | when you need a handoff | Simple: write a handoff. Detailed: it outputs a non-destructive session summary without compressing history, for handing off to a person or a new session; the original session is unaffected. |
+| /explore | host-injected, found by binary scan of `<app.asar>` | `/explore` | when entering an unfamiliar directory | Simple: a tour. Detailed: it explains the repo's layout, main modules, and module relationships, and points out where to start reading; the first thing to run in an unfamiliar project. |
 
 ## Table 5 — MCP (5 columns)
 
 | Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
 | ExampleMCP | remote MCP, `mcp.example.com`, global config `opencode.jsonc:mcp`, alias `gh_example` | Agent calls it (tools `example_*` / `gh_example_*`) | when you need to look up official docs online | Simple: look things up online. Detailed: humans don't call it; the Agent invokes it automatically when it needs current docs and gets live results. The auth header contains a key, already masked. Related skill unknown. |
+| Example local MCP | local MCP, `example-mcp` command | Agent calls it | when you need local capabilities | Simple: a local tool. Detailed: it wraps local commands as tools the Agent can call, triggered automatically when that local capability is needed; a missing command makes the call fail. Related skill unknown. |
 
 ## Table 6 — Agents (6 columns, including Model chain)
 
@@ -58,3 +70,7 @@ These rows define the **format only** — replace every value with observed resu
 ## Table-note style (write only when there is a risk; omit otherwise)
 
 `Note: ExampleMCP liveness probe failed (missing command / tools/list unreachable); the auth header contains a plaintext key, already masked.`
+
+---
+
+**Mnemonic: the three inventory questions — what it is, who brought it, how to use it; always name the specific bringer, and a command belongs to whoever owns the tool it invokes.**
