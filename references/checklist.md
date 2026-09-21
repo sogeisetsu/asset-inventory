@@ -11,7 +11,8 @@ Run this checklist before outputting. Every item must pass.
 - [ ] Exactly 7 tables; Tables 1-5/7 five columns, Table 6 six (including Model chain); headers consistent.
 - [ ] Every `Source` names the specific bringer, with a confidence suffix.
 - [ ] No skill in the global skills dir is called `local` until the plugin manifest has been checked — a `managed`/`customized` entry means the plugin is the bringer.
-- [ ] No absolute paths, plaintext keys/tokens, or real project names (unless real-name mode + 4th Provenance line).
+- [ ] No plaintext keys/tokens, masks real project names, and normalizes **every** home path to `~` / `%USERPROFILE%` in the Markdown **and** the JSON (real-name mode is the only exception, with the 4th Provenance line).
+- [ ] Unregistered skill-/plugin-like residue (has `SKILL.md`/`plugin.json`/`marketplace.json` but is not referenced by the config) is not dropped silently — it is `📦shelf-only` in a table or named in the Provenance Unresolved line, with the observed reason.
 - [ ] Versions/models/counts looked up fresh.
 - [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).
 - [ ] Empty tables have a declaration line + `[]`.
@@ -26,6 +27,7 @@ Run this checklist before outputting. Every item must pass.
 
 - [ ] Commands sit in the right table (built-in→Table 3, plugin→Table 2, user→Table 4, host-injected→Table 4).
 - [ ] No summary rows duplicating Table 1 software entries.
+- [ ] A plugin skill and its same-named registered command (`deepwork` + `/deepwork`) are **one** row, not two.
 
 ## Table 3 — Built-in commands & built-in skills
 
@@ -49,6 +51,7 @@ Run this checklist before outputting. Every item must pass.
 - [ ] Every row has a concrete Model chain (`a→b→c`) **or** (for a **core agent only**, with no configured chain) the host's currently effective real model + a "single model, no chain fallback" note. Placeholder phrasing does not count.
 - [ ] The active preset's array-valued `<agent>.model` entries were expanded into chains — not flattened to "single model". If several plugin agents all read "single model", re-read the preset file.
 - [ ] Row order: core primary → plugin primary → core subagent → plugin subagent, alphabetical within each group.
+- [ ] Config-disabled agents absent from `agent list` are named in the table note with their config key, not invented as rows (watch `explore` vs `explorer`).
 
 ## Table 7 — Host capabilities
 
