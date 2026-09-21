@@ -1,6 +1,6 @@
 <!--
   Release notes for v1.9.0 (English). Paste into the GitHub Release body.
-  Chinese version: zh/release-notes-v1.9.0-ZH.md
+  Chinese version: ../../zh/release-notes/release-notes-v1.9.0-ZH.md
   Release: v1.9.0 — asset-inventory (sogeisetsu/asset-inventory)
 -->
 
@@ -26,4 +26,4 @@ The three output-detail pages now show their samples **rendered from the sample 
 
 ## License
 
-MIT — see [LICENSE](../LICENSE).
+MIT — see [LICENSE](../../LICENSE).

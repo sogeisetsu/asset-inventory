@@ -1,6 +1,6 @@
 <!--
   Release notes for v1.7.0 (English). Paste into the GitHub Release body.
-  Chinese version: zh/release-notes-v1.7.0-ZH.md
+  Chinese version: ../../zh/release-notes/release-notes-v1.7.0-ZH.md
   Release: v1.7.0 — asset-inventory (sogeisetsu/asset-inventory)
 -->
 
@@ -39,4 +39,4 @@ Copy the install prompt from the landing page (or the README) and send it to you
 
 ## License
 
-MIT — see [LICENSE](../LICENSE).
+MIT — see [LICENSE](../../LICENSE).

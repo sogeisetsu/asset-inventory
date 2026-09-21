@@ -1,5 +1,5 @@
 <!--
-  v1.4.0 release notes（中文）。英文版见 ../docs/release-notes-v1.4.0.md
+  v1.4.0 release notes（中文）。英文版见 ../../docs/release-notes/release-notes-v1.4.0.md
   Release: v1.4.0 — asset-inventory (sogeisetsu/asset-inventory)
 -->
 
@@ -39,4 +39,4 @@ glossary 缺键 → error: glossary check: "zh" is missing key(s): tableTitles
 
 ## 许可证
 
-MIT — 见 [LICENSE](../LICENSE)。
+MIT — 见 [LICENSE](../../LICENSE)。

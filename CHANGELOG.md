@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.9.2] - 2026-09-22
+
+### Changed
+- **Release notes moved into their own folders** — `docs/release-notes/` and `zh/release-notes/`, with `check-docs`'s pair table, the repository trees, and every cross-link updated.
+
+---
+
 ## [1.9.1] - 2026-09-22
 
 ### Changed

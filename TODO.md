@@ -17,6 +17,7 @@
 | 1.8.0 | minor | Glossary: add `ko` / `ru` / `ar` / `es` fixed strings (7 languages) | ✅ | ✅ | ✅ done |
 | 1.9.0 | minor | Sample pages: generator script, rendered Markdown/JSON, `docs/samples/` restructure | ✅ | ✅ | ✅ done |
 | 1.9.1 | patch | Document the branch rule (CONTRIBUTING + repository guide) | ✅ | — | ✅ done |
+| 1.9.2 | patch | Release notes moved into docs/release-notes/ + zh/release-notes/ | ✅ | — | ✅ done |
 
 ## Details
 

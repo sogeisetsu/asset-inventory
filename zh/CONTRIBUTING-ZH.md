@@ -45,12 +45,12 @@ asset-inventory/
 │   ├── check-docs.mjs          # 文档 / 链接 / frontmatter 校验
 │   └── generate-assets.mjs     # 重新生成 assets/*.svg
 ├── docs/                       # GitHub Pages + release notes
+│   └── release-notes/          # English release notes
 └── zh/                         # 除 README-ZH.md 外的所有中文文档
     ├── CHANGELOG-ZH.md
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
-    ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md├── release-notes-v1.5.0-ZH.md├── release-notes-v1.6.0-ZH.md└── release-notes-v1.7.0-ZH.md
+    └── release-notes/          # Chinese release notes
 ```
 
 本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）与 `AGENTS.md` 已被 gitignore，永不入库。

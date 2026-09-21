@@ -1,5 +1,5 @@
 <!--
-  v1.8.0 release notes（中文）。英文版见 ../docs/release-notes-v1.8.0.md
+  v1.8.0 release notes（中文）。英文版见 ../../docs/release-notes/release-notes-v1.8.0.md
   Release: v1.8.0 — asset-inventory (sogeisetsu/asset-inventory)
 -->
 
@@ -22,4 +22,4 @@ skill 的固定输出字符串现已覆盖文档早就承诺的全部七种语�
 
 ## 许可证
 
-MIT — 见 [LICENSE](../LICENSE)。
+MIT — 见 [LICENSE](../../LICENSE)。

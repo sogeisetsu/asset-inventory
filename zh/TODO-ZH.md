@@ -16,6 +16,7 @@
 | 1.8.0 | minor | glossary 补齐 `ko` / `ru` / `ar` / `es`（7 语言固定字符串） | ✅ | ✅ | ✅ 已完成 |
 | 1.9.0 | minor | 样本页：生成脚本、渲染 Markdown/JSON、`docs/samples/` 目录重构 | ✅ | ✅ | ✅ 已完成 |
 | 1.9.1 | patch | 将分支规则写入文档（CONTRIBUTING + 仓库指南） | ✅ | — | ✅ 已完成 |
+| 1.9.2 | patch | release notes 移入 docs/release-notes/ 与 zh/release-notes/ | ✅ | — | ✅ 已完成 |
 
 ## 详情
 
