@@ -6,6 +6,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.10.0] - 2026-09-22
+
+### Added
+- **Bilingual release notes** — `docs/release-notes/release-notes-v1.10.0.md` and its Chinese counterpart, now in the dedicated release-notes folders.
+
+### Changed
+- Documentation-site and repository tidy-up: release notes in `docs/release-notes/` + `zh/release-notes/` (1.9.2), the language-stacking fix and per-tab language choice (1.9.3), and the detail-page polish (1.9.4).
+
+---
+
 ## [1.9.4] - 2026-09-22
 
 ### Changed

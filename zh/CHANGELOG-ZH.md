@@ -8,6 +8,16 @@
 
 ---
 
+## [1.10.0] - 2026-09-22
+
+### 新增
+- **双语 release notes** —— `docs/release-notes/release-notes-v1.10.0.md` 与其中文对照版，已放入各自的 release-notes 目录。
+
+### 变更
+- 文档站与仓库整理合计：release notes 移入 `docs/release-notes/` + `zh/release-notes/`（1.9.2）、修复语言叠加与按标签页记忆选择（1.9.3）、详情页清理（1.9.4）。
+
+---
+
 ## [1.9.4] - 2026-09-22
 
 ### 变更
