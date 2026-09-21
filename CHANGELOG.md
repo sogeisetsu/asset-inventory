@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.6.1] - 2026-09-22
+
+### Fixed
+- **Plugin-managed skills were misattributed as "local".** `oh-my-opencode-slim@2.2.18` manages 8 skills (`simplify`, `codemap`, `clonedeps`, `deepwork`, `verification-planning`, `reflect`, `oh-my-opencode-slim`, `worktrees`) via `.oh-my-opencode-slim/skills-manifest.json`. The skill never read that manifest, so it fell back to `local, integrated/upstream <repo>` and **invented** `github.com/sogeisetsu/<name>` from the folder name. `Discover` now reads the plugin manifest; `local, upstream <repo>` requires a verified URL; never infer a repo from a folder name.
+- **Every agent was reported as "single model, no chain fallback".** The active preset (`jibei-factory`) uses **array-valued** `model` for every agent, but the skill only handled string/arrow shapes and over-applied the exemption to plugin agents. The rule now states that `presets.<name>.<agent>.model` may be a string **or an array** (an array *is* the chain), and the exemption applies to **core-bundled agents only**.
+
+---
+
 ## [1.6.0] - 2026-09-22
 
 ### Fixed

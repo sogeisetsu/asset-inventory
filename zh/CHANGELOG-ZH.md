@@ -8,6 +8,14 @@
 
 ---
 
+## [1.6.1] - 2026-09-22
+
+### Fixed
+- **插件管理的 skill 被误标为"本地自建"。** `oh-my-opencode-slim@2.2.18` 通过 `.oh-my-opencode-slim/skills-manifest.json` 管理着 8 个 skill（`simplify`、`codemap`、`clonedeps`、`deepwork`、`verification-planning`、`reflect`、`oh-my-opencode-slim`、`worktrees`）。skill 从不读该 manifest，于是回退到 `local, integrated/upstream <repo>`，并根据目录名**编造**出 `github.com/sogeisetsu/<name>`。`Discover` 现读取插件 manifest；`local, upstream <repo>` 要求已验证的 URL；绝不从目录名推断仓库。
+- **所有 Agent 都被报成"单模型，无链式回退"。** 当前预设（`jibei-factory`）对每个 agent 都使用**数组形式**的 `model`，但 skill 只处理了字符串/箭头形式，并把豁免过度套用到插件 agent 上。现规则写明 `presets.<name>.<agent>.model` 可以是字符串**或数组**（数组*就是*模型链），且豁免仅适用于**核心自带**的 agent。
+
+---
+
 ## [1.6.0] - 2026-09-22
 
 ### Fixed
