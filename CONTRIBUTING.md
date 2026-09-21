@@ -111,7 +111,7 @@ If you add a language to `references/glossary.json`, give it **the same key set 
 | **MINOR** (`1.x.0`) | git tag **and** a GitHub Release |
 | **MAJOR** (`x.0.0`) | git tag **and** a GitHub Release |
 
-**If a change meets the minor bar, it must get a minor tag and a Release — a patch tag is not enough.** GitHub Releases exist only for minor/major versions; patches live as tags alone.
+**Every change gets the tag for the level it meets:** a patch-level change gets a patch tag, a minor-level change gets a minor tag, a major-level change gets a major tag. Do not hold a patch-level change back to bundle it into a later minor. GitHub Releases exist only for minor/major versions; patch tags carry no Release. And if a change meets the minor bar, a patch tag is not enough — it must get a minor tag **and** a Release.
 
 ## License
 

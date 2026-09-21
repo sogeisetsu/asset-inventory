@@ -6,6 +6,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.7.1] - 2026-09-22
+
+### Added
+- **`TODO.md` / `zh/TODO-ZH.md`** — a bilingual, living rollout plan so a fresh session can see which release is in flight and what comes next.
+
+### Changed
+- **Tag/release policy clarified** (`CONTRIBUTING.md`, `zh/CONTRIBUTING-ZH.md`) — every change gets the tag for its own level: a patch-level change gets a patch tag (tag only, no Release), while minor/major changes get their tag plus a GitHub Release. A patch-level change must not be held back to bundle into a later minor.
+
+---
+
 ## [1.7.0] - 2026-09-22
 
 ### Added

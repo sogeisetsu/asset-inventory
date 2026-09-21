@@ -8,6 +8,16 @@
 
 ---
 
+## [1.7.1] - 2026-09-22
+
+### 新增
+- **`TODO.md` / `zh/TODO-ZH.md`** —— 双语的滚动式发布计划，新会话打开即可看清当前进行到哪个版本、下一步是什么。
+
+### 变更
+- **tag/release 政策澄清**（`CONTRIBUTING.md`、`zh/CONTRIBUTING-ZH.md`）—— 每个改动都按其自身级别打 tag：patch 级别打 patch tag（仅 tag，不建 Release），minor/major 打各自 tag 并建 GitHub Release。patch 级别的改动不得攒到后面的 minor 才打。
+
+---
+
 ## [1.7.0] - 2026-09-22
 
 ### Added

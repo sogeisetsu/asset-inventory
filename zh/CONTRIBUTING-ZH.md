@@ -113,7 +113,7 @@ asset-inventory/
 | **MINOR**（`1.x.0`） | 打 git tag **并**建 GitHub Release |
 | **MAJOR**（`x.0.0`） | 打 git tag **并**建 GitHub Release |
 
-**只要改动达到 minor 标准，就必须打 minor tag 并建 Release——只打 patch tag 不够。** GitHub Release 只为 minor/major 而建；patch 仅以 tag 形式存在。
+**每个改动都按其自身达到的标准打 tag：** patch 达标打 patch tag，minor 达标打 minor tag，major 达标打 major tag。不要把 patch 级别的改动攒到后面的 minor 才打。GitHub Release 只为 minor/major 而建；patch 只有 tag、不建 Release。而只要改动达到 minor 标准，只打 patch tag 是不够的——必须打 minor tag **并**建 Release。
 
 ## 许可证
 

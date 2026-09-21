@@ -44,6 +44,7 @@ const SKIP_DIRS = new Set([
 // EN <-> ZH document pairs that must always travel together.
 const PAIRS = [
   ['README.md', 'README-ZH.md'],
+  ['TODO.md', 'zh/TODO-ZH.md'],
   ['CONTRIBUTING.md', 'zh/CONTRIBUTING-ZH.md'],
   ['CHANGELOG.md', 'zh/CHANGELOG-ZH.md'],
   ['docs/release-notes-v1.1.0.md', 'zh/release-notes-v1.1.0-ZH.md'],

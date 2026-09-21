@@ -1,0 +1,54 @@
+# TODO —— 发布计划
+
+> 滚动式发布计划。每完成一个版本就勾掉对应项，并更新底部的**下一步**。
+> 新会话请先读本文件，即可确认当前进行到哪个版本、接下来做什么。
+>
+> 英文对读版：[`TODO.md`](../TODO.md)（两者保持同步）。
+
+## 发布梯队
+
+| 版本 | 级别 | 内容 | tag | Release | 状态 |
+|---|---|---|---|---|---|
+| 1.7.1 | patch | 发布计划 + tag/release 政策澄清 | ✅ | — | ✅ 已完成 |
+| 1.7.2 | patch | 修正 MCP 调用事实（skill 规则 + 全部样例） | ⬜ | — | ⬜ 待办 |
+| 1.7.3 | patch | README 整理：去标题 emoji、加"通过 AI 安装"、非中英 README 移入 `readmes/` | ⬜ | — | ⬜ 待办 |
+| 1.7.4 | patch | 文档站点：未翻译内容回退英文（修"只有框架没有内容"） | ⬜ | — | ⬜ 待办 |
+| 1.8.0 | minor | glossary 补齐 `ko` / `ru` / `ar` / `es`（7 语言固定字符串） | ⬜ | ⬜ | ⬜ 待办 |
+| 1.9.0 | minor | 样本页：生成脚本、渲染 Markdown/JSON、`docs/samples/` 目录重构 | ⬜ | ⬜ | ⬜ 待办 |
+
+## 详情
+
+### 1.7.2 —— MCP 调用事实（patch）
+skill（及全部样例）曾声称 MCP 服务器"只由 Agent 调用、人永远不用叫"。这是错的。
+修正 `SKILL.md`（Cell Conventions、Discover、Anti-patterns）与
+`references/checklist.md`，并同步全部样例：`docs/samples/inventory.md`、
+`docs/samples/usage-guide.md`、`docs/samples/asset-inventory.json`、
+`docs/inventory.html`、`docs/asset-inventory-json.html`、`docs/index.html`。
+
+### 1.7.3 —— README 整理（patch）
+- 去掉所有 README 标题里的 🗃️ emoji（共 7 个文件）。
+- 每个 README 增加"通过 AI 安装"小节（复用 `docs/index.html` 已本地化的提示词）。
+- 非中英 README 移入 `readmes/`，重写相对链接（`assets/`、`LICENSE`、`docs/`、
+  `CHANGELOG.md`、`CONTRIBUTING.md`）、语言切换链接、`scripts/check-docs.mjs`
+  （`README_LOCALES` + CJK 剥离正则），并更新
+  `docs/guides/repository-and-contributing.md` 的目录树。
+
+### 1.7.4 —— 站点英文回退（patch）
+ja/ko/ru/ar/es 下未翻译的正文是空白。引入 `data-i18n` 分组 + `lang.js` 解析
+（所选语言 → 无则回退英文），并把 `style.css` 的可见性切到 `.on` 类，覆盖四个
+HTML 页面。框架与标题保留所选语言。
+
+### 1.8.0 —— glossary 七语言（minor · 建 Release）
+往 `references/glossary.json` 新增 `ko` / `ru` / `ar` / `es` 块（各 10 键，键集
+与 `en` 完全一致），并把 `SKILL.md` 的 "Fixed-string languages" 行扩到七种。
+
+### 1.9.0 —— 样本页（minor · 建 Release）
+新增 `scripts/build-sample-pages.mjs`，把 `inventory.md`（表格）、
+`usage-guide.md`（真 HTML）、`asset-inventory.json`（美化缩进）渲染进三个详情页。
+样本目录重构：英文放 `docs/samples/`、中文放 `docs/samples/zh/`；更新所有样本链接。
+详情页标题去掉裸文件名。
+
+## 下一步
+
+1.7.1 已完成。接下来：**1.7.2 —— 修正 MCP 调用事实**，然后沿梯队继续。
+每个 tag都要同步 `SKILL.md` 与两份 changelog。
