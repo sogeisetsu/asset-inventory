@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.10.3] - 2026-09-22
+
+### Changed
+- **Token trim (behavior-neutral)** — condensed `SKILL.md` (~17% smaller) and `references/format-example.md` (~25% smaller) by removing duplicated rules and illustrative example rows; the path-variable table moved from `SKILL.md` into `references/host-commands.md`. Every rule was audited to remain present and unambiguous; produced output is unchanged.
+
+---
+
 ## [1.10.2] - 2026-09-22
 
 ### Added

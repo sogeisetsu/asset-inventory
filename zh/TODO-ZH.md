@@ -22,6 +22,7 @@
 | 1.10.0 | minor | 文档站修复 + release notes 归集，双语 release notes | ✅ | ✅ | ✅ 已完成 |
 | 1.10.1 | patch | 为旧 release notes 地址加 404 跳转 | ✅ | — | ✅ 已完成 |
 | 1.10.2 | patch | 文档站 M3 优化 + 示例面板；参数（Targeting）文档（中英） | ✅ | — | ✅ 已完成 |
+| 1.10.3 | patch | 省 token：精简 SKILL.md + format-example.md（不改变行为） | ✅ | — | ✅ 已完成 |
 
 ## 详情
 
