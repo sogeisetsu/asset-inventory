@@ -14,7 +14,7 @@
 | 1.7.3 | patch | README 整理：去标题 emoji、加"通过 AI 安装"、非中英 README 移入 `readmes/` | ✅ | — | ✅ 已完成 |
 | 1.7.4 | patch | 文档站点：未翻译内容回退英文（修"只有框架没有内容"） | ✅ | — | ✅ 已完成 |
 | 1.8.0 | minor | glossary 补齐 `ko` / `ru` / `ar` / `es`（7 语言固定字符串） | ✅ | ✅ | ✅ 已完成 |
-| 1.9.0 | minor | 样本页：生成脚本、渲染 Markdown/JSON、`docs/samples/` 目录重构 | ⬜ | ⬜ | ⬜ 待办 |
+| 1.9.0 | minor | 样本页：生成脚本、渲染 Markdown/JSON、`docs/samples/` 目录重构 | ✅ | ✅ | ✅ 已完成 |
 
 ## 详情
 
@@ -50,5 +50,5 @@ HTML 页面。框架与标题保留所选语言。
 
 ## 下一步
 
-1.8.0 已完成。接下来：**1.9.0 —— 样本页**（生成脚本 + 渲染 Markdown/JSON +
-`docs/samples/` 目录重构），minor 版本，建 GitHub Release。之后梯队即完成。
+梯队已完成：1.7.1–1.7.4（patch）与 1.8.0 / 1.9.0（minor，均建 GitHub Release）。
+当前没有进行中的工作 —— 后续工作从这里开一条新梯队。

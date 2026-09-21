@@ -15,7 +15,7 @@
 | 1.7.3 | patch | README cleanup: drop title emoji, add "Install via AI", move non-EN/ZH READMEs into `readmes/` | ✅ | — | ✅ done |
 | 1.7.4 | patch | Docs site: English fallback for untranslated content (fix "frame with no content") | ✅ | — | ✅ done |
 | 1.8.0 | minor | Glossary: add `ko` / `ru` / `ar` / `es` fixed strings (7 languages) | ✅ | ✅ | ✅ done |
-| 1.9.0 | minor | Sample pages: generator script, rendered Markdown/JSON, `docs/samples/` restructure | ⬜ | ⬜ | ⬜ todo |
+| 1.9.0 | minor | Sample pages: generator script, rendered Markdown/JSON, `docs/samples/` restructure | ✅ | ✅ | ✅ done |
 
 ## Details
 
@@ -56,6 +56,6 @@ the detail-page titles.
 
 ## Next step
 
-1.8.0 is done. Next: **1.9.0 — sample pages** (generator + rendered
-Markdown/JSON + `docs/samples/` restructure), a minor release with a GitHub
-Release. Then the rollout is complete.
+The rollout is complete: 1.7.1–1.7.4 (patches) and 1.8.0 / 1.9.0 (minors, with
+GitHub Releases). Nothing is in flight — start a new ladder here for the next
+piece of work.

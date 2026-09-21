@@ -6,6 +6,21 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.9.0] - 2026-09-22
+
+### Added
+- **Sample-page generator** — `scripts/build-sample-pages.mjs` renders `docs/samples/` into the three detail pages (Markdown tables, full Markdown, and pretty-printed JSON); CI runs it with `--check`, so a stale page fails the build.
+- **English sample output** at `docs/samples/`; the Chinese set moved to `docs/samples/zh/`.
+
+### Changed
+- **Detail-page examples are rendered, not raw code blocks** — `usage-guide.html` shows real HTML, `asset-inventory-json.html` shows indented JSON, `inventory.html` shows its table.
+- **Human-readable localized page titles** — the detail pages no longer put the bare filename in the `<h1>` or tab title.
+
+### Fixed
+- Detail pages no longer go blank for a language without a translated sample: the English sample renders as the fallback.
+
+---
+
 ## [1.8.0] - 2026-09-22
 
 ### Added

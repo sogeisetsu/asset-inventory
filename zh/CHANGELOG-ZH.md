@@ -8,6 +8,21 @@
 
 ---
 
+## [1.9.0] - 2026-09-22
+
+### 新增
+- **样本页生成器** —— `scripts/build-sample-pages.mjs` 把 `docs/samples/` 渲染进三个详情页（Markdown 表格、完整 Markdown、美化 JSON）；CI 以 `--check` 运行，页面过期会导致构建失败。
+- **英文样本** 放 `docs/samples/`；中文样本移入 `docs/samples/zh/`。
+
+### 变更
+- **详情页示例改为渲染效果**，不再是裸代码块 —— `usage-guide.html` 输出真 HTML，`asset-inventory-json.html` 输出带缩进的 JSON，`inventory.html` 输出表格。
+- **人类可读的本地化页面标题** —— 详情页的 `<h1>` 与标签标题不再显示裸文件名。
+
+### 修复
+- 没有对应翻译样本的语言不再空白：回退渲染英文样本。
+
+---
+
 ## [1.8.0] - 2026-09-22
 
 ### 新增
