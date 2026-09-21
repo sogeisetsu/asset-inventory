@@ -3,17 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>asset-inventory.json — asset-inventory</title>
+<title>Machine-readable JSON — asset-inventory</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-title-en="asset-inventory.json — asset-inventory" data-title-zh="asset-inventory.json — asset-inventory" data-title-ja="asset-inventory.json — asset-inventory" data-title-ko="asset-inventory.json — asset-inventory" data-title-ru="asset-inventory.json — asset-inventory" data-title-ar="asset-inventory.json — asset-inventory" data-title-es="asset-inventory.json — asset-inventory">
+<body data-title-en="Machine-readable JSON — asset-inventory" data-title-zh="机器可读 JSON — asset-inventory" data-title-ja="機械可読 JSON — asset-inventory" data-title-ko="기계 판독 JSON — asset-inventory" data-title-ru="Машиночитаемый JSON — asset-inventory" data-title-ar="JSON مقروء آليًا — asset-inventory" data-title-es="JSON legible por máquina — asset-inventory">
 <main>
   <div class="lang"><button id="btn-en" onclick="setLang('en')">English</button><button id="btn-zh" onclick="setLang('zh')">中文</button><button id="btn-ja" onclick="setLang('ja')">日本語</button><button id="btn-ko" onclick="setLang('ko')">한국어</button><button id="btn-ru" onclick="setLang('ru')">Русский</button><button id="btn-ar" onclick="setLang('ar')">العربية</button><button id="btn-es" onclick="setLang('es')">Español</button></div>
 
   <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a><a href="index.html" data-lang="ja">← 概要へ戻る</a><a href="index.html" data-lang="ko">← 개요로 돌아가기</a><a href="index.html" data-lang="ru">← К обзору</a><a href="index.html" data-lang="ar">← العودة إلى النظرة العامة</a><a href="index.html" data-lang="es">← Volver al resumen</a></p>
 
-  <h1>asset-inventory.json</h1>
+  <h1 data-lang="en">Machine-readable JSON</h1>
+  <h1 data-lang="zh">机器可读 JSON</h1>
+  <h1 data-lang="ja">機械可読 JSON</h1>
+  <h1 data-lang="ko">기계 판독 JSON</h1>
+  <h1 data-lang="ru">Машиночитаемый JSON</h1>
+  <h1 data-lang="ar">JSON مقروء آليًا</h1>
+  <h1 data-lang="es">JSON legible por máquina</h1>
   <p class="tag" data-lang="en">The same 7 tables, machine-readable — for diffing and migration.</p>
   <p class="tag" data-lang="zh">与 7 张表等价、机器可读 —— 用于差异对比与迁移。</p>
   <p class="tag" data-lang="ja">同じ 7 表を機械可読に — 差分と移行のため。</p>
@@ -68,32 +74,486 @@
   <p data-lang="en">One element per row — shown line by line so each record is readable.</p>
   <p data-lang="zh">每行一个元素 —— 逐行展示，方便阅读。</p>
 
-  <div class="example">
-    <div class="bar">docs/samples/asset-inventory.json</div>
-    <pre class="json-view" data-lang="en" data-copy="json-en">[
-  { "table": 1, "name": "OpenChamber",        "state": "✅available", "confidence": "✅verified", "invoke": "nothing to call, on from launch" }
-  { "table": 2, "name": "/rtk-gain",          "state": "✅available", "confidence": "✅verified", "invoke": "/rtk-gain" }
-  { "table": 3, "name": "/compact",           "state": "✅available", "confidence": "✅docs",     "invoke": "/compact" }
-  { "table": 5, "name": "websearch",          "state": "✅available", "confidence": "✅verified", "invoke": "ask by name (\"use websearch\") or Agent calls it (tools websearch_*)" }
-  { "table": 5, "name": "context7",           "state": "✅available", "confidence": "✅verified", "invoke": "ask by name (\"use context7\") or Agent calls it (tools context7_*)" }
-  { "table": 5, "name": "pdf-mcp",            "state": "✅available", "confidence": "✅verified", "invoke": "ask by name (\"use pdf-mcp\") or Agent calls it (tools pdf_*)" }
-  { "table": 6, "name": "build",              "state": "✅available", "confidence": "✅verified", "invoke": "default Tab" }
-  { "table": 6, "name": "orchestrator",       "state": "✅available", "confidence": "✅verified", "invoke": "auto-takeover" }
+<!-- build-sample:start -->
+<div class="example" data-lang="en">
+  <div class="bar">docs/samples/asset-inventory.json</div>
+<pre class="json-view">[
+  {
+    <span class="k">"table"</span>: 1,
+    <span class="k">"name"</span>: <span class="s">"OpenChamber"</span>,
+    <span class="k">"source"</span>: <span class="s">"outer app official, install bundle resources/ + config $HOST_CONFIG/"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"nothing to call, on from launch"</span>
+  },
+  {
+    <span class="k">"table"</span>: 1,
+    <span class="k">"name"</span>: <span class="s">"@rezamonangg/opencode-rtk"</span>,
+    <span class="k">"source"</span>: <span class="s">"third-party plugin, opencode.jsonc:plugin[]"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"nothing to call, active automatically"</span>
+  },
+  {
+    <span class="k">"table"</span>: 1,
+    <span class="k">"name"</span>: <span class="s">"oh-my-opencode-slim@2.2.18"</span>,
+    <span class="k">"source"</span>: <span class="s">"third-party plugin, opencode.jsonc:plugin[]"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"nothing to call, active automatically"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"simplify"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-triggers on intent, or /simplify"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"codemap"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-triggers on intent, or /codemap"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"clonedeps"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-triggers on intent, or /clonedeps"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"deepwork"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-triggers on intent, or /deepwork"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"/rtk-gain"</span>,
+    <span class="k">"source"</span>: <span class="s">"@rezamonangg/opencode-rtk registers command (dist hooks/)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/rtk-gain"</span>
+  },
+  {
+    <span class="k">"table"</span>: 3,
+    <span class="k">"name"</span>: <span class="s">"/compact"</span>,
+    <span class="k">"source"</span>: <span class="s">"built-in, official TUI docs"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅docs"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/compact"</span>
+  },
+  {
+    <span class="k">"table"</span>: 3,
+    <span class="k">"name"</span>: <span class="s">"/undo"</span>,
+    <span class="k">"source"</span>: <span class="s">"built-in, official TUI docs"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅docs"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/undo"</span>
+  },
+  {
+    <span class="k">"table"</span>: 3,
+    <span class="k">"name"</span>: <span class="s">"/new"</span>,
+    <span class="k">"source"</span>: <span class="s">"built-in, official TUI docs"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅docs"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/new"</span>
+  },
+  {
+    <span class="k">"table"</span>: 4,
+    <span class="k">"name"</span>: <span class="s">"asset-inventory"</span>,
+    <span class="k">"source"</span>: <span class="s">"local, upstream github.com/sogeisetsu/asset-inventory MIT"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-triggers on intent, or /asset-inventory"</span>
+  },
+  {
+    <span class="k">"table"</span>: 4,
+    <span class="k">"name"</span>: <span class="s">"/catch-up"</span>,
+    <span class="k">"source"</span>: <span class="s">"host-injected, found by binary scan of &lt;app.asar&gt;"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/catch-up"</span>
+  },
+  {
+    <span class="k">"table"</span>: 4,
+    <span class="k">"name"</span>: <span class="s">"/debug"</span>,
+    <span class="k">"source"</span>: <span class="s">"host-injected, found by binary scan of &lt;app.asar&gt;"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/debug"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"websearch"</span>,
+    <span class="k">"source"</span>: <span class="s">"remote MCP, mcp.exa.ai, global config opencode.jsonc:mcp.websearch"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"ask by name (\"use websearch\"), or Agent calls it (tools websearch_*)"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"context7"</span>,
+    <span class="k">"source"</span>: <span class="s">"remote MCP, mcp.context7.com, global config opencode.jsonc:mcp.context7"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"ask by name (\"use context7\"), or Agent calls it (tools context7_*)"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"grep_app"</span>,
+    <span class="k">"source"</span>: <span class="s">"remote MCP, mcp.grep.app, global config opencode.jsonc:mcp.grep_app"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"ask by name (\"use gh_grep\"), or Agent calls it (tools grep_app_* / gh_grep_*)"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"PaddleOCR-VL-1.6"</span>,
+    <span class="k">"source"</span>: <span class="s">"local MCP, paddleocr_mcp.exe, global config opencode.jsonc:mcp.PaddleOCR-VL-1.6"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"ask by name (\"use PaddleOCR-VL-1.6\"), or Agent calls it (tools PaddleOCR_VL_*)"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"pdf-mcp"</span>,
+    <span class="k">"source"</span>: <span class="s">"local MCP, pdf-mcp command, global config opencode.jsonc:mcp.pdf-mcp"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"ask by name (\"use pdf-mcp\"), or Agent calls it (tools pdf_*)"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"build"</span>,
+    <span class="k">"source"</span>: <span class="s">"built-in (primary)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"default Tab"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"plan"</span>,
+    <span class="k">"source"</span>: <span class="s">"built-in (primary)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"Tab switch"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"orchestrator"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim (plugin package, primary)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-takeover"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"oracle"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim (plugin package, subagent)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-takeover"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"explorer"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim (plugin package, subagent)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-takeover"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"librarian"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim (plugin package, subagent)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-takeover"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"fixer"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim (plugin package, subagent)"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-takeover"</span>
+  },
+  {
+    <span class="k">"table"</span>: 7,
+    <span class="k">"name"</span>: <span class="s">"Global behavior rules"</span>,
+    <span class="k">"source"</span>: <span class="s">"host settings $HOST_CONFIG/ global behavior"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"auto-triggers on intent"</span>
+  },
+  {
+    <span class="k">"table"</span>: 7,
+    <span class="k">"name"</span>: <span class="s">"Model-preference management"</span>,
+    <span class="k">"source"</span>: <span class="s">"host settings $HOST_CONFIG/ model preferences"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"switch inside the app"</span>
+  },
+  {
+    <span class="k">"table"</span>: 7,
+    <span class="k">"name"</span>: <span class="s">"In-page browser"</span>,
+    <span class="k">"source"</span>: <span class="s">"host tool"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅available"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅verified"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"when the Agent calls it"</span>
+  }
 ]</pre>
-    <pre class="json-view" data-lang="zh" data-copy="json-zh">[
-  { "table": 1, "name": "OpenChamber",        "state": "✅可用", "confidence": "✅实测", "invoke": "不用叫，开机自带" }
-  { "table": 2, "name": "/rtk-gain",          "state": "✅可用", "confidence": "✅实测", "invoke": "/rtk-gain" }
-  { "table": 3, "name": "/compact",           "state": "✅可用", "confidence": "✅文档", "invoke": "/compact" }
-  { "table": 5, "name": "websearch",          "state": "✅可用", "confidence": "✅实测", "invoke": "点名调用（\"use websearch\"）或 Agent 自调（工具 websearch_*）" }
-  { "table": 5, "name": "context7",           "state": "✅可用", "confidence": "✅实测", "invoke": "点名调用（\"use context7\"）或 Agent 自调（工具 context7_*）" }
-  { "table": 5, "name": "pdf-mcp",            "state": "✅可用", "confidence": "✅实测", "invoke": "点名调用（\"use pdf-mcp\"）或 Agent 自调（工具 pdf_*）" }
-  { "table": 6, "name": "build",              "state": "✅可用", "confidence": "✅实测", "invoke": "默认 Tab" }
-  { "table": 6, "name": "orchestrator",       "state": "✅可用", "confidence": "✅实测", "invoke": "自动接管" }
+</div>
+
+<div class="example" data-lang="zh">
+  <div class="bar">docs/samples/zh/asset-inventory.json</div>
+<pre class="json-view">[
+  {
+    <span class="k">"table"</span>: 1,
+    <span class="k">"name"</span>: <span class="s">"OpenChamber"</span>,
+    <span class="k">"source"</span>: <span class="s">"外层应用官方，安装包 resources/ + 配置 $HOST_CONFIG/"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"不用叫，开机自带"</span>
+  },
+  {
+    <span class="k">"table"</span>: 1,
+    <span class="k">"name"</span>: <span class="s">"@rezamonangg/opencode-rtk"</span>,
+    <span class="k">"source"</span>: <span class="s">"第三方插件，opencode.jsonc:plugin[]"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"不用叫，自动生效"</span>
+  },
+  {
+    <span class="k">"table"</span>: 1,
+    <span class="k">"name"</span>: <span class="s">"oh-my-opencode-slim@2.2.18"</span>,
+    <span class="k">"source"</span>: <span class="s">"第三方插件，opencode.jsonc:plugin[]"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"不用叫，自动生效"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"simplify"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"看话自动干，或 /simplify"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"codemap"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"看话自动干，或 /codemap"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"clonedeps"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"看话自动干，或 /clonedeps"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"deepwork"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"看话自动干，或 /deepwork"</span>
+  },
+  {
+    <span class="k">"table"</span>: 2,
+    <span class="k">"name"</span>: <span class="s">"/rtk-gain"</span>,
+    <span class="k">"source"</span>: <span class="s">"@rezamonangg/opencode-rtk 注册命令（dist hooks/）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/rtk-gain"</span>
+  },
+  {
+    <span class="k">"table"</span>: 3,
+    <span class="k">"name"</span>: <span class="s">"/compact"</span>,
+    <span class="k">"source"</span>: <span class="s">"核心自带，官方 TUI 文档"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅文档"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/compact"</span>
+  },
+  {
+    <span class="k">"table"</span>: 3,
+    <span class="k">"name"</span>: <span class="s">"/undo"</span>,
+    <span class="k">"source"</span>: <span class="s">"核心自带，官方 TUI 文档"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅文档"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/undo"</span>
+  },
+  {
+    <span class="k">"table"</span>: 3,
+    <span class="k">"name"</span>: <span class="s">"/new"</span>,
+    <span class="k">"source"</span>: <span class="s">"核心自带，官方 TUI 文档"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅文档"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/new"</span>
+  },
+  {
+    <span class="k">"table"</span>: 4,
+    <span class="k">"name"</span>: <span class="s">"asset-inventory"</span>,
+    <span class="k">"source"</span>: <span class="s">"本地自建，上游 github.com/sogeisetsu/asset-inventory MIT"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"看话自动干，或 /asset-inventory"</span>
+  },
+  {
+    <span class="k">"table"</span>: 4,
+    <span class="k">"name"</span>: <span class="s">"/catch-up"</span>,
+    <span class="k">"source"</span>: <span class="s">"host-injected，二进制扫描 &lt;app.asar&gt; 发现"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/catch-up"</span>
+  },
+  {
+    <span class="k">"table"</span>: 4,
+    <span class="k">"name"</span>: <span class="s">"/debug"</span>,
+    <span class="k">"source"</span>: <span class="s">"host-injected，二进制扫描 &lt;app.asar&gt; 发现"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"/debug"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"websearch"</span>,
+    <span class="k">"source"</span>: <span class="s">"远端 MCP，mcp.exa.ai，全局配置 opencode.jsonc:mcp.websearch"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"点名调用（\"use websearch\"），或 Agent 自调（工具 websearch_*）"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"context7"</span>,
+    <span class="k">"source"</span>: <span class="s">"远端 MCP，mcp.context7.com，全局配置 opencode.jsonc:mcp.context7"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"点名调用（\"use context7\"），或 Agent 自调（工具 context7_*）"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"grep_app"</span>,
+    <span class="k">"source"</span>: <span class="s">"远端 MCP，mcp.grep.app，全局配置 opencode.jsonc:mcp.grep_app"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"点名调用（\"use gh_grep\"），或 Agent 自调（工具 grep_app_* / gh_grep_*）"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"PaddleOCR-VL-1.6"</span>,
+    <span class="k">"source"</span>: <span class="s">"本地 MCP，paddleocr_mcp.exe，全局配置 opencode.jsonc:mcp.PaddleOCR-VL-1.6"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"点名调用（\"use PaddleOCR-VL-1.6\"），或 Agent 自调（工具 PaddleOCR_VL_*）"</span>
+  },
+  {
+    <span class="k">"table"</span>: 5,
+    <span class="k">"name"</span>: <span class="s">"pdf-mcp"</span>,
+    <span class="k">"source"</span>: <span class="s">"本地 MCP，pdf-mcp 命令，全局配置 opencode.jsonc:mcp.pdf-mcp"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"点名调用（\"use pdf-mcp\"），或 Agent 自调（工具 pdf_*）"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"build"</span>,
+    <span class="k">"source"</span>: <span class="s">"核心自带（primary）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"默认 Tab"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"plan"</span>,
+    <span class="k">"source"</span>: <span class="s">"核心自带（primary）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"Tab 切换"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"orchestrator"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim（plugin package，primary）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"自动接管"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"oracle"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim（plugin package，subagent）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"自动接管"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"explorer"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim（plugin package，subagent）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"自动接管"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"librarian"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim（plugin package，subagent）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"自动接管"</span>
+  },
+  {
+    <span class="k">"table"</span>: 6,
+    <span class="k">"name"</span>: <span class="s">"fixer"</span>,
+    <span class="k">"source"</span>: <span class="s">"oh-my-opencode-slim（plugin package，subagent）"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"自动接管"</span>
+  },
+  {
+    <span class="k">"table"</span>: 7,
+    <span class="k">"name"</span>: <span class="s">"全局行为规则"</span>,
+    <span class="k">"source"</span>: <span class="s">"宿主设置 $HOST_CONFIG/ global behavior"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"看话自动干"</span>
+  },
+  {
+    <span class="k">"table"</span>: 7,
+    <span class="k">"name"</span>: <span class="s">"模型偏好管理"</span>,
+    <span class="k">"source"</span>: <span class="s">"宿主设置 $HOST_CONFIG/ model preferences"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"在应用里切换"</span>
+  },
+  {
+    <span class="k">"table"</span>: 7,
+    <span class="k">"name"</span>: <span class="s">"内嵌浏览器"</span>,
+    <span class="k">"source"</span>: <span class="s">"宿主工具"</span>,
+    <span class="k">"state"</span>: <span class="s">"✅可用"</span>,
+    <span class="k">"confidence"</span>: <span class="s">"✅实测"</span>,
+    <span class="k">"invoke"</span>: <span class="s">"Agent 调用时"</span>
+  }
 ]</pre>
-  </div>
+</div>
+<!-- build-sample:end -->
 
   <p data-lang="en">Full sample: <a href="samples/asset-inventory.json">docs/samples/asset-inventory.json</a></p>
-  <p data-lang="zh">完整示例：<a href="samples/asset-inventory.json">docs/samples/asset-inventory.json</a></p>
+  <p data-lang="zh">完整示例：<a href="samples/zh/asset-inventory.json">docs/samples/zh/asset-inventory.json</a></p>
 
 
   <p data-lang="en"><strong>Note:</strong> the <code>table</code> value is always the number — that keeps JSON stable and diffable even when the human-facing tables are in another language.</p>

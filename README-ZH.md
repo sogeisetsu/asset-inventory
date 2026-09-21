@@ -68,7 +68,7 @@ cd asset-inventory
     └── asset-inventory.json # 机器可读的行（主键 table + name）
 ```
 
-👀 **看真实示例：** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json)
+👀 **看真实示例：** 📄 [inventory.md](docs/samples/zh/inventory.md) · 🧭 [usage-guide.md](docs/samples/zh/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/zh/asset-inventory.json)
 
 ## ✨ 特点
 

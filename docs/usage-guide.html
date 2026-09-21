@@ -3,17 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>usage-guide.md — asset-inventory</title>
+<title>Usage guide — asset-inventory</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-title-en="usage-guide.md — asset-inventory" data-title-zh="usage-guide.md — asset-inventory" data-title-ja="usage-guide.md — asset-inventory" data-title-ko="usage-guide.md — asset-inventory" data-title-ru="usage-guide.md — asset-inventory" data-title-ar="usage-guide.md — asset-inventory" data-title-es="usage-guide.md — asset-inventory">
+<body data-title-en="Usage guide — asset-inventory" data-title-zh="使用指南 — asset-inventory" data-title-ja="使い方ガイド — asset-inventory" data-title-ko="사용 안내 — asset-inventory" data-title-ru="Руководство по использованию — asset-inventory" data-title-ar="دليل الاستخدام — asset-inventory" data-title-es="Guía de uso — asset-inventory">
 <main>
   <div class="lang"><button id="btn-en" onclick="setLang('en')">English</button><button id="btn-zh" onclick="setLang('zh')">中文</button><button id="btn-ja" onclick="setLang('ja')">日本語</button><button id="btn-ko" onclick="setLang('ko')">한국어</button><button id="btn-ru" onclick="setLang('ru')">Русский</button><button id="btn-ar" onclick="setLang('ar')">العربية</button><button id="btn-es" onclick="setLang('es')">Español</button></div>
 
   <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a><a href="index.html" data-lang="ja">← 概要へ戻る</a><a href="index.html" data-lang="ko">← 개요로 돌아가기</a><a href="index.html" data-lang="ru">← К обзору</a><a href="index.html" data-lang="ar">← العودة إلى النظرة العامة</a><a href="index.html" data-lang="es">← Volver al resumen</a></p>
 
-  <h1>usage-guide.md</h1>
+  <h1 data-lang="en">Usage guide</h1>
+  <h1 data-lang="zh">使用指南</h1>
+  <h1 data-lang="ja">使い方ガイド</h1>
+  <h1 data-lang="ko">사용 안내</h1>
+  <h1 data-lang="ru">Руководство по использованию</h1>
+  <h1 data-lang="ar">دليل الاستخدام</h1>
+  <h1 data-lang="es">Guía de uso</h1>
   <p class="tag" data-lang="en">A plain-language "when to use it" guide, by scenario and frequency.</p>
   <p class="tag" data-lang="zh">按场景与频率重排的"什么时候用"指南。</p>
   <p class="tag" data-lang="ja">場面と頻度で並べ替えた「いつ使うか」ガイド。</p>
@@ -55,55 +61,55 @@
   <h2 data-lang="ru">Пример</h2>
   <h2 data-lang="ar">مثال</h2>
   <h2 data-lang="es">Ejemplo</h2>
-  <div class="example">
-    <div class="bar">output/usage-guide.md</div>
-    <pre data-lang="en"># Usage guide: when to use these commands/skills
+<!-- build-sample:start -->
+<div class="example" data-lang="en">
+  <div class="bar">docs/samples/usage-guide.md</div>
+<h1>Usage guide: when to use these commands/skills</h1>
+<blockquote>Updated 2026-09-22, based on this machine's opencode environment and active plugins (preset: jibei-factory).<br>This is a second view of the 7-table inventory — the same facts, regrouped by how often you reach for them, listing only ✅available items.</blockquote>
+<h2>Daily (highest frequency)</h2>
+<p><strong><code>/catch-up</code></strong> — the first thing to run every time you return to a project. It silently checks the git state (in-progress diffs, PR review status, recent commits) and tells you where you left off and how to resume. If you hop between sessions a lot, this is your highest-frequency command.</p>
+<p><strong><code>/compact</code></strong> — use it when a session gets long and context is about to overflow. It compresses the session history with AI so you can keep working, instead of being forced to start a fresh session and lose context.</p>
+<p><strong><code>/undo</code></strong> — when you misspoke or edited the wrong file, revert the last message (file changes roll back too). Use <code>/redo</code> to reverse it. Note: the project must be a git repo.</p>
+<p><strong><code>/new</code></strong> — when one task is done, open a clean session so old context does not pollute the next one.</p>
+<h2>Main tools</h2>
+<div class="md-table-wrap"><table class="md-table"><thead><tr><th>Command</th><th>When to use</th></tr></thead><tbody><tr><td><code>/deepwork</code></td><td>Complex multi-phase tasks (e.g. "scaffold the project"). A deep workflow with review gates; <strong>expensive</strong></td></tr><tr><td><code>orchestrator</code> (agent)</td><td>Any multi-step task that needs splitting; it auto-takes-over, splits, dispatches, and reassembles</td></tr><tr><td><code>fixer</code> (agent)</td><td>Executes changes once a clear spec is given; dispatched by the orchestrator</td></tr></tbody></table></div>
+<h2>On demand</h2>
+<div class="md-table-wrap"><table class="md-table"><thead><tr><th>Command</th><th>When to use</th></tr></thead><tbody><tr><td><code>/debug</code></td><td>Tests are red and repeated fixes fail; do root-cause investigation before fixing</td></tr><tr><td><code>/weigh</code></td><td>Several options are unclear; compare trade-offs</td></tr><tr><td><code>/explore</code></td><td>Entering an unfamiliar codebase; a structured tour</td></tr><tr><td><code>/codemap</code></td><td>Wanting a hierarchical map of an unfamiliar repo; expensive</td></tr><tr><td><code>/clonedeps</code></td><td>Needing to read a dependency library's source internals</td></tr><tr><td><code>simplify</code></td><td>Behavior is settled and you only want cleaner code (no behavior change)</td></tr><tr><td><code>oracle</code> (agent)</td><td>Needing architecture advice, complex debugging, or code review</td></tr><tr><td><code>librarian</code> (agent)</td><td>Needing official docs or real code examples</td></tr><tr><td><code>explorer</code> (agent)</td><td>Locating "where is X" fast</td></tr></tbody></table></div>
+<h2>Periodic</h2>
+<div class="md-table-wrap"><table class="md-table"><thead><tr><th>Command</th><th>When to use</th></tr></thead><tbody><tr><td><code>/reflect</code></td><td>Once a week, to distill reusable improvements</td></tr><tr><td><code>/rtk-gain</code></td><td>At the end of a long session, to see how many tokens these rewrites actually saved</td></tr></tbody></table></div>
+<h2>Notes</h2>
+<ul>
+<li><code>/new</code>, <code>/sessions</code>, <code>/undo</code>, and <code>/redo</code> manage file changes through git internally — the project must be a git repo.</li>
+<li>Skills can also be called by name (e.g. <code>/codemap</code>, <code>/simplify</code>), and they auto-trigger on intent as well.</li>
+<li>Expensive tools (deepwork, codemap, oracle) are only for when they are clearly needed; do not reach for them on small everyday changes.</li>
+<li><strong>MCP (websearch / context7 / grep_app / PaddleOCR-VL-1.6 / pdf-mcp) can be called by name</strong> (e.g. "use context7"), and the Agent also invokes them when needed — that is why they are not listed under "Daily".</li>
+</ul>
+</div>
 
-> Updated 2026-09-09, based on this machine's opencode environment and active plugins (preset: opencode-go/mimo-v2.5).
-
-## Daily (highest frequency)
-
-**`/catch-up`** — the first thing to run every time you return to a project. It silently checks the git state (in-progress diffs, PR review status, recent commits) and tells you where you left off and how to resume. If you hop between sessions a lot, this is your highest-frequency command.
-
-**`/compact`** — use it when a session gets long and context is about to overflow. It compresses the session history with AI so you can keep working, instead of being forced to start a fresh session and lose context.
-
-## Main tools
-
-| Command | When to use |
-|---|---|
-| `/deepwork` | Complex multi-phase tasks. A deep workflow with review gates; expensive |
-| `/loop` | Repeatedly trying until it passes. Auto-dispatches a fixer to iterate |
-
-## On demand
-
-| Command | When to use |
-|---|---|
-| `/debug` | When a bug won't fix; do root-cause investigation before fixing |
-| `/weigh` | When several options are unclear; compare trade-offs |</pre>
-    <pre data-lang="zh"># 使用指南：这些命令/技能什么时候用
-
-> 更新于 2026-09-09，基于本机 opencode 环境与当前生效插件（预设名：opencode-go/mimo-v2.5）。
-
-## 每天必用（最高频）
-
-**`/catch-up`** — 每次回到项目第一件事。它静默检查 git 状态（进行中 diff、PR 评审状态、最近提交），然后告诉你"上次干到哪、从哪继续"。你多会话来回切换，这是最高频的命令。
-
-**`/compact`** — 会话聊长了、上下文快爆时用。它用 AI 压缩会话历史，让你能继续干活，而不是被迫开新会话丢上下文。
-
-## 主力工具
-
-| 命令 | 何时用 |
-|---|---|
-| `/deepwork` | 复杂多阶段任务。带审查关卡的深度工作流；很贵 |
-| `/loop` | 反复尝试直到通过。自动派 fixer 迭代 |
-
-## 按需使用
-
-| 命令 | 何时用 |
-|---|---|
-| `/debug` | 修不好的 bug；先做根因调查再修 |
-| `/weigh` | 几个方案拿不定；对比权衡 |</pre>
-  </div>
+<div class="example" data-lang="zh">
+  <div class="bar">docs/samples/zh/usage-guide.md</div>
+<h1>使用指南：这些命令/技能什么时候用</h1>
+<blockquote>更新于 2026-09-22，基于本机 opencode 环境与当前生效插件（预设名：jibei-factory）。<br>本文是 7 表盘点的第二视角——同一批事实，按使用频率重排，只收录 ✅可用 的项。</blockquote>
+<h2>每天必用（最高频）</h2>
+<p><strong><code>/catch-up</code></strong> — 每次回到项目第一件事。它静默检查 git 状态（进行中 diff、PR 评审状态、最近提交），然后告诉你"上次干到哪、从哪继续"。你多会话来回切换，这是最高频的命令。</p>
+<p><strong><code>/compact</code></strong> — 会话聊长了、上下文快爆时用。它用 AI 压缩会话历史，让你能继续干活，而不是被迫开新会话丢上下文。</p>
+<p><strong><code>/undo</code></strong> — 说错话或改错文件时撤销上一条消息（文件改动一起回滚）。反悔用 <code>/redo</code>。注意：需要项目是 git 仓库。</p>
+<p><strong><code>/new</code></strong> — 一件事做完就开个干净会话，别让旧上下文污染下一个任务。</p>
+<h2>主力工具</h2>
+<div class="md-table-wrap"><table class="md-table"><thead><tr><th>命令</th><th>何时用</th></tr></thead><tbody><tr><td><code>/deepwork</code></td><td>复杂多阶段任务（如"把项目骨架搭起来"）。带审查关卡的深度工作流；<strong>很贵</strong></td></tr><tr><td><code>orchestrator</code>（agent）</td><td>任何需要拆解的多步任务；它自动接管、拆活派活再整合</td></tr><tr><td><code>fixer</code>（agent）</td><td>拿到明确规格后执行改动；由 orchestrator 派发</td></tr></tbody></table></div>
+<h2>按需使用</h2>
+<div class="md-table-wrap"><table class="md-table"><thead><tr><th>命令</th><th>何时用</th></tr></thead><tbody><tr><td><code>/debug</code></td><td>测试红了、修几次修不好；先做根因调查再修</td></tr><tr><td><code>/weigh</code></td><td>几个方案拿不定；对比权衡</td></tr><tr><td><code>/explore</code></td><td>进陌生代码库；结构化导览</td></tr><tr><td><code>/codemap</code></td><td>要一份不熟悉仓库的层级结构图；很贵</td></tr><tr><td><code>/clonedeps</code></td><td>要读某个依赖库的源码内部实现</td></tr><tr><td><code>simplify</code></td><td>行为已明确、只想让代码更清爽（不改行为）</td></tr><tr><td><code>oracle</code>（agent）</td><td>需要架构建议、复杂调试或代码审查</td></tr><tr><td><code>librarian</code>（agent）</td><td>需要查官方文档或真实代码示例</td></tr><tr><td><code>explorer</code>（agent）</td><td>快速定位"X 在哪"</td></tr></tbody></table></div>
+<h2>定期</h2>
+<div class="md-table-wrap"><table class="md-table"><thead><tr><th>命令</th><th>何时用</th></tr></thead><tbody><tr><td><code>/reflect</code></td><td>每周回顾一次，沉淀可复用的改进</td></tr><tr><td><code>/rtk-gain</code></td><td>长会话结束时看一眼这套改写到底省了多少 token</td></tr></tbody></table></div>
+<h2>注意</h2>
+<ul>
+<li><code>/new</code>、<code>/sessions</code>、<code>/undo</code>、<code>/redo</code> 内部通过 git 管理文件改动，项目必须是 git 仓库。</li>
+<li>Skill 也能按名调用（如 <code>/codemap</code>、<code>/simplify</code>），同时会看话自动触发。</li>
+<li>昂贵的工具（deepwork、codemap、oracle）只在明确需要时用；日常小改别去碰。</li>
+<li><strong>MCP（websearch / context7 / grep_app / PaddleOCR-VL-1.6 / pdf-mcp）可以点名调用</strong>（如 "use context7"），Agent 在需要时也会自调，所以不列在"每天必用"里。</li>
+</ul>
+</div>
+<!-- build-sample:end -->
 
   <footer>
     asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>

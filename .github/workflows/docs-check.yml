@@ -23,7 +23,10 @@ jobs:
           node-version: '20'
 
       - name: Syntax-check scripts
-        run: node --check scripts/check-docs.mjs && node --check scripts/generate-assets.mjs
+        run: node --check scripts/check-docs.mjs && node --check scripts/generate-assets.mjs && node --check scripts/build-sample-pages.mjs
 
       - name: Validate documentation
         run: node scripts/check-docs.mjs
+
+      - name: Verify generated sample pages are up to date
+        run: node scripts/build-sample-pages.mjs --check

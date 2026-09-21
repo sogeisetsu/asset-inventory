@@ -1,50 +1,50 @@
-# 使用指南：这些命令/技能什么时候用
+# Usage guide: when to use these commands/skills
 
-> 更新于 2026-09-22，基于本机 opencode 环境与当前生效插件（预设名：jibei-factory）。
-> 本文是 7 表盘点的第二视角——同一批事实，按使用频率重排，只收录 ✅可用 的项。
+> Updated 2026-09-22, based on this machine's opencode environment and active plugins (preset: jibei-factory).
+> This is a second view of the 7-table inventory — the same facts, regrouped by how often you reach for them, listing only ✅available items.
 
-## 每天必用（最高频）
+## Daily (highest frequency)
 
-**`/catch-up`** — 每次回到项目第一件事。它静默检查 git 状态（进行中 diff、PR 评审状态、最近提交），然后告诉你"上次干到哪、从哪继续"。你多会话来回切换，这是最高频的命令。
+**`/catch-up`** — the first thing to run every time you return to a project. It silently checks the git state (in-progress diffs, PR review status, recent commits) and tells you where you left off and how to resume. If you hop between sessions a lot, this is your highest-frequency command.
 
-**`/compact`** — 会话聊长了、上下文快爆时用。它用 AI 压缩会话历史，让你能继续干活，而不是被迫开新会话丢上下文。
+**`/compact`** — use it when a session gets long and context is about to overflow. It compresses the session history with AI so you can keep working, instead of being forced to start a fresh session and lose context.
 
-**`/undo`** — 说错话或改错文件时撤销上一条消息（文件改动一起回滚）。反悔用 `/redo`。注意：需要项目是 git 仓库。
+**`/undo`** — when you misspoke or edited the wrong file, revert the last message (file changes roll back too). Use `/redo` to reverse it. Note: the project must be a git repo.
 
-**`/new`** — 一件事做完就开个干净会话，别让旧上下文污染下一个任务。
+**`/new`** — when one task is done, open a clean session so old context does not pollute the next one.
 
-## 主力工具
+## Main tools
 
-| 命令 | 何时用 |
+| Command | When to use |
 |---|---|
-| `/deepwork` | 复杂多阶段任务（如"把项目骨架搭起来"）。带审查关卡的深度工作流；**很贵** |
-| `orchestrator`（agent） | 任何需要拆解的多步任务；它自动接管、拆活派活再整合 |
-| `fixer`（agent） | 拿到明确规格后执行改动；由 orchestrator 派发 |
+| `/deepwork` | Complex multi-phase tasks (e.g. "scaffold the project"). A deep workflow with review gates; **expensive** |
+| `orchestrator` (agent) | Any multi-step task that needs splitting; it auto-takes-over, splits, dispatches, and reassembles |
+| `fixer` (agent) | Executes changes once a clear spec is given; dispatched by the orchestrator |
 
-## 按需使用
+## On demand
 
-| 命令 | 何时用 |
+| Command | When to use |
 |---|---|
-| `/debug` | 测试红了、修几次修不好；先做根因调查再修 |
-| `/weigh` | 几个方案拿不定；对比权衡 |
-| `/explore` | 进陌生代码库；结构化导览 |
-| `/codemap` | 要一份不熟悉仓库的层级结构图；很贵 |
-| `/clonedeps` | 要读某个依赖库的源码内部实现 |
-| `simplify` | 行为已明确、只想让代码更清爽（不改行为） |
-| `oracle`（agent） | 需要架构建议、复杂调试或代码审查 |
-| `librarian`（agent） | 需要查官方文档或真实代码示例 |
-| `explorer`（agent） | 快速定位"X 在哪" |
+| `/debug` | Tests are red and repeated fixes fail; do root-cause investigation before fixing |
+| `/weigh` | Several options are unclear; compare trade-offs |
+| `/explore` | Entering an unfamiliar codebase; a structured tour |
+| `/codemap` | Wanting a hierarchical map of an unfamiliar repo; expensive |
+| `/clonedeps` | Needing to read a dependency library's source internals |
+| `simplify` | Behavior is settled and you only want cleaner code (no behavior change) |
+| `oracle` (agent) | Needing architecture advice, complex debugging, or code review |
+| `librarian` (agent) | Needing official docs or real code examples |
+| `explorer` (agent) | Locating "where is X" fast |
 
-## 定期
+## Periodic
 
-| 命令 | 何时用 |
+| Command | When to use |
 |---|---|
-| `/reflect` | 每周回顾一次，沉淀可复用的改进 |
-| `/rtk-gain` | 长会话结束时看一眼这套改写到底省了多少 token |
+| `/reflect` | Once a week, to distill reusable improvements |
+| `/rtk-gain` | At the end of a long session, to see how many tokens these rewrites actually saved |
 
-## 注意
+## Notes
 
-- `/new`、`/sessions`、`/undo`、`/redo` 内部通过 git 管理文件改动，项目必须是 git 仓库。
-- Skill 也能按名调用（如 `/codemap`、`/simplify`），同时会看话自动触发。
-- 昂贵的工具（deepwork、codemap、oracle）只在明确需要时用；日常小改别去碰。
-- **MCP（websearch / context7 / grep_app / PaddleOCR-VL-1.6 / pdf-mcp）可以点名调用**（如 "use context7"），Agent 在需要时也会自调，所以不列在"每天必用"里。
+- `/new`, `/sessions`, `/undo`, and `/redo` manage file changes through git internally — the project must be a git repo.
+- Skills can also be called by name (e.g. `/codemap`, `/simplify`), and they auto-trigger on intent as well.
+- Expensive tools (deepwork, codemap, oracle) are only for when they are clearly needed; do not reach for them on small everyday changes.
+- **MCP (websearch / context7 / grep_app / PaddleOCR-VL-1.6 / pdf-mcp) can be called by name** (e.g. "use context7"), and the Agent also invokes them when needed — that is why they are not listed under "Daily".

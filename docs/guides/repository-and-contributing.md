@@ -34,10 +34,11 @@ asset-inventory/
 ├── assets/                     # local SVG icon / banner / badges (generated)
 ├── scripts/
 │   ├── check-docs.mjs          # docs / links / frontmatter validation
+│   ├── build-sample-pages.mjs  # renders docs/samples/ into the detail pages
 │   └── generate-assets.mjs     # regenerates assets/*.svg
 ├── docs/                       # GitHub Pages + release notes + guides + samples
 │   ├── guides/                 # these long-form guides
-│   └── samples/                # example output files
+│   └── samples/                # example output (English; zh/ holds the Chinese set)
 └── zh/                         # all Chinese docs except README-ZH.md
 ```
 
