@@ -1,58 +1,58 @@
-# 使用指南格式参考（非事实，值需替换为现查结果）
+# Usage-guide format reference (not facts — replace values with what you look up)
 
-`usage-guide.md` 是从 7 表盘点结果**派生的第二视图**——同一批事实，按用户场景/频率重新组织，用大白话讲"什么时候用、为什么用"。只收 `✅可用` 项，绝不重新收集或编造。以下为格式示范。
-
----
-
-# 使用指南：这些命令/技能什么时候用
-
-> 更新于 现查日期，基于本机 opencode 环境与当前生效插件（预设名：现查）。
-
-## 每天必用（最高频）
-
-**`/catch-up`** — 每次回到项目第一件事。它静默检查 git 状态（进行中 diff、PR 评审状态、最近提交），然后告诉你"上次干到哪、从哪继续"。你多会话来回切换，这是最高频的命令。
-
-**`/compact`** — 会话聊长了、上下文快爆时用。它用 AI 压缩会话历史，让你能继续干活，而不是被迫开新会话丢上下文。
-
-**`/undo`** — 说错话或改错文件时撤销上一条消息（文件改动一起回滚）。反悔用 `/redo`。注意：需要项目是 git 仓库。
-
-**`/new`** — 一件事干完，开一个干净的新会话，避免旧上下文污染新任务。
-
-## 干活主力
-
-| 命令 | 什么时候用 |
-| --- | --- |
-| `/deepwork` | 复杂多阶段任务（如"实现项目骨架"）。深度工作流，带审查关卡，很贵 |
-| `/loop` | 反复试错直到通过（"修到测试全绿，最多试3次"）。自动派 fixer 迭代 |
-
-## 按需
-
-| 命令 | 什么时候用 |
-| --- | --- |
-| `/plan-feature` | 做新功能前先规划，引导探索代码库再出方案 |
-| `/debug` | 出 bug 修不好，先根因调查再修 |
-| `/weigh` | 多个方案拿不准，对比取舍 |
-| `/explore` | 不熟悉代码库，结构化导览 |
-| `/craft-goal` | 目标含糊时，磨成清晰可验证的 Goal |
-
-## 周期性
-
-| 命令 | 什么时候用 |
-| --- | --- |
-| `/reflect` | 每周回顾一次，提炼可复用改进 |
-
-## 注意事项
-
-- `/new`、`/sessions`、`/undo`、`/redo` 内部用 git 管理文件改动，需项目为 git 仓库。
-- 技能也可作 `/技能名` 调用（如 `/codemap`、`/simplify`），看话也能自动触发。
-- 贵命令（deepwork、codemap、oracle）只在明确需要时用，日常改动别碰。
+`usage-guide.md` is a **second view derived from** the 7-table inventory — the same facts, reorganized by user scenario/frequency, in plain language: "when to use it, and why". It includes only `✅available` items and never re-collects or invents. Below is a format sample.
 
 ---
 
-## 组织规则
+# Usage guide: when to use these commands/skills
 
-1. 分组维度：**每天必用 → 干活主力 → 按需 → 周期性**，按用户真实使用频率排序。
-2. 每条：`**/命令** — <何时用>。它<做什么>，让你<得到什么>。` 用大白话，带实际效果。
-3. 有坑就标：`需 git`、`很贵`、`Win 专用`、`每次回来第一件事`。
-4. 只收 `✅可用` 项；`❌已禁用`、`📦仅货架未装`、`🚫不存在` 一律不出现。
-5. 可从 7 表派生，但**绝不重新收集证据、绝不编造**——同一批事实换个视图。
+> Updated <lookup date>, based on this machine's opencode environment and currently active plugins (preset name: <look up>).
+
+## Daily (highest frequency)
+
+**`/catch-up`** — the first thing to run every time you return to a project. It silently checks the git state (in-progress diffs, PR review status, recent commits) and tells you "where you left off and how to resume". If you hop between sessions a lot, this is your highest-frequency command.
+
+**`/compact`** — use it when a session gets long and context is about to overflow. It compresses the session history with AI so you can keep working, instead of being forced to start a fresh session and lose context.
+
+**`/undo`** — take back the last message when you said the wrong thing or edited the wrong file (file changes roll back too). Use `/redo` to redo. Note: requires the project to be a git repo.
+
+**`/new`** — start a clean session once one task is done, so old context doesn't pollute the next task.
+
+## Main tools
+
+| Command | When to use |
+| --- | --- |
+| `/deepwork` | Complex multi-phase tasks (e.g. "build the project skeleton"). A deep workflow with review gates; expensive |
+| `/loop` | Repeatedly trying until it passes ("fix until the tests are all green, max 3 attempts"). Auto-dispatches a fixer to iterate |
+
+## On demand
+
+| Command | When to use |
+| --- | --- |
+| `/plan-feature` | Plan before building a new feature; guides exploration of the codebase, then produces an approach |
+| `/debug` | When a bug won't fix; do root-cause investigation before fixing |
+| `/weigh` | When several options are unclear; compare trade-offs |
+| `/explore` | When unfamiliar with a codebase; a structured tour |
+| `/craft-goal` | When the goal is vague; sharpen it into a clear, verifiable Goal |
+
+## Periodic
+
+| Command | When to use |
+| --- | --- |
+| `/reflect` | Review once a week and distill reusable improvements |
+
+## Notes
+
+- `/new`, `/sessions`, `/undo`, and `/redo` manage file changes via git internally, so the project must be a git repo.
+- Skills can also be invoked as `/skill-name` (e.g. `/codemap`, `/simplify`), and auto-trigger on intent.
+- Expensive commands (deepwork, codemap, oracle) are only for when clearly needed; don't reach for them on everyday changes.
+
+---
+
+## Organization rules
+
+1. Grouping: **daily → main tools → on-demand → periodic**, ordered by the user's real usage frequency.
+2. Each entry: `**/command** — <when to use>. It <what it does>, so you <what you get>.` Plain language, with concrete effect.
+3. Flag pitfalls: `needs git`, `expensive`, `Windows-only`, `first thing on return`.
+4. Include only `✅available` items; `❌disabled`, `📦shelf-only`, and `🚫absent` never appear.
+5. It may be derived from the 7 tables, but **never re-collect evidence and never invent** — the same facts, a different view.

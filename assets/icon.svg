@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="asset-inventory">
+<title>asset-inventory</title>
+<rect width="128" height="128" rx="16" fill="#4B4646"/>
+<rect x="20" y="20" width="24" height="24" rx="3" fill="#03B000"/>
+<rect x="52" y="20" width="24" height="24" rx="3" fill="#03B000"/>
+<rect x="84" y="20" width="24" height="24" rx="3" fill="#B7B1B1"/>
+<rect x="20" y="52" width="24" height="24" rx="3" fill="#03B000"/>
+<rect x="52" y="52" width="24" height="24" rx="3" fill="#B7B1B1"/>
+<rect x="84" y="52" width="24" height="24" rx="3" fill="#B7B1B1"/>
+<rect x="20" y="84" width="24" height="24" rx="3" fill="#FF6900"/>
+<rect x="52" y="84" width="24" height="24" rx="3" fill="#B7B1B1"/>
+<rect x="84" y="84" width="24" height="24" rx="3" fill="#03B000"/>
+</svg>

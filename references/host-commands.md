@@ -1,48 +1,98 @@
-# 外层应用注入命令（magicPrompts，app.asar 实测）
+# Outer-app scan methods
 
-> **注意：下表为 2026-09 快照，仅供参考。盘点时必须对外层应用包现扫全量 `magicPrompts` key（含 git / github / linear / planning / session 各组），以现扫结果为准。** 快照列出的命令可能因外层应用版本变化而增减。
+## How to find injected commands (mandatory — plain grep misses binaries)
 
-OpenChamber 把外层应用注入的 `/` 命令定义在外层应用本体 `app.asar` 的 `settings.magicPrompts` 段。这些命令**不是** opencode 配置、`command/` 目录或插件带来的，来源一律写 `外层应用注入，外层应用 magicPrompts（app.asar）`。
+Host-injected slash commands may hide in:
 
-## 如何发现（必做，普通 grep 会漏二进制）
+1. **App bundle binaries** (`app.asar`, `web-dist`, etc.) — most common
+2. **Config files** (`settings.json`, etc.) — less common
+3. **Registry / internal storage** (Electron DIPS/SQLite) — needs specialized tools
 
-用二进制安全搜索扫描外层应用包（node `Buffer.indexOf`），找 `/xxx` 字面量：
+**General rule:** never assume any command list. Trust the scan result.
 
+## App bundle binary scan (Electron-style apps)
+
+**Principle:** search the binary for `/xxx` literals. Match bytes, not regex.
+
+**Node.js (recommended):**
 ```js
-const b = require('fs').readFileSync('<外层应用包/app.asar 或 web-dist>');
-['/catch-up','/plan-feature','/craft-goal','/workspace-review','/weigh',
- '/debug','/summary','/explore','/todo','/implement'].forEach(t =>
+const b = require('fs').readFileSync('<outer-app bundle/app.asar>');
+// List the commands you want to verify (known from other sources, or scan all)
+['/catch-up','/plan-feature','/weigh'].forEach(t =>
   console.log(t, b.indexOf(Buffer.from(t)) >= 0 ? 'FOUND' : 'absent'));
 ```
 
-## 已确认的命令（2026-09 实测，按需现查复核）
+**PowerShell:**
+```powershell
+$b = [IO.File]::ReadAllBytes('<outer-app bundle/app.asar>')
+$text = [System.Text.Encoding]::UTF8.GetString($b)
+@('/catch-up','/plan-feature','/weigh') | ForEach-Object {
+    "$_ $(if($text.Contains($_)){'FOUND'}else{'absent'})"
+}
+```
 
-| 命令 | 用途 |
-|---|---|
-| /catch-up | branch-aware 上下文：当前分支提交 + PR 状态 + 未提交改动 → 可扫读总结 + 下一步建议 |
-| /plan-feature | 引导式：先探索代码库，分批澄清需求，再出实现计划；不直接写码 |
-| /craft-goal | 把模糊想法/任务引导成清晰、可验证的 Goal |
-| /workspace-review | 审查工作区 diff 是否达标、正确、合理，按严重度分类 |
-| /weigh | 查代码后给 2-3 个方案 + 取舍 + 推荐，不写计划不写码 |
-| /debug | 引导式根因分析再修，禁止盲目试错 |
-| /summary | 非破坏性会话摘要（不压缩历史），供交接 |
-| /explore | 结构化仓库导览：总览、主模块、模块关系、从哪开始读 |
-| /fusion | 把多个运行结果按序合并成一份最终答案 |
-| /todo | 拆任务清单（planning 组） |
-| /implement | 把已定方案落地实现（planning 组） |
+> **Note:** PowerShell's `Contains()` can be slow on 60MB+ files. Node.js `Buffer.indexOf` is faster and more reliable.
 
-另有 git/github/linear 组 magicPrompts 键（如 `gitCommitGenerate`、`githubPrReview`、`linearIssueReview`），按实际发现补充；`settings.magicPrompts` 键名即命令语义来源。
+## Full scan (when you don't know which commands exist)
 
-## 非斜杠 magicPrompts key（git / github / linear / planning / session 组）
+If you don't know which commands to verify, scan everything first:
 
-上表仅列出 11 个 `/xxx` 斜杠命令，但 `settings.magicPrompts` 段还包含多组**非斜杠** key，盘点时不可遗漏：
+**Node.js:**
+```js
+const b = require('fs').readFileSync('<outer-app bundle/app.asar>');
+const text = b.toString('utf8');
+// Find all slash-command patterns starting with /
+const matches = text.match(/\/[a-z][a-z0-9-]{2,}/g);
+if (matches) {
+  const unique = [...new Set(matches)].sort();
+  console.log(`Found ${unique.length} potential commands:`);
+  unique.forEach(cmd => console.log(cmd));
+}
+```
 
-| 组 | 示例 key | 说明 |
+**PowerShell (slow, prefer Node.js):**
+```powershell
+$b = [IO.File]::ReadAllBytes('<outer-app bundle/app.asar>')
+$text = [System.Text.Encoding]::UTF8.GetString($b)
+$matches = [regex]::Matches($text, '/[a-z][a-z0-9]{2,}')
+$matches | ForEach-Object { $_.Value } | Sort-Object -Unique
+```
+
+> **Warning:** a full scan returns a lot of noise (code comments, path strings, etc.). Human judgment is needed to tell which are real slash commands.
+
+## Config-file scan (secondary)
+
+If the outer app has a config file, check it for command-registration keys:
+
+```powershell
+$configPath = "$env:USERPROFILE\.config\<OuterApp>\settings.json"
+if (Test-Path $configPath) {
+    $config = Get-Content $configPath -Raw | ConvertFrom-Json
+    $config.PSObject.Properties | Where-Object {
+        $_.Name -match 'prompt|command|slash|magic'
+    } | ForEach-Object {
+        Write-Host "$($_.Name): $($_.Value)"
+    }
+}
+```
+
+> **Note:** the config file may not contain a command list (e.g. OpenChamber) — the commands are baked into the app bundle. A config scan is only a secondary measure.
+
+## Inventory requirements
+
+1. **Never assume any command list** — every inventory must scan fresh and trust the result.
+2. **Never assume the outer app's format** — first determine the tech stack, then use the matching method.
+3. **Never assume config key names** — `magicPrompts` is only OpenChamber's key name; other outer apps may use different keys.
+4. **Always write the source as** `host-injected, <how it was found> (<path>)`.
+5. **If you can't find it, say so** — don't fabricate or guess.
+
+## Common outer apps (reference only)
+
+| App | Tech stack | Scan target |
 |---|---|---|
-| git | `gitCommitGenerate`, `gitPrGenerate`, `gitConflictResolve`, `gitIntegrateCherrypickResolve` | git 提交/PR/冲突/cherry-pick |
-| github | `githubPrReview`, `githubIssueReview`, `githubPrChecksReview`, `githubPrCommentsReview`, `githubPrCommentSingle` | GitHub PR/Issue/检查/评论审查 |
-| linear | `linearIssueReview` | Linear Issue 审查 |
-| planning | `planTodo`, `planImprove`, `planImplement` | 任务规划与实施 |
-| session | `sessionExplore`, `sessionSummary`, `sessionReview`, `sessionPlan`, `sessionCraftGoal`, `sessionCatchup`, `sessionDebug`, `sessionWeigh`, `sessionFusion` | 会话级操作 |
+| OpenChamber | Electron | `app.asar` (commands are baked into the bundle, not the config file) |
+| Other Electron apps | Electron | `app.asar` or `resources/` under the install dir |
+| Tauri apps | Tauri | `web-dist/`, `src-tauri/` config |
+| Native apps | varies | install dir, config dir, system registry |
 
-**盘点要求**：对外层应用包做二进制安全扫描时，应提取 `settings.magicPrompts` 段的**全量 key**（用 `Object.keys()` 或正则提取），不只限于上表列出的斜杠命令。每个 key 对应一项外层应用注入命令/能力，来源一律写 `外层应用注入，外层应用 magicPrompts（app.asar）`。**以现扫结果为准，上表与本表均为参考快照。**
+> The above is reference only; trust what you observe at inventory time.

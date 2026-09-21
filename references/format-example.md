@@ -1,60 +1,60 @@
-# 格式示例（非事实，输出时替换为现查值）
+# Format examples (not facts — replace with values you look up at output time)
 
-这些行只定**格式**——值全部换成实测结果，不许照抄。`干什么`必须达到本文件所示的详细度：简单一句话 + 详细 2-4 句（含做法、典型用法、关键注意事项），一句话版算不达标。仅当你不确定单元格怎么写时查阅本节。
+These rows define the **format only** — replace every value with observed results; never copy them. `What it does` must reach the level of detail shown here: a one-sentence Simple plus a 2-4 sentence Detailed (including how it works, typical usage, and key caveats). One-liners do not pass. Consult this file only when you are unsure how a cell should read.
 
-## 表1 插件与配套软件（5 列）
+## Table 1 — Plugins & companion software (5 columns)
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| 示例外层应用（真名，如 OpenChamber） | 外层应用官方，安装包 `resources/` + 配置 `$HOST_CONFIG/` | 不用叫，开机自带 | 每次打开工作台时 | 简单：桌面工作台。详细：它管项目、会话、定时任务、模型偏好和页内浏览器，是所有外层应用能力的总入口；同时向 opencode 注入一批 `/` 命令与会话、浏览器工具，盘点时以它托管的 opencode 进程为准。 |
+| Example outer app (real name, e.g. OpenChamber) | outer app official, install bundle `resources/` + config `$HOST_CONFIG/` | nothing to call, on from launch | every time you open the workspace | Simple: the desktop workspace. Detailed: it manages projects, sessions, scheduled tasks, model preferences, and the in-page browser, and is the entry point to every host capability; it also injects a batch of `/` commands plus session and browser tools into opencode. When inventorying, treat the opencode process it hosts as ground truth. |
 
-## 表2 各软件/插件带来的 Skill 与命令（5 列，无总述行）
+## Table 2 — Skills & commands each software/plugin brings (5 columns, no summary rows)
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| example-skill | 示例插件 包 `src/skills/example` | 看话自动干，或 `/example:skill` | 需要某类流程化处理时 | 简单：一句话用途。详细：基于 SKILL.md 实际 description 展开 2-4 句，讲清它接管后具体做什么、输入输出是什么；日常对话命中场景自动触发，也可显式点名调用 |
-| /loop | 示例插件 注册命令（dist `hooks/loop-command`） | `/loop` | 反复试错直到通过时 | 简单：自动"执行-验证-迭代"循环。详细：先问清 goal、成功标准、成功类型与最大尝试次数，再派执行 agent 干、验证 agent 验，失败带历史重试直到通过或次数用尽；循环状态写盘 |
-| /example | 示例插件提供工具，命令文件 `$OPENCODE_CONFIG/command/example.md` | `/example` | 想看某结果时 | 简单：看本会话的某项账单数据。详细：它立即执行插件提供的后台工具，把结果打成表格展示，不问问题、不改配置；适合长会话结束时看一眼 |
+| example-skill | example plugin package `src/skills/example` | auto-triggers on intent, or `/example:skill` | when you need a particular kind of flow | Simple: one-line purpose. Detailed: expand 2-4 sentences from the real SKILL.md description, explaining what it does once it takes over and what its inputs/outputs are; it auto-triggers on matching situations in normal conversation, and can also be invoked by name. |
+| /loop | example plugin registers command (dist `hooks/loop-command`) | `/loop` | when repeatedly trying until it passes | Simple: an automatic "run–verify–iterate" loop. Detailed: it first asks for the goal, success criteria, success type, and max attempts, then dispatches an executor agent to do the work and a verifier agent to check it; on failure it retries with history until it passes or attempts run out. Loop state is written to disk. |
+| /example | example plugin provides the tool; command file `$OPENCODE_CONFIG/command/example.md` | `/example` | when you want to see a particular result | Simple: see some bill data for this session. Detailed: it immediately runs the background tool the plugin provides and prints the result as a table; it asks nothing and changes no config. Best glanced at when a long session ends. |
 
-## 表3 原生命令与原生 Skill（5 列）
+## Table 3 — Built-in commands & built-in skills (5 columns)
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| /undo | 核心自带，官方 TUI 文档 | `/undo` | 改错反悔时，需 git | 简单：后悔药。详细：它撤销上一条消息，并通过 Git 回滚这条消息产生的文件改动；反悔之后可用 `/redo` 恢复。项目非 git 仓库时不可用，这是最常见的坑。 |
-| 示例 builtin Skill | 核心 builtin | 自动 | 说"改工具自身"时 | 简单：只调自己。详细：走安全流程处理工具自身变更，分两步确认再动手；日常改业务代码不会触发。 |
+| /undo | built-in, official TUI docs | `/undo` | when you want to take back a mistake; needs git | Simple: undo. Detailed: it reverts the last message and rolls back the file changes that message produced via Git; `/redo` restores it afterward. It is unavailable when the project is not a git repo — the most common pitfall. |
+| Example builtin skill | core builtin | automatic | when you say "change the tool itself" | Simple: it only touches itself. Detailed: it follows a safety flow for changes to the tool itself, confirming in two steps before acting; everyday business-code changes do not trigger it. |
 
-## 表4 自定义 Skill、命令与外层应用注入（5 列）
+## Table 4 — Custom skills, commands, and host-injected commands (5 columns)
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| 示例自建 Skill | 本地自建，上游 `<repo>` `<协议>`，依赖 `<CLI>` | 自动或 `/example:skill` | 需要某类处理时 | 简单：一句话用途。详细：基于 SKILL.md 实际 description 展开 2-4 句，讲清触发场景与做法；依赖的 CLI 须事先装好，未装时会在调用处报错 |
-| /status | 全局自定义，`$OPENCODE_CONFIG/command/status.md` | `/status` | 回来先看盘时 | 简单：一屏定位。详细：它收集当前分支、干净度、近 8 笔提交，存在活文档时一并读取，然后按"分支/阶段/下一步"三段输出；不深挖 diff、不读设计文档，只做快速定位 |
-| /catch-up | 外层应用注入，外层应用 `magicPrompts`（app.asar） | `/catch-up` | 每次回来断片时，第一件事 | 简单：补课。详细：它把当前分支提交、PR 状态和未提交改动汇总成 branch-aware 上下文，给出可扫读的总结和下一步建议；多会话来回切换时最高频 |
+| Example user-built skill | local, upstream `<repo>` `<license>`, depends on `<CLI>` | automatic, or `/example:skill` | when you need a particular kind of processing | Simple: one-line purpose. Detailed: expand 2-4 sentences from the real SKILL.md description, explaining the trigger scenario and how it works; the CLI it depends on must be installed first, or it errors at the call site. |
+| /status | global custom, `$OPENCODE_CONFIG/command/status.md` | `/status` | when you want a quick status check on return | Simple: locate everything in one screen. Detailed: it collects the current branch, cleanliness, and the last 8 commits, and reads any living doc if present, then prints three sections: branch / phase / next step. It does not dig into diffs or read design docs — just a fast orientation. |
+| /catch-up | host-injected, found by binary scan of `<app.asar>` | `/catch-up` | the first thing to run whenever you come back and have lost context | Simple: catch up. Detailed: it summarizes current-branch commits, PR status, and uncommitted changes into branch-aware context and gives a skimmable summary plus next steps; it is the highest-frequency command when hopping between sessions. |
 
-## 表5 MCP（5 列）
+## Table 5 — MCP (5 columns)
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| 示例MCP | 远端MCP，`mcp.example.com`，全局配置 `opencode.jsonc:mcp`，别名 `gh_example` | Agent 自调（工具 `example_*` / `gh_example_*`） | 需要联网查官方文档时 | 简单：联网查。详细：人不用叫，Agent 在需要现行文档时自动调它取实时结果；认证头含 key，已脱敏处理相关 Skill 未知。 |
+| ExampleMCP | remote MCP, `mcp.example.com`, global config `opencode.jsonc:mcp`, alias `gh_example` | Agent calls it (tools `example_*` / `gh_example_*`) | when you need to look up official docs online | Simple: look things up online. Detailed: humans don't call it; the Agent invokes it automatically when it needs current docs and gets live results. The auth header contains a key, already masked. Related skill unknown. |
 
-## 表6 Agent（6 列，含模型链）
+## Table 6 — Agents (6 columns, including Model chain)
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 | 模型链 |
+| Name | Source | How to call | When to use | What it does | Model chain |
 |---|---|---|---|---|---|
-| build | 核心自带（primary）✅实测 | Tab 默认 | 执行改动时 | 简单：主力。详细：它是默认 primary，全部工具放开，负责实现需求、改文件、跑命令；日常所有改动都经它动手，规划类任务除外。 | <宿主defaultModel 实值现查>（单模型，无链式回退） |
-| plan | 核心自带（primary）✅实测 | Tab 切换 | 动手前先出方案时 | 简单：规划先行。详细：先调研代码、给方案与步骤，默认不动手改文件；适合"先谋定再动"。 | <宿主defaultModel 实值现查>（单模型，无链式回退） |
-| 示例编排Agent | 示例插件（插件包，primary）✅实测 | 自动接管 | 任何多步活时 | 简单：包工头。详细：它拆活派活再整合，只调度不写码，把子任务结果拼回最终答案；多步任务命中场景自动接管，也可显式点名。 | `opencode-go/模型A → longcat/模型B → opencode/模型C`（当前预设现查）；备用预设：预设2、预设3 |
-| 示例子Agent | 示例插件（插件包，subagent）✅实测 | 自动接管 | 分工下的某类专活时 | 简单：专家。详细：承接 orchestrator 派下的专活（查资料/改码/看图等），只做分内事，把结果交回。 | `opencode-go/模型A → longcat/模型B`（当前预设现查）；备用预设：预设2、预设3 |
+| build | built-in (primary) ✅verified | default Tab | when executing changes | Simple: the workhorse. Detailed: it is the default primary with all tools enabled, responsible for implementing requirements, editing files, and running commands; all everyday changes go through it, except planning tasks. | `<host defaultModel, look up the real value>` (single model, no chain fallback) |
+| plan | built-in (primary) ✅verified | Tab switch | when you want a plan before acting | Simple: plan first. Detailed: it researches the code and gives an approach plus steps, and by default does not edit files; good for "plan before you act". | `<host defaultModel, look up the real value>` (single model, no chain fallback) |
+| Example orchestrator agent | example plugin (plugin package, primary) ✅verified | auto-takeover | on any multi-step job | Simple: the foreman. Detailed: it splits work, dispatches it, and reassembles results; it only coordinates and does not write code, and stitches sub-task results into the final answer. It auto-takes-over on matching multi-step tasks and can be invoked by name. | `opencode-go/modelA → longcat/modelB → opencode/modelC` (current preset, look up); backup presets: preset2, preset3 |
+| Example subagent | example plugin (plugin package, subagent) ✅verified | auto-takeover | on a particular specialized sub-task | Simple: the specialist. Detailed: it takes the specialized work the orchestrator dispatches (research / code / images, etc.), does only its part, and hands results back. | `opencode-go/modelA → longcat/modelB` (current preset, look up); backup presets: preset2, preset3 |
 
-> 注：隐藏系统 agent（compaction/title/summary）存在且自动运行，但 UI 不可选，不作为可用行列出。
+> Note: hidden system agents (compaction/title/summary) exist and run automatically, but are not selectable in the UI and are not listed as available rows.
 
-## 表7 外层应用（5 列：名称｜来源｜怎么叫｜何时用｜干什么）
+## Table 7 — Host capabilities (5 columns: Name | Source | How to call | When to use | What it does)
 
-| 名称 | 来源 | 怎么叫 | 何时用 | 干什么 |
+| Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| 全局行为规则 | 外层应用设置 `$HOST_CONFIG/` 全局行为 | 看话自动干 | 所有会话 | 简单：家规。详细：它给所有会话立规矩，例如先验证再查文档、不可逆操作先计划确认；每次回答前自动生效，不用点名 |
-| 页内浏览器 | 外层应用工具 | Agent 调时 | 要看登录态页面时 | 简单：用你的浏览器看。详细：Agent 在需要时调用它开页、读内容、点击、截图，全程带用户真实登录态；人不用叫 |
+| Global behavior rules | host settings `$HOST_CONFIG/` global behavior | auto-triggers on intent | all sessions | Simple: house rules. Detailed: it sets rules for every session, e.g. verify before consulting docs, and plan-and-confirm before irreversible operations; it takes effect before every reply, with no invocation needed. |
+| In-page browser | host tool | when the Agent calls it | when you need to see a logged-in page | Simple: see through your browser. Detailed: the Agent calls it as needed to open pages, read content, click, and screenshot, all carrying the user's real login state; humans don't call it. |
 
-## 表注写法（有风险才写，无则省略）
+## Table-note style (write only when there is a risk; omit otherwise)
 
-`注：示例MCP 探活失败（缺命令 tools/list 不可达）；认证头含明文 key，已打码。`
+`Note: ExampleMCP liveness probe failed (missing command / tools/list unreachable); the auth header contains a plaintext key, already masked.`

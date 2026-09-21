@@ -1,4 +1,19 @@
-# 资产盘点（Asset Inventory）
+<div align="center">
+
+<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+
+# Asset Inventory
+
+**一眼看清你的 OpenCode 环境到底能调用什么——每一项资产都带来源追溯。**
+
+[![License: MIT](assets/badge-license.svg)](LICENSE)
+[![OpenCode Skill](assets/badge-opencode.svg)](#适用范围与兼容性)
+
+[English](README.md) · [简体中文](README-ZH.md)
+
+<img src="assets/banner-zh.svg" alt="asset-inventory banner" width="100%">
+
+</div>
 
 **asset-inventory** 是一个 OpenCode Skill：一次扫清你机器上的 OpenCode 环境——所有插件、Skill、命令、MCP、Agent 和外层应用能力，每一项都带**来源追溯**（它从哪来的）。对每个资产回答三问：**是什么、谁带来的、怎么用**。
 
@@ -11,6 +26,13 @@ OpenCode 环境膨胀得很快。几周后你就忘了自己装了什么、*从�
 - **`asset-inventory.json`** — 机器可读的 JSON：同一批数据的结构化形式，供程序处理/对比。
 
 ## 安装
+
+> **推荐：全局安装。** 这个 skill 是通用工具，用来了解和清理你的 OpenCode 环境——它不绑定任何单个项目。装一次到全局 skills 目录，之后就不用再管它。
+>
+> - **为什么推荐全局：** 只装一份、只更新一份、只维护一份（不用给每个项目各拷一份），而且随处可用。
+> - **全局安装的效果：** 装好后，`/asset-inventory`（以及自然语言触发）在**任何项目、任何会话**里都能用。产物依旧写进你当前运行它的那个项目——就算是全局安装，输出也落在被盘点项目的 `output/` 里，而不是 skill 自己的目录。
+>
+> 只有当你确实想让它只待在某一个仓库里（例如通过版本控制分享给该仓库的协作者）时，才选**项目级**。
 
 **第一步：把仓库弄到本地。** 二选一：
 
@@ -50,14 +72,22 @@ New-Item -ItemType Directory -Force -Path "<项目根目录>\.opencode\skills\as
 Copy-Item -Recurse SKILL.md, references, examples -Destination "<项目根目录>\.opencode\skills\asset-inventory\"
 ```
 
-> 不确定选哪个？选**全局**——skill 输出跟着你运行的项目走，不管 skill 本身装在哪。
-
 ### 用 AI 自动安装
 
 如果你用 AI 编程助手，直接把下面这段话复制给它，让它帮你装：
 
 ```text
-请帮我安装 "asset-inventory" 这个 OpenCode skill，来源是 <https://github.com/sogeisetsu/asset-inventory>。先问我装到全局还是只装进当前项目。然后克隆或下载该仓库，只复制运行所需的文件——SKILL.md、references/、examples/——到选定的目标位置：全局就装到 ~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\），项目级就装到当前项目内的 .opencode/skills/（没有就创建）。不要复制 README 文件。确认最终路径是 <目标位置>/asset-inventory/SKILL.md。安装过程中不要改动任何 skill 文件。完成后告诉我最终路径。
+请帮我安装 OpenCode skill "asset-inventory"，仓库地址 <https://github.com/sogeisetsu/asset-inventory>。
+
+1. 先只问我一个问题：装到全局，还是只装进当前项目。
+2. 获取仓库：优先 `git clone`；如果没有 git 或克隆失败，就改用 GitHub 的 ZIP 下载。
+3. 只把三个运行时项复制到目标位置：
+   - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
+   - 项目级：当前项目下的 .opencode/skills/asset-inventory/
+   目录不存在就创建。不要复制 README、docs、assets、scripts。
+4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
+5. 完成后确认 <目标位置>/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
+6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。
 ```
 
 ## 更新
@@ -162,14 +192,26 @@ asset-inventory/
 ├── SKILL.md                    # skill 主体（规则与流程）
 ├── update.ps1                  # 一键更新脚本
 ├── README.md                   # 英文文档
-├── README-zh.md                # 中文文档（本文件）
-├── references/
-│   ├── format-example.md       # 7 表单元格格式参考
-│   ├── host-commands.md        # 外层应用命令扫描方法 + 清单
-│   └── usage-guide.md          # 使用指南格式参考
-└── examples/
-    └── inventory-example.md    # 脱敏输出示例
+├── README-ZH.md                # 中文文档（本文件）
+├── CHANGELOG.md                # 版本历史（英文）
+├── CONTRIBUTING.md             # 贡献指南（英文）
+├── LICENSE                     # MIT
+├── references/                 # skill 格式与扫描方法参考
+├── examples/                   # 脱敏输出示例
+├── assets/                     # 本地 SVG 图标 / banner / 徽章（脚本生成）
+├── scripts/
+│   ├── check-docs.mjs          # 文档 / 链接 / frontmatter 校验
+│   └── generate-assets.mjs     # 重新生成 assets/*.svg
+├── docs/                       # GitHub Pages + release notes
+└── zh/                         # 除 README-ZH.md 外的所有中文文档
+    ├── CHANGELOG-ZH.md
+    ├── CONTRIBUTING-ZH.md
+    ├── LICENSE-ZH.txt
+    ├── release-notes-v1.1.0-ZH.md
+    └── release-notes-v1.3.0-ZH.md
 ```
+
+本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）与 `AGENTS.md` 已被 gitignore，不会发布。
 
 ## 适用范围与兼容性
 
@@ -179,4 +221,4 @@ asset-inventory/
 
 ## 许可证
 
-MIT — 见 [LICENSE](LICENSE)。
+MIT — 见 [LICENSE](LICENSE)。参考中文译本见 [`zh/LICENSE-ZH.txt`](zh/LICENSE-ZH.txt)（非官方译文，仅供阅读；以英文原文为准）。

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="118" height="20" role="img" aria-label="opencode: skill">
+<title>opencode: skill</title>
+<rect width="118" height="20" rx="3" fill="#4B4646"/>
+<rect x="66" y="0" width="52" height="20" rx="3" fill="#03B000"/>
+<rect x="66" y="0" width="6" height="20" fill="#03B000"/>
+<text x="34.5" y="14" font-family="Courier New, Courier, monospace" font-size="11" fill="#F1ECEC" text-anchor="middle">opencode</text>
+<text x="93.5" y="14" font-family="Courier New, Courier, monospace" font-size="11" fill="#F1ECEC" text-anchor="middle">skill</text>
+</svg>
