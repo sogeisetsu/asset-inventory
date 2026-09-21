@@ -8,7 +8,7 @@
 
 ---
 
-## [1.3.0] - 2026-09-13
+## [1.3.0] - 2026-09-21
 
 ### Added
 - **中文文档集**（`zh/`）—— `CONTRIBUTING-ZH.md`、`CHANGELOG-ZH.md` 与 `release-notes-v1.1.0-ZH.md`，与仓库根目录的英文文档成对。

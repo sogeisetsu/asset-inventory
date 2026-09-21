@@ -6,7 +6,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
-## [1.3.0] - 2026-09-13
+## [1.3.0] - 2026-09-21
 
 ### Added
 - **Chinese doc set** (`zh/`) — `CONTRIBUTING-ZH.md`, `CHANGELOG-ZH.md`, and `release-notes-v1.1.0-ZH.md`, paired with the English docs at the repo root.

@@ -10,6 +10,10 @@
 //      unquoted ": " values warned (they silently break YAML).
 //   5. English docs contain no CJK characters (Chinese docs live under zh/
 //      or end with -ZH.md; local AGENTS.md is exempt).
+//   6. Version consistency: the SKILL.md frontmatter metadata.version matches
+//      the top release heading in CHANGELOG.md and zh/CHANGELOG-ZH.md.
+//   7. Glossary structure: every language block in references/glossary.json
+//      exposes the same key set as the `en` block.
 //
 // Usage: node scripts/check-docs.mjs
 // Exits non-zero on errors. Warnings do not fail.
@@ -180,6 +184,98 @@ function changedFiles() {
   }
 }
 
+async function checkVersionConsistency() {
+  // 6. Version must agree across SKILL.md frontmatter and both CHANGELOG tops.
+  const skillPath = path.join(ROOT, 'SKILL.md');
+  if (!(await exists(skillPath))) {
+    err('version check: SKILL.md not found');
+    return;
+  }
+  const skillRaw = await fs.readFile(skillPath, 'utf8');
+  const skillLines = skillRaw.split(/\r?\n/);
+  let skillVersion = null;
+  for (let i = 0; i < skillLines.length; i += 1) {
+    const m = skillLines[i].match(/^\s+version:\s*(.+?)\s*$/);
+    if (m) {
+      skillVersion = m[1].replace(/^["']|["']$/g, '');
+      break;
+    }
+    if (i > 15) break;
+  }
+  if (!skillVersion) {
+    warn('version check: no metadata.version found in SKILL.md frontmatter');
+    return;
+  }
+
+  const changelogs = ['CHANGELOG.md', 'zh/CHANGELOG-ZH.md'];
+  for (const relPath of changelogs) {
+    const abs = path.join(ROOT, relPath);
+    if (!(await exists(abs))) {
+      err(`version check: missing ${relPath}`);
+      continue;
+    }
+    const raw = await fs.readFile(abs, 'utf8');
+    const m = raw.match(/^##\s*\[([^\]]+)\]/m);
+    if (!m) {
+      err(`version check: no release heading in ${relPath}`);
+      continue;
+    }
+    const changelogVersion = m[1].trim();
+    if (changelogVersion !== skillVersion) {
+      err(
+        `version mismatch: SKILL.md has ${skillVersion} but ${relPath} top heading is ${changelogVersion}`,
+      );
+    }
+  }
+}
+
+async function checkGlossaryStructure() {
+  // 7. Every language block must expose the same key set as `en`.
+  const glossaryPath = path.join(ROOT, 'references', 'glossary.json');
+  if (!(await exists(glossaryPath))) {
+    err('glossary check: references/glossary.json not found');
+    return;
+  }
+  let data;
+  try {
+    data = JSON.parse(await fs.readFile(glossaryPath, 'utf8'));
+  } catch (e) {
+    err(`glossary check: invalid JSON in references/glossary.json (${e.message})`);
+    return;
+  }
+  const languages = data && typeof data === 'object' ? data.languages : null;
+  if (!languages || typeof languages !== 'object') {
+    err('glossary check: missing top-level "languages" object');
+    return;
+  }
+  const keys = Object.keys(languages);
+  if (keys.length === 0) {
+    err('glossary check: "languages" has no entries');
+    return;
+  }
+  const reference = keys.includes('en') ? 'en' : keys[0];
+  const referenceKeys = new Set(Object.keys(languages[reference] || {}));
+  if (!keys.includes('en')) {
+    warn(`glossary check: no "en" block; using "${reference}" as the reference key set`);
+  }
+  for (const lang of keys) {
+    const block = languages[lang];
+    if (!block || typeof block !== 'object') {
+      err(`glossary check: language block "${lang}" is not an object`);
+      continue;
+    }
+    const langKeys = new Set(Object.keys(block));
+    const missing = [...referenceKeys].filter((k) => !langKeys.has(k));
+    const extra = [...langKeys].filter((k) => !referenceKeys.has(k));
+    if (missing.length > 0) {
+      err(`glossary check: "${lang}" is missing key(s): ${missing.join(', ')}`);
+    }
+    if (extra.length > 0) {
+      err(`glossary check: "${lang}" has key(s) not in "${reference}": ${extra.join(', ')}`);
+    }
+  }
+}
+
 async function main() {
   const allFiles = await walk(ROOT);
   const mdFiles = allFiles.filter((f) => f.endsWith('.md'));
@@ -230,6 +326,10 @@ async function main() {
       warn(`local copy may be stale: ${local} (source: ${source})`);
     }
   }
+
+  // 6, 7
+  await checkVersionConsistency();
+  await checkGlossaryStructure();
 
   for (const w of warnings) console.warn(`warning: ${w}`);
   for (const e of errors) console.error(`error: ${e}`);
