@@ -13,6 +13,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ### Changed
 - Documentation-site and repository tidy-up: release notes in `docs/release-notes/` + `zh/release-notes/` (1.9.2), the language-stacking fix and per-tab language choice (1.9.3), and the detail-page polish (1.9.4).
+- **`build-sample-pages --check` is line-ending agnostic** — it normalizes CRLF before comparing, so a fresh Windows checkout is no longer reported as out of date.
 
 ---
 

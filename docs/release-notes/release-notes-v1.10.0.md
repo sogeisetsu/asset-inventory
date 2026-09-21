@@ -17,6 +17,7 @@ This release is a documentation-site pass plus a repository tidy-up. The invento
 - **Language stacking fixed** — the docs language toggle grouped translations by `className`, which included the `.i18n-on` class it had just added; a second switch split each slot and rendered several languages at once. Grouping now ignores `i18n-on`, so every slot shows exactly one language.
 - **Language choice is per-tab** — the toggle now uses `sessionStorage` instead of `localStorage`, so a fresh visit always starts in English while a choice still carries across pages within the same tab.
 - **Detail pages cleaned up** — removed the file-path bar above each rendered sample, added real cell borders to the `.facts` tables, and capped the JSON sample's height with a scrollbar.
+- **`build-sample-pages --check` is line-ending agnostic** — it normalizes CRLF before comparing, so a fresh Windows checkout is never reported as out of date.
 
 ## Usage
 

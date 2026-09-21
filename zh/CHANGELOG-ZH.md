@@ -15,6 +15,7 @@
 
 ### 变更
 - 文档站与仓库整理合计：release notes 移入 `docs/release-notes/` + `zh/release-notes/`（1.9.2）、修复语言叠加与按标签页记忆选择（1.9.3）、详情页清理（1.9.4）。
+- **`build-sample-pages --check` 不再受换行符影响** —— 比较前先归一化 CRLF，Windows 全新检出不再被误报为过期。
 
 ---
 
