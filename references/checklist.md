@@ -45,7 +45,8 @@ Run this checklist before outputting. Every item must pass.
 
 ## Table 6 — Agents
 
-- [ ] Every row has a concrete Model chain (`a→b→c`) **or** (for a core agent with no configured chain) the host's currently effective real model + a "single model, no chain fallback" note. Placeholder phrasing does not count.
+- [ ] Every row has a concrete Model chain (`a→b→c`) **or** (for a **core agent only**, with no configured chain) the host's currently effective real model + a "single model, no chain fallback" note. Placeholder phrasing does not count.
+- [ ] The active preset's array-valued `<agent>.model` entries were expanded into chains — not flattened to "single model". If several plugin agents all read "single model", re-read the preset file.
 - [ ] Row order: core primary → plugin primary → core subagent → plugin subagent, alphabetical within each group.
 
 ## Table 7 — Host capabilities
