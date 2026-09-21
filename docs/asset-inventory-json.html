@@ -7,26 +7,38 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-title-en="asset-inventory.json — asset-inventory" data-title-zh="asset-inventory.json — asset-inventory">
+<body data-title-en="asset-inventory.json — asset-inventory" data-title-zh="asset-inventory.json — asset-inventory" data-title-ja="asset-inventory.json — asset-inventory" data-title-ko="asset-inventory.json — asset-inventory" data-title-ru="asset-inventory.json — asset-inventory" data-title-ar="asset-inventory.json — asset-inventory" data-title-es="asset-inventory.json — asset-inventory">
 <main>
-  <div class="lang">
-    <button id="btn-zh" onclick="setLang('zh')">中文</button>
-    <button id="btn-en" onclick="setLang('en')">English</button>
-  </div>
+  <div class="lang"><button id="btn-en" onclick="setLang('en')">English</button><button id="btn-zh" onclick="setLang('zh')">中文</button><button id="btn-ja" onclick="setLang('ja')">日本語</button><button id="btn-ko" onclick="setLang('ko')">한국어</button><button id="btn-ru" onclick="setLang('ru')">Русский</button><button id="btn-ar" onclick="setLang('ar')">العربية</button><button id="btn-es" onclick="setLang('es')">Español</button></div>
 
-  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a></p>
+  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a><a href="index.html" data-lang="ja">← 概要へ戻る</a><a href="index.html" data-lang="ko">← 개요로 돌아가기</a><a href="index.html" data-lang="ru">← К обзору</a><a href="index.html" data-lang="ar">← العودة إلى النظرة العامة</a><a href="index.html" data-lang="es">← Volver al resumen</a></p>
 
   <h1>asset-inventory.json</h1>
   <p class="tag" data-lang="en">The same 7 tables, machine-readable — for diffing and migration.</p>
   <p class="tag" data-lang="zh">与 7 张表等价、机器可读 —— 用于差异对比与迁移。</p>
+  <p class="tag" data-lang="ja">同じ 7 表を機械可読に — 差分と移行のため。</p>
+  <p class="tag" data-lang="ko">같은 7개 표를 기계가 읽도록 — diff와 이전용.</p>
+  <p class="tag" data-lang="ru">Те же 7 таблиц, машиночитаемо — для diff и миграции.</p>
+  <p class="tag" data-lang="ar">نفس الجداول السبعة بصيغة مقروءة آليًا — للمقارنة والترحيل.</p>
+  <p class="tag" data-lang="es">Las mismas 7 tablas, legibles por máquina — para diff y migración.</p>
 
   <h2 data-lang="en">What it is</h2>
   <h2 data-lang="zh">它是什么</h2>
+  <h2 data-lang="ja">何か</h2>
+  <h2 data-lang="ko">무엇인가</h2>
+  <h2 data-lang="ru">Что это</h2>
+  <h2 data-lang="ar">ما هو</h2>
+  <h2 data-lang="es">Qué es</h2>
   <p data-lang="en">A standalone JSON array with <strong>one element per Markdown data row</strong>. Its primary key is <code>table</code> + <code>name</code>. The <code>table</code> field is always the numeric <code>1</code>–<code>7</code> and never changes with the output language — that is what makes cross-run diffing possible even when the tables themselves are written in a different language.</p>
   <p data-lang="zh">一个独立的 JSON 数组，<strong>每个 Markdown 数据行对应一个元素</strong>。主键为 <code>table</code> + <code>name</code>。<code>table</code> 字段恒为数字 <code>1</code>–<code>7</code>，不随输出语言变化 —— 这正是能跨运行做差异对比的原因，即使表格本身换成了另一种语言。</p>
 
   <h2 data-lang="en">Fields</h2>
   <h2 data-lang="zh">字段</h2>
+  <h2 data-lang="ja">フィールド</h2>
+  <h2 data-lang="ko">필드</h2>
+  <h2 data-lang="ru">Поля</h2>
+  <h2 data-lang="ar">الحقول</h2>
+  <h2 data-lang="es">Campos</h2>
   <table class="facts">
     <tr><th>table</th><td data-lang="en">numeric 1–7 — the table this row belongs to (never localized)</td><td data-lang="zh">数字 1–7 —— 该行所属的表（不本地化）</td></tr>
     <tr><th>name</th><td data-lang="en">the asset name, as shown in the Markdown</td><td data-lang="zh">资产名，与 Markdown 中一致</td></tr>
@@ -38,11 +50,21 @@
 
   <h2 data-lang="en">Diff mode</h2>
   <h2 data-lang="zh">差异模式</h2>
+  <h2 data-lang="ja">差分モード</h2>
+  <h2 data-lang="ko">Diff 모드</h2>
+  <h2 data-lang="ru">Режим diff</h2>
+  <h2 data-lang="ar">وضع المقارنة</h2>
+  <h2 data-lang="es">Modo diff</h2>
   <p data-lang="en">Ask "what changed since last time?" and paste the previous JSON — you get only the <strong>added</strong> and <strong>removed</strong> rows, keyed by <code>table</code> + <code>name</code>. The full tables are never re-dumped.</p>
   <p data-lang="zh">问"和上次比有什么变化？"并贴入上一次的 JSON —— 只会得到按 <code>table</code> + <code>name</code> 键控的<strong>新增</strong>与<strong>删除</strong>行，绝不重新倾倒完整表格。</p>
 
   <h2 data-lang="en">Example (rendered)</h2>
   <h2 data-lang="zh">示例（渲染效果）</h2>
+  <h2 data-lang="ja">例（描画）</h2>
+  <h2 data-lang="ko">예시(렌더링)</h2>
+  <h2 data-lang="ru">Пример (отрендеренный)</h2>
+  <h2 data-lang="ar">مثال (معروض)</h2>
+  <h2 data-lang="es">Ejemplo (renderizado)</h2>
   <p data-lang="en">One element per row — shown line by line so each record is readable.</p>
   <p data-lang="zh">每行一个元素 —— 逐行展示，方便阅读。</p>
 

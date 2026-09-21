@@ -7,26 +7,38 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-title-en="inventory.md — asset-inventory" data-title-zh="inventory.md — asset-inventory">
+<body data-title-en="inventory.md — asset-inventory" data-title-zh="inventory.md — asset-inventory" data-title-ja="inventory.md — asset-inventory" data-title-ko="inventory.md — asset-inventory" data-title-ru="inventory.md — asset-inventory" data-title-ar="inventory.md — asset-inventory" data-title-es="inventory.md — asset-inventory">
 <main>
-  <div class="lang">
-    <button id="btn-zh" onclick="setLang('zh')">中文</button>
-    <button id="btn-en" onclick="setLang('en')">English</button>
-  </div>
+  <div class="lang"><button id="btn-en" onclick="setLang('en')">English</button><button id="btn-zh" onclick="setLang('zh')">中文</button><button id="btn-ja" onclick="setLang('ja')">日本語</button><button id="btn-ko" onclick="setLang('ko')">한국어</button><button id="btn-ru" onclick="setLang('ru')">Русский</button><button id="btn-ar" onclick="setLang('ar')">العربية</button><button id="btn-es" onclick="setLang('es')">Español</button></div>
 
-  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a></p>
+  <p class="crumb"><a href="index.html" data-lang="en">← Back to overview</a><a href="index.html" data-lang="zh">← 返回总览</a><a href="index.html" data-lang="ja">← 概要へ戻る</a><a href="index.html" data-lang="ko">← 개요로 돌아가기</a><a href="index.html" data-lang="ru">← К обзору</a><a href="index.html" data-lang="ar">← العودة إلى النظرة العامة</a><a href="index.html" data-lang="es">← Volver al resumen</a></p>
 
   <h1>inventory.md</h1>
   <p class="tag" data-lang="en">The 7-table inventory — the main deliverable.</p>
   <p class="tag" data-lang="zh">7 张表的盘点清单 —— 主产物。</p>
+  <p class="tag" data-lang="ja">7 表の棚卸し — 主要な成果物。</p>
+  <p class="tag" data-lang="ko">7개 표 인벤토리 — 핵심 산출물.</p>
+  <p class="tag" data-lang="ru">Инвентаризация из 7 таблиц — главный результат.</p>
+  <p class="tag" data-lang="ar">جرد من ٧ جداول — الناتج الرئيسي.</p>
+  <p class="tag" data-lang="es">El inventario de 7 tablas: el resultado principal.</p>
 
   <h2 data-lang="en">What it is</h2>
   <h2 data-lang="zh">它是什么</h2>
+  <h2 data-lang="ja">何か</h2>
+  <h2 data-lang="ko">무엇인가</h2>
+  <h2 data-lang="ru">Что это</h2>
+  <h2 data-lang="ar">ما هو</h2>
+  <h2 data-lang="es">Qué es</h2>
   <p data-lang="en"><code>inventory.md</code> is the core output: one Markdown file containing <strong>7 fixed tables</strong> that map everything your machine can actually invoke. Tables 1–5 and 7 have five columns (<code>Name | Source | How to call | When to use | What it does</code>); Table 6 (Agents) adds a sixth, <code>Model chain</code>.</p>
   <p data-lang="zh"><code>inventory.md</code> 是核心产物：一个 Markdown 文件，含 <strong>7 张固定表</strong>，把本机真正能调用的一切列出来。表 1–5、7 为五列（<code>名称 | 来源 | 调用方式 | 何时用 | 干什么</code>）；表 6（Agent）多一列 <code>模型链</code>。</p>
 
   <h2 data-lang="en">The 7 tables</h2>
   <h2 data-lang="zh">7 张表</h2>
+  <h2 data-lang="ja">7 つの表</h2>
+  <h2 data-lang="ko">7개 표</h2>
+  <h2 data-lang="ru">7 таблиц</h2>
+  <h2 data-lang="ar">الجداول السبعة</h2>
+  <h2 data-lang="es">Las 7 tablas</h2>
   <table class="facts">
     <tr><th>1</th><td data-lang="en">Plugins &amp; companion software — real product names</td><td data-lang="zh">插件与配套软件 —— 用真实产品名</td></tr>
     <tr><th>2</th><td data-lang="en">Skills &amp; commands each software/plugin brings</td><td data-lang="zh">各软件/插件带来的 Skill 与命令</td></tr>
@@ -39,6 +51,11 @@
 
   <h2 data-lang="en">Key conventions</h2>
   <h2 data-lang="zh">关键约定</h2>
+  <h2 data-lang="ja">主な規約</h2>
+  <h2 data-lang="ko">핵심 규칙</h2>
+  <h2 data-lang="ru">Ключевые соглашения</h2>
+  <h2 data-lang="ar">الأعراف الأساسية</h2>
+  <h2 data-lang="es">Convenciones clave</h2>
   <ul data-lang="en">
     <li><strong>State markers:</strong> ✅available / ❌disabled / 📦shelf-only / 🚫absent — localized to the output language.</li>
     <li><strong>Confidence:</strong> ✅verified / ✅docs / ⚠️inferred appended to every source.</li>
@@ -54,6 +71,11 @@
 
   <h2 data-lang="en">Example (rendered)</h2>
   <h2 data-lang="zh">示例（渲染效果）</h2>
+  <h2 data-lang="ja">例（描画）</h2>
+  <h2 data-lang="ko">예시(렌더링)</h2>
+  <h2 data-lang="ru">Пример (отрендеренный)</h2>
+  <h2 data-lang="ar">مثال (معروض)</h2>
+  <h2 data-lang="es">Ejemplo (renderizado)</h2>
   <p data-lang="en">This is how Table 5 looks when rendered — the real file is Markdown, shown here as a table for readability.</p>
   <p data-lang="zh">这是表 5 渲染后的样子 —— 真实文件是 Markdown，这里用表格展示以便阅读。</p>
 
