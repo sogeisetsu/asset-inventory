@@ -111,6 +111,138 @@
         "本表は asset-inventory が生成（自己完結）"
       ],
       "provenanceRealName": "本出力にはユーザーが要求した実プロジェクト名が含まれます。外部共有しないでください。"
+    },
+    "ko": {
+      "columns": ["이름", "출처", "호출 방법", "사용 시점", "기능"],
+      "columnsAgent": ["이름", "출처", "호출 방법", "사용 시점", "기능", "모델 체인"],
+      "tableTitles": {
+        "1": "플러그인과 동반 소프트웨어",
+        "2": "각 소프트웨어/플러그인이 제공하는 Skill과 명령",
+        "3": "내장 명령과 내장 Skill",
+        "4": "사용자 정의 Skill·명령·호스트 주입 명령",
+        "5": "MCP",
+        "6": "Agent",
+        "7": "호스트 기능"
+      },
+      "state": {
+        "available": "✅사용 가능",
+        "disabled": "❌비활성",
+        "shelfOnly": "📦미설치",
+        "absent": "🚫없음"
+      },
+      "confidence": {
+        "verified": "✅실측",
+        "docs": "✅문서",
+        "inferred": "⚠️추정"
+      },
+      "emptyTable": "이 표에 사용할 수 있는 행이 없습니다(<조회 시각> 기준)",
+      "unknown": "알 수 없음",
+      "threeQuestions": "무엇인가(이름) · 누가 가져왔는가(3단 출처) · 어떻게 쓰는가(사용 시점 + 호출 경로)",
+      "provenance": [
+        "조사 시각: <스캔 후 기입> | 프리셋: <스캔 후 기입> | 명령: `opencode agent list` + `opencode --pure agent list` 실행됨",
+        "미해결: 솔직히 나열(예: 플러그인 캐시를 읽을 수 없음). 없으면 \"없음\"",
+        "이 표는 asset-inventory가 생성(자기 완결)"
+      ],
+      "provenanceRealName": "이 출력에는 사용자가 요청한 실제 프로젝트 이름이 포함됩니다. 외부에 공유하지 마세요."
+    },
+    "ru": {
+      "columns": ["Имя", "Источник", "Как вызвать", "Когда использовать", "Что делает"],
+      "columnsAgent": ["Имя", "Источник", "Как вызвать", "Когда использовать", "Что делает", "Цепочка моделей"],
+      "tableTitles": {
+        "1": "Плагины и сопутствующее ПО",
+        "2": "Skill и команды, которые приносит каждое ПО/плагин",
+        "3": "Встроенные команды и встроенные Skill",
+        "4": "Пользовательские Skill, команды и команды, внедрённые хостом",
+        "5": "MCP",
+        "6": "Агенты",
+        "7": "Возможности хоста"
+      },
+      "state": {
+        "available": "✅доступно",
+        "disabled": "❌отключено",
+        "shelfOnly": "📦только на полке",
+        "absent": "🚫отсутствует"
+      },
+      "confidence": {
+        "verified": "✅проверено",
+        "docs": "✅документация",
+        "inferred": "⚠️предположение"
+      },
+      "emptyTable": "в этой таблице нет пригодных строк (на дату проверки)",
+      "unknown": "неизвестно",
+      "threeQuestions": "что это (имя) · кто это принёс (источник из трёх частей) · как использовать (когда + путь вызова)",
+      "provenance": [
+        "Время инвентаризации: <заполнить после сканирования> | Пресет: <заполнить после сканирования> | Команды: `opencode agent list` + `opencode --pure agent list` выполнены",
+        "Не решено: перечислите честно (например, кеш плагина недоступен), иначе «нет»",
+        "Сгенерировано asset-inventory (самодостаточно)"
+      ],
+      "provenanceRealName": "В этом выводе есть запрошенные вами реальные имена проектов — не делитесь ими вовне."
+    },
+    "ar": {
+      "columns": ["الاسم", "المصدر", "كيفية الاستدعاء", "متى تستخدمه", "ماذا يفعل"],
+      "columnsAgent": ["الاسم", "المصدر", "كيفية الاستدعاء", "متى تستخدمه", "ماذا يفعل", "سلسلة النماذج"],
+      "tableTitles": {
+        "1": "الإضافات والبرامج المرافقة",
+        "2": "المهارات والأوامر التي يجلبها كل برنامج/إضافة",
+        "3": "الأوامر المدمجة والمهارات المدمجة",
+        "4": "المهارات والأوامر المخصصة والأوامر المحقونة من المضيف",
+        "5": "MCP",
+        "6": "الوكلاء",
+        "7": "قدرات المضيف"
+      },
+      "state": {
+        "available": "✅متاح",
+        "disabled": "❌معطّل",
+        "shelfOnly": "📦غير مثبّت",
+        "absent": "🚫غير موجود"
+      },
+      "confidence": {
+        "verified": "✅مُتحقَّق",
+        "docs": "✅توثيق",
+        "inferred": "⚠️مُستنتَج"
+      },
+      "emptyTable": "لا توجد صفوف قابلة للاستخدام في هذا الجدول (حتى تاريخ الفحص)",
+      "unknown": "غير معروف",
+      "threeQuestions": "ما هو (الاسم) · من جاء به (مصدر من ثلاثة أجزاء) · كيف يُستخدم (متى تستخدمه + مسار الاستدعاء)",
+      "provenance": [
+        "وقت الجرد: <يُملأ بعد الفحص> | الإعداد المسبق: <يُملأ بعد الفحص> | الأوامر: تم تشغيل `opencode agent list` + `opencode --pure agent list`",
+        "غير المحلول: اذكره بصدق (مثل تعذّر قراءة ذاكرة الإضافة المؤقتة)، وإلا فاكتب \"لا شيء\"",
+        "أُنشئ بواسطة asset-inventory (مكتفٍ ذاتيًا)"
+      ],
+      "provenanceRealName": "يتضمن هذا الناتج أسماء مشاريع حقيقية طلبتها — لا تشاركه خارجيًا."
+    },
+    "es": {
+      "columns": ["Nombre", "Fuente", "Cómo invocarlo", "Cuándo usarlo", "Qué hace"],
+      "columnsAgent": ["Nombre", "Fuente", "Cómo invocarlo", "Cuándo usarlo", "Qué hace", "Cadena de modelos"],
+      "tableTitles": {
+        "1": "Plugins y software complementario",
+        "2": "Skill y comandos que aporta cada software/plugin",
+        "3": "Comandos integrados y Skill integrados",
+        "4": "Skill, comandos propios y comandos inyectados por el host",
+        "5": "MCP",
+        "6": "Agentes",
+        "7": "Capacidades del host"
+      },
+      "state": {
+        "available": "✅disponible",
+        "disabled": "❌deshabilitado",
+        "shelfOnly": "📦solo en estante",
+        "absent": "🚫ausente"
+      },
+      "confidence": {
+        "verified": "✅verificado",
+        "docs": "✅docs",
+        "inferred": "⚠️inferido"
+      },
+      "emptyTable": "no hay filas utilizables en esta tabla (a la fecha de consulta)",
+      "unknown": "desconocido",
+      "threeQuestions": "qué es (nombre) · quién lo trajo (fuente en tres partes) · cómo usarlo (cuándo usarlo + ruta de invocación)",
+      "provenance": [
+        "Hora del inventario: <rellenar tras el escaneo> | Preset: <rellenar tras el escaneo> | Comandos: `opencode agent list` + `opencode --pure agent list` ejecutados",
+        "Sin resolver: enumera con honestidad (p. ej. caché del plugin ilegible), o \"ninguno\"",
+        "Generado por asset-inventory (autocontenido)"
+      ],
+      "provenanceRealName": "Este resultado incluye nombres reales de proyectos que solicitaste — no lo compartas externamente."
     }
   }
 }

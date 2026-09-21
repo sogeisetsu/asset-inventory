@@ -5,7 +5,7 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.7.4
+  version: 1.8.0
 ---
 
 # Asset Inventory
@@ -20,8 +20,8 @@ This skill's instructions are written in English, but **output must follow the u
 
 - If the user writes in Chinese, or asks for a Chinese result, produce the whole deliverable in Chinese — every table header, cell value, state marker, provenance line, and the usage guide.
 - If the user writes in English, produce it in English.
-- **Fixed-string languages:** `references/glossary.json` currently ships fixed strings for **English (`en`), Chinese (`zh`), and Japanese (`ja`)**. Use the matching entry verbatim.
-- **Any other language still works**, but has no fixed-string entry: translate the same structure into that language and **derive the header/marker strings from the `en` block**, keeping the shape (same number of columns, same marker set). Note in Provenance that the fixed strings were derived, not from the glossary. Do not silently output English strings for a non-English request.
+- **Fixed-string languages:** `references/glossary.json` ships fixed strings for **English (`en`), Chinese (`zh`), Japanese (`ja`), Korean (`ko`), Russian (`ru`), Arabic (`ar`), and Spanish (`es`)**. Use the matching entry verbatim.
+- **Any language outside those seven still works**, but has no fixed-string entry: translate the same structure into that language and **derive the header/marker strings from the `en` block**, keeping the shape (same number of columns, same marker set). Note in Provenance that the fixed strings were derived, not from the glossary. Do not silently output English strings for a non-English request.
 - Keep technical terms, paths, command names, asset names, and field names in their original form.
 - When in doubt, mirror the language of the user's last message, or ask.
 - **Use the fixed strings from `references/glossary.json`** for the chosen language: `columns` / `columnsAgent` (headers), `state` markers, `confidence` suffixes, `tableTitles`, `emptyTable`, `unknown`, and `provenance`. Do not improvise these strings; they must stay identical across runs so diff mode stays comparable.

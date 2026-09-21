@@ -14,7 +14,7 @@
 | 1.7.2 | patch | MCP invocation facts corrected (skill rule + every sample) | ✅ | — | ✅ done |
 | 1.7.3 | patch | README cleanup: drop title emoji, add "Install via AI", move non-EN/ZH READMEs into `readmes/` | ✅ | — | ✅ done |
 | 1.7.4 | patch | Docs site: English fallback for untranslated content (fix "frame with no content") | ✅ | — | ✅ done |
-| 1.8.0 | minor | Glossary: add `ko` / `ru` / `ar` / `es` fixed strings (7 languages) | ⬜ | ⬜ | ⬜ todo |
+| 1.8.0 | minor | Glossary: add `ko` / `ru` / `ar` / `es` fixed strings (7 languages) | ✅ | ✅ | ✅ done |
 | 1.9.0 | minor | Sample pages: generator script, rendered Markdown/JSON, `docs/samples/` restructure | ⬜ | ⬜ | ⬜ todo |
 
 ## Details
@@ -56,6 +56,6 @@ the detail-page titles.
 
 ## Next step
 
-1.7.4 is done. Next: **1.8.0 — glossary 7 languages** (add `ko`/`ru`/`ar`/`es`
-fixed strings, widen the `SKILL.md` claim), a minor release with a GitHub
-Release. Then 1.9.0 for the sample pages.
+1.8.0 is done. Next: **1.9.0 — sample pages** (generator + rendered
+Markdown/JSON + `docs/samples/` restructure), a minor release with a GitHub
+Release. Then the rollout is complete.

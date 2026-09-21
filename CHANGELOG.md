@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.8.0] - 2026-09-22
+
+### Added
+- **Seven fixed-string languages** — `references/glossary.json` now ships `ko` (Korean), `ru` (Russian), `ar` (Arabic), and `es` (Spanish) alongside `en` / `zh` / `ja`, each with the same 10-key shape as `en`. `SKILL.md` advertises all seven, so a request in any of them uses the glossary strings verbatim instead of deriving them from the English block.
+
+---
+
 ## [1.7.4] - 2026-09-22
 
 ### Fixed

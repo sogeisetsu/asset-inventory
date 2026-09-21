@@ -13,7 +13,7 @@
 | 1.7.2 | patch | 修正 MCP 调用事实（skill 规则 + 全部样例） | ✅ | — | ✅ 已完成 |
 | 1.7.3 | patch | README 整理：去标题 emoji、加"通过 AI 安装"、非中英 README 移入 `readmes/` | ✅ | — | ✅ 已完成 |
 | 1.7.4 | patch | 文档站点：未翻译内容回退英文（修"只有框架没有内容"） | ✅ | — | ✅ 已完成 |
-| 1.8.0 | minor | glossary 补齐 `ko` / `ru` / `ar` / `es`（7 语言固定字符串） | ⬜ | ⬜ | ⬜ 待办 |
+| 1.8.0 | minor | glossary 补齐 `ko` / `ru` / `ar` / `es`（7 语言固定字符串） | ✅ | ✅ | ✅ 已完成 |
 | 1.9.0 | minor | 样本页：生成脚本、渲染 Markdown/JSON、`docs/samples/` 目录重构 | ⬜ | ⬜ | ⬜ 待办 |
 
 ## 详情
@@ -50,6 +50,5 @@ HTML 页面。框架与标题保留所选语言。
 
 ## 下一步
 
-1.7.4 已完成。接下来：**1.8.0 —— glossary 七语言**（新增 `ko`/`ru`/`ar`/`es`
-固定字符串，扩宽 `SKILL.md` 的语言声明），minor 版本，建 GitHub Release。
-之后是 1.9.0 的样本页。
+1.8.0 已完成。接下来：**1.9.0 —— 样本页**（生成脚本 + 渲染 Markdown/JSON +
+`docs/samples/` 目录重构），minor 版本，建 GitHub Release。之后梯队即完成。
