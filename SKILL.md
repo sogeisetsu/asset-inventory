@@ -5,7 +5,7 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.3.0
+  version: 1.4.0
 ---
 
 # Asset Inventory
@@ -19,7 +19,9 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 This skill's instructions are written in English, but **output must follow the user's language**.
 
 - If the user writes in Chinese, or asks for a Chinese result, produce the whole deliverable in Chinese — every table header, cell value, state marker, provenance line, and the usage guide.
-- If the user writes in English, produce it in English. Any other language works the same way (Japanese→Japanese, German→German, …).
+- If the user writes in English, produce it in English.
+- **Fixed-string languages:** `references/glossary.json` currently ships fixed strings for **English (`en`), Chinese (`zh`), and Japanese (`ja`)**. Use the matching entry verbatim.
+- **Any other language still works**, but has no fixed-string entry: translate the same structure into that language and **derive the header/marker strings from the `en` block**, keeping the shape (same number of columns, same marker set). Note in Provenance that the fixed strings were derived, not from the glossary. Do not silently output English strings for a non-English request.
 - Keep technical terms, paths, command names, asset names, and field names in their original form.
 - When in doubt, mirror the language of the user's last message, or ask.
 - **Use the fixed strings from `references/glossary.json`** for the chosen language: `columns` / `columnsAgent` (headers), `state` markers, `confidence` suffixes, `tableTitles`, `emptyTable`, `unknown`, and `provenance`. Do not improvise these strings; they must stay identical across runs so diff mode stays comparable.
@@ -229,7 +231,7 @@ No content after verification → **do not invent, do not omit**: output `no usa
   - `output/inventory.md` — the 7-table inventory below.
   - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
   - `output/asset-inventory.json` — standalone JSON, one element per row.
-- **Language follows the user**: every table header, cell value, state marker, and the usage guide must be written in the same language the user asked in (Chinese→Chinese, English→English, Japanese→Japanese, German→German, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (Tables 1-5/7 five columns, Table 6 six), but the header text, all cell content, state markers, and prose are translated into the user's language, using the exact fixed strings in `references/glossary.json`. When in doubt, ask or mirror the last user message.
+- **Language follows the user**: every table header, cell value, state marker, and the usage guide must be written in the same language the user asked in (Chinese→Chinese, English→English, Japanese→Japanese, etc.). Never default to a fixed language. The 7-table *structure* and column *count* stay fixed (Tables 1-5/7 five columns, Table 6 six), but the header text, all cell content, state markers, and prose are translated into the user's language, using the exact fixed strings in `references/glossary.json`. For a language without a glossary entry, derive the strings from the `en` block and note it in Provenance. When in doubt, ask or mirror the last user message.
 - Compact tables, blank line between tables, fixed headers, rows alphabetical (Table 2 grouped by software), one entry per cell.
 - Format examples: see `references/format-example.md` (values there are placeholders — replace, never copy).
 - **Usage Guide (`usage-guide.md`)**: after producing the 7 tables, derive a plain-language usage guide from the same rows. Do NOT re-collect evidence. Organize by user scenario, not by type. See `references/usage-guide.md` for format.
@@ -250,46 +252,7 @@ No content after verification → **do not invent, do not omit**: output `no usa
 
 ## Quality Checklist
 
-Run this checklist before outputting. Every item must pass.
-
-### All Tables
-- [ ] Exactly 7 tables; Tables 1-5/7 five columns, Table 6 six (including Model chain); headers consistent.
-- [ ] Every `Source` names the specific bringer, with a confidence suffix.
-- [ ] No absolute paths, plaintext keys/tokens, or real project names (unless real-name mode + 4th Provenance line).
-- [ ] Versions/models/counts looked up fresh.
-- [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).
-- [ ] Empty tables have a declaration line + `[]`.
-- [ ] The `Name` column is uniform per asset type: commands are bare `/command` (no "command" suffix), skills bare `skill-name` (no `/`), Table 2 rows bare child name (no plugin prefix), software real names. No mixed styles.
-- [ ] Every `How to call` lists ALL real invocation paths. No bare "auto-triggers on intent".
-
-### Table 1 — Plugins & companion software
-- [ ] Software names are real names (e.g. `OpenChamber`), never placeholders.
-
-### Table 2 — Skills & commands each software/plugin brings
-- [ ] Commands sit in the right table (built-in→Table 3, plugin→Table 2, user→Table 4, host-injected→Table 4).
-- [ ] No summary rows duplicating Table 1 software entries.
-
-### Table 3 — Built-in commands & built-in skills
-- [ ] Lists **all** built-in commands from the docs, not a handful.
-
-### Table 4 — Custom skills, commands, and host-injected commands
-- [ ] Includes outer-app-injected commands (source `host-injected`).
-- [ ] This skill appears in Table 4.
-
-### Table 5 — MCP
-- [ ] Rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
-
-### Table 6 — Agents
-- [ ] Every row has a concrete Model chain (`a→b→c`) **or** (for a core agent with no configured chain) the host's currently effective real model + a "single model, no chain fallback" note. Placeholder phrasing does not count.
-- [ ] Row order: core primary → plugin primary → core subagent → plugin subagent, alphabetical within each group.
-
-### Table 7 — Host capabilities
-- [ ] No duplication with Table 1/Table 2; outer-app capabilities (non-command) → Table 7.
-
-### What it does & Usage Guide
-- [ ] Every `What it does` is detailed: a one-sentence Simple plus a 2-4 sentence Detailed, expanded from the source description, including typical usage and key caveats. One-liners/labels do not pass.
-- [ ] Tables 1/2/4/5/7 rows do NOT carry deletion consequences; `What it does` focuses on what/who/how/caveats.
-- [ ] `usage-guide.md` is derived from the same rows — no re-collection, no invented facts; grouped by scenario/frequency; only `✅available` items; plain-language "when and why".
+Run the full checklist in **`references/checklist.md`** before outputting. Every item must pass.
 
 ---
 

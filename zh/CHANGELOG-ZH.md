@@ -8,6 +8,27 @@
 
 ---
 
+## [1.4.0] - 2026-09-21
+
+### Added
+- **PR 触发的文档校验**（`.github/workflows/docs-check.yml`）—— 每次向 `master` 提 PR（以及 push）时运行脚本语法检查与 `node scripts/check-docs.mjs`，PR 终于有了真正的质量闸门，而不再只有部署工作流。
+- **版本一致性校验**（`check-docs.mjs`）—— 从 `SKILL.md` frontmatter 读取 `metadata.version`，与 `CHANGELOG.md`、`zh/CHANGELOG-ZH.md` 顶部发布标题比对，不一致即失败。
+- **glossary 结构校验**（`check-docs.mjs`）—— `references/glossary.json` 每个语言块的键集必须与 `en` 块一致；逐语言报告缺失或多余的键。
+- **日语词条**（`references/glossary.json` → `ja`）—— 固定字符串承诺现对 `en` / `zh` / `ja` 成立，并为其它语言写明明确回退规则。
+- **`references/checklist.md`** —— 完整质量清单，从 `SKILL.md` 移出，使规则主体更聚焦；`SKILL.md` 现指向它。
+- **`update.ps1 -DryRun`** —— 预览将复制哪些运行时文件，且不写任何内容。
+- **故障排除补充** —— Table 6 行序自检、非 glossary 语言的处理、本地副本过期告警的说明。
+
+### Changed
+- **`SKILL.md` 语言承诺收窄并改为诚实表述** —— 不再声称所有语言都有固定字符串；`en` / `zh` / `ja` 直接取自词表，其它语言从 `en` 块派生并在 Provenance 中注明。
+- **`CONTRIBUTING.md` / `zh/CONTRIBUTING-ZH.md`** —— 版本管理段现写明必须同步的三处，以及新增语言所需的精确 glossary 键集。
+- **`SKILL.md` 精简** —— 内联的质量清单（42 行）移至 `references/checklist.md`。
+
+### Fixed
+- **v1.3.0 发布日期**在 `CHANGELOG.md` 与 `zh/CHANGELOG-ZH.md` 中由 `2026-09-13` 更正为实际发布日 `2026-09-21`。
+
+---
+
 ## [1.3.0] - 2026-09-21
 
 ### Added

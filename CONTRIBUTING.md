@@ -49,7 +49,8 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    └── release-notes-v1.3.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md
+    └── release-notes-v1.4.0-ZH.md
 ```
 
 Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) and `AGENTS.md` are gitignored and never committed.
@@ -89,6 +90,16 @@ Follow [Semantic Versioning](https://semver.org/):
 - **MAJOR** (x.0.0): Breaking changes to table structure or output format
 
 Update `metadata.version` in the `SKILL.md` frontmatter and add an entry to `CHANGELOG.md`.
+
+Three places must stay in lockstep, and `check-docs.mjs` now enforces it:
+
+1. `SKILL.md` frontmatter `metadata.version`
+2. The top release heading in `CHANGELOG.md`
+3. The top release heading in `zh/CHANGELOG-ZH.md`
+
+A mismatch fails the check. The release heading must be `## [x.y.z]` (the date after it is not compared).
+
+If you add a language to `references/glossary.json`, give it **the same key set as the `en` block** — the check reports any missing or extra key per language. Every language block must expose the same keys: `columns`, `columnsAgent`, `tableTitles`, `state`, `confidence`, `emptyTable`, `unknown`, `threeQuestions`, `provenance`, `provenanceRealName`.
 
 ## License
 

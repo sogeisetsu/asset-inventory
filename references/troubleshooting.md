@@ -40,3 +40,19 @@
 1. Language follows the language of the user's last message
 2. The Provenance lines should also follow the output language (Chinese output uses Chinese Provenance, English uses English)
 3. Table headers, state markers, and cell content all follow the user's language
+4. A language without a `references/glossary.json` entry is still supported: derive the fixed strings from the `en` block, keep the same shape, and say so in Provenance
+
+### Table 6 agent order looks wrong
+
+The row order is enforced and easy to break. Before finishing, confirm all four groups appear in this order, alphabetical within each group:
+
+1. core primary (`build`, `plan`)
+2. plugin primary
+3. core subagent
+4. plugin subagent
+
+A common slip is putting a plugin primary above a core primary, or mixing a subagent into the primary block. Re-sort before output; this order is a Quality Checklist item and cannot be checked automatically (the rows live in the run output, not in the repo).
+
+### Broken links in a Chinese read-along doc
+
+`zh/skill-zh.md` is a gitignored local copy. If `check-docs` warns `local copy may be stale`, the local copy's mtime is more than 24h behind `SKILL.md` — re-sync it or ignore the warning; it never fails the check.

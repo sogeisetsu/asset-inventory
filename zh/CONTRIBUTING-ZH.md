@@ -51,7 +51,8 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    └── release-notes-v1.3.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md
+    └── release-notes-v1.4.0-ZH.md
 ```
 
 本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）与 `AGENTS.md` 已被 gitignore，永不入库。
@@ -91,6 +92,16 @@ asset-inventory/
 - **MAJOR**（x.0.0）：表结构或输出格式的破坏性变更
 
 更新 `SKILL.md` frontmatter 里的 `metadata.version`，并往 `CHANGELOG.md` 加条目。
+
+三处版本必须保持一致，`check-docs.mjs` 现已强制校验：
+
+1. `SKILL.md` frontmatter 的 `metadata.version`
+2. `CHANGELOG.md` 顶部的发布标题
+3. `zh/CHANGELOG-ZH.md` 顶部的发布标题
+
+任一不一致都会导致校验失败。发布标题格式必须为 `## [x.y.z]`（其后的日期不参与比对）。
+
+若往 `references/glossary.json` 新增语言，必须给它**与 `en` 块完全相同的键集** —— 校验会逐语言报告缺失或多余的键。每个语言块都必须包含这些键：`columns`、`columnsAgent`、`tableTitles`、`state`、`confidence`、`emptyTable`、`unknown`、`threeQuestions`、`provenance`、`provenanceRealName`。
 
 ## 许可证
 
