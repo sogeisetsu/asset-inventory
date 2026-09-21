@@ -159,6 +159,8 @@ skill 会往**当前项目根目录**的 `output/` 写入产物，描述你机�
 
 > 注意：产物落在"被盘点的项目"根目录，不是 skill 安装目录——全局安装后，输出跟着你的项目走。
 
+**看真实示例：** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json) —— 取自一台真实机器，让你先看清最终会拿到什么。
+
 ### `inventory.md` 里的 7 张表
 
 `inventory.md` 就是上面 `output/` 里的第一份文件——一份 Markdown 文档，所有资产按下面 7 张表组织：
@@ -201,7 +203,8 @@ asset-inventory/
 ├── scripts/
 │   ├── check-docs.mjs          # 文档 / 链接 / frontmatter 校验
 │   └── generate-assets.mjs     # 重新生成 assets/*.svg
-├── docs/                       # GitHub Pages + release notes
+├── docs/                       # GitHub Pages + release notes + 示例
+│   └── samples/                # 示例产物：inventory.md、usage-guide.md、asset-inventory.json
 └── zh/                         # 除 README-ZH.md 外的所有中文文档
     ├── CHANGELOG-ZH.md
     ├── CONTRIBUTING-ZH.md

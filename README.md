@@ -157,6 +157,8 @@ your-project-root/
 
 > The output lands in the project being inventoried, not in the skill's install location — so a globally installed skill still writes into your project root.
 
+**See real examples:** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json) — generated from a real machine, so you know exactly what you'll get.
+
 ### The 7 tables in `inventory.md`
 
 `inventory.md` is the first file in `output/` above — a Markdown document that organizes every asset into the following 7 tables:
@@ -199,7 +201,8 @@ asset-inventory/
 ├── scripts/
 │   ├── check-docs.mjs          # docs / links / frontmatter validation
 │   └── generate-assets.mjs     # regenerates assets/*.svg
-├── docs/                       # GitHub Pages + release notes
+├── docs/                       # GitHub Pages + release notes + samples
+│   └── samples/                # example output: inventory.md, usage-guide.md, asset-inventory.json
 └── zh/                         # all Chinese docs except README-ZH.md
     ├── CHANGELOG-ZH.md
     ├── CONTRIBUTING-ZH.md

@@ -59,6 +59,10 @@ const LOCAL_PAIRS = [['SKILL.md', 'zh/skill-zh.md']];
 // Local-only files that are deliberately Chinese and never published.
 const LOCAL_ONLY_DOCS = ['AGENTS.md'];
 
+// Directories whose docs follow the *output* language, not the repo's English
+// rule — e.g. sample artifacts, which may legitimately be in any language.
+const OUTPUT_LANGUAGE_DIRS = ['docs/samples/'];
+
 const errors = [];
 const warnings = [];
 const err = (m) => errors.push(m);
@@ -194,6 +198,7 @@ function isEnglishDoc(relPath) {
   if (relPath.startsWith('zh/')) return false;
   if (/(^|\/)[^/]*-ZH\.md$/i.test(relPath)) return false;
   if (LOCAL_ONLY_DOCS.includes(relPath)) return false;
+  if (OUTPUT_LANGUAGE_DIRS.some((d) => relPath.startsWith(d))) return false;
   return relPath.endsWith('.md');
 }
 
