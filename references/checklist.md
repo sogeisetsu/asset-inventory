@@ -10,6 +10,7 @@ Run this checklist before outputting. Every item must pass.
 
 - [ ] Exactly 7 tables; Tables 1-5/7 five columns, Table 6 six (including Model chain); headers consistent.
 - [ ] Every `Source` names the specific bringer, with a confidence suffix.
+- [ ] No skill in the global skills dir is called `local` until the plugin manifest has been checked — a `managed`/`customized` entry means the plugin is the bringer.
 - [ ] No absolute paths, plaintext keys/tokens, or real project names (unless real-name mode + 4th Provenance line).
 - [ ] Versions/models/counts looked up fresh.
 - [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).

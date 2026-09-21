@@ -147,10 +147,15 @@ For a Chinese deliverable the same content is written in Chinese, in the same on
 | `third-party plugin, opencode.jsonc:plugin[], source <repo> <license>` | npm plugin |
 | `outer app official, install bundle <dir> + config $HOST_CONFIG/` | outer app (host) |
 | `<plugin> package <src/skills/<name>>` | plugin-bundled skill |
-| `local, integrated/upstream <repo> <license>` | user-created skill |
+| `<plugin> manages skill (skills-manifest.json, status <managed/customized>, v<version>)` | plugin-managed skill installed into the global skills dir |
+| `local, upstream <repo> <license>` — **only with a verified repo URL** | genuinely user-authored skill |
 | `global config command/<name>.md` | user command |
 | `host-injected, found by binary scan of <bundle>` | outer-app-injected command |
 | `<mcp-name> (remote MCP, <url>)` / `<mcp-name> (local MCP, <cmd>)` | MCP server |
+
+> **A skill in the global skills dir is NOT automatically "local".** Many arrive from a plugin that installs and manages them. Before writing `local`, check the plugin self-managed manifest (e.g. `.oh-my-opencode-slim/skills-manifest.json`): a `status` of `managed`/`customized` with a `packageVersion` means the **plugin is the bringer**, not the user.
+>
+> **Never infer a repo URL from a skill's folder name.** A directory called `clonedeps` does not imply `github.com/<user>/clonedeps`. The `local, upstream <repo>` form requires a URL you actually saw (in the skill content, a manifest, or the plugin's config). If you cannot verify it, write the real bringer, or `local (repo unverified) ⚠️inferred` — never a fabricated URL.
 
 Suffix every source with confidence: `✅verified` / `✅docs` / `⚠️inferred`. Append state:
 
@@ -176,10 +181,11 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
 3. **Project overlay**: `$PROJECT_DIR/.opencode/`, project-level MCP/plugin additions.
 4. **Plugin packages**: evidence sources are **remappable per host**. Try, in order:
    - **Installed plugin cache** (`$PACKAGE_CACHE/packages/*/`) — list `src/skills/` (packaged skills) AND scan `dist/*.js` for `registerCommand`/`COMMAND_NAME` hook registrations (plugin-registered `/` commands like `/loop` live there, not in `command/`).
-   - **Plugin self-managed manifest** (e.g. `.oh-my-opencode-slim/skills-manifest.json`) — tells `✅available` (synced to global skills) from `📦shelf-only` (in package but not synced).
+   - **Plugin self-managed manifest** (e.g. `.oh-my-opencode-slim/skills-manifest.json`) — **read this before calling any global skill "local"**. It maps each managed skill to its `status` (`managed` / `customized`) and `packageVersion`, which names the plugin as the bringer and distinguishes `✅available` (synced to global skills) from `📦shelf-only` (in package but not synced).
    - **`package.json:dependencies`** and the plugin's own dist/hooks referenced from `opencode.jsonc:plugin[]`.
 
    Use whichever sources exist on the host being inventoried; never assume a single fixed path.
+   > **Attribution rule:** for each skill found in the global skills dir, first ask "did a plugin install this?" — if a manifest lists it, or the skill's directory matches a plugin the config declares, the **plugin is the bringer** and the source is `<plugin> manages skill (skills-manifest.json, status …, v…)`, not `local`.
 5. **Host-injected**: `$HOST_CONFIG/` settings, and a **binary-safe scan of the outer app bundle** for `/xxx` slash-command literals — plain grep misses binaries. The bundle may be `app.asar` (Electron), `web-dist`, or other formats depending on the outer app's tech stack. See `references/host-commands.md` for the scan method.
    > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The bundle scan still works regardless.
 6. **MCP servers — enumerate ALL of them, never just one**: read every `mcp` key from the global config (`$OPENCODE_CONFIG/opencode.jsonc` → `mcp`), then the project overlay (`$PROJECT_DIR/.opencode/`), and merge. For each key you MUST emit a row — local and remote alike, enabled and disabled alike.
@@ -273,6 +279,8 @@ These behaviors make an inventory untrustworthy. Items already covered by the Qu
 - Listing only one MCP server and stopping — Table 5 must match the config's `mcp` key count. A one-row Table 5 means servers were dropped.
 - Treating a user's casually-named software as fact — verify first (`📦`/`🚫` if absent).
 - Writing a bare `plugin package`/`local` as a source without naming the actual plugin/software.
+- Calling a plugin-managed skill "local" — check the plugin's `skills-manifest.json` (or the plugin config) first; the plugin is the bringer.
+- Inventing an upstream repo URL from a skill's folder name (`clonedeps` → `github.com/<user>/clonedeps`). A repo form requires a URL you actually saw, else write the real bringer or `local (repo unverified) ⚠️inferred`.
 - Skipping the binary scan of the outer app bundle — silently drops the whole host-injected class.
 - Copying example rows from `references/format-example.md` as literal output.
 - Editing any skill/command/agent/MCP/config during the inventory. Read-only.
