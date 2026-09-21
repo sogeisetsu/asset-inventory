@@ -43,7 +43,7 @@ git clone https://github.com/sogeisetsu/asset-inventory.git
 
 or download **Code → Download ZIP** from the GitHub page and unzip it. You'll end up with an `asset-inventory/` folder.
 
-**Step 2 — `cd` into the `asset-inventory/` folder and copy only three things** (`SKILL.md`, `references/`, `examples/` — the README, docs, etc. are not needed) to the target:
+**Step 2 — `cd` into the `asset-inventory/` folder and copy only two things** (`SKILL.md`, `references/` — the README, docs, scripts, etc. are not needed) to the target:
 
 | Scope | When to choose | Target |
 |---|---|---|
@@ -53,21 +53,21 @@ or download **Code → Download ZIP** from the GitHub page and unzip it. You'll 
 ```sh
 # Global (macOS / Linux)
 mkdir -p ~/.config/opencode/skills/asset-inventory
-cp -r SKILL.md references examples ~/.config/opencode/skills/asset-inventory/
+cp -r SKILL.md references ~/.config/opencode/skills/asset-inventory/
 
 # Project-scoped (macOS / Linux) — replace <project-root> with your project path
 mkdir -p <project-root>/.opencode/skills/asset-inventory
-cp -r SKILL.md references examples <project-root>/.opencode/skills/asset-inventory/
+cp -r SKILL.md references <project-root>/.opencode/skills/asset-inventory/
 ```
 
 ```powershell
 # Global (Windows PowerShell)
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"
-Copy-Item -Recurse SKILL.md, references, examples -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"
+Copy-Item -Recurse SKILL.md, references -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"
 
 # Project-scoped (Windows PowerShell) — replace <project-root> with your project path
 New-Item -ItemType Directory -Force -Path "<project-root>\.opencode\skills\asset-inventory"
-Copy-Item -Recurse SKILL.md, references, examples -Destination "<project-root>\.opencode\skills\asset-inventory\"
+Copy-Item -Recurse SKILL.md, references -Destination "<project-root>\.opencode\skills\asset-inventory\"
 ```
 
 ### Auto-install via AI
@@ -79,7 +79,7 @@ Install the OpenCode skill "asset-inventory" from <https://github.com/sogeisetsu
 
 1. First ask me exactly one question: install globally, or into the current project only.
 2. Get the repository: prefer `git clone`; if git is unavailable or the clone fails, download the GitHub ZIP instead.
-3. Copy only the three runtime items into the target:
+3. Copy only the two runtime items (SKILL.md and references/) into the target:
    - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - Project-scoped: .opencode/skills/asset-inventory/ inside the current project.
    Create the directory if it is missing. Do not copy the README, docs, assets, or scripts.
@@ -96,7 +96,7 @@ Already installed? Pull the latest and overwrite:
 cd asset-inventory && pwsh ./update.ps1
 ```
 
-The script auto-detects where your install lives (global `~/.config/opencode/skills/asset-inventory/` or a project-scoped directory), does `git pull`, and copies over the three runtime files. It reports the before/after version so you can confirm the update took effect.
+The script auto-detects where your install lives (global `~/.config/opencode/skills/asset-inventory/` or a project-scoped directory), does `git pull`, and copies over the two runtime items (SKILL.md and references/). It reports the before/after version so you can confirm the update took effect.
 
 For a **project-scoped** install, pass the target explicitly:
 
@@ -195,7 +195,6 @@ asset-inventory/
 ├── CONTRIBUTING.md             # contribution guidelines (English)
 ├── LICENSE                     # MIT
 ├── references/                 # skill format & scan-method references
-├── examples/                   # desensitized output example
 ├── assets/                     # local SVG icon / banner / badges (generated)
 ├── scripts/
 │   ├── check-docs.mjs          # docs / links / frontmatter validation
@@ -206,11 +205,27 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    ├── release-notes-v1.3.0-ZH.md
-    └── release-notes-v1.4.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md├── release-notes-v1.4.0-ZH.md└── release-notes-v1.5.0-ZH.md
 ```
 
 Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) and `AGENTS.md` are gitignored and never published.
+
+### Which file should I read?
+
+| You want to… | Read |
+|---|---|
+| Understand the skill's rules / change its behavior | `SKILL.md` |
+| See the exact cell format for a table | `references/format-example.md` |
+| Know every pre-output check | `references/checklist.md` |
+| Add a language / fixed output strings | `references/glossary.json` |
+| Support a new outer app / host | `references/host-commands.md` |
+| Format the usage guide | `references/usage-guide.md` |
+| Debug a failed run | `references/troubleshooting.md` |
+| Install or update | `README.md` (this file) · `update.ps1 -Help` |
+| Contribute / release | `CONTRIBUTING.md` · `CHANGELOG.md` |
+
+`references/` holds the runtime reference files shipped with the skill; `scripts/`, `docs/`, and `zh/` are development-side only.
+
 
 ## Compatibility
 

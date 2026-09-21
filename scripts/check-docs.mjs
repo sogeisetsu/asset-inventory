@@ -12,8 +12,12 @@
 //      or end with -ZH.md; local AGENTS.md is exempt).
 //   6. Version consistency: the SKILL.md frontmatter metadata.version matches
 //      the top release heading in CHANGELOG.md and zh/CHANGELOG-ZH.md.
-//   7. Glossary structure: every language block in references/glossary.json
-//      exposes the same key set as the `en` block.
+//   8. Reference integrity: every `references/<name>.md` mentioned in SKILL.md
+//      exists, and references/checklist.md still holds the expected number of
+//      `- [ ]` items (guards against silent loss when the list is edited).
+//   9. Glossary structure: every language block in references/glossary.json
+//      exposes the same key set as the `en` block, and every language SKILL.md
+//      declares as a fixed-string language actually exists in the glossary.
 //
 // Usage: node scripts/check-docs.mjs
 // Exits non-zero on errors. Warnings do not fail.
@@ -45,6 +49,7 @@ const PAIRS = [
   ['docs/release-notes-v1.1.0.md', 'zh/release-notes-v1.1.0-ZH.md'],
   ['docs/release-notes-v1.3.0.md', 'zh/release-notes-v1.3.0-ZH.md'],
   ['docs/release-notes-v1.4.0.md', 'zh/release-notes-v1.4.0-ZH.md'],
+  ['docs/release-notes-v1.5.0.md', 'zh/release-notes-v1.5.0-ZH.md'],
 ];
 
 // Gitignored local copies compared by mtime (source, local copy).
@@ -275,6 +280,63 @@ async function checkGlossaryStructure() {
       err(`glossary check: "${lang}" has key(s) not in "${reference}": ${extra.join(', ')}`);
     }
   }
+
+  // 7b. Languages SKILL.md advertises must actually exist in the glossary.
+  // SKILL.md states them on the "Fixed-string languages:" line, each code in
+  // backticks, e.g. "English (`en`), Chinese (`zh`), and Japanese (`ja`)".
+  const skillPath = path.join(ROOT, 'SKILL.md');
+  if (!(await exists(skillPath))) return;
+  const skillRaw = await fs.readFile(skillPath, 'utf8');
+  const claimLine = skillRaw
+    .split(/\r?\n/)
+    .find((l) => l.includes('Fixed-string languages'));
+  if (!claimLine) {
+    warn('glossary check: no "Fixed-string languages" line found in SKILL.md — cannot verify advertised languages');
+    return;
+  }
+  const advertised = [...claimLine.matchAll(/\(`([a-z]{2}(?:-[A-Za-z]{2,4})?)`\)/g)].map((m) => m[1]);
+  if (advertised.length === 0) {
+    warn('glossary check: "Fixed-string languages" line lists no (`xx`) codes — cannot verify advertised languages');
+    return;
+  }
+  for (const lang of advertised) {
+    if (!Object.prototype.hasOwnProperty.call(languages, lang)) {
+      err(`glossary check: SKILL.md advertises "${lang}" as a fixed-string language but references/glossary.json has no "${lang}" block`);
+    }
+  }
+  const advertisedSet = new Set(advertised);
+  const undocumented = keys.filter((k) => !advertisedSet.has(k));
+  if (undocumented.length > 0) {
+    warn(`glossary check: glossary has language(s) not advertised in SKILL.md: ${undocumented.join(', ')}`);
+  }
+}
+
+async function checkReferenceIntegrity() {
+  // 8. References named in SKILL.md must exist; checklist must keep its items.
+  const skillPath = path.join(ROOT, 'SKILL.md');
+  if (!(await exists(skillPath))) {
+    err('reference check: SKILL.md not found');
+    return;
+  }
+  const skillRaw = await fs.readFile(skillPath, 'utf8');
+
+  const named = new Set([...skillRaw.matchAll(/`references\/([A-Za-z0-9._-]+)`/g)].map((m) => m[1]));
+  for (const name of named) {
+    if (!(await exists(path.join(ROOT, 'references', name)))) {
+      err(`reference check: SKILL.md references "references/${name}" but the file does not exist`);
+    }
+  }
+
+  const checklistPath = path.join(ROOT, 'references', 'checklist.md');
+  if (!(await exists(checklistPath))) {
+    err('reference check: references/checklist.md not found');
+    return;
+  }
+  const checklistRaw = await fs.readFile(checklistPath, 'utf8');
+  const itemCount = (checklistRaw.match(/^- \[ \]/gm) || []).length;
+  if (itemCount < 20) {
+    err(`reference check: references/checklist.md has only ${itemCount} checklist item(s); at least 20 expected (were items dropped?)`);
+  }
 }
 
 async function main() {
@@ -328,8 +390,9 @@ async function main() {
     }
   }
 
-  // 6, 7
+  // 6, 7, 8
   await checkVersionConsistency();
+  await checkReferenceIntegrity();
   await checkGlossaryStructure();
 
   for (const w of warnings) console.warn(`warning: ${w}`);

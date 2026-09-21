@@ -6,6 +6,24 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.5.0] - 2026-09-21
+
+### Added
+- **Language-claim check** in `check-docs.mjs` — parses the "Fixed-string languages" line in `SKILL.md` and fails if any advertised language (e.g. `ja`) has no block in `references/glossary.json`. This closes the gap that let v1.4.0 ship a `ja` claim with no `ja` data.
+- **Reference-integrity check** in `check-docs.mjs` — every `references/<name>` named in `SKILL.md` must exist, and `references/checklist.md` must keep at least 20 checklist items (guards against silent loss when the list is edited).
+- **Japanese glossary block** (`references/glossary.json` → `ja`) — actually delivered now; `en` / `zh` / `ja` each carry the same 10 keys.
+- **`update.ps1 -Help`** — usage, options, and install locations without touching anything.
+- **"Which file should I read?" navigation** in both READMEs — maps common intents to the right file.
+
+### Changed
+- **`references/format-example.md` merged with `examples/inventory-example.md`** — they were near-duplicates (17 identical rows, ~3,932 shared bytes). The two are now one file; the runtime set is `SKILL.md` + `references/`, and `update.ps1`, both READMEs, and both CONTRIBUTING files no longer mention `examples/`.
+- **`SKILL.md` "What it does" rules consolidated** — the Cell Conventions bullet no longer restates the full rule set; it points at the dedicated "What-it-does format (mandatory)" section.
+
+### Removed
+- **`examples/inventory-example.md`** — removed as a duplicate of `references/format-example.md`. Runtime payload drops from 60,390 B to 55,250 B (~8.5%, ≈1,285 tokens saved on a full read).
+
+---
+
 ## [1.4.0] - 2026-09-21
 
 ### Added

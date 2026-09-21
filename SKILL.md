@@ -5,7 +5,7 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.4.0
+  version: 1.5.0
 ---
 
 # Asset Inventory
@@ -106,16 +106,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
   - MCP → `Agent calls it` (+ known tool-name prefix/alias, e.g. `grep_app_* / gh_grep_*`).
   - Software/host capability → `active once installed` / `nothing to call, on from launch` / `when the Agent calls it`.
 - **When to use**: concrete scenario with conditions (e.g. `needs git`, `expensive`, `Windows-only`). Never a bare "on demand".
-- **What it does**: **detailed, never one-liners** — shape `Simple: one sentence. Detailed: <2-4 sentences>`.
-  The Detailed part MUST be expanded from the source's actual description
-  (`SKILL.md` frontmatter `description`, `command/*.md` frontmatter + body,
-  official doc wording, `magicPrompts` usage text), paraphrased into readable
-  prose in the output language, covering: what it actually does, how it is
-  typically invoked, and key caveats (`needs git`, `expensive`, `depends on a CLI
-  that is/isn't installed`, `which model chain it uses`).
-  **Never** write deletion consequences ("goes away when the plugin is removed" / "what happens if you delete it").
-  - ❌ Bad: `Simple: see results. Detailed: prints this session's data.`
-  - ✅ Good: `Simple: see how many tokens this session saved. Detailed: it immediately runs the rtk_gain tool and prints a bill of the tokens saved after whitelisted commands were rewritten through RTK; it asks nothing and changes no config. Best glanced at when a long session ends.`
+- **What it does**: **detailed, never one-liners** — shape `Simple: one sentence. Detailed: <2-4 sentences>`. Full rules in [What-it-does format](#what-it-does-format-mandatory) below.
 - **Model chain (Table 6 only)**: the current preset's chain `a→b→c`, plus backup presets. **Exemption**: core-bundled agents without their own model config (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback"; never write placeholder phrasing like "follows the main session" as if it were a chain.
 
 ### What-it-does format (mandatory)
@@ -126,6 +117,8 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 Simple: one-sentence summary. Detailed: 2-4 sentences expanded from the source SKILL.md description / command docs / magicPrompts text, covering: what it does, how it is triggered, and its caveats.
 ```
 
+The Detailed part MUST be expanded from the source's actual description (`SKILL.md` frontmatter `description`, `command/*.md` frontmatter + body, official doc wording, `magicPrompts` usage text), paraphrased into readable prose in the output language, covering what it actually does, how it is typically invoked, and key caveats (`needs git`, `expensive`, `depends on a CLI that is/isn't installed`, `which model chain it uses`).
+
 **Expansion source priority:**
 1. `SKILL.md` frontmatter `description`
 2. `command/*.md` frontmatter + body
@@ -134,8 +127,10 @@ Simple: one-sentence summary. Detailed: 2-4 sentences expanded from the source S
 
 **Forbidden:**
 - ❌ one-liner / label-style (`Simple: see results. Detailed: prints this session's data.`)
-- ❌ deletion consequences ("goes away when the plugin is removed")
+- ❌ deletion consequences (`Simple: goes away when the plugin is removed.`)
 - ❌ placeholders (`Simple: TODO. Detailed: TBD.`)
+
+✅ Good: `Simple: see how many tokens this session saved. Detailed: it immediately runs the rtk_gain tool and prints a bill of the tokens saved after whitelisted commands were rewritten through RTK; it asks nothing and changes no config. Best glanced at when a long session ends.`
 
 ### Source Classification
 

@@ -5,15 +5,44 @@
 #
 # What it does:
 #   1. Pulls latest from the repo (skips if the repo dir is dirty)
-#   2. Backs up existing SKILL.md (if exists)
-#   3. Copies SKILL.md + references/ + examples/ to the install location
+#   2. Backs up existing files (if version changes)
+#   3. Copies SKILL.md + references/ to the install location
 #   4. Reports before/after version
+#
+# Options:
+#   -Target <dir>   Update a project-scoped install instead of the global one
+#   -NoBackup       Skip the pre-overwrite backup
+#   -DryRun         Preview what would be copied; change nothing
+#   -Help           Show this help and exit
 
 param(
   [string]$Target,   # Optional: project-scoped target dir (e.g. /path/to/my-project/.opencode/skills/asset-inventory)
   [switch]$NoBackup, # Skip backup step
-  [switch]$DryRun    # Preview what would be copied, change nothing
+  [switch]$DryRun,   # Preview what would be copied, change nothing
+  [switch]$Help      # Show usage and exit
 )
+
+if ($Help) {
+  @'
+asset-inventory — one-command update
+
+Usage:
+  pwsh ./update.ps1                       Update the global install
+  pwsh ./update.ps1 -Target <dir>         Update a project-scoped install
+  pwsh ./update.ps1 -DryRun               Preview without writing
+  pwsh ./update.ps1 -NoBackup             Skip the backup step
+
+It pulls the latest repo (unless the working tree is dirty), backs up any
+existing install when the version changes, copies SKILL.md and references/
+to the target, and reports the before/after version.
+
+Install location:
+  Global          ~/.config/opencode/skills/asset-inventory/
+                  (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+  Project-scoped  <project-root>/.opencode/skills/asset-inventory/   (pass -Target)
+'@ | Write-Host
+  exit 0
+}
 
 $ErrorActionPreference = "Stop"
 
@@ -55,7 +84,7 @@ if (Test-Path (Join-Path $RepoRoot ".git")) {
 }
 
 # --- determine install target ---
-$runtimeFiles = @("SKILL.md", "references", "examples")
+$runtimeFiles = @("SKILL.md", "references")
 
 if ($Target) {
   $installDir = $Target
