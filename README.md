@@ -206,7 +206,8 @@ asset-inventory/
     ├── CONTRIBUTING-ZH.md
     ├── LICENSE-ZH.txt
     ├── release-notes-v1.1.0-ZH.md
-    └── release-notes-v1.3.0-ZH.md
+    ├── release-notes-v1.3.0-ZH.md
+    └── release-notes-v1.4.0-ZH.md
 ```
 
 Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) and `AGENTS.md` are gitignored and never published.

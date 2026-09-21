@@ -6,6 +6,27 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.4.0] - 2026-09-21
+
+### Added
+- **PR-triggered docs check** (`.github/workflows/docs-check.yml`) — runs `node --check` on the scripts and `node scripts/check-docs.mjs` on every pull request to `master` (and on push), so PRs finally get a real gate instead of the deploy-only workflow.
+- **Version-consistency check** in `check-docs.mjs` — reads `metadata.version` from the `SKILL.md` frontmatter and fails if it disagrees with the top release heading in `CHANGELOG.md` or `zh/CHANGELOG-ZH.md`.
+- **Glossary-structure check** in `check-docs.mjs` — every language block in `references/glossary.json` must expose the same key set as the `en` block; reports missing or extra keys per language.
+- **Japanese glossary entries** (`references/glossary.json` → `ja`) — the fixed-string promise now holds for `en` / `zh` / `ja`, with an explicit fallback rule for any other language.
+- **`references/checklist.md`** — the full Quality Checklist, moved out of `SKILL.md` so the rule body stays focused; `SKILL.md` now points to it.
+- **`update.ps1 -DryRun`** — previews exactly which runtime files would be copied and writes nothing.
+- **Troubleshooting entries** — Table 6 row-order self-check, non-glossary language handling, and the stale local-copy warning explained.
+
+### Changed
+- **`SKILL.md` language promise narrowed and made honest** — it no longer claims every language has fixed strings; `en` / `zh` / `ja` are verbatim from the glossary, any other language derives its strings from the `en` block and says so in Provenance.
+- **`CONTRIBUTING.md` / `zh/CONTRIBUTING-ZH.md`** — versioning section now names the three places that must stay in lockstep and the exact glossary key set a new language needs.
+- **`SKILL.md` trimmed** — the inline Quality Checklist (42 lines) moved to `references/checklist.md`.
+
+### Fixed
+- **v1.3.0 release date** in `CHANGELOG.md` and `zh/CHANGELOG-ZH.md` corrected from `2026-09-13` to the actual release day `2026-09-21`.
+
+---
+
 ## [1.3.0] - 2026-09-21
 
 ### Added

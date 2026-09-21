@@ -44,6 +44,7 @@ const PAIRS = [
   ['CHANGELOG.md', 'zh/CHANGELOG-ZH.md'],
   ['docs/release-notes-v1.1.0.md', 'zh/release-notes-v1.1.0-ZH.md'],
   ['docs/release-notes-v1.3.0.md', 'zh/release-notes-v1.3.0-ZH.md'],
+  ['docs/release-notes-v1.4.0.md', 'zh/release-notes-v1.4.0-ZH.md'],
 ];
 
 // Gitignored local copies compared by mtime (source, local copy).

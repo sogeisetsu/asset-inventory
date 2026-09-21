@@ -11,7 +11,8 @@
 
 param(
   [string]$Target,   # Optional: project-scoped target dir (e.g. /path/to/my-project/.opencode/skills/asset-inventory)
-  [switch]$NoBackup  # Skip backup step
+  [switch]$NoBackup, # Skip backup step
+  [switch]$DryRun    # Preview what would be copied, change nothing
 )
 
 $ErrorActionPreference = "Stop"
@@ -75,6 +76,23 @@ if ($Target) {
 }
 
 Write-Host "`n> Updating: $installDir" -ForegroundColor Cyan
+
+if ($DryRun) {
+  Write-Host "`n  DRY RUN — no files will be changed." -ForegroundColor Yellow
+  if ($newVersion) { Write-Host "  Would install version: $newVersion" }
+  Write-Host "  Target: $installDir" -ForegroundColor DarkGray
+  foreach ($item in $runtimeFiles) {
+    $src = Join-Path $RepoRoot $item
+    if (Test-Path $src) {
+      $kind = if (Test-Path $src -PathType Container) { "dir " } else { "file" }
+      Write-Host "  would copy [$kind] $item"
+    } else {
+      Write-Host "  would skip (missing source): $item" -ForegroundColor Yellow
+    }
+  }
+  Write-Host "`n  Dry run complete — nothing was written. Re-run without -DryRun to apply." -ForegroundColor Green
+  exit 0
+}
 
 # --- ensure target directory exists ---
 if (-not (Test-Path $installDir)) {
