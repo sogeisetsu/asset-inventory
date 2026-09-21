@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **Conoce exactamente qué puede invocar tu entorno de OpenCode: cada plugin, skill, comando, servidor MCP, agente y capacidad del host, con su procedencia.**
 
-[![License: MIT](assets/badge-license.svg)](LICENSE)
-[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
 
-[English](README.md) · [中文](README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
+[English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -56,7 +56,7 @@ Instala el skill de OpenCode "asset-inventory" desde <https://github.com/sogeise
 6. Trata el origen como solo lectura y no modifiques ningún contenido. Informa solo la ubicación y la versión.
 ```
 
-📖 Pasos completos (todas las plataformas), autoinstalación con IA y actualización → **[Instalación y actualización](docs/guides/install-and-update.md)**
+📖 Pasos completos (todas las plataformas), autoinstalación con IA y actualización → **[Instalación y actualización](../docs/guides/install-and-update.md)**
 
 ## 📤 Resultado
 
@@ -68,7 +68,7 @@ your-project-root/
     └── asset-inventory.json # filas legibles por máquina (clave table + name)
 ```
 
-👀 **Ejemplos reales:** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json)
+👀 **Ejemplos reales:** 📄 [inventory.md](../docs/samples/inventory.md) · 🧭 [usage-guide.md](../docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](../docs/samples/asset-inventory.json)
 
 ## ✨ Aspectos destacados
 
@@ -83,15 +83,15 @@ your-project-root/
 
 | Guía | Contenido |
 |---|---|
-| 🧠 [Cómo funciona](docs/guides/how-it-works.md) | Idea central, las 7 tablas, procedencia, los tres archivos |
-| 📦 [Instalación y actualización](docs/guides/install-and-update.md) | Todas las plataformas, autoinstalación con IA, `update.ps1` |
-| 🧭 [Repositorio y contribución](docs/guides/repository-and-contributing.md) | Qué leer, estructura, contribuir, versiones |
+| 🧠 [Cómo funciona](../docs/guides/how-it-works.md) | Idea central, las 7 tablas, procedencia, los tres archivos |
+| 📦 [Instalación y actualización](../docs/guides/install-and-update.md) | Todas las plataformas, autoinstalación con IA, `update.ps1` |
+| 🧭 [Repositorio y contribución](../docs/guides/repository-and-contributing.md) | Qué leer, estructura, contribuir, versiones |
 
 ## 🔗 Enlaces
 
 - 🖥️ **Página de inicio:** <https://sogeisetsu.github.io/asset-inventory/>
-- 📝 **Registro de cambios:** [CHANGELOG.md](CHANGELOG.md)
-- 🤝 **Contribuir:** [CONTRIBUTING.md](CONTRIBUTING.md)
+- 📝 **Registro de cambios:** [CHANGELOG.md](../CHANGELOG.md)
+- 🤝 **Contribuir:** [CONTRIBUTING.md](../CONTRIBUTING.md)
 
 ## ✅ Compatibilidad
 
@@ -101,4 +101,4 @@ Requiere [OpenCode](https://opencode.ai) (los skills se cargan bajo demanda con 
 
 ## 📄 Licencia
 
-MIT — ver [LICENSE](LICENSE).
+MIT — ver [LICENSE](../LICENSE).

@@ -1,17 +1,17 @@
 <div align="center" dir="rtl">
 
-<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **اعرف بالضبط ما يمكن لبيئة OpenCode لديك استدعاؤه فعلاً — كل إضافة ومهارة وأمر وخادم MCP ووكيل وقدرة مضيفة، مع بيان المصدر.**
 
-[![License: MIT](assets/badge-license.svg)](LICENSE)
-[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
 
-[English](README.md) · [中文](README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
+[English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -58,7 +58,7 @@ cd asset-inventory
 ٦. اعتبر المصدر للقراءة فقط ولا تعدّل أي محتوى. أبلغ فقط عن مسار التثبيت والإصدار.
 ```
 
-📖 الخطوات الكاملة (كل الأنظمة) والتثبيت التلقائي بالذكاء الاصطناعي والتحديث ← **[التثبيت والتحديث](docs/guides/install-and-update.md)**
+📖 الخطوات الكاملة (كل الأنظمة) والتثبيت التلقائي بالذكاء الاصطناعي والتحديث ← **[التثبيت والتحديث](../docs/guides/install-and-update.md)**
 
 ## 📤 النواتج
 
@@ -70,7 +70,7 @@ your-project-root/
     └── asset-inventory.json # صفوف مقروءة آليًا (المفتاح table + name)
 ```
 
-👀 **أمثلة حقيقية:** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json)
+👀 **أمثلة حقيقية:** 📄 [inventory.md](../docs/samples/inventory.md) · 🧭 [usage-guide.md](../docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](../docs/samples/asset-inventory.json)
 
 ## ✨ المزايا
 
@@ -85,15 +85,15 @@ your-project-root/
 
 | الدليل | المحتوى |
 |---|---|
-| 🧠 [كيف يعمل](docs/guides/how-it-works.md) | الفكرة، الجداول السبعة، المصدر، الملفات الثلاثة |
-| 📦 [التثبيت والتحديث](docs/guides/install-and-update.md) | كل الأنظمة، التثبيت التلقائي، `update.ps1` |
-| 🧭 [المستودع والمساهمة](docs/guides/repository-and-contributing.md) | أي ملف تقرأ، البنية، المساهمة، الإصدارات |
+| 🧠 [كيف يعمل](../docs/guides/how-it-works.md) | الفكرة، الجداول السبعة، المصدر، الملفات الثلاثة |
+| 📦 [التثبيت والتحديث](../docs/guides/install-and-update.md) | كل الأنظمة، التثبيت التلقائي، `update.ps1` |
+| 🧭 [المستودع والمساهمة](../docs/guides/repository-and-contributing.md) | أي ملف تقرأ، البنية، المساهمة، الإصدارات |
 
 ## 🔗 روابط
 
 - 🖥️ **صفحة الهبوط:** <https://sogeisetsu.github.io/asset-inventory/>
-- 📝 **سجل التغييرات:** [CHANGELOG.md](CHANGELOG.md)
-- 🤝 **المساهمة:** [CONTRIBUTING.md](CONTRIBUTING.md)
+- 📝 **سجل التغييرات:** [CHANGELOG.md](../CHANGELOG.md)
+- 🤝 **المساهمة:** [CONTRIBUTING.md](../CONTRIBUTING.md)
 
 ## ✅ التوافق
 
@@ -103,6 +103,6 @@ your-project-root/
 
 ## 📄 الترخيص
 
-MIT — راجع [LICENSE](LICENSE).
+MIT — راجع [LICENSE](../LICENSE).
 
 </div>

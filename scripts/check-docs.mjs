@@ -59,11 +59,11 @@ const PAIRS = [
 const README_LOCALES = [
   'README.md',
   'README-ZH.md',
-  'README-JA.md',
-  'README-KO.md',
-  'README-RU.md',
-  'README-AR.md',
-  'README-ES.md',
+  'readmes/README-JA.md',
+  'readmes/README-KO.md',
+  'readmes/README-RU.md',
+  'readmes/README-AR.md',
+  'readmes/README-ES.md',
 ];
 
 // Gitignored local copies compared by mtime (source, local copy).
@@ -395,8 +395,14 @@ async function checkReadmeLocales() {
       continue;
     }
     const raw = await fs.readFile(abs, 'utf8');
+    // Compare by basename so a README may link siblings inside its own folder
+    // (`README-JA.md`) or across folders (`../README.md`, `readmes/README-JA.md`).
+    const linked = new Set(
+      [...raw.matchAll(/\]\(([^)\s]+)\)/g)].map((m) => m[1].split('/').pop()),
+    );
     for (const target of README_LOCALES) {
-      if (!raw.includes(`](${target})`)) {
+      const name = target.split('/').pop();
+      if (!linked.has(name)) {
         warn(`readme locales: ${relPath} does not link to ${target}`);
       }
     }
@@ -419,7 +425,7 @@ async function main() {
       // CJK scan so only real prose is checked.
       const prose = raw
         .split(/\r?\n/)
-        .filter((l) => !/\]\(README-[A-Z]{2}\.md\)/.test(l) && !/\]\(README\.md\)/.test(l))
+        .filter((l) => !/\]\([^)]*README(?:-[A-Z]{2})?\.md\)/.test(l))
         .join('\n');
       if (CJK.test(prose)) {
         const count = (prose.match(/[\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff]/g) || []).length;

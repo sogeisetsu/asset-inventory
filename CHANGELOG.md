@@ -6,6 +6,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.7.3] - 2026-09-22
+
+### Added
+- **"Install via AI" section** in all seven READMEs, reusing the localized install prompts from the landing page.
+
+### Changed
+- **README layout** — the non-English/Chinese READMEs (`README-JA/KO/RU/AR/ES.md`) moved into `readmes/`; the root now holds only `README.md` and `README-ZH.md`. Relative links, the language switcher, the docs check, and the repository-layout guide were updated.
+- **README titles** — dropped the 🗃️ emoji from every README H1.
+
+---
+
 ## [1.7.2] - 2026-09-22
 
 ### Fixed

@@ -11,7 +11,7 @@
 |---|---|---|---|---|---|
 | 1.7.1 | patch | 发布计划 + tag/release 政策澄清 | ✅ | — | ✅ 已完成 |
 | 1.7.2 | patch | 修正 MCP 调用事实（skill 规则 + 全部样例） | ✅ | — | ✅ 已完成 |
-| 1.7.3 | patch | README 整理：去标题 emoji、加"通过 AI 安装"、非中英 README 移入 `readmes/` | ⬜ | — | ⬜ 待办 |
+| 1.7.3 | patch | README 整理：去标题 emoji、加"通过 AI 安装"、非中英 README 移入 `readmes/` | ✅ | — | ✅ 已完成 |
 | 1.7.4 | patch | 文档站点：未翻译内容回退英文（修"只有框架没有内容"） | ⬜ | — | ⬜ 待办 |
 | 1.8.0 | minor | glossary 补齐 `ko` / `ru` / `ar` / `es`（7 语言固定字符串） | ⬜ | ⬜ | ⬜ 待办 |
 | 1.9.0 | minor | 样本页：生成脚本、渲染 Markdown/JSON、`docs/samples/` 目录重构 | ⬜ | ⬜ | ⬜ 待办 |
@@ -50,6 +50,5 @@ HTML 页面。框架与标题保留所选语言。
 
 ## 下一步
 
-1.7.2 已完成。接下来：**1.7.3 —— README 整理**（去标题 emoji、加"通过 AI 安装"、
-非中英 README 移入 `readmes/`），然后沿梯队继续。每个 tag 都要同步 `SKILL.md`
-与两份 changelog。
+1.7.3 已完成。接下来：**1.7.4 —— 站点英文回退**（框架用所选语言，未翻译内容
+回退英文），然后沿梯队继续。每个 tag 都要同步 `SKILL.md` 与两份 changelog。

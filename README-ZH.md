@@ -9,7 +9,7 @@
 [![License: MIT](assets/badge-license.svg)](LICENSE)
 [![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
 
-[English](README.md) · [中文](README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
+[English](README.md) · [中文](README-ZH.md) · [日本語](readmes/README-JA.md) · [한국어](readmes/README-KO.md) · [Русский](readmes/README-RU.md) · [العربية](readmes/README-AR.md) · [Español](readmes/README-ES.md)
 
 <img src="assets/banner-zh.svg" alt="asset-inventory banner" width="100%">
 

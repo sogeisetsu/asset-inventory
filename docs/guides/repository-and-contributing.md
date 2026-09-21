@@ -23,9 +23,10 @@
 asset-inventory/
 ├── SKILL.md                    # the skill (execution skeleton + rules)
 ├── update.ps1                  # one-command update script
-├── README.md                   # English documentation (this file)
+├── README.md                   # English documentation
 ├── README-ZH.md                # Chinese documentation
-├── README-JA.md / -KO / -RU / -AR / -ES   # localized READMEs
+├── readmes/                    # localized READMEs (JA / KO / RU / AR / ES)
+├── TODO.md                     # rollout plan (English)
 ├── CHANGELOG.md                # version history (English)
 ├── CONTRIBUTING.md             # contribution guidelines (English)
 ├── LICENSE                     # MIT
@@ -42,7 +43,7 @@ asset-inventory/
 
 ## 🧩 Runtime vs. development
 
-Only `SKILL.md` and `references/` are shipped to the skill's install location. Everything else (`docs/`, `scripts/`, `zh/`, `assets/`, `README*`, `CHANGELOG*`, `CONTRIBUTING*`) is development-side only.
+Only `SKILL.md` and `references/` are shipped to the skill's install location. Everything else (`docs/`, `scripts/`, `zh/`, `assets/`, `readmes/`, `README*`, `CHANGELOG*`, `CONTRIBUTING*`) is development-side only.
 
 ## ✅ Contributing
 

@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **OpenCode 環境が実際に呼び出せるものを一目で — プラグイン、スキル、コマンド、MCP サーバー、エージェント、ホスト機能を、出所つきで。**
 
-[![License: MIT](assets/badge-license.svg)](LICENSE)
-[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
 
-[English](README.md) · [中文](README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
+[English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -56,7 +56,7 @@ OpenCode スキル "asset-inventory" を <https://github.com/sogeisetsu/asset-in
 6. ソースは読み取り専用として扱い、内容を変更しない。報告はインストール先と版のみ。
 ```
 
-📖 詳細手順（各プラットフォーム）・AI 自動インストール・更新 → **[インストールと更新](docs/guides/install-and-update.md)**
+📖 詳細手順（各プラットフォーム）・AI 自動インストール・更新 → **[インストールと更新](../docs/guides/install-and-update.md)**
 
 ## 📤 出力
 
@@ -68,7 +68,7 @@ your-project-root/
     └── asset-inventory.json # 機械可読な行（主キー table + name）
 ```
 
-👀 **実例を見る：** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json)
+👀 **実例を見る：** 📄 [inventory.md](../docs/samples/inventory.md) · 🧭 [usage-guide.md](../docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](../docs/samples/asset-inventory.json)
 
 ## ✨ 特長
 
@@ -83,15 +83,15 @@ your-project-root/
 
 | ガイド | 内容 |
 |---|---|
-| 🧠 [仕組み](docs/guides/how-it-works.md) | 基本方針、7 表、出所、3 つの成果物 |
-| 📦 [インストールと更新](docs/guides/install-and-update.md) | 各プラットフォーム、AI 自動インストール、`update.ps1` |
-| 🧭 [リポジトリと貢献](docs/guides/repository-and-contributing.md) | 読むべきファイル、構成、貢献、バージョン規則 |
+| 🧠 [仕組み](../docs/guides/how-it-works.md) | 基本方針、7 表、出所、3 つの成果物 |
+| 📦 [インストールと更新](../docs/guides/install-and-update.md) | 各プラットフォーム、AI 自動インストール、`update.ps1` |
+| 🧭 [リポジトリと貢献](../docs/guides/repository-and-contributing.md) | 読むべきファイル、構成、貢献、バージョン規則 |
 
 ## 🔗 リンク
 
 - 🖥️ **ランディングページ：** <https://sogeisetsu.github.io/asset-inventory/>
-- 📝 **変更履歴：** [CHANGELOG.md](CHANGELOG.md)
-- 🤝 **貢献：** [CONTRIBUTING.md](CONTRIBUTING.md)
+- 📝 **変更履歴：** [CHANGELOG.md](../CHANGELOG.md)
+- 🤝 **貢献：** [CONTRIBUTING.md](../CONTRIBUTING.md)
 
 ## ✅ 互換性
 
@@ -101,4 +101,4 @@ your-project-root/
 
 ## 📄 ライセンス
 
-MIT — [LICENSE](LICENSE) を参照。
+MIT — [LICENSE](../LICENSE) を参照。

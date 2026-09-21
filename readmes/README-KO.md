@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **OpenCode 환경이 실제로 호출할 수 있는 것을 한눈에 — 모든 플러그인, 스킬, 명령, MCP 서버, 에이전트, 호스트 기능을 출처와 함께.**
 
-[![License: MIT](assets/badge-license.svg)](LICENSE)
-[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
 
-[English](README.md) · [中文](README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
+[English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -56,7 +56,7 @@ OpenCode 스킬 "asset-inventory"를 <https://github.com/sogeisetsu/asset-invent
 6. 소스는 읽기 전용으로 취급하고 내용을 수정하지 않음. 보고는 설치 위치와 버전만.
 ```
 
-📖 전체 단계(모든 플랫폼) · AI 자동 설치 · 업데이트 → **[설치 및 업데이트](docs/guides/install-and-update.md)**
+📖 전체 단계(모든 플랫폼) · AI 자동 설치 · 업데이트 → **[설치 및 업데이트](../docs/guides/install-and-update.md)**
 
 ## 📤 산출물
 
@@ -68,7 +68,7 @@ your-project-root/
     └── asset-inventory.json # 기계가 읽는 행(기본 키 table + name)
 ```
 
-👀 **실제 예시 보기:** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json)
+👀 **실제 예시 보기:** 📄 [inventory.md](../docs/samples/inventory.md) · 🧭 [usage-guide.md](../docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](../docs/samples/asset-inventory.json)
 
 ## ✨ 특징
 
@@ -83,15 +83,15 @@ your-project-root/
 
 | 가이드 | 내용 |
 |---|---|
-| 🧠 [작동 방식](docs/guides/how-it-works.md) | 핵심 사상, 7개 표, 출처, 세 가지 산출물 |
-| 📦 [설치 및 업데이트](docs/guides/install-and-update.md) | 모든 플랫폼, AI 자동 설치, `update.ps1` |
-| 🧭 [저장소와 기여](docs/guides/repository-and-contributing.md) | 읽을 파일, 구조, 기여, 버전 규칙 |
+| 🧠 [작동 방식](../docs/guides/how-it-works.md) | 핵심 사상, 7개 표, 출처, 세 가지 산출물 |
+| 📦 [설치 및 업데이트](../docs/guides/install-and-update.md) | 모든 플랫폼, AI 자동 설치, `update.ps1` |
+| 🧭 [저장소와 기여](../docs/guides/repository-and-contributing.md) | 읽을 파일, 구조, 기여, 버전 규칙 |
 
 ## 🔗 링크
 
 - 🖥️ **랜딩 페이지:** <https://sogeisetsu.github.io/asset-inventory/>
-- 📝 **변경 이력:** [CHANGELOG.md](CHANGELOG.md)
-- 🤝 **기여:** [CONTRIBUTING.md](CONTRIBUTING.md)
+- 📝 **변경 이력:** [CHANGELOG.md](../CHANGELOG.md)
+- 🤝 **기여:** [CONTRIBUTING.md](../CONTRIBUTING.md)
 
 ## ✅ 호환성
 
@@ -101,4 +101,4 @@ your-project-root/
 
 ## 📄 라이선스
 
-MIT — [LICENSE](LICENSE) 참조.
+MIT — [LICENSE](../LICENSE) 참조.

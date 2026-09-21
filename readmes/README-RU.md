@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **Узнайте точно, что ваша среда OpenCode может реально вызвать — каждый плагин, навык, команда, MCP-сервер, агент и возможность хоста, с указанием происхождения.**
 
-[![License: MIT](assets/badge-license.svg)](LICENSE)
-[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
 
-[English](README.md) · [中文](README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
+[English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -56,7 +56,7 @@ cd asset-inventory
 6. Считайте источник только для чтения и не меняйте содержимое. Сообщите только путь установки и версию.
 ```
 
-📖 Полные шаги (все платформы), автоустановка через ИИ и обновление → **[Установка и обновление](docs/guides/install-and-update.md)**
+📖 Полные шаги (все платформы), автоустановка через ИИ и обновление → **[Установка и обновление](../docs/guides/install-and-update.md)**
 
 ## 📤 Результат
 
@@ -68,7 +68,7 @@ your-project-root/
     └── asset-inventory.json # машиночитаемые строки (ключ table + name)
 ```
 
-👀 **Реальные примеры:** 📄 [inventory.md](docs/samples/inventory.md) · 🧭 [usage-guide.md](docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](docs/samples/asset-inventory.json)
+👀 **Реальные примеры:** 📄 [inventory.md](../docs/samples/inventory.md) · 🧭 [usage-guide.md](../docs/samples/usage-guide.md) · 🧾 [asset-inventory.json](../docs/samples/asset-inventory.json)
 
 ## ✨ Особенности
 
@@ -83,15 +83,15 @@ your-project-root/
 
 | Руководство | Содержание |
 |---|---|
-| 🧠 [Как это работает](docs/guides/how-it-works.md) | Идея, 7 таблиц, происхождение, три файла |
-| 📦 [Установка и обновление](docs/guides/install-and-update.md) | Все платформы, автоустановка ИИ, `update.ps1` |
-| 🧭 [Репозиторий и участие](docs/guides/repository-and-contributing.md) | Что читать, структура, участие, версии |
+| 🧠 [Как это работает](../docs/guides/how-it-works.md) | Идея, 7 таблиц, происхождение, три файла |
+| 📦 [Установка и обновление](../docs/guides/install-and-update.md) | Все платформы, автоустановка ИИ, `update.ps1` |
+| 🧭 [Репозиторий и участие](../docs/guides/repository-and-contributing.md) | Что читать, структура, участие, версии |
 
 ## 🔗 Ссылки
 
 - 🖥️ **Лендинг:** <https://sogeisetsu.github.io/asset-inventory/>
-- 📝 **История изменений:** [CHANGELOG.md](CHANGELOG.md)
-- 🤝 **Участие:** [CONTRIBUTING.md](CONTRIBUTING.md)
+- 📝 **История изменений:** [CHANGELOG.md](../CHANGELOG.md)
+- 🤝 **Участие:** [CONTRIBUTING.md](../CONTRIBUTING.md)
 
 ## ✅ Совместимость
 
@@ -101,4 +101,4 @@ your-project-root/
 
 ## 📄 Лицензия
 
-MIT — см. [LICENSE](LICENSE).
+MIT — см. [LICENSE](../LICENSE).
