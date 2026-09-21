@@ -2,7 +2,7 @@
 
 <img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
-# 🗃️ Asset Inventory
+# Asset Inventory
 
 **一眼看清你的 OpenCode 环境真正能调用什么 —— 每个插件、Skill、命令、MCP、Agent 与外层应用能力，都带来源追溯。**
 
@@ -37,6 +37,24 @@ cd asset-inventory
 
 - **全局：** `~/.config/opencode/skills/asset-inventory/`
 - **项目级：** `<项目根目录>/.opencode/skills/asset-inventory/`
+
+### 🤖 通过 AI 安装
+
+把下面这段发给 AI，它会帮你装好：
+
+```
+请帮我安装 OpenCode skill "asset-inventory"，仓库地址 <https://github.com/sogeisetsu/asset-inventory>。
+
+1. 先只问我一个问题：装到全局，还是只装进当前项目。
+2. 获取仓库：优先 `git clone`；如果没有 git 或克隆失败，就改用 GitHub 的 ZIP 下载。
+3. 只把两个运行时项（SKILL.md 和 references/）复制到目标位置：
+   - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
+   - 项目级：当前项目下的 .opencode/skills/asset-inventory/
+   目录不存在就创建。不要复制 README、docs、assets、scripts。
+4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
+5. 完成后确认 <目标位置>/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
+6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。
+```
 
 📖 完整步骤（各平台）+ AI 自动安装 + 更新 → **[安装与更新](docs/guides/install-and-update.md)**
 

@@ -2,7 +2,7 @@
 
 <img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
-# 🗃️ Asset Inventory
+# Asset Inventory
 
 **Узнайте точно, что ваша среда OpenCode может реально вызвать — каждый плагин, навык, команда, MCP-сервер, агент и возможность хоста, с указанием происхождения.**
 
@@ -37,6 +37,24 @@ cd asset-inventory
 
 - **Глобально:** `~/.config/opencode/skills/asset-inventory/`
 - **В проект:** `<project-root>/.opencode/skills/asset-inventory/`
+
+### 🤖 Установка через ИИ
+
+Отправьте текст ниже своему ИИ — он установит всё сам:
+
+```
+Установите навык OpenCode "asset-inventory" из <https://github.com/sogeisetsu/asset-inventory>.
+
+1. Сначала задайте ровно один вопрос: глобально или только в текущий проект.
+2. Получите репозиторий: предпочтительно `git clone`; если git нет или клонирование не удалось — скачайте ZIP с GitHub.
+3. Скопируйте только два рабочих элемента (SKILL.md и references/):
+   - Глобально: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+   - В проект: .opencode/skills/asset-inventory/ внутри текущего проекта.
+   Создайте каталог при отсутствии. Не копируйте README, docs, assets, scripts.
+4. Если навык уже есть — перезапишите (это обновление), не спрашивайте второй раз.
+5. По завершении убедитесь, что <target>/asset-inventory/SKILL.md существует, и прочитайте установленную версию из `metadata.version`.
+6. Считайте источник только для чтения и не меняйте содержимое. Сообщите только путь установки и версию.
+```
 
 📖 Полные шаги (все платформы), автоустановка через ИИ и обновление → **[Установка и обновление](docs/guides/install-and-update.md)**
 

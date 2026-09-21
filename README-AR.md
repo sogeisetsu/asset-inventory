@@ -2,7 +2,7 @@
 
 <img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
-# 🗃️ Asset Inventory
+# Asset Inventory
 
 **اعرف بالضبط ما يمكن لبيئة OpenCode لديك استدعاؤه فعلاً — كل إضافة ومهارة وأمر وخادم MCP ووكيل وقدرة مضيفة، مع بيان المصدر.**
 
@@ -39,6 +39,24 @@ cd asset-inventory
 
 - **عام:** `~/.config/opencode/skills/asset-inventory/`
 - **داخل المشروع:** `<project-root>/.opencode/skills/asset-inventory/`
+
+### 🤖 التثبيت عبر الذكاء الاصطناعي
+
+أرسل النص أدناه إلى الذكاء الاصطناعي وسيثبّته لك:
+
+```
+ثبّت مهارة OpenCode باسم "asset-inventory" من <https://github.com/sogeisetsu/asset-inventory>.
+
+١. اسألني سؤالاً واحدًا فقط: التثبيت عامًّا أم داخل المشروع الحالي فقط.
+٢. احصل على المستودع: يُفضّل `git clone`؛ وإن تعذّر git أو فشل الاستنساخ فاستخدم ملف ZIP من GitHub.
+٣. انسخ عنصرين تشغيليين فقط (SKILL.md و references/) إلى الهدف:
+   - عام: ~/.config/opencode/skills/asset-inventory/ (ويندوز: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
+   - داخل المشروع: .opencode/skills/asset-inventory/
+   أنشئ المجلد إن لم يوجد. لا تنسخ README أو docs أو assets أو scripts.
+٤. إن كانت المهارة موجودة فاستبدلها (هذا تحديث)، ولا تسأل مرة ثانية.
+٥. عند الانتهاء تحقق من وجود <target>/asset-inventory/SKILL.md واقرأ الإصدار من `metadata.version`.
+٦. اعتبر المصدر للقراءة فقط ولا تعدّل أي محتوى. أبلغ فقط عن مسار التثبيت والإصدار.
+```
 
 📖 الخطوات الكاملة (كل الأنظمة) والتثبيت التلقائي بالذكاء الاصطناعي والتحديث ← **[التثبيت والتحديث](docs/guides/install-and-update.md)**
 

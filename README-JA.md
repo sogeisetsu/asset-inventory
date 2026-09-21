@@ -2,7 +2,7 @@
 
 <img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
-# 🗃️ Asset Inventory
+# Asset Inventory
 
 **OpenCode 環境が実際に呼び出せるものを一目で — プラグイン、スキル、コマンド、MCP サーバー、エージェント、ホスト機能を、出所つきで。**
 
@@ -37,6 +37,24 @@ cd asset-inventory
 
 - **グローバル：** `~/.config/opencode/skills/asset-inventory/`
 - **プロジェクト単位：** `<project-root>/.opencode/skills/asset-inventory/`
+
+### 🤖 AI でインストール
+
+下のテキストを AI に送れば、インストールしてくれます：
+
+```
+OpenCode スキル "asset-inventory" を <https://github.com/sogeisetsu/asset-inventory> からインストールしてください。
+
+1. まず質問は 1 つだけ：グローバルに入れるか、今のプロジェクトだけか。
+2. リポジトリ取得：`git clone` を優先。git が無い／失敗する場合は GitHub の ZIP を使う。
+3. 実行時に必要な 2 点（SKILL.md と references/）だけをコピー：
+   - グローバル：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
+   - プロジェクト単位：現在のプロジェクト内 .opencode/skills/asset-inventory/
+   無ければ作成。README・docs・assets・scripts はコピーしない。
+4. 既に同名スキルがあれば上書き（更新）し、二度目は聞かない。
+5. 完了後 <target>/asset-inventory/SKILL.md の存在を確認し、frontmatter の `metadata.version` を読む。
+6. ソースは読み取り専用として扱い、内容を変更しない。報告はインストール先と版のみ。
+```
 
 📖 詳細手順（各プラットフォーム）・AI 自動インストール・更新 → **[インストールと更新](docs/guides/install-and-update.md)**
 
