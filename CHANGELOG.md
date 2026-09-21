@@ -6,6 +6,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.0] - 2026-09-22
+
+### Added
+- **Targeting docs** and **M3 rendered-sample panels** on the docs site (`docs/guides/how-it-works.md`, `docs/style.css`).
+
+### Changed
+- **Token trim (behavior-neutral)** — see [1.10.3]; this release rolls 1.10.1–1.10.3 into a documented minor.
+
+---
+
 ## [1.10.3] - 2026-09-22
 
 ### Changed

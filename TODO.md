@@ -24,6 +24,7 @@
 | 1.10.1 | patch | 404 redirect for old release-note URLs | ✅ | — | ✅ done |
 | 1.10.2 | patch | Docs site M3 polish + example panel; Targeting docs (EN/ZH) | ✅ | — | ✅ done |
 | 1.10.3 | patch | Token trim: condense SKILL.md + format-example.md (behavior-neutral) | ✅ | — | ✅ done |
+| 1.11.0 | minor | Docs-site M3 + example panel, Targeting docs, token trim; bilingual release notes | ✅ | ✅ | ✅ done |
 
 ## Details
 
@@ -64,6 +65,6 @@ the detail-page titles.
 
 ## Next step
 
-The rollout is complete: 1.7.1–1.7.4 (patches) and 1.8.0 / 1.9.0 (minors, with
-GitHub Releases). Nothing is in flight — start a new ladder here for the next
-piece of work.
+The rollout is complete through **1.11.0**: 1.10.2 / 1.10.3 (patches) and 1.11.0
+(minor, with a GitHub Release). Nothing is in flight — start a new ladder here
+for the next piece of work.
