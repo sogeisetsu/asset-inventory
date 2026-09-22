@@ -13,6 +13,8 @@ Run this checklist before outputting. Every item must pass.
 - [ ] No skill in the global skills dir is called `local` until the plugin manifest has been checked — a `managed`/`customized` entry means the plugin is the bringer.
 - [ ] No plaintext keys/tokens, masks real project names, and normalizes **every** home path to `~` / `%USERPROFILE%` in the Markdown **and** the JSON (real-name mode is the only exception, with the 4th Provenance line).
 - [ ] Unregistered skill-/plugin-like residue (has `SKILL.md`/`plugin.json`/`marketplace.json` but is not referenced by the config) is not dropped silently — it is `📦shelf-only` in a table or named in the Provenance Unresolved line, with the observed reason.
+- [ ] A local skill's upstream came from the documented lookup order (manifest → config-root sibling checkout → skill README → host marketplace cache → other client dirs → description attribution); if unverified, the source reads `local (repo unverified) ⚠️inferred` — no fabricated URL.
+- [ ] `inventory.md` opens with a one-line Name legend (`/command` = a command you type; bare name = a skill or another asset).
 - [ ] Versions/models/counts looked up fresh.
 - [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).
 - [ ] Empty tables have a declaration line + `[]`.
@@ -27,7 +29,7 @@ Run this checklist before outputting. Every item must pass.
 
 - [ ] Commands sit in the right table (built-in→Table 3, plugin→Table 2, user→Table 4, host-injected→Table 4).
 - [ ] No summary rows duplicating Table 1 software entries.
-- [ ] A plugin skill and its same-named registered command (`deepwork` + `/deepwork`) are **one** row, not two.
+- [ ] A command and a same-named skill are **separate** rows (never merged); a gate/wrapper command is described as a gate, not as the skill's own behavior.
 
 ## Table 3 — Built-in commands & built-in skills
 
