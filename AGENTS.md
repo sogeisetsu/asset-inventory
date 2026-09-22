@@ -40,7 +40,7 @@
 2. 改 `references/` — 格式/方法文档
 3. 改了样本 → 跑 `node scripts/build-sample-pages.mjs` 重新生成三个详情页（**不要手改**标记之间的生成块）
 4. 更新 `CHANGELOG.md`（及 `zh/CHANGELOG-ZH.md`）— 在顶部新版本条目下加条目；发布时把标题改成 `[x.y.z] - YYYY-MM-DD`
-5. minor/major → 写双语 release notes（`docs/release-notes/release-notes-vX.Y.Z.md` + `zh/release-notes/release-notes-vX.Y.Z-ZH.md`），并登记进 `scripts/check-docs.mjs` 的 `PAIRS`
+5. minor/major → 写双语 release notes（`docs/release-notes/release-notes-vX.Y.Z.md` + `zh/release-notes/release-notes-vX.Y.Z-ZH.md`），并登记进 `scripts/check-docs.mjs` 的 `PAIRS`。**GitHub Release 正文只贴英文文件**；中文版仅供 docs 站与仓库，永不追加进 Release 正文
 6. 跑 `node scripts/check-docs.mjs` — 校验链接（Markdown + HTML）、EN/ZH 配对、frontmatter、版本一致性、词表结构、README 七语互链、引用完整性
 7. 跑 `pwsh ./update.ps1` 部署到安装位置（`-DryRun` 可先预览）
 8. 版本号在 `SKILL.md` frontmatter 的 `metadata.version`，与 `CHANGELOG.md`、`zh/CHANGELOG-ZH.md` 顶部三处必须同步
@@ -75,7 +75,7 @@
 
 - tag 一律用 **annotated**（`git tag -a`），风格与既有 tag 一致。
 - 推送用 `git push origin master --follow-tags`。
-- Release 正文用 release notes 文件：`gh release create vX.Y.Z --title "..." --notes-file docs/release-notes/release-notes-vX.Y.Z.md`。
+- Release 正文用**英文** release notes 文件：`gh release create vX.Y.Z --title "..." --notes-file docs/release-notes/release-notes-vX.Y.Z.md`；**永不追加 `zh/` 版**（Release 页面只显示英文）。
 - patch 版本**不写** release notes 文件、不建 Release。
 
 ## 发布检查清单（每个版本）
@@ -87,7 +87,7 @@
 5. 双语 CHANGELOG；minor/major 另写双语 release notes 并登记进 `check-docs` 的 `PAIRS`
 6. `git commit`（一个逻辑变更多次提交）
 7. `git tag -a vX.Y.Z -m "..."` → `git push origin master --follow-tags`
-8. minor/major：`gh release create vX.Y.Z --notes-file docs/release-notes/release-notes-vX.Y.Z.md`
+8. minor/major：`gh release create vX.Y.Z --notes-file docs/release-notes/release-notes-vX.Y.Z.md`（正文仅英文）
 9. 更新 `TODO.md` / `zh/TODO-ZH.md` 的状态行与"下一步"
 
 ## 坑

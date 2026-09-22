@@ -122,6 +122,8 @@ If you add a language to `references/glossary.json`, give it **the same key set 
 
 **Every change gets the tag for the level it meets:** a patch-level change gets a patch tag, a minor-level change gets a minor tag, a major-level change gets a major tag. Do not hold a patch-level change back to bundle it into a later minor. GitHub Releases exist only for minor/major versions; patch tags carry no Release. And if a change meets the minor bar, a patch tag is not enough — it must get a minor tag **and** a Release.
 
+Release bodies are English-only: paste `docs/release-notes/release-notes-vX.Y.Z.md` as the body. The `zh/` counterparts are for the docs site and the repository, never for a Release page.
+
 ## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.

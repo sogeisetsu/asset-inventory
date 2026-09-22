@@ -124,6 +124,8 @@ asset-inventory/
 
 **每个改动都按其自身达到的标准打 tag：** patch 达标打 patch tag，minor 达标打 minor tag，major 达标打 major tag。不要把 patch 级别的改动攒到后面的 minor 才打。GitHub Release 只为 minor/major 而建；patch 只有 tag、不建 Release。而只要改动达到 minor 标准，只打 patch tag 是不够的——必须打 minor tag **并**建 Release。
 
+Release 正文只用英文：粘贴 `docs/release-notes/release-notes-vX.Y.Z.md` 作为正文。`zh/` 版仅供文档站与仓库使用，永不放进 Release 页面。
+
 ## 许可证
 
 贡献即表示你同意你的贡献按 MIT License 授权。
