@@ -29,6 +29,7 @@
 | 1.11.2 | patch | Never merge command + same-named skill; widen upstream lookup; name legend | ✅ | — | ✅ done |
 | 1.11.3 | patch | Merge scope: same-plugin pair = one row; separate-origin command + skill = two rows | ✅ | ✅ | ✅ done |
 | 1.11.4 | patch | Install via AI: require `git clone`, drop ZIP fallback; warn against Releases ZIPs | ✅ | ✅ | ✅ done |
+| 1.11.5 | patch | `AGENTS.md` de-privatized & tracked; Release bodies English-only | ✅ | — | ✅ done |
 
 ## Details
 
@@ -69,6 +70,6 @@ the detail-page titles.
 
 ## Next step
 
-The rollout is complete through **1.11.4**: 1.11.1–1.11.4 (patches) with GitHub
+The rollout is complete through **1.11.5**: 1.11.1–1.11.5 (patches) with GitHub
 Releases on 1.11.3 and 1.11.4. Nothing is in flight — start a new ladder here
 for the next piece of work.

@@ -6,6 +6,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.5] - 2026-09-22
+
+### Changed
+- **`AGENTS.md` is now tracked** — the local-only privacy notes were removed (the branch-rule exception naming it, the gitignore-status bullet, and the local `zh/skill-zh.md` copy note), `/AGENTS.md` dropped from `.gitignore`, and every doc that described it as untracked was updated (both CONTRIBUTINGs, the repository guide's file tree, and the `check-docs` comments — its CJK exemption stays, renamed `CHINESE_ROOT_DOCS`).
+- **GitHub Release bodies are English-only** — the five bodies that still carried Chinese (v1.0.0, v1.1.0, v1.2.0, v1.11.3, v1.11.4) were rewritten to English, and the rule is now written down in `AGENTS.md` and both CONTRIBUTINGs; the `zh/` release-notes files stay for the docs site but never enter a Release body.
+
+---
+
 ## [1.11.4] - 2026-09-22
 
 ### Changed

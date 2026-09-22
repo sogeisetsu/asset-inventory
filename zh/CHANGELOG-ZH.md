@@ -8,6 +8,14 @@
 
 ---
 
+## [1.11.5] - 2026-09-22
+
+### 变更
+- **`AGENTS.md` 已入库** —— 删除三处本地专用说明（点名它的分支规则例外、gitignore 状态条目、本地 `zh/skill-zh.md` 副本提示），`.gitignore` 移除 `/AGENTS.md`，并同步所有称其"不入库"的文档（两份 CONTRIBUTING、仓库指南文件树、`check-docs` 注释——其 CJK 豁免保留，数组改名 `CHINESE_ROOT_DOCS`）。
+- **GitHub Release 正文纯英文** —— 仍带中文的 5 个正文（v1.0.0、v1.1.0、v1.2.0、v1.11.3、v1.11.4）已改写为英文；规则写入 `AGENTS.md` 与两份 CONTRIBUTING。`zh/` release notes 仍供文档站使用，但永不进入 Release 正文。
+
+---
+
 ## [1.11.4] - 2026-09-22
 
 ### 变更
