@@ -26,6 +26,7 @@
 | 1.10.3 | patch | Token trim: condense SKILL.md + format-example.md (behavior-neutral) | ✅ | — | ✅ done |
 | 1.11.0 | minor | Docs-site M3 + example panel, Targeting docs, token trim; bilingual release notes | ✅ | ✅ | ✅ done |
 | 1.11.1 | patch | Rule hardening: home-path masking, merge skill/command pairs, disabled agents, unregistered residue | ✅ | — | ✅ done |
+| 1.11.2 | patch | Never merge command + same-named skill; widen upstream lookup; name legend | ✅ | — | ✅ done |
 
 ## Details
 

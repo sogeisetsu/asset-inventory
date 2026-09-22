@@ -25,6 +25,7 @@
 | 1.10.3 | patch | 省 token：精简 SKILL.md + format-example.md（不改变行为） | ✅ | — | ✅ 已完成 |
 | 1.11.0 | minor | 文档站 M3 + 示例面板、参数文档、省 token 精简；双语 release notes | ✅ | ✅ | ✅ 已完成 |
 | 1.11.1 | patch | 规则加固：home 路径脱敏、同名 skill/命令合并、禁用 agent、未注册残留 | ✅ | — | ✅ 已完成 |
+| 1.11.2 | patch | 命令与同名 skill 绝不合并；扩大上游查找；名称图例 | ✅ | — | ✅ 已完成 |
 
 ## 详情
 

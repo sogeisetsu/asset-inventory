@@ -6,6 +6,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.2] - 2026-09-22
+
+### Fixed
+- **A command and its same-named skill are never merged** — they are different assets (a skill, versus a command that targets it), so they get **separate rows**; a gate/wrapper command is now described as a gate, not as the skill's own behavior. This reverts the same-name merge rule added in 1.11.1.
+- **Upstream discovery widened** — a local skill's repo URL is now looked up in a documented order, including a **config-root sibling checkout** (e.g. `~/.config/opencode/<name>/` with `plugin.json` / `INSTALL.md` / `README`) and the host **marketplace cache** (`skills-catalog-cache.json`). If still unverified, the source simply reads `local (repo unverified) ⚠️inferred` (no list of searched places).
+- **Name legend** — `inventory.md` now opens with a one-line legend explaining `/command` vs. bare skill/asset names.
+
+---
+
 ## [1.11.1] - 2026-09-22
 
 ### Fixed
