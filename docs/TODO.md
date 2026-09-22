@@ -31,6 +31,7 @@
 | 1.11.4 | patch | Install via AI: require `git clone`, drop ZIP fallback; warn against Releases ZIPs | ✅ | ✅ | ✅ done |
 | 1.11.5 | patch | `AGENTS.md` de-privatized & tracked; Release bodies English-only | ✅ | — | ✅ done |
 | 1.11.6 | patch | Root slimming: `assets/`→`docs/assets/`, `TODO.md`→`docs/` | ✅ | — | ✅ done |
+| 1.11.7 | patch | SKILL.md self-declared source line; references deliberately unmarked | ✅ | — | ✅ done |
 
 ## Details
 
@@ -71,6 +72,6 @@ the detail-page titles.
 
 ## Next step
 
-The rollout is complete through **1.11.6**: 1.11.1–1.11.6 (patches) with GitHub
+The rollout is complete through **1.11.7**: 1.11.1–1.11.7 (patches) with GitHub
 Releases on 1.11.3 and 1.11.4. Nothing is in flight — start a new ladder here
 for the next piece of work.

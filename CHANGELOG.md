@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.7] - 2026-09-22
+
+### Added
+- **Self-declared source line** — `SKILL.md` now states its own repository directly under the title (`github.com/sogeisetsu/asset-inventory`), so a reader of the skill alone can tell where it comes from. The `references/` files stay unmarked deliberately: they are only reachable through `SKILL.md` (the skill entry point) and never stand alone — recorded here as a decision, not an omission.
+
+---
+
 ## [1.11.6] - 2026-09-22
 
 ### Changed

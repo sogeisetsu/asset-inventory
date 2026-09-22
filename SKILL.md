@@ -5,10 +5,12 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.11.6
+  version: 1.11.7
 ---
 
 # Asset Inventory
+
+> **Source:** [github.com/sogeisetsu/asset-inventory](https://github.com/sogeisetsu/asset-inventory) · MIT
 
 Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers three questions: **what it is, who brought it in, how to use it**.
 
