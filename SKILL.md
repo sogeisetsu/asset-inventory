@@ -188,6 +188,8 @@ Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't ma
 
 **Rule:** When in doubt, write what you observed — never fabricate. A `⚠️inferred` with an explanation is always better than a confident `✅verified` on unverified data.
 
+More failure scenarios and fixes: see `references/troubleshooting.md`.
+
 ### 4. Empty tables
 
 No content after verification → **do not invent, do not omit**: output `no usable rows in this table (as of <lookup date>)`; JSON = `[]`.
