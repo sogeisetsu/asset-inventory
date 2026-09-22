@@ -8,6 +8,13 @@
 
 ---
 
+## [1.12.0] - 2026-09-22
+
+### 变更
+- **skill 的 `调用方式` 现在写真实 TUI 路径** —— 单元格改为 `看话自动干，或在 /skills 里选（直接打 /skill-name 也行）`，因为 OpenCode TUI 的 `/` 补全跳过 `source === "skill"` 条目、`/skills` 才是官方选择器（直接打全名仍按 command 分发）。已同步 `SKILL.md`（规则 + 名称图例）、`references/checklist.md`、`references/format-example.md`、`references/usage-guide.md` 与全部 EN/ZH 样例；重建样例页；版本升至 1.12.0。
+
+---
+
 ## [1.11.8] - 2026-09-22
 
 ### 变更

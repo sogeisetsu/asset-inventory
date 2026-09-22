@@ -57,6 +57,7 @@ const PAIRS = [
   ['docs/release-notes/release-notes-v1.9.0.md', 'zh/release-notes/release-notes-v1.9.0-ZH.md'],
   ['docs/release-notes/release-notes-v1.10.0.md', 'zh/release-notes/release-notes-v1.10.0-ZH.md'],
   ['docs/release-notes/release-notes-v1.11.0.md', 'zh/release-notes/release-notes-v1.11.0-ZH.md'],
+  ['docs/release-notes/release-notes-v1.12.0.md', 'zh/release-notes/release-notes-v1.12.0-ZH.md'],
 ];
 
 // Localized READMEs that must all exist and cross-link each other.
