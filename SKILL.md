@@ -197,6 +197,7 @@ Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't ma
 | Config file missing or malformed | note the gap in a table note; don't guess defaults |
 | Version unknown after all sources exhausted | write `unknown` — never invent |
 | Language mismatch (user asks in English, config is Chinese) | follow the user's language for output; use English for technical terms |
+| Pasted diff JSON/Markdown unparseable | ask the user to re-paste, or fall back to comparing the Markdown tables; never guess or invent PK rows |
 
 **Rule:** When in doubt, write what you observed — never fabricate. A `⚠️inferred` with an explanation is always better than a confident `✅verified` on unverified data.
 
