@@ -35,6 +35,7 @@ asset-inventory/
 ├── README-ZH.md                # Chinese documentation (root, per project convention)
 ├── CHANGELOG.md                # Version history (English)
 ├── CONTRIBUTING.md             # Contribution guidelines (English)
+├── AGENTS.md                  # Agent working guide (Chinese)
 ├── LICENSE                     # MIT
 ├── update.ps1                  # One-command update script
 ├── references/                 # Skill format & scan-method references
@@ -51,7 +52,7 @@ asset-inventory/
     └── release-notes/          # Chinese release notes
 ```
 
-Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) and `AGENTS.md` are gitignored and never committed.
+Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) are gitignored and never committed. `AGENTS.md` is tracked.
 
 ## Testing Your Changes
 
@@ -105,7 +106,7 @@ If you add a language to `references/glossary.json`, give it **the same key set 
 - Name branches in the existing style: `feat/vX.Y.Z`, `fix/...`, `docs/...`, `chore/...`.
 - Run `node scripts/check-docs.mjs` before merging (add `node scripts/build-sample-pages.mjs --check` if you touched the samples).
 - Tag / create the Release after the merge, per the version rules below.
-- Exception: gitignored local files (such as `AGENTS.md`) are not affected.
+- Exception: gitignored local files (such as `zh/skill-zh.md`) are not affected.
 
 ### Commit granularity
 

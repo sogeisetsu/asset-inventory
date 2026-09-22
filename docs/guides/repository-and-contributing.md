@@ -29,6 +29,7 @@ asset-inventory/
 ├── TODO.md                     # rollout plan (English)
 ├── CHANGELOG.md                # version history (English)
 ├── CONTRIBUTING.md             # contribution guidelines (English)
+├── AGENTS.md                  # agent working guide (Chinese)
 ├── LICENSE                     # MIT
 ├── references/                 # skill format & scan-method references
 ├── assets/                     # local SVG icon / banner / badges (generated)
