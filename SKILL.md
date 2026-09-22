@@ -102,7 +102,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 - **When to use**: concrete scenario with conditions (e.g. `needs git`, `expensive`, `Windows-only`). Never a bare "on demand".
 - **What it does**: one detailed paragraph — full rules in [What-it-does format](#what-it-does-format-mandatory).
 - **Model chain (Table 6 only)**: the chain comes from the **active preset** in the plugin's preset file (e.g. `.oh-my-opencode-slim/oh-my-opencode-slim.json` → `preset` names the active one, `presets.<name>.<agent>.model` holds it). **That value may be a string OR an array** — an array *is* the chain, in order (`["a","b","c"]` → `a → b → c`). Never flatten an array to a single model, and never report "single model" for a plugin agent whose preset lists an array.
-  **Exemption — core-bundled agents only**: agents that ship with the host and have no preset entry (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback". This exemption **does not apply to plugin agents**; if a plugin agent's chain cannot be read, write `unknown ⚠️inferred`, never "single model".
+  **Exemption — core-bundled agents only**: see Table 6 rules below.
   Also record the backup preset names (the other keys under `presets`).
 
 ### What-it-does format (mandatory)
