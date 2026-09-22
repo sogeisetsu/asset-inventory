@@ -27,7 +27,8 @@
 | 1.11.0 | minor | Docs-site M3 + example panel, Targeting docs, token trim; bilingual release notes | ✅ | ✅ | ✅ done |
 | 1.11.1 | patch | Rule hardening: home-path masking, merge skill/command pairs, disabled agents, unregistered residue | ✅ | — | ✅ done |
 | 1.11.2 | patch | Never merge command + same-named skill; widen upstream lookup; name legend | ✅ | — | ✅ done |
-| 1.11.3 | patch | Merge scope: same-plugin pair = one row; separate-origin command + skill = two rows | ✅ | — | ✅ done |
+| 1.11.3 | patch | Merge scope: same-plugin pair = one row; separate-origin command + skill = two rows | ✅ | ✅ | ✅ done |
+| 1.11.4 | patch | Install via AI: require `git clone`, drop ZIP fallback; warn against Releases ZIPs | ✅ | ✅ | ✅ done |
 
 ## Details
 
@@ -68,6 +69,6 @@ the detail-page titles.
 
 ## Next step
 
-The rollout is complete through **1.11.0**: 1.10.2 / 1.10.3 (patches) and 1.11.0
-(minor, with a GitHub Release). Nothing is in flight — start a new ladder here
+The rollout is complete through **1.11.4**: 1.11.1–1.11.4 (patches) with GitHub
+Releases on 1.11.3 and 1.11.4. Nothing is in flight — start a new ladder here
 for the next piece of work.

@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.4] - 2026-09-22
+
+### Changed
+- **"Install via AI" now requires `git clone`** — step 2 of the install prompt no longer falls back to a ZIP download (the clone URL is spelled out), so an installer can never pull an outdated archive from the Releases page. Updated across all 7 READMEs and the 7 localized prompts on `docs/index.html`; the manual install guide now warns explicitly against Releases-page ZIPs.
+
+---
+
 ## [1.11.3] - 2026-09-22
 
 ### Fixed

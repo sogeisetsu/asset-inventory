@@ -46,7 +46,7 @@ cd asset-inventory
 OpenCode スキル "asset-inventory" を <https://github.com/sogeisetsu/asset-inventory> からインストールしてください。
 
 1. まず質問は 1 つだけ：グローバルに入れるか、今のプロジェクトだけか。
-2. リポジトリ取得：`git clone` を優先。git が無い／失敗する場合は GitHub の ZIP を使う。
+2. `git clone https://github.com/sogeisetsu/asset-inventory.git` でリポジトリを取得する——必須。ZIP ダウンロードへのフォールバックは不可（Releases ページの ZIP は古い可能性がある）。
 3. 実行時に必要な 2 点（SKILL.md と references/）だけをコピー：
    - グローバル：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
    - プロジェクト単位：現在のプロジェクト内 .opencode/skills/asset-inventory/

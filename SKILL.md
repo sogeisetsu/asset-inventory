@@ -5,7 +5,7 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.11.3
+  version: 1.11.4
 ---
 
 # Asset Inventory

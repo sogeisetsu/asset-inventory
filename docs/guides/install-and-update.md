@@ -13,13 +13,13 @@ Choose **project-scoped** only if you specifically want the skill to live inside
 
 ## 🚀 Steps
 
-**Step 1 — get the repository locally.** Either clone it:
+**Step 1 — get the repository locally.** Clone it:
 
 ```sh
 git clone https://github.com/sogeisetsu/asset-inventory.git
 ```
 
-or download **Code → Download ZIP** from the GitHub page and unzip it.
+or download **Code → Download ZIP** from the repository's main page and unzip it — but never a ZIP from the **Releases** page; release archives can be outdated.
 
 **Step 2 — copy only two things** (`SKILL.md` and `references/`) to the target:
 

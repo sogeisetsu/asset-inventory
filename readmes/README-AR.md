@@ -48,7 +48,7 @@ cd asset-inventory
 ثبّت مهارة OpenCode باسم "asset-inventory" من <https://github.com/sogeisetsu/asset-inventory>.
 
 ١. اسألني سؤالاً واحدًا فقط: التثبيت عامًّا أم داخل المشروع الحالي فقط.
-٢. احصل على المستودع: يُفضّل `git clone`؛ وإن تعذّر git أو فشل الاستنساخ فاستخدم ملف ZIP من GitHub.
+٢. احصل على المستودع عبر `git clone https://github.com/sogeisetsu/asset-inventory.git` — إلزامي؛ لا تنتقل إلى تنزيل ZIP (قد يكون ZIP من صفحة Releases قديمًا).
 ٣. انسخ عنصرين تشغيليين فقط (SKILL.md و references/) إلى الهدف:
    - عام: ~/.config/opencode/skills/asset-inventory/ (ويندوز: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - داخل المشروع: .opencode/skills/asset-inventory/
