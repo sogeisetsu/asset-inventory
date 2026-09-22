@@ -32,12 +32,12 @@ asset-inventory/
 ├── AGENTS.md                  # agent working guide (Chinese)
 ├── LICENSE                     # MIT
 ├── references/                 # skill format & scan-method references
-├── assets/                     # local SVG icon / banner / badges (generated)
 ├── scripts/
 │   ├── check-docs.mjs          # docs / links / frontmatter validation
 │   ├── build-sample-pages.mjs  # renders docs/samples/ into the detail pages
-│   └── generate-assets.mjs     # regenerates assets/*.svg
-├── docs/                       # GitHub Pages + release notes + guides + samples
+│   └── generate-assets.mjs     # regenerates docs/assets/*.svg
+├── docs/                       # GitHub Pages + release notes + guides + samples + assets
+│   ├── assets/                 # local SVG icon / banner / badges (generated)
 │   ├── guides/                 # these long-form guides
 │   ├── release-notes/          # English release notes
 │   └── samples/                # example output (English; zh/ holds the Chinese set)
@@ -47,7 +47,7 @@ asset-inventory/
 
 ## 🧩 Runtime vs. development
 
-Only `SKILL.md` and `references/` are shipped to the skill's install location. Everything else (`docs/`, `scripts/`, `zh/`, `assets/`, `readmes/`, `README*`, `CHANGELOG*`, `CONTRIBUTING*`) is development-side only.
+Only `SKILL.md` and `references/` are shipped to the skill's install location. Everything else (`docs/`, `scripts/`, `zh/`, `readmes/`, `README*`, `CHANGELOG*`, `CONTRIBUTING*`) is development-side only.
 
 ## ✅ Contributing
 

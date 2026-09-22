@@ -15,7 +15,7 @@
 - `TODO.md` / `zh/TODO-ZH.md` — 滚动发布计划（EN/ZH 配对，`check-docs` 的 `PAIRS` 强制）。**新会话先读它**即可定位当前进度与下一步。
 - `scripts/check-docs.mjs` — 文档/链接/frontmatter/版本/词表/README 互链校验（提 PR 前跑）。
 - `scripts/build-sample-pages.mjs` — 从 `docs/samples/` 渲染三个详情页；`--check` 判过期。
-- `scripts/generate-assets.mjs` — 重新生成 `assets/*.svg`。
+- `scripts/generate-assets.mjs` — 重新生成 `docs/assets/*.svg`。
 - `docs/` — GitHub Pages 落地页 + `docs/release-notes/`（发布说明）+ `docs/guides/`（长文文档）+ `docs/samples/`（示例产物：英文在 base，中文在 `docs/samples/zh/`）。
 - `readmes/` — 非中英 README（JA / KO / RU / AR / ES）；根目录只保留 `README.md` 与 `README-ZH.md`。
 - `zh/` — 中文对读版（`CHANGELOG-ZH.md`、`CONTRIBUTING-ZH.md`、`TODO-ZH.md`、`release-notes/` 等）。

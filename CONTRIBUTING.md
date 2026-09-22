@@ -39,11 +39,11 @@ asset-inventory/
 ├── LICENSE                     # MIT
 ├── update.ps1                  # One-command update script
 ├── references/                 # Skill format & scan-method references
-├── assets/                     # Local SVG icon / banner / badges (generated)
 ├── scripts/
 │   ├── check-docs.mjs          # Doc/link/frontmatter validation
-│   └── generate-assets.mjs     # Regenerates assets/*.svg
-├── docs/                       # GitHub Pages + release notes
+│   └── generate-assets.mjs     # Regenerates docs/assets/*.svg
+├── docs/                       # GitHub Pages + release notes + assets
+│   ├── assets/                 # Local SVG icon / banner / badges (generated)
 │   └── release-notes/          # English release notes
 └── zh/                         # All Chinese docs except README-ZH.md
     ├── CHANGELOG-ZH.md

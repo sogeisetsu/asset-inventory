@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../docs/assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **OpenCode 환경이 실제로 호출할 수 있는 것을 한눈에 — 모든 플러그인, 스킬, 명령, MCP 서버, 에이전트, 호스트 기능을 출처와 함께.**
 
-[![License: MIT](../assets/badge-license.svg)](../LICENSE)
-[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../docs/assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../docs/assets/badge-opencode.svg)](#compatibility)
 
 [English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../docs/assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -50,7 +50,7 @@ OpenCode 스킬 "asset-inventory"를 <https://github.com/sogeisetsu/asset-invent
 3. 런타임 항목 두 개(SKILL.md와 references/)만 대상에 복사:
    - 전역: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - 프로젝트: 현재 프로젝트의 .opencode/skills/asset-inventory/
-   없으면 생성. README·docs·assets·scripts는 복사하지 않음.
+   없으면 생성. README·docs·scripts는 복사하지 않음.
 4. 같은 스킬이 이미 있으면 덮어쓰기(업데이트)하고 두 번 묻지 않음.
 5. 완료 후 <target>/asset-inventory/SKILL.md 존재를 확인하고 frontmatter의 `metadata.version`을 읽음.
 6. 소스는 읽기 전용으로 취급하고 내용을 수정하지 않음. 보고는 설치 위치와 버전만.

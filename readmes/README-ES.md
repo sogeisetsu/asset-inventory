@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../docs/assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **Conoce exactamente qué puede invocar tu entorno de OpenCode: cada plugin, skill, comando, servidor MCP, agente y capacidad del host, con su procedencia.**
 
-[![License: MIT](../assets/badge-license.svg)](../LICENSE)
-[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../docs/assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../docs/assets/badge-opencode.svg)](#compatibility)
 
 [English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../docs/assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -50,7 +50,7 @@ Instala el skill de OpenCode "asset-inventory" desde <https://github.com/sogeise
 3. Copia solo los dos elementos de ejecución (SKILL.md y references/):
    - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - En el proyecto: .opencode/skills/asset-inventory/ dentro del proyecto actual.
-   Crea el directorio si falta. No copies README, docs, assets ni scripts.
+   Crea el directorio si falta. No copies README, docs ni scripts.
 4. Si el skill ya existe, sobrescríbelo (es una actualización); no preguntes otra vez.
 5. Al terminar, verifica que exista <target>/asset-inventory/SKILL.md y lee la versión instalada de `metadata.version`.
 6. Trata el origen como solo lectura y no modifiques ningún contenido. Informa solo la ubicación y la versión.

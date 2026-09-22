@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="docs/assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **Know exactly what your OpenCode setup can actually invoke — every plugin, skill, command, MCP server, agent, and host capability, each with provenance.**
 
-[![License: MIT](assets/badge-license.svg)](LICENSE)
-[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](docs/assets/badge-license.svg)](LICENSE)
+[![OpenCode Skill](docs/assets/badge-opencode.svg)](#compatibility)
 
 [English](README.md) · [中文](README-ZH.md) · [日本語](readmes/README-JA.md) · [한국어](readmes/README-KO.md) · [Русский](readmes/README-RU.md) · [العربية](readmes/README-AR.md) · [Español](readmes/README-ES.md)
 
-<img src="assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="docs/assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -50,7 +50,7 @@ Install the OpenCode skill "asset-inventory" from <https://github.com/sogeisetsu
 3. Copy only the two runtime items (SKILL.md and references/) into the target:
    - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - Project-scoped: .opencode/skills/asset-inventory/ inside the current project.
-   Create the directory if it is missing. Do not copy the README, docs, assets, or scripts.
+   Create the directory if it is missing. Do not copy the README, docs, or scripts.
 4. If the skill already exists at the target, overwrite it (that is an update) — do not ask a second time.
 5. When done, verify <target>/asset-inventory/SKILL.md exists, and read the installed version from its frontmatter `metadata.version`.
 6. Treat the source as read-only and do not modify any skill content. Report only the install location and the version.

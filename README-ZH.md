@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="docs/assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **一眼看清你的 OpenCode 环境真正能调用什么 —— 每个插件、Skill、命令、MCP、Agent 与外层应用能力，都带来源追溯。**
 
-[![License: MIT](assets/badge-license.svg)](LICENSE)
-[![OpenCode Skill](assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](docs/assets/badge-license.svg)](LICENSE)
+[![OpenCode Skill](docs/assets/badge-opencode.svg)](#compatibility)
 
 [English](README.md) · [中文](README-ZH.md) · [日本語](readmes/README-JA.md) · [한국어](readmes/README-KO.md) · [Русский](readmes/README-RU.md) · [العربية](readmes/README-AR.md) · [Español](readmes/README-ES.md)
 
-<img src="assets/banner-zh.svg" alt="asset-inventory banner" width="100%">
+<img src="docs/assets/banner-zh.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -50,7 +50,7 @@ cd asset-inventory
 3. 只把两个运行时项（SKILL.md 和 references/）复制到目标位置：
    - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
    - 项目级：当前项目下的 .opencode/skills/asset-inventory/
-   目录不存在就创建。不要复制 README、docs、assets、scripts。
+   目录不存在就创建。不要复制 README、docs、scripts。
 4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
 5. 完成后确认 <目标位置>/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
 6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。

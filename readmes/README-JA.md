@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../docs/assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **OpenCode 環境が実際に呼び出せるものを一目で — プラグイン、スキル、コマンド、MCP サーバー、エージェント、ホスト機能を、出所つきで。**
 
-[![License: MIT](../assets/badge-license.svg)](../LICENSE)
-[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../docs/assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../docs/assets/badge-opencode.svg)](#compatibility)
 
 [English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../docs/assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -50,7 +50,7 @@ OpenCode スキル "asset-inventory" を <https://github.com/sogeisetsu/asset-in
 3. 実行時に必要な 2 点（SKILL.md と references/）だけをコピー：
    - グローバル：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
    - プロジェクト単位：現在のプロジェクト内 .opencode/skills/asset-inventory/
-   無ければ作成。README・docs・assets・scripts はコピーしない。
+   無ければ作成。README・docs・scripts はコピーしない。
 4. 既に同名スキルがあれば上書き（更新）し、二度目は聞かない。
 5. 完了後 <target>/asset-inventory/SKILL.md の存在を確認し、frontmatter の `metadata.version` を読む。
 6. ソースは読み取り専用として扱い、内容を変更しない。報告はインストール先と版のみ。
