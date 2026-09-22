@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="../assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
+<img src="../docs/assets/icon.svg" alt="asset-inventory icon" width="96" height="96">
 
 # Asset Inventory
 
 **Узнайте точно, что ваша среда OpenCode может реально вызвать — каждый плагин, навык, команда, MCP-сервер, агент и возможность хоста, с указанием происхождения.**
 
-[![License: MIT](../assets/badge-license.svg)](../LICENSE)
-[![OpenCode Skill](../assets/badge-opencode.svg)](#compatibility)
+[![License: MIT](../docs/assets/badge-license.svg)](../LICENSE)
+[![OpenCode Skill](../docs/assets/badge-opencode.svg)](#compatibility)
 
 [English](../README.md) · [中文](../README-ZH.md) · [日本語](README-JA.md) · [한국어](README-KO.md) · [Русский](README-RU.md) · [العربية](README-AR.md) · [Español](README-ES.md)
 
-<img src="../assets/banner.svg" alt="asset-inventory banner" width="100%">
+<img src="../docs/assets/banner.svg" alt="asset-inventory banner" width="100%">
 
 </div>
 
@@ -50,7 +50,7 @@ cd asset-inventory
 3. Скопируйте только два рабочих элемента (SKILL.md и references/):
    - Глобально: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - В проект: .opencode/skills/asset-inventory/ внутри текущего проекта.
-   Создайте каталог при отсутствии. Не копируйте README, docs, assets, scripts.
+   Создайте каталог при отсутствии. Не копируйте README, docs, scripts.
 4. Если навык уже есть — перезапишите (это обновление), не спрашивайте второй раз.
 5. По завершении убедитесь, что <target>/asset-inventory/SKILL.md существует, и прочитайте установленную версию из `metadata.version`.
 6. Считайте источник только для чтения и не меняйте содержимое. Сообщите только путь установки и версию.

@@ -41,11 +41,12 @@ asset-inventory/
 ├── LICENSE                     # MIT
 ├── update.ps1                  # 一键更新脚本
 ├── references/                 # skill 格式与扫描方法参考
-├── assets/                     # 本地 SVG 图标 / banner / 徽章（脚本生成）
 ├── scripts/
 │   ├── check-docs.mjs          # 文档 / 链接 / frontmatter 校验
-│   └── generate-assets.mjs     # 重新生成 assets/*.svg
-├── docs/                       # GitHub Pages + release notes
+│   └── generate-assets.mjs     # 重新生成 docs/assets/*.svg
+├── docs/                       # GitHub Pages + release notes + assets + TODO
+│   ├── TODO.md                 # 发布计划（英文）
+│   ├── assets/                 # 本地 SVG 图标 / banner / 徽章（脚本生成）
 │   └── release-notes/          # English release notes
 └── zh/                         # 除 README-ZH.md 外的所有中文文档
     ├── CHANGELOG-ZH.md

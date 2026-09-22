@@ -26,18 +26,18 @@ asset-inventory/
 ├── README.md                   # English documentation
 ├── README-ZH.md                # Chinese documentation
 ├── readmes/                    # localized READMEs (JA / KO / RU / AR / ES)
-├── TODO.md                     # rollout plan (English)
 ├── CHANGELOG.md                # version history (English)
 ├── CONTRIBUTING.md             # contribution guidelines (English)
 ├── AGENTS.md                  # agent working guide (Chinese)
 ├── LICENSE                     # MIT
 ├── references/                 # skill format & scan-method references
-├── assets/                     # local SVG icon / banner / badges (generated)
 ├── scripts/
 │   ├── check-docs.mjs          # docs / links / frontmatter validation
 │   ├── build-sample-pages.mjs  # renders docs/samples/ into the detail pages
-│   └── generate-assets.mjs     # regenerates assets/*.svg
-├── docs/                       # GitHub Pages + release notes + guides + samples
+│   └── generate-assets.mjs     # regenerates docs/assets/*.svg
+├── docs/                       # GitHub Pages + release notes + guides + samples + assets + TODO
+│   ├── TODO.md                 # rollout plan (English)
+│   ├── assets/                 # local SVG icon / banner / badges (generated)
 │   ├── guides/                 # these long-form guides
 │   ├── release-notes/          # English release notes
 │   └── samples/                # example output (English; zh/ holds the Chinese set)
@@ -47,7 +47,7 @@ asset-inventory/
 
 ## 🧩 Runtime vs. development
 
-Only `SKILL.md` and `references/` are shipped to the skill's install location. Everything else (`docs/`, `scripts/`, `zh/`, `assets/`, `readmes/`, `README*`, `CHANGELOG*`, `CONTRIBUTING*`) is development-side only.
+Only `SKILL.md` and `references/` are shipped to the skill's install location. Everything else (`docs/`, `scripts/`, `zh/`, `readmes/`, `README*`, `CHANGELOG*`, `CONTRIBUTING*`) is development-side only.
 
 ## ✅ Contributing
 

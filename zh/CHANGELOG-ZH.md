@@ -8,6 +8,13 @@
 
 ---
 
+## [1.11.6] - 2026-09-22
+
+### 变更
+- **根目录瘦身** —— `assets/` 移入 `docs/assets/`、`TODO.md` 移入 `docs/`（根目录从 18 项减到 16 项）。已同步：7 语言 README 图片路径、`generate-assets.mjs` 输出路径、三处文件树（两份 CONTRIBUTING + 仓库指南）、`AGENTS.md`、`check-docs` 的 PAIRS 条目、`zh/TODO-ZH.md` 互链、安装提示词"不要复制"列表（14 处）；CHANGELOG / release notes 中的历史叙述保持原貌。
+
+---
+
 ## [1.11.5] - 2026-09-22
 
 ### 变更

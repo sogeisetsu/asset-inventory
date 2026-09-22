@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.6] - 2026-09-22
+
+### Changed
+- **Root slimming** — `assets/` moved to `docs/assets/` and `TODO.md` to `docs/` (root goes from 18 to 16 items). All README image paths (7 languages), the `generate-assets.mjs` output path, the file trees (both CONTRIBUTINGs + the repository guide), `AGENTS.md`, the `check-docs` PAIRS entry, the `zh/TODO-ZH.md` cross-link, and the install prompts' "do not copy" list (14 spots) were updated; historical CHANGELOG / release-notes wording stays as written.
+
+---
+
 ## [1.11.5] - 2026-09-22
 
 ### Changed

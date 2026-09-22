@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// generate-assets.mjs - regenerate assets/*.svg used by the README headers.
+// generate-assets.mjs - regenerate docs/assets/*.svg used by the README headers.
 //
 // Style: dark warm grey background, green/orange accents, dot-matrix title and
 // monospace body text. Every dot is placed on an integer grid sharing one
@@ -12,7 +12,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const OUT = path.join(ROOT, 'assets');
+const OUT = path.join(ROOT, 'docs', 'assets');
 
 const COLOR = {
   grayDark: '#4B4646',
@@ -180,7 +180,7 @@ async function main() {
   await fs.mkdir(OUT, { recursive: true });
   for (const [name, content] of Object.entries(OUTPUTS)) {
     await fs.writeFile(path.join(OUT, name), content, 'utf8');
-    console.log(`wrote assets/${name}`);
+    console.log(`wrote docs/assets/${name}`);
   }
 }
 
