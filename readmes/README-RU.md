@@ -46,7 +46,7 @@ cd asset-inventory
 Установите навык OpenCode "asset-inventory" из <https://github.com/sogeisetsu/asset-inventory>.
 
 1. Сначала задайте ровно один вопрос: глобально или только в текущий проект.
-2. Получите репозиторий: предпочтительно `git clone`; если git нет или клонирование не удалось — скачайте ZIP с GitHub.
+2. Получите репозиторий через `git clone https://github.com/sogeisetsu/asset-inventory.git` — обязательно; не переходите на скачивание ZIP (ZIP со страницы Releases может быть устаревшим).
 3. Скопируйте только два рабочих элемента (SKILL.md и references/):
    - Глобально: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - В проект: .opencode/skills/asset-inventory/ внутри текущего проекта.

@@ -46,7 +46,7 @@ cd asset-inventory
 OpenCode 스킬 "asset-inventory"를 <https://github.com/sogeisetsu/asset-inventory> 에서 설치해 주세요.
 
 1. 먼저 한 가지만 물어보세요: 전역 설치인지, 현재 프로젝트에만 설치인지.
-2. 저장소 확보: `git clone` 우선, git이 없거나 실패하면 GitHub ZIP을 사용.
+2. `git clone https://github.com/sogeisetsu/asset-inventory.git` 으로 저장소를 확보 — 필수이며 ZIP 다운로드로 대체하지 말 것(Releases 페이지의 ZIP은 구버전일 수 있음).
 3. 런타임 항목 두 개(SKILL.md와 references/)만 대상에 복사:
    - 전역: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - 프로젝트: 현재 프로젝트의 .opencode/skills/asset-inventory/

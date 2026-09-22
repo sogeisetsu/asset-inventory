@@ -46,7 +46,7 @@ cd asset-inventory
 请帮我安装 OpenCode skill "asset-inventory"，仓库地址 <https://github.com/sogeisetsu/asset-inventory>。
 
 1. 先只问我一个问题：装到全局，还是只装进当前项目。
-2. 获取仓库：优先 `git clone`；如果没有 git 或克隆失败，就改用 GitHub 的 ZIP 下载。
+2. 用 `git clone https://github.com/sogeisetsu/asset-inventory.git` 获取仓库——必须，不要回退到 ZIP 下载（Releases 页的 ZIP 可能是旧版本）。
 3. 只把两个运行时项（SKILL.md 和 references/）复制到目标位置：
    - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
    - 项目级：当前项目下的 .opencode/skills/asset-inventory/

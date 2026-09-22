@@ -46,7 +46,7 @@ Send the text below to your AI and it will install the skill for you:
 Install the OpenCode skill "asset-inventory" from <https://github.com/sogeisetsu/asset-inventory>.
 
 1. First ask me exactly one question: install globally, or into the current project only.
-2. Get the repository: prefer `git clone`; if git is unavailable or the clone fails, download the GitHub ZIP instead.
+2. Get the repository with `git clone https://github.com/sogeisetsu/asset-inventory.git` — required; do not fall back to a ZIP download (a ZIP from the Releases page may be outdated).
 3. Copy only the two runtime items (SKILL.md and references/) into the target:
    - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
    - Project-scoped: .opencode/skills/asset-inventory/ inside the current project.
