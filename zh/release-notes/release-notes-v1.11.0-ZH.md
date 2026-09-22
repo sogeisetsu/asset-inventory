@@ -1,5 +1,5 @@
 <!--
-  中文版 release notes v1.11.0。发布到 GitHub Release 正文。
+  中文版 release notes v1.11.0。仅供文档站与中文读者；GitHub Release 正文只用英文版。
   英文版：../../docs/release-notes/release-notes-v1.11.0.md
   Release: v1.11.0 — asset-inventory (sogeisetsu/asset-inventory)
 -->

@@ -37,6 +37,7 @@ asset-inventory/
 ├── README-ZH.md                # 中文文档（按项目约定放在根目录）
 ├── CHANGELOG.md                # 版本历史（英文）
 ├── CONTRIBUTING.md             # 贡献指南（英文）
+├── AGENTS.md                  # agent 工作指南（中文）
 ├── LICENSE                     # MIT
 ├── update.ps1                  # 一键更新脚本
 ├── references/                 # skill 格式与扫描方法参考
@@ -53,7 +54,7 @@ asset-inventory/
     └── release-notes/          # Chinese release notes
 ```
 
-本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）与 `AGENTS.md` 已被 gitignore，永不入库。
+本地专用的中文指南（`zh/skill-zh.md`、`zh/repo-init-guide-zh.md`）已被 gitignore，永不入库。`AGENTS.md` 已入库。
 
 ## 测试你的改动
 
@@ -107,7 +108,7 @@ asset-inventory/
 - 分支命名沿用既有风格：`feat/vX.Y.Z`、`fix/...`、`docs/...`、`chore/...`。
 - 合并前跑 `node scripts/check-docs.mjs`（动过样本再加 `node scripts/build-sample-pages.mjs --check`）。
 - 合并后按下面的版本规则打 tag / 建 Release。
-- 例外：`AGENTS.md` 等 gitignored 本地文件不受此限。
+- 例外：`zh/skill-zh.md` 等 gitignored 本地文件不受此限。
 
 ### 提交粒度
 
@@ -122,6 +123,8 @@ asset-inventory/
 | **MAJOR**（`x.0.0`） | 打 git tag **并**建 GitHub Release |
 
 **每个改动都按其自身达到的标准打 tag：** patch 达标打 patch tag，minor 达标打 minor tag，major 达标打 major tag。不要把 patch 级别的改动攒到后面的 minor 才打。GitHub Release 只为 minor/major 而建；patch 只有 tag、不建 Release。而只要改动达到 minor 标准，只打 patch tag 是不够的——必须打 minor tag **并**建 Release。
+
+Release 正文只用英文：粘贴 `docs/release-notes/release-notes-vX.Y.Z.md` 作为正文。`zh/` 版仅供文档站与仓库使用，永不放进 Release 页面。
 
 ## 许可证
 

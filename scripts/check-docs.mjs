@@ -9,7 +9,7 @@
 //   4. Frontmatter: delimiters complete, top-level keys well formed,
 //      unquoted ": " values warned (they silently break YAML).
 //   5. English docs contain no CJK characters (Chinese docs live under zh/
-//      or end with -ZH.md; local AGENTS.md is exempt).
+//      or end with -ZH.md; AGENTS.md is deliberately Chinese and exempt).
 //   6. Version consistency: the SKILL.md frontmatter metadata.version matches
 //      the top release heading in CHANGELOG.md and zh/CHANGELOG-ZH.md.
 //   8. Reference integrity: every `references/<name>.md` mentioned in SKILL.md
@@ -73,8 +73,8 @@ const README_LOCALES = [
 // Gitignored local copies compared by mtime (source, local copy).
 const LOCAL_PAIRS = [['SKILL.md', 'zh/skill-zh.md']];
 
-// Local-only files that are deliberately Chinese and never published.
-const LOCAL_ONLY_DOCS = ['AGENTS.md'];
+// Root-level files that are deliberately Chinese (exempt from the CJK rule).
+const CHINESE_ROOT_DOCS = ['AGENTS.md'];
 
 // Directories whose docs follow the *output* language, not the repo's English
 // rule — e.g. sample artifacts, which may legitimately be in any language.
@@ -216,7 +216,7 @@ function isEnglishDoc(relPath) {
   if (/(^|\/)[^/]*-ZH\.md$/i.test(relPath)) return false;
   // Any non-English locale README (README-JA.md, README-KO.md, …) is exempt.
   if (/(^|\/)README-[A-Za-z]{2,3}\.md$/i.test(relPath)) return false;
-  if (LOCAL_ONLY_DOCS.includes(relPath)) return false;
+  if (CHINESE_ROOT_DOCS.includes(relPath)) return false;
   if (OUTPUT_LANGUAGE_DIRS.some((d) => relPath.startsWith(d))) return false;
   return relPath.endsWith('.md');
 }
