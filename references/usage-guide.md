@@ -44,7 +44,7 @@ A second view derived from the 7-table inventory — same facts, by scenario/fre
 ## Notes
 
 - `/new`, `/sessions`, `/undo`, and `/redo` manage file changes via git internally, so the project must be a git repo.
-- Skills can also be invoked as `/skill-name` (e.g. `/codemap`, `/simplify`), and auto-trigger on intent.
+- Skills can also be picked from `/skills` (or typed as `/skill-name`, e.g. `/codemap`, `/simplify`), and auto-trigger on intent.
 - Expensive commands (deepwork, codemap, oracle) are only for when clearly needed; don't reach for them on everyday changes.
 
 ---

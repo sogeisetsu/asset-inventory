@@ -19,7 +19,7 @@ Run this checklist before outputting. Every item must pass.
 - [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).
 - [ ] Empty tables have a declaration line + `[]`.
 - [ ] Name column uniform per type: `/command` (no "command" suffix), `skill-name` (no `/`), Table 2 bare child name, software real names. No mixed styles.
-- [ ] Every `How to call` lists ALL real invocation paths. No bare "auto-triggers on intent".
+- [ ] Every `How to call` lists ALL real invocation paths. No bare "auto-triggers on intent"; skill rows show the `/skills` picker path, not only `/skill-name`.
 
 ## Table 1 — Plugins & companion software
 

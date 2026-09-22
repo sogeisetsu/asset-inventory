@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.12.0] - 2026-09-22
+
+### Changed
+- **Skill `How to call` now shows the real TUI path** — the cell reads `auto-triggers on intent, or pick from /skills (typing /skill-name works too)` instead of implying a bare `/skill-name`: the OpenCode TUI hides skills from the `/` autocomplete (commands with `source === "skill"` are skipped) and `/skills` is the official picker, though typing the full name still dispatches as a command. Updated `SKILL.md` (rule + Name legend), `references/checklist.md`, `references/format-example.md`, `references/usage-guide.md`, all EN/ZH samples (`inventory.md`, `asset-inventory.json`, `usage-guide.md`); sample pages rebuilt; version bumped to 1.12.0.
+
+---
+
 ## [1.11.8] - 2026-09-22
 
 ### Changed

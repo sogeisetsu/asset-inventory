@@ -33,6 +33,7 @@
 | 1.11.6 | patch | Root slimming: `assets/`→`docs/assets/`, `TODO.md`→`docs/` | ✅ | — | ✅ done |
 | 1.11.7 | patch | SKILL.md self-declared source line; references deliberately unmarked | ✅ | — | ✅ done |
 | 1.11.8 | patch | Behavior-neutral token trim of runtime payload | ✅ | — | ✅ done |
+| 1.12.0 | minor | Skill `How to call` shows the real TUI path (`/skills` picker, typed full name) | ✅ | ✅ | ✅ done |
 
 ## Details
 
@@ -73,6 +74,6 @@ the detail-page titles.
 
 ## Next step
 
-The rollout is complete through **1.11.8**: 1.11.1–1.11.8 (patches) with GitHub
-Releases on 1.11.3 and 1.11.4. Nothing is in flight — start a new ladder here
-for the next piece of work.
+The rollout is complete through **1.12.0**: 1.11.1–1.11.8 (patches) and 1.12.0
+(minor, with a GitHub Release), GitHub Releases on 1.11.3, 1.11.4 and 1.12.0.
+Nothing is in flight — start a new ladder here for the next piece of work.
