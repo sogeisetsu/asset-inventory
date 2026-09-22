@@ -29,7 +29,7 @@
     "source": "oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or /simplify"
+    "invoke": "auto-triggers on intent, or pick from /skills (typing /simplify works too)"
   },
   {
     "table": 2,
@@ -37,7 +37,7 @@
     "source": "oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or /codemap"
+    "invoke": "auto-triggers on intent, or pick from /skills (typing /codemap works too)"
   },
   {
     "table": 2,
@@ -45,7 +45,7 @@
     "source": "oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or /clonedeps"
+    "invoke": "auto-triggers on intent, or pick from /skills (typing /clonedeps works too)"
   },
   {
     "table": 2,
@@ -53,7 +53,7 @@
     "source": "oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or /deepwork"
+    "invoke": "auto-triggers on intent, or pick from /skills (typing /deepwork works too)"
   },
   {
     "table": 2,
@@ -93,7 +93,7 @@
     "source": "local, upstream github.com/sogeisetsu/asset-inventory MIT",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or /asset-inventory"
+    "invoke": "auto-triggers on intent, or pick from /skills (typing /asset-inventory works too)"
   },
   {
     "table": 4,

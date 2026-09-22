@@ -16,10 +16,10 @@
 
 | 名称 | 来源 | 调用方式 | 何时用 | 干什么 |
 |---|---|---|---|---|
-| simplify | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或 `/simplify` | 需要在不改行为的前提下简化代码时 | 它在请求匹配描述时自动触发，也可用 `/simplify` 按名调用；触发后它梳理冗余、提升可读性，但**不改变行为**。适合行为已经明确、只想让代码更清爽时。 |
-| codemap | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或 `/codemap` | 进入陌生仓库需要导览时 | 自动触发或按名调用；它为不熟悉的仓库生成层级结构图，标注主模块、入口文件与模块关系。第一次接触新项目时先跑它——但它很贵，只在确实需要时用。 |
-| clonedeps | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或 `/clonedeps` | 需要读依赖库源码时 | 自动触发或按名调用；它把重要依赖的源码克隆到本地被忽略的工作区，让你能直接读 SDK/框架内部实现。调试库行为、理解底层机制时用。 |
-| deepwork | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或 `/deepwork` | 复杂多阶段、需要审查关卡时 | 自动触发或按名调用；它是高成本编排器，拆活、派活、再整合，带审查关卡，适合大型重构或新功能实现。**很贵**，只在明确需要时用。 |
+| simplify | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/simplify` 也行） | 需要在不改行为的前提下简化代码时 | 它在请求匹配描述时自动触发，也可用 `/simplify` 按名调用；触发后它梳理冗余、提升可读性，但**不改变行为**。适合行为已经明确、只想让代码更清爽时。 |
+| codemap | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/codemap` 也行） | 进入陌生仓库需要导览时 | 自动触发或按名调用；它为不熟悉的仓库生成层级结构图，标注主模块、入口文件与模块关系。第一次接触新项目时先跑它——但它很贵，只在确实需要时用。 |
+| clonedeps | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/clonedeps` 也行） | 需要读依赖库源码时 | 自动触发或按名调用；它把重要依赖的源码克隆到本地被忽略的工作区，让你能直接读 SDK/框架内部实现。调试库行为、理解底层机制时用。 |
+| deepwork | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/deepwork` 也行） | 复杂多阶段、需要审查关卡时 | 自动触发或按名调用；它是高成本编排器，拆活、派活、再整合，带审查关卡，适合大型重构或新功能实现。**很贵**，只在明确需要时用。 |
 | /rtk-gain | @rezamonangg/opencode-rtk 注册命令（dist hooks/）✅实测 | `/rtk-gain` | 长会话结束时想确认省了多少 token | 你输入 `/rtk-gain`；它立即执行 rtk_gain 工具，把白名单命令经 RTK 改写后省下的 token 量打成账单展示，不问问题也不改配置。适合每次长会话结束时看一眼省了多少。 |
 
 ## 表3 原生命令与原生 Skill
@@ -34,7 +34,7 @@
 
 | 名称 | 来源 | 调用方式 | 何时用 | 干什么 |
 |---|---|---|---|---|
-| asset-inventory | 本地自建，上游 `github.com/sogeisetsu/asset-inventory` MIT ✅实测 | 看话自动干，或 `/asset-inventory` | 需要盘点本机 opencode 环境时 | 自动触发或按名调用；它一次扫清本机所有可调用的插件、Skill、命令、MCP、Agent 和外层应用能力，输出 7 张表 + JSON + 使用指南。适合换机器、交接、或搞不清环境时用。 |
+| asset-inventory | 本地自建，上游 `github.com/sogeisetsu/asset-inventory` MIT ✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/asset-inventory` 也行） | 需要盘点本机 opencode 环境时 | 自动触发或按名调用；它一次扫清本机所有可调用的插件、Skill、命令、MCP、Agent 和外层应用能力，输出 7 张表 + JSON + 使用指南。适合换机器、交接、或搞不清环境时用。 |
 | /catch-up | host-injected，二进制扫描 `<app.asar>` 发现 ✅实测 | `/catch-up` | 每次回到项目、丢了上下文时第一件事 | 它由外层应用注入，输入 `/catch-up` 运行；它汇总当前分支提交、PR 状态与未提交改动，给出可速览的摘要和下一步。多会话来回切换时，这是最高频的命令。 |
 | /debug | host-injected，二进制扫描 `<app.asar>` 发现 ✅实测 | `/debug` | 测试红了、修几次修不好时 | 输入 `/debug` 运行；它做引导式根因分析，定位到原因后才动手修，禁止盲目试错。适合反复修不好、需要根因而不是再猜一次时。 |
 

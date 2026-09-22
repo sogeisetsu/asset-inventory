@@ -45,6 +45,6 @@
 ## Notes
 
 - `/new`, `/sessions`, `/undo`, and `/redo` manage file changes through git internally — the project must be a git repo.
-- Skills can also be called by name (e.g. `/codemap`, `/simplify`), and they auto-trigger on intent as well.
+- Skills can also be picked from `/skills` (or typed as `/codemap`, `/simplify`), and they auto-trigger on intent as well.
 - Expensive tools (deepwork, codemap, oracle) are only for when they are clearly needed; do not reach for them on small everyday changes.
 - **MCP (websearch / context7 / grep_app / PaddleOCR-VL-1.6 / pdf-mcp) can be called by name** (e.g. "use context7"), and the Agent also invokes them when needed — that is why they are not listed under "Daily".

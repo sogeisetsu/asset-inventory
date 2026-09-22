@@ -29,7 +29,7 @@
     "source": "oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "看话自动干，或 /simplify"
+    "invoke": "看话自动干，或在 /skills 里选（直接打 /simplify 也行）"
   },
   {
     "table": 2,
@@ -37,7 +37,7 @@
     "source": "oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "看话自动干，或 /codemap"
+    "invoke": "看话自动干，或在 /skills 里选（直接打 /codemap 也行）"
   },
   {
     "table": 2,
@@ -45,7 +45,7 @@
     "source": "oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "看话自动干，或 /clonedeps"
+    "invoke": "看话自动干，或在 /skills 里选（直接打 /clonedeps 也行）"
   },
   {
     "table": 2,
@@ -53,7 +53,7 @@
     "source": "oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "看话自动干，或 /deepwork"
+    "invoke": "看话自动干，或在 /skills 里选（直接打 /deepwork 也行）"
   },
   {
     "table": 2,
@@ -93,7 +93,7 @@
     "source": "本地自建，上游 github.com/sogeisetsu/asset-inventory MIT",
     "state": "✅可用",
     "confidence": "✅实测",
-    "invoke": "看话自动干，或 /asset-inventory"
+    "invoke": "看话自动干，或在 /skills 里选（直接打 /asset-inventory 也行）"
   },
   {
     "table": 4,
