@@ -10,6 +10,8 @@ metadata:
 
 # Asset Inventory
 
+> **Source:** [github.com/sogeisetsu/asset-inventory](https://github.com/sogeisetsu/asset-inventory) · MIT
+
 Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers three questions: **what it is, who brought it in, how to use it**.
 
 > **Language rule — read this first: output follows the user's language.** A Chinese request produces a fully Chinese deliverable; English produces English. The skill's own instructions stay English. Fixed strings (table headers, state markers, confidence suffixes) come verbatim from `references/glossary.json` for the chosen language — never improvised, so diff mode stays comparable.
