@@ -2,7 +2,7 @@
 
 Run this checklist before outputting. Every item must pass.
 
-> Moved out of `SKILL.md` in v1.4.0 so the rule body stays focused and this list can be read on its own. `SKILL.md` → Quality Checklist points here. The `Anti-patterns` section in `SKILL.md` deliberately does **not** repeat items already covered below.
+> Moved out of `SKILL.md` in v1.4.0; `SKILL.md` points here. Anti-patterns are not repeated here.
 
 ---
 
@@ -10,7 +10,7 @@ Run this checklist before outputting. Every item must pass.
 
 - [ ] Exactly 7 tables; Tables 1-5/7 five columns, Table 6 six (including Model chain); headers consistent.
 - [ ] Every `Source` names the specific bringer, with a confidence suffix.
-- [ ] No skill in the global skills dir is called `local` until the plugin manifest has been checked — a `managed`/`customized` entry means the plugin is the bringer.
+- [ ] No global-dir skill is `local` until the plugin manifest is checked (managed/customized → plugin is the bringer).
 - [ ] No plaintext keys/tokens, masks real project names, and normalizes **every** home path to `~` / `%USERPROFILE%` in the Markdown **and** the JSON (real-name mode is the only exception, with the 4th Provenance line).
 - [ ] Unregistered skill-/plugin-like residue (has `SKILL.md`/`plugin.json`/`marketplace.json` but is not referenced by the config) is not dropped silently — it is `📦shelf-only` in a table or named in the Provenance Unresolved line, with the observed reason.
 - [ ] A local skill's upstream came from the documented lookup order (manifest → config-root sibling checkout → skill README → host marketplace cache → other client dirs → description attribution); if unverified, the source reads `local (repo unverified) ⚠️inferred` — no fabricated URL.
@@ -18,7 +18,7 @@ Run this checklist before outputting. Every item must pass.
 - [ ] Versions/models/counts looked up fresh.
 - [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).
 - [ ] Empty tables have a declaration line + `[]`.
-- [ ] The `Name` column is uniform per asset type: commands are bare `/command` (no "command" suffix), skills bare `skill-name` (no `/`), Table 2 rows bare child name (no plugin prefix), software real names. No mixed styles.
+- [ ] Name column uniform per type: `/command` (no "command" suffix), `skill-name` (no `/`), Table 2 bare child name, software real names. No mixed styles.
 - [ ] Every `How to call` lists ALL real invocation paths. No bare "auto-triggers on intent".
 
 ## Table 1 — Plugins & companion software
@@ -29,7 +29,7 @@ Run this checklist before outputting. Every item must pass.
 
 - [ ] Commands sit in the right table (built-in→Table 3, plugin→Table 2, user→Table 4, host-injected→Table 4).
 - [ ] No summary rows duplicating Table 1 software entries.
-- [ ] Merge vs split: a skill and its same-named command from the **same plugin package** are **one** row; a **separately-authored** command and a skill are **two** rows, and a gate/wrapper command is described as a gate.
+- [ ] Merge vs split: same-package skill+same-named command = one row; separately-authored = two rows; gate/wrapper described as gate.
 
 ## Table 3 — Built-in commands & built-in skills
 
@@ -46,12 +46,12 @@ Run this checklist before outputting. Every item must pass.
 - [ ] A single-row table has been double-checked against the config — it is the exception, not the norm.
 - [ ] Every server is listed: local and remote, enabled and disabled (`❌disabled` with the config line quoted).
 - [ ] Rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
-- [ ] Every MCP row lists its **real invocation paths** — ask-by-name (`use <name>`), the tool prefix, an MCP Prompt (`/prompt-name`) if it exposes one, or its own CLI/HTTP endpoint — never a blanket "the Agent calls it" / "the human doesn't call it".
+- [ ] Every MCP row lists real invocation paths — ask-by-name, tool prefix, MCP Prompt if exposed, own CLI/HTTP if shipped — never "Agent calls it" / "human doesn't call it".
 
 ## Table 6 — Agents
 
-- [ ] Every row has a concrete Model chain (`a→b→c`) **or** (for a **core agent only**, with no configured chain) the host's currently effective real model + a "single model, no chain fallback" note. Placeholder phrasing does not count.
-- [ ] The active preset's array-valued `<agent>.model` entries were expanded into chains — not flattened to "single model". If several plugin agents all read "single model", re-read the preset file.
+- [ ] Every row has a concrete chain (`a→b→c`) or (core agent only, no chain) the host's real model + "single model, no chain fallback" note.
+- [ ] Array-valued preset entries expanded into chains, not flattened. If several read "single model", re-read the preset.
 - [ ] Row order: core primary → plugin primary → core subagent → plugin subagent, alphabetical within each group.
 - [ ] Config-disabled agents absent from `agent list` are named in the table note with their config key, not invented as rows (watch `explore` vs `explorer`).
 
@@ -61,10 +61,10 @@ Run this checklist before outputting. Every item must pass.
 
 ## What it does & Usage Guide
 
-- [ ] Every `What it does` is **one detailed paragraph** (no `Simple: … Detailed: …` split) answering: how it is invoked, when to use it, and what happens after (with caveats). One-liners/labels do not pass.
+- [ ] Every `What it does` is one detailed paragraph (no Simple/Detailed split) covering: how invoked, when to use, what happens after (caveats). One-liners/labels fail.
 - [ ] Tables 1/2/4/5/7 rows do NOT carry deletion consequences; `What it does` focuses on what/who/how/caveats.
-- [ ] `usage-guide.md` is derived from the same rows — no re-collection, no invented facts; grouped by scenario/frequency; only `✅available` items; plain-language "when and why".
-- [ ] The usage guide picked the right mode: generic (Mode A) for an empty project, project-anchored (Mode B) for a non-empty one — and in Mode B the tool facts are unchanged, with no real file paths or private code pasted in.
+- [ ] Derived from the same rows — no re-collection, no invented facts; by scenario/frequency; only `✅available`; plain-language.
+- [ ] Picked the right mode: generic (Mode A) for empty project, project-anchored (Mode B) for non-empty — Mode B keeps tool facts unchanged, no real paths or private code.
 
 ## Language & Fixed Strings
 

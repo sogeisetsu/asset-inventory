@@ -44,14 +44,14 @@
 
 ### Table 6 agent order looks wrong
 
-The row order is enforced and easy to break. Before finishing, confirm all four groups appear in this order, alphabetical within each group:
+Row order is enforced. Before finishing, confirm all four groups appear in this order, alphabetical within each group:
 
 1. core primary (`build`, `plan`)
 2. plugin primary
 3. core subagent
 4. plugin subagent
 
-A common slip is putting a plugin primary above a core primary, or mixing a subagent into the primary block. Re-sort before output; this order is a Quality Checklist item and cannot be checked automatically (the rows live in the run output, not in the repo).
+Common slip: plugin primary above core, or subagent in primary block. Re-sort; this is a Quality Checklist item checked manually.
 
 ### Broken links in a Chinese read-along doc
 

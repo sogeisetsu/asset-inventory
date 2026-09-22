@@ -5,14 +5,14 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.11.7
+  version: 1.11.8
 ---
 
 # Asset Inventory
 
 > **Source:** [github.com/sogeisetsu/asset-inventory](https://github.com/sogeisetsu/asset-inventory) · MIT
 
-Inventory what this machine can **actually invoke** — not what files exist on disk. Every row answers three questions: **what it is, who brought it in, how to use it**.
+Inventory what this machine can **actually invoke** — not what files exist on disk.
 
 > **Language rule — read this first: output follows the user's language.** A Chinese request produces a fully Chinese deliverable; English produces English. The skill's own instructions stay English. Fixed strings (table headers, state markers, confidence suffixes) come verbatim from `references/glossary.json` for the chosen language — never improvised, so diff mode stays comparable.
 
@@ -83,9 +83,9 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 - **Source**: three-part shape. See Source Classification below.
 - **How to call**: how the user can actually reach it — **list ALL real invocation paths, never just one**:
   - Command → the literal `/command` (aliases in parens). Never "auto-runs on intent".
-  - Skill → both paths: `auto-triggers on intent, or /skill-name` (skills auto-trigger on description match AND are slash-invocable). Never bare "auto-triggers" when a slash name exists.
+  - Skill → both paths: `auto-triggers on intent, or /skill-name`. Never bare "auto-triggers" when a slash name exists.
   - Agent → `Tab switch` / `auto-takeover` / `@agent-name`.
-  - MCP → **list every real invocation path, never just one**: ask-by-name (`use context7` / `use the gh_grep tool`); the tool the Agent calls (`<server>_<tool>`, e.g. `grep_app_*` / `gh_grep_*`); an MCP Prompt registered as `/prompt-name` (only if the server exposes one); and its own standalone CLI/HTTP endpoint (e.g. a local `pdf-mcp` command, `mcp.context7.com`) if it ships one. **Never** write "the human doesn't call it" or any "Agent-only" claim.
+  - MCP → ask-by-name (`use context7` / `use the gh_grep tool`); the tool the Agent calls (`<server>_<tool>`, e.g. `grep_app_*` / `gh_grep_*`); an MCP Prompt registered as `/prompt-name` (only if the server exposes one); and its own standalone CLI/HTTP endpoint (e.g. a local `pdf-mcp` command, `mcp.context7.com`) if it ships one. **Never** write "the human doesn't call it" or any "Agent-only" claim.
   - Software/host capability → `active once installed` / `nothing to call, on from launch` / `when the Agent calls it`.
 - **When to use**: concrete scenario with conditions (e.g. `needs git`, `expensive`, `Windows-only`). Never a bare "on demand".
 - **What it does**: one detailed paragraph — full rules in [What-it-does format](#what-it-does-format-mandatory).
@@ -95,7 +95,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 
 ### What-it-does format (mandatory)
 
-`What it does` is the most critical cell in a table. Write it as **one detailed, readable paragraph** (2–5 sentences) — never a one-liner, never a label, and **never split into "Simple / Detailed" parts**. In flowing prose (no numbered list inside the cell), every paragraph MUST answer three things: (1) **how it is invoked** — what the user or Agent actually does to trigger it; (2) **when to use it** — the concrete situation where it earns its keep; (3) **what happens after** — the observable effect once it runs, plus caveats (`needs git`, `expensive`, `depends on a CLI that is/isn't installed`, which model chain it uses).
+`What it does` is the most critical cell in a table. Write it as **one detailed, readable paragraph** (2–5 sentences) — never a one-liner, never a label. In flowing prose (no numbered list inside the cell), every paragraph MUST answer three things: (1) **how it is invoked** — what the user or Agent actually does to trigger it; (2) **when to use it** — the concrete situation where it earns its keep; (3) **what happens after** — the observable effect once it runs, plus caveats (`needs git`, `expensive`, `depends on a CLI that is/isn't installed`, which model chain it uses).
 
 Expand from the source's actual description, in this priority: `SKILL.md` frontmatter `description` → `command/*.md` frontmatter + body → official documentation wording → `magicPrompts` usage text; paraphrase it into the output language.
 
@@ -156,7 +156,7 @@ Multi-source items: record the **direct bringer**; push indirect provenance into
 5. **Host-injected**: `$HOST_CONFIG/` settings, and a **binary-safe scan of the outer app bundle** for `/xxx` slash-command literals — plain grep misses binaries. The bundle may be `app.asar` (Electron), `web-dist`, or other formats depending on the outer app's tech stack. See `references/host-commands.md` for the scan method.
    > **Note**: outer app settings may live in Electron internal storage (DIPS/SQLite) with no standalone JSON file. If `$HOST_CONFIG/settings.json` is absent, say so in a table note — don't fabricate. The bundle scan still works regardless.
 6. **MCP servers — enumerate ALL of them, never just one**: read every `mcp` key from the global config (`$OPENCODE_CONFIG/opencode.jsonc` → `mcp`), then the project overlay (`$PROJECT_DIR/.opencode/`), and merge. For each key you MUST emit a row — local and remote alike, enabled and disabled alike.
-   - **Count assertion (mandatory):** after building Table 5, re-read the config's `mcp` object and compare its key count with your row count — they must match, or you dropped servers. A single-row Table 5 is a red flag, not a result.
+    - **Count assertion (mandatory):** after building Table 5, re-read the config's `mcp` object and compare its key count with your row count — they must match, or you dropped servers.
    - The config may not be strict JSON (comments / trailing commas): strip `//` before parsing, or read the `mcp` block directly — do not skip a server because the file fails strict parse. A disabled server is still a row (`❌disabled` + the config line quoted).
    - **Invocation paths, not a blanket "Agent calls it":** for each server note the ask-by-name path (`use <name>`), the tool-name prefix, whether it exposes MCP Prompts (`/prompt-name`), and any own CLI/HTTP endpoint — report only what you verified, never "the human doesn't call it".
 7. **Agent model chains**: read the plugin's preset file (`$OPENCODE_CONFIG/oh-my-opencode-slim.json` or equivalent → `preset` + `presets`). The active preset's `<agent>.model` gives each plugin agent's chain; an **array is the chain**, a string is a single model. Record the other preset names as backups. Do not guess — if the file is absent, write `unknown` for plugin agents.
@@ -192,11 +192,7 @@ No content after verification → **do not invent, do not omit**: output `no usa
 
 ### 5. Output
 
-- Every run writes **three files** into the **`output/` directory of the project
-  being inventoried** — the current working directory (`$PROJECT_DIR`), created if
-  missing. Not the skill's install location: the skill may live in a global config
-  dir, but the output must always land in the user's project root so it ships with
-  that project. Never write anywhere else:
+- Every run writes **three files** into the project root's `output/` dir (`$PROJECT_DIR/output/`, created if missing) — never the skill's install location. Never write anywhere else:
   - `output/inventory.md` — the 7-table inventory below.
   - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
   - `output/asset-inventory.json` — standalone JSON, one element per row.
@@ -212,7 +208,7 @@ No content after verification → **do not invent, do not omit**: output `no usa
   ```
   Real-name mode adds a 4th line: `This output contains user-requested real project names — do not share externally.` (localized template: `references/glossary.json` → `provenanceRealName`).
 - **JSON** (`output/asset-inventory.json`): standalone file, one element per row: `table, name, source, state, confidence, invoke`. PK = `table`+`name`. Empty table ⇒ `[]`.
-  - **The `table` field is always the numeric `1`-`7`** (matching Tables 1-7) and **does not change with the output language** — this is what makes diff mode comparable across runs. The Markdown "Table N" heading serves human readers; the JSON number serves machines. Never write `Table 1` or any localized string there.
+  - **The `table` field is always the numeric `1`-`7`** (never a localized string) — this is what makes diff mode comparable across runs.
   - Group rows, table notes, and hidden agents are excluded from JSON; the JSON row set = the Markdown data-row set.
 - **Name legend**: open `inventory.md` with a one-line legend (in the output language) explaining the Name shapes — `/name` = a slash command you type; `name` (no slash) = a skill (auto-triggers, or is invoked by name); other bare names = plugins/software, agents, MCP servers, or host capabilities. Put it directly under the title.
 - **Masking — apply before writing, then self-check**: redact API keys, tokens, and auth headers; replace the home-directory segment of **every** path with `~` (macOS/Linux) or `%USERPROFILE%` (Windows) — e.g. `C:\Users\alice\.local\bin\tool.exe` → `%USERPROFILE%\.local\bin\tool.exe`; mask private project names. Real-name mode only on explicit request + the Provenance line. Before finishing, scan the whole deliverable (Markdown **and** JSON) for the raw home path and fix any leak.

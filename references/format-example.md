@@ -1,8 +1,8 @@
 # Format examples (not facts — replace with values you look up at output time)
 
-These rows define the **format only** — replace every value with observed results; never copy them. Example values are desensitized placeholders and do not represent any real machine. `What it does` must be **one detailed paragraph** — never a `Simple: … Detailed: …` split, never a one-liner — answering: how it is invoked, when to use it, and what happens after (with caveats). Consult this file only when you are unsure how a cell should read.
+These rows define the **format only** — replace every value with observed results; never copy them. `What it does` must be one detailed paragraph (no Simple/Detailed split) covering: how invoked, when to use, what happens after (with caveats).
 
-> This file is both the format reference and the desensitized output example. Row counts are illustrative — a real run has as many rows as the machine actually has.
+> Format reference + desensitized example. Row counts are illustrative.
 
 ## Table 1 — Plugins & companion software (5 columns)
 

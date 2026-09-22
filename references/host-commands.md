@@ -106,4 +106,4 @@ if (Test-Path $configPath) {
 | Tauri apps | Tauri | `web-dist/`, `src-tauri/` config |
 | Native apps | varies | install dir, config dir, system registry |
 
-> The above is reference only; trust what you observe at inventory time.
+> Trust what you observe at inventory time.
