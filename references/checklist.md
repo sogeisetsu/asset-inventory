@@ -29,7 +29,7 @@ Run this checklist before outputting. Every item must pass.
 
 - [ ] Commands sit in the right table (built-in→Table 3, plugin→Table 2, user→Table 4, host-injected→Table 4).
 - [ ] No summary rows duplicating Table 1 software entries.
-- [ ] A command and a same-named skill are **separate** rows (never merged); a gate/wrapper command is described as a gate, not as the skill's own behavior.
+- [ ] Merge vs split: a skill and its same-named command from the **same plugin package** are **one** row; a **separately-authored** command and a skill are **two** rows, and a gate/wrapper command is described as a gate.
 
 ## Table 3 — Built-in commands & built-in skills
 

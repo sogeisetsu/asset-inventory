@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.3] - 2026-09-22
+
+### Fixed
+- **Merge scope corrected** — a skill and its same-named command are **one row only when the same plugin package delivers both** (e.g. `deepwork` + `/deepwork`, `reflect` + `/reflect`). A **separately-authored** command and a skill stay **two rows**, and a gate/wrapper command is described as a gate. Refines the rule from 1.11.1 / 1.11.2.
+
+---
+
 ## [1.11.2] - 2026-09-22
 
 ### Fixed
