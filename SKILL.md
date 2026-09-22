@@ -55,7 +55,7 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 
 Rules:
 - With a target, **skip unrelated evidence collection** (e.g. `mcp` skips the plugin dist scan, `agents` skips the outer-app bundle). Language, cell conventions, source classification, masking rules, and the `output/` path all stay the same.
-- `diff` is equivalent to natural-language diff mode: ask the user to paste the previous JSON, output only added/removed by PK. Never re-dump full tables.
+- 🔴 CHECKPOINT — paste gate: diff is equivalent to natural-language diff mode: ask the user to paste the previous JSON, output only added/removed by PK. Never re-dump full tables.
 - `usage` still does a full scan (the usage guide must derive from the same rows), but only writes `usage-guide.md`, not `inventory.md` or JSON.
 - Unrecognized target → fall back to full scan and note "unknown target, fell back to full scan" at the end.
 
@@ -136,6 +136,8 @@ Suffix every source with confidence: `✅verified` / `✅docs` / `⚠️inferred
 
 Multi-source items: record the **direct bringer**; push indirect provenance into `What it does`. **Resolution vs disk:** on-disk-but-unregistered = unavailable (say so); registered-but-broken (missing command/env/probe fail) = `⚠️inferred` + failure class in a table note.
 
+🔴 CHECKPOINT — real-name mode: turn it on only on the user's explicit request, never on your own initiative.
+
 ---
 
 ## Procedure
@@ -211,7 +213,7 @@ No content after verification → **do not invent, do not omit**: output `no usa
   - **The `table` field is always the numeric `1`-`7`** (never a localized string) — this is what makes diff mode comparable across runs.
   - Group rows, table notes, and hidden agents are excluded from JSON; the JSON row set = the Markdown data-row set.
 - **Name legend**: open `inventory.md` with a one-line legend (in the output language) explaining the Name shapes — `/name` = a slash command you type; `name` (no slash) = a skill (auto-triggers, or is picked from /skills); other bare names = plugins/software, agents, MCP servers, or host capabilities. Put it directly under the title.
-- **Masking — apply before writing, then self-check**: redact API keys, tokens, and auth headers; replace the home-directory segment of **every** path with `~` (macOS/Linux) or `%USERPROFILE%` (Windows) — e.g. `C:\Users\alice\.local\bin\tool.exe` → `%USERPROFILE%\.local\bin\tool.exe`; mask private project names. Real-name mode only on explicit request + the Provenance line. Before finishing, scan the whole deliverable (Markdown **and** JSON) for the raw home path and fix any leak.
+- **Masking — apply before writing, then self-check**: redact API keys, tokens, and auth headers; replace the home-directory segment of **every** path with `~` (macOS/Linux) or `%USERPROFILE%` (Windows) — e.g. `C:\Users\alice\.local\bin\tool.exe` → `%USERPROFILE%\.local\bin\tool.exe`; mask private project names. Real-name mode only on explicit request + the Provenance line. 🛑 STOP — do not deliver until you have scanned the whole deliverable (Markdown **and** JSON) for the raw home path and fixed any leak.
 - **Diff mode**: user asks "what changed since last time" → ask them to paste the previous JSON/Markdown, output only added/removed, keyed by PK. Never re-dump full tables.
 
 ---
