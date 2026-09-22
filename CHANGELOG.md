@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.11.8] - 2026-09-22
+
+### Changed
+- **Behavior-neutral token trim** — trimmed redundant restatements, compressible filler, and verbose modifiers across the runtime payload (`SKILL.md` + all 6 `references/` files). `references/glossary.json` was minified (parsed JSON verified deep-equal to original). Total payload reduced by 4911 bytes (71453 → 66542) with no rule, example semantic, or Anti-pattern removed; checklist item count unchanged at 36.
+
+---
+
 ## [1.11.7] - 2026-09-22
 
 ### Added
