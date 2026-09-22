@@ -42,7 +42,8 @@ asset-inventory/
 ├── scripts/
 │   ├── check-docs.mjs          # Doc/link/frontmatter validation
 │   └── generate-assets.mjs     # Regenerates docs/assets/*.svg
-├── docs/                       # GitHub Pages + release notes + assets
+├── docs/                       # GitHub Pages + release notes + assets + TODO
+│   ├── TODO.md                 # Rollout plan (English)
 │   ├── assets/                 # Local SVG icon / banner / badges (generated)
 │   └── release-notes/          # English release notes
 └── zh/                         # All Chinese docs except README-ZH.md

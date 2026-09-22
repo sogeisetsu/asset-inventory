@@ -26,7 +26,6 @@ asset-inventory/
 ├── README.md                   # English documentation
 ├── README-ZH.md                # Chinese documentation
 ├── readmes/                    # localized READMEs (JA / KO / RU / AR / ES)
-├── TODO.md                     # rollout plan (English)
 ├── CHANGELOG.md                # version history (English)
 ├── CONTRIBUTING.md             # contribution guidelines (English)
 ├── AGENTS.md                  # agent working guide (Chinese)
@@ -36,7 +35,8 @@ asset-inventory/
 │   ├── check-docs.mjs          # docs / links / frontmatter validation
 │   ├── build-sample-pages.mjs  # renders docs/samples/ into the detail pages
 │   └── generate-assets.mjs     # regenerates docs/assets/*.svg
-├── docs/                       # GitHub Pages + release notes + guides + samples + assets
+├── docs/                       # GitHub Pages + release notes + guides + samples + assets + TODO
+│   ├── TODO.md                 # rollout plan (English)
 │   ├── assets/                 # local SVG icon / banner / badges (generated)
 │   ├── guides/                 # these long-form guides
 │   ├── release-notes/          # English release notes

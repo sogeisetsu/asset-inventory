@@ -4,7 +4,7 @@
 > **Next step** line at the bottom. A fresh session should read this file first
 > to know exactly which release is in flight and what comes next.
 >
-> Chinese counterpart: [`zh/TODO-ZH.md`](zh/TODO-ZH.md) (kept in sync).
+> Chinese counterpart: [`zh/TODO-ZH.md`](../zh/TODO-ZH.md) (kept in sync).
 
 ## Release ladder
 

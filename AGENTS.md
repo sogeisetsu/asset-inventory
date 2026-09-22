@@ -12,7 +12,7 @@
 - `references/` — 格式示例、质量清单、扫描方法、故障排除、本地化词汇表（`glossary.json`）。辅助文档，不是事实。
 - `references/checklist.md` — 输出前的完整质量清单。
 - `update.ps1` — 一键更新脚本（复制 `SKILL.md` + `references/` 到安装位置）。
-- `TODO.md` / `zh/TODO-ZH.md` — 滚动发布计划（EN/ZH 配对，`check-docs` 的 `PAIRS` 强制）。**新会话先读它**即可定位当前进度与下一步。
+- `docs/TODO.md` / `zh/TODO-ZH.md` — 滚动发布计划（EN/ZH 配对，`check-docs` 的 `PAIRS` 强制）。**新会话先读它**即可定位当前进度与下一步。
 - `scripts/check-docs.mjs` — 文档/链接/frontmatter/版本/词表/README 互链校验（提 PR 前跑）。
 - `scripts/build-sample-pages.mjs` — 从 `docs/samples/` 渲染三个详情页；`--check` 判过期。
 - `scripts/generate-assets.mjs` — 重新生成 `docs/assets/*.svg`。
@@ -88,7 +88,7 @@
 6. `git commit`（一个逻辑变更多次提交）
 7. `git tag -a vX.Y.Z -m "..."` → `git push origin master --follow-tags`
 8. minor/major：`gh release create vX.Y.Z --notes-file docs/release-notes/release-notes-vX.Y.Z.md`（正文仅英文）
-9. 更新 `TODO.md` / `zh/TODO-ZH.md` 的状态行与"下一步"
+9. 更新 `docs/TODO.md` / `zh/TODO-ZH.md` 的状态行与"下一步"
 
 ## 坑
 
