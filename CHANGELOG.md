@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.13.3] - 2026-09-24
+
+### Changed
+- **Release-notes content range defined** — `CONTRIBUTING.md` / `zh/CONTRIBUTING-ZH.md` now state that a GitHub Release's notes must cover **all changes since the previous Release's tag** (found via `gh release list`), not the current version's commit list: patch tags carry no Release, so every intermediate patch belongs in the notes; written from the user's perspective, never as a raw commit dump. `AGENTS.md` carries the summary, and `scripts/release-prep.mjs`'s `--notes` checklist repeats the rule at fill-in time.
+
+---
+
 ## [1.13.2] - 2026-09-24
 
 ### Added
