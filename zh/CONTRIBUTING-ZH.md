@@ -127,6 +127,8 @@ asset-inventory/
 
 Release 正文只用英文：粘贴 `docs/release-notes/release-notes-vX.Y.Z.md` 作为正文。`zh/` 版仅供文档站与仓库使用，永不放进 Release 页面。
 
+**notes 必须覆盖的范围：** 与**上一个 GitHub Release 的 tag** 相比的全部变化，而不是本次发版包含哪些 commit。patch 不建 Release，所以自上一个 Release tag 到新 tag 之间落进来的所有改动——含中间的每个 patch——都要写进 notes。用上一个 Release 的 tag 圈定范围（`gh release list` 或 Releases 页最新的那条），以用户视角描述该范围内的变化；不要罗列本版本的 commit 清单。尚无任何 GitHub Release 时，覆盖到新 tag 为止的全部内容。
+
 ## 许可证
 
 贡献即表示你同意你的贡献按 MIT License 授权。

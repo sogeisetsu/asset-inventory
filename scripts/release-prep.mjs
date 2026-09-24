@@ -228,8 +228,8 @@ function printManualSteps(version, notes) {
     '  [ ] zh/CHANGELOG-ZH.md — 填写新标题下的中文条目',
   ];
   if (notes) {
-    lines.push(`  [ ] docs/release-notes/release-notes-v${version}.md — fill in the English release notes`);
-    lines.push(`  [ ] zh/release-notes/release-notes-v${version}-ZH.md — 填写中文 release notes`);
+    lines.push(`  [ ] docs/release-notes/release-notes-v${version}.md — fill in the English release notes: cover ALL changes since the PREVIOUS Release tag (gh release list), not just this version's commits`);
+    lines.push(`  [ ] zh/release-notes/release-notes-v${version}-ZH.md — 填写中文 release notes（同一范围：与上一个 Release tag 相比的全部变化，非本版本 commit 清单）`);
   }
   lines.push(`  [ ] docs/TODO.md + zh/TODO-ZH.md — add the ${version} version row`);
   lines.push('  [ ] write the release commit(s)');

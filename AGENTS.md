@@ -76,6 +76,7 @@
 - tag 一律用 **annotated**（`git tag -a`），风格与既有 tag 一致。
 - 推送用 `git push origin master --follow-tags`。
 - Release 正文用**英文** release notes 文件：`gh release create vX.Y.Z --title "..." --notes-file docs/release-notes/release-notes-vX.Y.Z.md`；**永不追加 `zh/` 版**（Release 页面只显示英文）。
+- Release notes 的**内容范围 = 与上一个 GitHub Release 的 tag 相比的变化**（用 `gh release list` 找上一个 Release tag，`git log --oneline <上个Release tag>..<新tag>` 圈范围），不是本版本的 commit 清单——中间的 patch 改动也要写进去；以用户视角描述，别罗列 commit。
 - patch 版本**不写** release notes 文件、不建 Release。
 
 ## 发布检查清单（每个版本）

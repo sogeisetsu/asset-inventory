@@ -125,6 +125,8 @@ If you add a language to `references/glossary.json`, give it **the same key set 
 
 Release bodies are English-only: paste `docs/release-notes/release-notes-vX.Y.Z.md` as the body. The `zh/` counterparts are for the docs site and the repository, never for a Release page.
 
+**What the notes must cover:** all changes since the tag of the **previous GitHub Release**, not just the commits of the version being released. Patch tags carry no Release, so everything that landed between the last Release tag and the new tag — every intermediate patch — belongs in the notes. Find the range with the previous Release's tag (`gh release list`, or the newest Release shown on the Releases page) and describe that range's changes in user-facing terms; do not dump this version's commit list. If no GitHub Release exists yet, cover everything up to the new tag.
+
 ## License
 
 By contributing, you agree that your contributions will be licensed under the MIT License.
