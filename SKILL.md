@@ -209,10 +209,11 @@ No content after verification → **do not invent, do not omit**: output `no usa
 
 ### 5. Output
 
-- Every run writes **three files** into the project root's `output/` dir (`$PROJECT_DIR/output/`, created if missing) — never the skill's install location. Never write anywhere else:
+- A **full scan** writes **three files** into the project root's `output/` dir (`$PROJECT_DIR/output/`, created if missing) — never the skill's install location. Never write anywhere else:
   - `output/inventory.md` — the 7-table inventory below.
   - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
   - `output/asset-inventory.json` — standalone JSON, one element per row.
+- **Targeted modes write only the files named in the Targeting table**: `mcp` / `agents` / `hosts` / `skills` → `inventory.md` + JSON; `usage` → `usage-guide.md` only. **`diff` writes no files** — answer in the chat, and only write a file if the user explicitly asks.
 - **Language**: the whole deliverable follows the user's language (see [Output Language](#output-language)); the 7-table structure and column counts stay fixed, headers/cells/markers/prose are translated via `references/glossary.json`.
 - Compact tables, blank line between tables, fixed headers, rows alphabetical (Table 2 grouped by software), one entry per cell.
 - Format examples: see `references/format-example.md` (values there are placeholders — replace, never copy).
