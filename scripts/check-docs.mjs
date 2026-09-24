@@ -18,6 +18,9 @@
 //   9. Glossary structure: every language block in references/glossary.json
 //      exposes the same key set as the `en` block, and every language SKILL.md
 //      declares as a fixed-string language actually exists in the glossary.
+//   10. State parity: every `languages.<lang>.state` value in the glossary
+//      appears verbatim in that language's README and in docs/index.html, so
+//      localized pages never drift from the fixed output markers.
 //
 // Usage: node scripts/check-docs.mjs
 // Exits non-zero on errors. Warnings do not fail.
@@ -62,15 +65,16 @@ const PAIRS = [
   ['docs/release-notes/release-notes-v1.13.1.md', 'zh/release-notes/release-notes-v1.13.1-ZH.md'],
 ];
 
-// Localized READMEs that must all exist and cross-link each other.
+// Localized READMEs that must all exist and cross-link each other, keyed by
+// glossary language code (used by the locale and state-parity checks).
 const README_LOCALES = [
-  'README.md',
-  'README-ZH.md',
-  'readmes/README-JA.md',
-  'readmes/README-KO.md',
-  'readmes/README-RU.md',
-  'readmes/README-AR.md',
-  'readmes/README-ES.md',
+  ['en', 'README.md'],
+  ['zh', 'README-ZH.md'],
+  ['ja', 'readmes/README-JA.md'],
+  ['ko', 'readmes/README-KO.md'],
+  ['ru', 'readmes/README-RU.md'],
+  ['ar', 'readmes/README-AR.md'],
+  ['es', 'readmes/README-ES.md'],
 ];
 
 // Gitignored local copies compared by mtime (source, local copy).
@@ -395,7 +399,7 @@ async function checkReferenceIntegrity() {
 
 async function checkReadmeLocales() {
   // 9. Every localized README exists and links to the whole locale set.
-  for (const relPath of README_LOCALES) {
+  for (const [, relPath] of README_LOCALES) {
     const abs = path.join(ROOT, relPath);
     if (!(await exists(abs))) {
       err(`readme locales: missing ${relPath}`);
@@ -407,10 +411,69 @@ async function checkReadmeLocales() {
     const linked = new Set(
       [...raw.matchAll(/\]\(([^)\s]+)\)/g)].map((m) => m[1].split('/').pop()),
     );
-    for (const target of README_LOCALES) {
+    for (const [, target] of README_LOCALES) {
       const name = target.split('/').pop();
       if (!linked.has(name)) {
         warn(`readme locales: ${relPath} does not link to ${target}`);
+      }
+    }
+  }
+}
+
+async function checkGlossaryStateParity() {
+  // 10. Every glossary state marker must appear verbatim in that language's
+  // README and in docs/index.html (which renders a five-state line per
+  // locale), so a marker rename in references/glossary.json cannot silently
+  // strand the localized pages.
+  const glossaryPath = path.join(ROOT, 'references', 'glossary.json');
+  if (!(await exists(glossaryPath))) return; // already reported by check 7
+  let data;
+  try {
+    data = JSON.parse(await fs.readFile(glossaryPath, 'utf8'));
+  } catch {
+    return; // already reported by check 7
+  }
+  const languages = data && typeof data === 'object' ? data.languages : null;
+  if (!languages || typeof languages !== 'object') return;
+
+  const statesOf = (lang) => {
+    const block = languages[lang];
+    const state = block && typeof block === 'object' ? block.state : null;
+    if (!state || typeof state !== 'object') return null; // key-parity reports this
+    return Object.values(state).filter((v) => typeof v === 'string' && v !== '');
+  };
+
+  const readmeByLang = new Map(README_LOCALES);
+  for (const lang of Object.keys(languages)) {
+    const values = statesOf(lang);
+    if (!values) continue;
+    const relPath = readmeByLang.get(lang);
+    if (!relPath) {
+      warn(`state parity: no README mapped for glossary language "${lang}"`);
+      continue;
+    }
+    const abs = path.join(ROOT, relPath);
+    if (!(await exists(abs))) continue; // readme-locales check reports this
+    const raw = await fs.readFile(abs, 'utf8');
+    for (const value of values) {
+      if (!raw.includes(value)) {
+        err(`state parity: ${relPath} is missing glossary state value "${value}" (${lang})`);
+      }
+    }
+  }
+
+  const indexAbs = path.join(ROOT, 'docs', 'index.html');
+  if (!(await exists(indexAbs))) {
+    err('state parity: docs/index.html not found');
+    return;
+  }
+  const indexRaw = await fs.readFile(indexAbs, 'utf8');
+  for (const lang of Object.keys(languages)) {
+    const values = statesOf(lang);
+    if (!values) continue;
+    for (const value of values) {
+      if (!indexRaw.includes(value)) {
+        err(`state parity: docs/index.html is missing glossary state value "${value}" (${lang})`);
       }
     }
   }
@@ -488,6 +551,7 @@ async function main() {
   await checkReferenceIntegrity();
   await checkGlossaryStructure();
   await checkReadmeLocales();
+  await checkGlossaryStateParity();
 
   for (const w of warnings) console.warn(`warning: ${w}`);
   for (const e of errors) console.error(`error: ${e}`);
