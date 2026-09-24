@@ -145,8 +145,9 @@ Suffix every source with confidence: `✅verified` / `✅docs` / `⚠️inferred
 | `❌disabled` | explicitly disabled in config; **quote the config line**. |
 | `📦shelf-only` | marketplace/cache/docs only, not registered, not invokable. |
 | `🚫absent` | absent everywhere. Never pad tables. |
+| `🛑broken` | registered in config but not invokable (missing command / env / probe fail); quote the failure in a table note. |
 
-Multi-source items: record the **direct bringer**; push indirect provenance into `What it does`. **Resolution vs disk:** on-disk-but-unregistered = unavailable (say so); registered-but-broken (missing command/env/probe fail) = `⚠️inferred` + failure class in a table note.
+Multi-source items: record the **direct bringer**; push indirect provenance into `What it does`. **Resolution vs disk:** on-disk-but-unregistered = unavailable (say so); registered-but-broken (missing command/env/probe fail) = `⚠️inferred 🛑broken` + failure class in a table note.
 
 🔴 CHECKPOINT — real-name mode: turn it on only on the user's explicit request, never on your own initiative.
 
@@ -193,7 +194,7 @@ Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't ma
 | Plugin cache unreadable | `🚫absent` + table note: `plugin cache unreadable (<error>)` |
 | Outer app bundle scan fails | note the failure reason in a table note; skip that source, don't fabricate |
 | `opencode agent list` returns empty | check `opencode --pure agent list`; if still empty, write "no selectable agents detected" |
-| MCP server unreachable | `⚠️inferred` + note: `liveness probe failed (<error>)` |
+| MCP server unreachable | `⚠️inferred 🛑broken` + note: `liveness probe failed (<error>)` |
 | Config file missing or malformed | note the gap in a table note; don't guess defaults |
 | Version unknown after all sources exhausted | write `unknown` — never invent |
 | Language mismatch (user asks in English, config is Chinese) | follow the user's language for output; use English for technical terms |

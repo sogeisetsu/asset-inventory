@@ -54,7 +54,7 @@ A second view derived from the 7-table inventory — same facts, by scenario/fre
 1. Grouping: **daily → main tools → on-demand → periodic**, ordered by the user's real usage frequency.
 2. Each entry: `**/command** — <when to use>. It <what it does>, so you <what you get>.` Plain language, with concrete effect.
 3. Flag pitfalls: `needs git`, `expensive`, `Windows-only`, `first thing on return`.
-4. Include only `✅available` items; `❌disabled`, `📦shelf-only`, and `🚫absent` never appear.
+4. Include only `✅available` items; `❌disabled`, `📦shelf-only`, `🚫absent`, and `🛑broken` never appear.
 5. Derived from the 7 tables — never re-collect or invent. Same facts, different view.
 
 ## Two modes — empty project vs. non-empty project

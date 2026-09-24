@@ -38,7 +38,7 @@ These rows define the **format only** — replace every value with observed resu
 
 | Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| ExampleMCP | remote MCP, `mcp.example.com`, global config `opencode.jsonc:mcp`, alias `gh_example` ✅verified ✅available | ask by name (`` `use ExampleMCP` ``) or Agent calls it (tools `example_*` / `gh_example_*`) | when you need to look up official docs online | Ask for it by name, or let the Agent invoke it when it needs current docs and live results, exposed under the tool names `example_*` / `gh_example_*`; its auth header contains a key, already masked. Related skill unknown. |
+| ExampleMCP | remote MCP, `mcp.example.com`, global config `opencode.jsonc:mcp`, alias `gh_example` ⚠️inferred 🛑broken | ask by name (`` `use ExampleMCP` ``) or Agent calls it (tools `example_*` / `gh_example_*`) | when you need to look up official docs online | Ask for it by name, or let the Agent invoke it when it needs current docs and live results, exposed under the tool names `example_*` / `gh_example_*`; its auth header contains a key, already masked. Related skill unknown. |
 | Example local MCP | local MCP, `example-mcp` command ✅verified ✅available | ask by name (`` `use example-mcp` ``) or Agent calls it (tools `example_*`) | when you need local capabilities | Ask for it by name, or let the Agent invoke it when a local capability is needed; it wraps local commands as tools and a missing command makes the call fail. Related skill unknown. |
 
 ## Table 6 — Agents (6 columns, including Model chain)
