@@ -55,7 +55,7 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 
 Rules:
 - With a target, **skip unrelated evidence collection** (e.g. `mcp` skips the plugin dist scan, `agents` skips the outer-app bundle). Language, cell conventions, source classification, masking rules, and the `output/` path all stay the same.
-- `diff` is equivalent to natural-language diff mode: ask the user to paste the previous JSON, output only added/removed by PK. Never re-dump full tables.
+- 🔴 CHECKPOINT — paste gate: diff is equivalent to natural-language diff mode: ask the user to paste the previous JSON, output only added/removed by PK. Never re-dump full tables.
 - `usage` still does a full scan (the usage guide must derive from the same rows), but only writes `usage-guide.md`, not `inventory.md` or JSON.
 - Unrecognized target → fall back to full scan and note "unknown target, fell back to full scan" at the end.
 
@@ -70,12 +70,24 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 | # | Table | Covers |
 |---|---|---|
 | 1 | Plugins & companion software | The software/plugins themselves (hosts, plugins, companion apps), one row per software. **Name = the real product name** (e.g. `OpenChamber`, `@rezamonangg/opencode-rtk@0.4.0`), never a placeholder; reverse-look-up the real name from install paths or config names. |
-| 2 | Skills & commands each software/plugin brings | Grouped by providing software, **one row per skill/command, no summary rows** (the software is already in Table 1). Ownership follows the tool a command invokes (`/rtk-gain` → `@rezamonangg/opencode-rtk`). Slash commands a plugin registers via hooks also go here (e.g. `/loop`; source = `<plugin> registers command (dist hooks/…)`). **Merge vs split turns on whether the same plugin package delivers both.** If one plugin package both ships a skill and registers a same-named slash command (skill path and hook registration both inside that package, e.g. `deepwork` + `/deepwork`, `reflect` + `/reflect`), emit **one** row: name = the skill name, `How to call` lists both entry points, `Source` cites both the package skill path and the hook registration. If the command is **authored separately** (e.g. a user command at `$OPENCODE_CONFIG/command/<name>.md`) while the skill comes from elsewhere, they are **two different assets → separate rows**; and when such a command is a gate/wrapper (it judges the input, then loads the skill, or overrides format rules), describe it as exactly that — never attribute the skill's behavior to the command. Read the command file (`command/*.md`) before writing its row. **Grouping:** you may prefix each software's block with a bold group row (name column = software name, other cells empty); a group row is not a data row — JSON excludes it and row counts ignore it. Use group rows throughout or not at all; never mix. Table 4's "local / user-command / host-injected" group rows follow the same rule. |
+| 2 | Skills & commands each software/plugin brings | Grouped by providing software, one row per skill/command, no summary rows; ownership follows the tool a command invokes (e.g. `/rtk-gain` → `@rezamonangg/opencode-rtk`). Full merge/split and grouping rules: see Table 2 rules below. |
 | 3 | Built-in commands & built-in skills | **ALL built-in TUI commands** (verify against `opencode.ai/docs/tui`: `/connect /compact /details /editor /exit /export /help /init /models /new /redo /sessions /share /unshare /themes /thinking /undo` + the docs list) and built-in skills. If none, write an empty-table declaration. |
 | 4 | Custom skills, commands, and host-injected commands | user-created skills (upstream + deps), user commands, and outer-app-injected commands (source `host-injected`). Each expanded, never merged. **This skill itself MUST appear here.** |
 | 5 | MCP | **every** MCP server (global + project), local/remote, with enabled state and auth-masking state — re-read the config's `mcp` keys and match the count. Record a known alias/tool-name prefix (e.g. grep_app → `gh_grep`) in `Source` or `How to call`. Related skills only when verified, else `unknown` — never fabricate. |
-| 6 | Agents | selectable/invocable agents (native primary `build`/`plan`, subagents, plugin-provided, custom; disabled ones `❌disabled` + config line). Agents the config disables but the runtime `agent list` never exposes (e.g. `agent.explore` / `agent.general`) are **not rows** — name them in the Table 6 note with their config key; if a disabled name collides with a real agent name (`explore` vs `explorer`), note the mismatch and keep the real one. **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only. **The Model-chain column is mandatory**: the active preset's `<agent>.model` may be a string or an array, and an **array is the chain**; also record backup preset names. Never render a preset full of arrays as "single model" for every agent. **Row order is enforced: core primary → plugin primary → core subagent → plugin subagent; alphabetical within each group.** |
+| 6 | Agents | Selectable/invocable agents with their model chain. Full chain and row-order rules: see Table 6 rules below. |
 | 7 | Host capabilities | outer-app-injected capabilities, no duplication with Table 1/2. **Names come from a fixed category list and stay stable across runs** (localizable, but the set is fixed): ① global behavior rules ② model-preference management ③ session & scheduled-task actions ④ in-page browser ⑤ managed-process management ⑥ prompt optimization ⑦ skill marketplace catalog. Do not list a category the machine lacks, and never invent a new one (fold it into the nearest category and explain in `What it does`). |
+
+#### Table 2 rules
+
+- Grouped by providing software; **one row per skill/command, no summary rows** (the software is already in Table 1). Ownership follows the tool a command invokes (`/rtk-gain` → `@rezamonangg/opencode-rtk`). Slash commands a plugin registers via hooks also go here (e.g. `/loop`; source = `<plugin> registers command (dist hooks/…)`).
+- **Merge vs split turns on whether the same plugin package delivers both.** If one plugin package both ships a skill and registers a same-named slash command (skill path and hook registration both inside that package, e.g. `deepwork` + `/deepwork`, `reflect` + `/reflect`), emit **one** row: name = the skill name, `How to call` lists both entry points, `Source` cites both the package skill path and the hook registration. If the command is **authored separately** (e.g. a user command at `$OPENCODE_CONFIG/command/<name>.md`) while the skill comes from elsewhere, they are **two different assets → separate rows**; and when such a command is a gate/wrapper (it judges the input, then loads the skill, or overrides format rules), describe it as exactly that — never attribute the skill's behavior to the command. Read the command file (`command/*.md`) before writing its row.
+- **Grouping:** you may prefix each software's block with a bold group row (name column = software name, other cells empty); a group row is not a data row — JSON excludes it and row counts ignore it. Use group rows throughout or not at all; never mix. Table 4's "local / user-command / host-injected" group rows follow the same rule.
+
+#### Table 6 rules
+
+- Rows are the selectable/invocable agents (native primary `build`/`plan`, subagents, plugin-provided, custom; disabled ones `❌disabled` + config line). Agents the config disables but the runtime `agent list` never exposes (e.g. `agent.explore` / `agent.general`) are **not rows** — name them in the Table 6 note with their config key; if a disabled name collides with a real agent name (`explore` vs `explorer`), note the mismatch and keep the real one. **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only.
+- **The Model-chain column is mandatory**: the active preset's `<agent>.model` may be a string or an array, and an **array is the chain**; also record backup preset names. Never render a preset full of arrays as "single model" for every agent. **Exemption — core-bundled agents only**: agents that ship with the host and have no preset entry (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback". This exemption **does not apply to plugin agents**; if a plugin agent's chain cannot be read, write `unknown ⚠️inferred`, never "single model".
+- **Row order is enforced: core primary → plugin primary → core subagent → plugin subagent; alphabetical within each group.**
 
 ### Cell Conventions
 
@@ -90,7 +102,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 - **When to use**: concrete scenario with conditions (e.g. `needs git`, `expensive`, `Windows-only`). Never a bare "on demand".
 - **What it does**: one detailed paragraph — full rules in [What-it-does format](#what-it-does-format-mandatory).
 - **Model chain (Table 6 only)**: the chain comes from the **active preset** in the plugin's preset file (e.g. `.oh-my-opencode-slim/oh-my-opencode-slim.json` → `preset` names the active one, `presets.<name>.<agent>.model` holds it). **That value may be a string OR an array** — an array *is* the chain, in order (`["a","b","c"]` → `a → b → c`). Never flatten an array to a single model, and never report "single model" for a plugin agent whose preset lists an array.
-  **Exemption — core-bundled agents only**: agents that ship with the host and have no preset entry (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback". This exemption **does not apply to plugin agents**; if a plugin agent's chain cannot be read, write `unknown ⚠️inferred`, never "single model".
+  **Exemption — core-bundled agents only**: see Table 6 rules below.
   Also record the backup preset names (the other keys under `presets`).
 
 ### What-it-does format (mandatory)
@@ -133,8 +145,11 @@ Suffix every source with confidence: `✅verified` / `✅docs` / `⚠️inferred
 | `❌disabled` | explicitly disabled in config; **quote the config line**. |
 | `📦shelf-only` | marketplace/cache/docs only, not registered, not invokable. |
 | `🚫absent` | absent everywhere. Never pad tables. |
+| `🛑broken` | registered in config but not invokable (missing command / env / probe fail); quote the failure in a table note. |
 
-Multi-source items: record the **direct bringer**; push indirect provenance into `What it does`. **Resolution vs disk:** on-disk-but-unregistered = unavailable (say so); registered-but-broken (missing command/env/probe fail) = `⚠️inferred` + failure class in a table note.
+Multi-source items: record the **direct bringer**; push indirect provenance into `What it does`. **Resolution vs disk:** on-disk-but-unregistered = unavailable (say so); registered-but-broken (missing command/env/probe fail) = `⚠️inferred 🛑broken` + failure class in a table note.
+
+🔴 CHECKPOINT — real-name mode: turn it on only on the user's explicit request, never on your own initiative.
 
 ---
 
@@ -179,12 +194,15 @@ Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't ma
 | Plugin cache unreadable | `🚫absent` + table note: `plugin cache unreadable (<error>)` |
 | Outer app bundle scan fails | note the failure reason in a table note; skip that source, don't fabricate |
 | `opencode agent list` returns empty | check `opencode --pure agent list`; if still empty, write "no selectable agents detected" |
-| MCP server unreachable | `⚠️inferred` + note: `liveness probe failed (<error>)` |
+| MCP server unreachable | `⚠️inferred 🛑broken` + note: `liveness probe failed (<error>)` |
 | Config file missing or malformed | note the gap in a table note; don't guess defaults |
 | Version unknown after all sources exhausted | write `unknown` — never invent |
 | Language mismatch (user asks in English, config is Chinese) | follow the user's language for output; use English for technical terms |
+| Pasted diff JSON/Markdown unparseable | ask the user to re-paste, or fall back to comparing the Markdown tables; never guess or invent PK rows |
 
 **Rule:** When in doubt, write what you observed — never fabricate. A `⚠️inferred` with an explanation is always better than a confident `✅verified` on unverified data.
+
+More failure scenarios and fixes: see `references/troubleshooting.md`.
 
 ### 4. Empty tables
 
@@ -192,10 +210,11 @@ No content after verification → **do not invent, do not omit**: output `no usa
 
 ### 5. Output
 
-- Every run writes **three files** into the project root's `output/` dir (`$PROJECT_DIR/output/`, created if missing) — never the skill's install location. Never write anywhere else:
+- A **full scan** writes **three files** into the project root's `output/` dir (`$PROJECT_DIR/output/`, created if missing) — never the skill's install location. Never write anywhere else:
   - `output/inventory.md` — the 7-table inventory below.
   - `output/usage-guide.md` — the how-to-use guide derived from the same rows.
   - `output/asset-inventory.json` — standalone JSON, one element per row.
+- **Targeted modes write only the files named in the Targeting table**: `mcp` / `agents` / `hosts` / `skills` → `inventory.md` + JSON; `usage` → `usage-guide.md` only. **`diff` writes no files** — answer in the chat, and only write a file if the user explicitly asks.
 - **Language**: the whole deliverable follows the user's language (see [Output Language](#output-language)); the 7-table structure and column counts stay fixed, headers/cells/markers/prose are translated via `references/glossary.json`.
 - Compact tables, blank line between tables, fixed headers, rows alphabetical (Table 2 grouped by software), one entry per cell.
 - Format examples: see `references/format-example.md` (values there are placeholders — replace, never copy).
@@ -206,12 +225,13 @@ No content after verification → **do not invent, do not omit**: output `no usa
   Unresolved: list honestly (e.g. plugin cache unreadable), or "none"
   Generated by asset-inventory (self-contained)
   ```
+  The template describes a **full scan**; in targeted modes, any field whose evidence was skipped must read `not scanned (<target> target)` or `skipped (<target> target)` — never claim a command that was not run.
   Real-name mode adds a 4th line: `This output contains user-requested real project names — do not share externally.` (localized template: `references/glossary.json` → `provenanceRealName`).
 - **JSON** (`output/asset-inventory.json`): standalone file, one element per row: `table, name, source, state, confidence, invoke`. PK = `table`+`name`. Empty table ⇒ `[]`.
   - **The `table` field is always the numeric `1`-`7`** (never a localized string) — this is what makes diff mode comparable across runs.
   - Group rows, table notes, and hidden agents are excluded from JSON; the JSON row set = the Markdown data-row set.
 - **Name legend**: open `inventory.md` with a one-line legend (in the output language) explaining the Name shapes — `/name` = a slash command you type; `name` (no slash) = a skill (auto-triggers, or is picked from /skills); other bare names = plugins/software, agents, MCP servers, or host capabilities. Put it directly under the title.
-- **Masking — apply before writing, then self-check**: redact API keys, tokens, and auth headers; replace the home-directory segment of **every** path with `~` (macOS/Linux) or `%USERPROFILE%` (Windows) — e.g. `C:\Users\alice\.local\bin\tool.exe` → `%USERPROFILE%\.local\bin\tool.exe`; mask private project names. Real-name mode only on explicit request + the Provenance line. Before finishing, scan the whole deliverable (Markdown **and** JSON) for the raw home path and fix any leak.
+- **Masking — apply before writing, then self-check**: redact API keys, tokens, and auth headers; replace the home-directory segment of **every** path with `~` (macOS/Linux) or `%USERPROFILE%` (Windows) — e.g. `C:\Users\alice\.local\bin\tool.exe` → `%USERPROFILE%\.local\bin\tool.exe`; mask private project names. Real-name mode only on explicit request + the Provenance line. 🛑 STOP — do not deliver until you have scanned the whole deliverable (Markdown **and** JSON) for the raw home path and fixed any leak.
 - **Diff mode**: user asks "what changed since last time" → ask them to paste the previous JSON/Markdown, output only added/removed, keyed by PK. Never re-dump full tables.
 
 ---

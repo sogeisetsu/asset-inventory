@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "prompt": "List all my MCP servers with their status and how to call each one.",
+    "expected": "Table 5 only: one row per configured mcp key (enabled and disabled alike), 5 columns, count matches config, sources with confidence suffixes, no invented servers."
+  },
+  {
+    "id": 2,
+    "prompt": "Do a full inventory of everything on this machine — plugins, skills, commands, MCP, agents, host capabilities — and write the three output files.",
+    "expected": "All 7 tables written to output/inventory.md + usage-guide.md + asset-inventory.json; JSON PKs match markdown rows; provenance block present; masking applied; this skill itself appears in Table 4."
+  },
+  {
+    "id": 3,
+    "prompt": "What changed in my setup since last time? [pastes previous asset-inventory.json]",
+    "expected": "Diff mode: only added/removed rows keyed by PK, no full re-dump; if pasted JSON is unparseable, asks for re-paste instead of guessing."
+  }
+]
