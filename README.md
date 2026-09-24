@@ -73,7 +73,7 @@ your-project-root/
 ## ✨ Highlights
 
 - 🧭 **Provenance** — built into OpenCode, brought by a plugin, created by you, or injected by a host app. A plugin-managed skill is credited to its plugin, never mislabeled "local".
-- 🚦 **Four-state labels** — ✅available / ❌disabled / 📦shelf-only / 🚫absent
+- 🚦 **Five-state labels** — ✅available / ❌disabled / 📦shelf-only / 🚫absent / 🛑broken
 - 🔒 **Read-only & masked** — changes no config; masks keys, paths, and private project names by default
 - 🖥️ **Host-aware** — binary-scans the app bundle for injected commands that plain grep misses
 - 🔀 **Diff mode** — paste the previous JSON and get only additions and removals

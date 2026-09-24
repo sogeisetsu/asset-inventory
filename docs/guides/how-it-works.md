@@ -30,7 +30,7 @@ Tables 1–5 and 7 have five columns (`Name | Source | How to call | When to use
 
 Every row says exactly where the asset came from. A plugin-managed skill is attributed to its plugin (read from the plugin's `skills-manifest.json`), never called "local" by default. A repo URL is only written when actually verified — never inferred from a folder name.
 
-Every asset also carries a state: ✅available, ❌disabled, 📦shelf-only, or 🚫absent — plus a confidence suffix (✅verified / ✅docs / ⚠️inferred).
+Every asset also carries a state: ✅available, ❌disabled, 📦shelf-only, 🚫absent, or 🛑broken — plus a confidence suffix (✅verified / ✅docs / ⚠️inferred).
 
 ## 🧾 Three files, one evidence
 
