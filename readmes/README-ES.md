@@ -73,7 +73,7 @@ your-project-root/
 ## ✨ Aspectos destacados
 
 - 🧭 **Procedencia** — integrado en OpenCode, aportado por un plugin, creado por ti o inyectado por el host. Un skill gestionado por un plugin se atribuye al plugin, nunca se etiqueta como «local».
-- 🚦 **Cuatro estados** — ✅disponible / ❌deshabilitado / 📦solo en estante / 🚫ausente
+- 🚦 **Cinco estados** — ✅disponible / ❌deshabilitado / 📦solo en estante / 🚫ausente / 🛑no disponible
 - 🔒 **Solo lectura y enmascarado** — no cambia la configuración; oculta claves, rutas y nombres privados
 - 🖥️ **Consciente del host** — escanea el binario del paquete y halla comandos inyectados que grep no ve
 - 🔀 **Modo diff** — pega el JSON anterior y obtén solo altas y bajas

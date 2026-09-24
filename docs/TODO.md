@@ -35,6 +35,7 @@
 | 1.11.8 | patch | Behavior-neutral token trim of runtime payload | ✅ | — | ✅ done |
 | 1.12.0 | minor | Skill `How to call` shows the real TUI path (`/skills` picker, typed full name) | ✅ | ✅ | ✅ done |
 | 1.13.0 | minor | `🛑broken` state marker (7 locales), visible checkpoints, targeted-mode output/provenance rules | ✅ | ✅ | ✅ done |
+| 1.13.1 | patch | Probe env rule, diff protocol pinned, security guards, five-state sync | ✅ | ✅ | ✅ done |
 
 ## Details
 
@@ -75,6 +76,6 @@ the detail-page titles.
 
 ## Next step
 
-The rollout is complete through **1.13.0**: 1.11.1–1.11.8 (patches) and 1.12.0,
-1.13.0 (minors, with GitHub Releases), GitHub Releases on 1.11.3, 1.11.4, 1.12.0
-and 1.13.0. Nothing is in flight — start a new ladder here for the next piece of work.
+The rollout is complete through **1.13.1**: 1.11.1–1.11.8 and 1.13.1 (patches),
+1.12.0 and 1.13.0 (minors), GitHub Releases on 1.11.3, 1.11.4, 1.12.0, 1.13.0
+and 1.13.1. Nothing is in flight — start a new ladder here for the next piece of work.
