@@ -36,7 +36,7 @@
 
 > **动手前先从 `master` 拉一个新分支**（见「分支规则」）；以下每一步都在该分支上完成，确认无误后再合并回 `master`。
 
-1. 改 `SKILL.md` — 规则/行为变更
+1. 改 `SKILL.md` — 规则/行为变更；同步 `zh/skill-zh.md`（gitignored 本地镜像，check-docs 会按 mtime 警告）
 2. 改 `references/` — 格式/方法文档
 3. 改了样本 → 跑 `node scripts/build-sample-pages.mjs` 重新生成三个详情页（**不要手改**标记之间的生成块）
 4. 更新 `CHANGELOG.md`（及 `zh/CHANGELOG-ZH.md`）— 在顶部新版本条目下加条目；发布时把标题改成 `[x.y.z] - YYYY-MM-DD`
