@@ -123,7 +123,7 @@ asset-inventory/
 | **MINOR**（`1.x.0`） | 打 git tag **并**建 GitHub Release |
 | **MAJOR**（`x.0.0`） | 打 git tag **并**建 GitHub Release |
 
-**每个改动都按其自身达到的标准打 tag：** patch 达标打 patch tag，minor 达标打 minor tag，major 达标打 major tag。不要把 patch 级别的改动攒到后面的 minor 才打。GitHub Release 只为 minor/major 而建；patch 只有 tag、不建 Release。而只要改动达到 minor 标准，只打 patch tag 是不够的——必须打 minor tag **并**建 Release。
+**每个改动都按其自身达到的标准打 tag：** patch 达标打 patch tag，minor 达标打 minor tag，major 达标打 major tag。不要把 patch 级别的改动攒到后面的 minor 才打。GitHub Release 只为 minor/major 而建；patch 只有 tag、不建 Release。而只要改动达到 minor 标准，只打 patch tag 是不够的——必须打 minor tag **并**建 Release。patch 默认只打 tag；但若用户明确要求为 patch 建 GitHub Release，则建之——此时需提供已登记进 `scripts/check-docs.mjs` 的 `PAIRS` 的双语 release notes 文件，并以英文文件作 Release 正文（与 minor/major 同一规则）。
 
 Release 正文只用英文：粘贴 `docs/release-notes/release-notes-vX.Y.Z.md` 作为正文。`zh/` 版仅供文档站与仓库使用，永不放进 Release 页面。
 

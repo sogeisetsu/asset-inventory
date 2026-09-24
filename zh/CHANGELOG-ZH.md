@@ -8,6 +8,18 @@
 
 ---
 
+## [1.13.2] - 2026-09-24
+
+### 新增
+- **`scripts/release-prep.mjs`** —— 一条命令完成发版的机械半场：改 `metadata.version`、在中英 CHANGELOG 顶部插标题 stub、可选生成双语 release-notes 并登记进 check-docs 的 `PAIRS`（`--notes`，用于 minor/major）、跑双校验门、打印剩余手工步骤。绝不自动 commit/tag/push；工作树不干净或版本号重复则拒绝执行；`--dry-run` 只预览不写盘。
+- **check-docs 状态对等规则** —— `references/glossary.json` 里每个语言的每个 `state` 值（含第五个标记）必须原文出现在该语言 README 与 `docs/index.html` 中，新增标记再也不能在门面文档还列着旧集合时发出去。
+
+### 变更
+- **工作流第 1 步点名 zh 镜像** —— `AGENTS.md` 现在明确要求改 `SKILL.md` 时同步 gitignored 的 `zh/skill-zh.md`，不再靠每个 agent 自己记得。
+- **patch Release 覆盖条款** —— `CONTRIBUTING.md` / `zh/CONTRIBUTING-ZH.md` 写明默认（patch 只打 tag）与用户显式要求时的例外（此时双语 notes + `PAIRS` 登记 + 英文正文，与 minor/major 同一规则）。
+
+---
+
 ## [1.13.1] - 2026-09-24
 
 ### 新增

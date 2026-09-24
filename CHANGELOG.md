@@ -6,6 +6,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.13.2] - 2026-09-24
+
+### Added
+- **`scripts/release-prep.mjs`** — one command prepares the mechanical half of a release: bumps `metadata.version`, inserts EN/ZH CHANGELOG heading stubs, optionally scaffolds the bilingual release-notes pair and registers it in check-docs' `PAIRS` (`--notes`, for minor/major), then runs both validation gates and prints the remaining manual steps. Never commits, tags, or pushes; refuses to run on a dirty tree or a duplicate version; `--dry-run` previews without writing.
+- **State-parity check in `check-docs`** — every `state` value in `references/glossary.json` (all seven locales, including the fifth marker) must appear verbatim in that language's README and in `docs/index.html`, so a new marker can no longer ship while the public docs still list the old set.
+
+### Changed
+- **Workflow step 1 names the zh mirror** — `AGENTS.md` now tells every session to sync the gitignored `zh/skill-zh.md` alongside `SKILL.md`, instead of relying on each agent remembering it.
+- **Patch-Release override clause** — `CONTRIBUTING.md` / `zh/CONTRIBUTING-ZH.md` state the default (patch = tag only) and the explicit-user-request exception (then bilingual notes + `PAIRS` registration + English Release body, the same rule as minor/major).
+
+---
+
 ## [1.13.1] - 2026-09-24
 
 ### Added
