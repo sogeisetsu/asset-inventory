@@ -16,7 +16,7 @@
   data-title-ar="asset-inventory — جرد إعداد OpenCode"
   data-title-es="asset-inventory — Inventario de tu entorno OpenCode">
 <main>
-  <div class="lang">
+  <div class="lang" role="group" data-lang-group="">
     <button id="btn-en" onclick="setLang('en')">English</button>
     <button id="btn-zh" onclick="setLang('zh')">中文</button>
     <button id="btn-ja" onclick="setLang('ja')">日本語</button>
@@ -283,6 +283,7 @@ New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\ski
     asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>
   </footer>
 </main>
+<div id="copy-status" class="visually-hidden" role="status" aria-live="polite"></div>
 <script src="lang.js"></script>
 </body>
 </html>

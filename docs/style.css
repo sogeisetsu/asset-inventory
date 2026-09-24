@@ -170,6 +170,12 @@ footer {
   color: var(--md-on-surface-variant); font-size: .8125rem;
 }
 
+/* Visually hidden, available to assistive tech (live regions etc.) */
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
 /* ---- Language visibility ----
    Elements carry `data-lang`. lang.js groups consecutive same-tag/same-class
    siblings into translation slots and marks the chosen one with `.i18n-on`,
