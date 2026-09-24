@@ -55,7 +55,7 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 
 Rules:
 - With a target, **skip unrelated evidence collection** (e.g. `mcp` skips the plugin dist scan, `agents` skips the outer-app bundle). Language, cell conventions, source classification, masking rules, and the `output/` path all stay the same.
-- 🔴 CHECKPOINT — paste gate: diff is equivalent to natural-language diff mode: ask the user to paste the previous JSON, output only added/removed by PK. Never re-dump full tables.
+- 🔴 CHECKPOINT — paste gate: diff (argument form or natural language) starts here: ask the user to paste the previous JSON, then run the full diff protocol in [Output](#5-output) → **Diff mode**. Never re-dump full tables.
 - `usage` still does a full scan (the usage guide must derive from the same rows), but only writes `usage-guide.md`, not `inventory.md` or JSON.
 - Unrecognized target → fall back to full scan and note "unknown target, fell back to full scan" at the end.
 
@@ -234,7 +234,11 @@ No content after verification → **do not invent, do not omit**: output `no usa
   - Group rows, table notes, and hidden agents are excluded from JSON; the JSON row set = the Markdown data-row set.
 - **Name legend**: open `inventory.md` with a one-line legend (in the output language) explaining the Name shapes — `/name` = a slash command you type; `name` (no slash) = a skill (auto-triggers, or is picked from /skills); other bare names = plugins/software, agents, MCP servers, or host capabilities. Put it directly under the title.
 - **Masking — apply before writing, then self-check**: redact API keys, tokens, and auth headers; replace the home-directory segment of **every** path with `~` (macOS/Linux) or `%USERPROFILE%` (Windows) — e.g. `C:\Users\alice\.local\bin\tool.exe` → `%USERPROFILE%\.local\bin\tool.exe`; mask private project names. Real-name mode only on explicit request + the Provenance line. 🛑 STOP — do not deliver until you have scanned the whole deliverable (Markdown **and** JSON) for the raw home path and fixed any leak.
-- **Diff mode**: user asks "what changed since last time" → ask them to paste the previous JSON/Markdown, output only added/removed, keyed by PK. Never re-dump full tables.
+- **Diff mode**: user asks "what changed since last time" → ask them to paste the previous JSON/Markdown (answer in the chat; diff writes no files unless explicitly asked). Full protocol:
+  1. **Scope**: compare ONLY the tables whose numeric ids appear in the pasted baseline JSON — re-collect just those tables' evidence, never a full 7-table scan. If the baseline lacks any of tables 1–7, end the output with a one-line scope note: `Scope: tables <present> compared; tables <absent> not in baseline — not compared.`
+  2. **Partial-baseline caveat**: for any compared table where the baseline row count < the current row count, add: `Baseline may be incomplete for table <n> (<b> rows vs <c> now) — verify before treating all differences as newly added.`
+  3. **Row shape**: output two sections, `Added` and `Removed`, each a markdown table with columns `Table | Name | State` (Table = numeric id, Name = PK name, State = the current state marker for Added / the baseline state marker for Removed). Never re-dump full rows or full tables.
+  4. **Ending**: finish with the standard 3-line Provenance (language rule unchanged), where fields not collected in diff mode follow the targeted-mode rule (`not scanned (diff)`); the scope note from (1) goes immediately before it. No new glossary keys.
 
 ---
 
