@@ -6,6 +6,12 @@ Run this checklist before outputting. Every item must pass.
 
 ---
 
+## Evidence & Output Budget
+
+- [ ] Evidence commands returned verdicts + supporting lines, not dumps: no full permission arrays, no full SKILL.md bodies, no unique-token lists, no unfiltered directory recursion.
+- [ ] No silent truncation (`-First N`-style cuts); any limit prints the pre-limit total; known-noise patterns excluded by name, not by cap.
+- [ ] Each fact backed by exactly one sufficient source — no second/third-source re-verification of the same fact (manifest + README + `git remote` for one URL = one lookup).
+
 ## All Tables
 
 - [ ] Exactly 7 tables; Tables 1-5/7 five columns, Table 6 six (including Model chain); headers consistent.

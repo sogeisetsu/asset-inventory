@@ -6,6 +6,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.13.4] - 2026-09-25
+
+### Changed
+- **Evidence returns verdicts, not dumps** — `SKILL.md`'s Verify section now requires every evidence command to return *verdict + supporting source line + suppressed-candidate count*: counts assert `N = M` instead of printing both lists, hashes print `match=true|false`, `agent list` / `debug agent` print name+mode lines plus only the permission lines a row cites, skill listings project name/description/location instead of full SKILL.md bodies, and binary scans print evidence-ranked context windows instead of the full unique-token list. Every verdict keeps its quote, and a silent `-First N` cut that could hide unregistered residue is forbidden — provenance claims are unchanged, only the transport waste is gone.
+- **First sufficient evidence wins** — each fact (version, upstream URL, state, model chain, count) is verified exactly once: the first source in the documented lookup order that actually shows it, recorded and stopped at; escalate only when the current source doesn't show the fact or two sources conflict.
+- **Output budget in Discover** — trim before returning: project only the fields you will cite, error line only on failure, parse single-line JSON with a parser instead of `Read`, scan binaries in-process, read the error and retry at most twice.
+- **Full-scan example rewritten to match** — `references/host-commands.md` now scans in-process and prints ranked context candidates with a suppressed count (6125 raw tokens → 12 contexted candidates measured on a ~130 MB `app.asar`), checking every occurrence so a command whose first appearance sits in unrelated code cannot be missed; `references/checklist.md` gains an **Evidence & Output Budget** gate (verdicts not dumps / no silent truncation / one sufficient source per fact).
+
+---
+
 ## [1.13.3] - 2026-09-24
 
 ### Changed
