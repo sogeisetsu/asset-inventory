@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>asset-inventory — Inventory Your OpenCode Setup</title>
+<meta name="description" content="asset-inventory — one command to inventory your OpenCode setup: every plugin, skill, command, MCP server, agent and host capability, with provenance.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="asset-inventory — Inventory Your OpenCode Setup">
+<meta property="og:description" content="asset-inventory — one command to inventory your OpenCode setup: every plugin, skill, command, MCP server, agent and host capability, with provenance.">
+<meta property="og:url" content="https://sogeisetsu.github.io/asset-inventory/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -273,11 +278,18 @@
   <p data-lang="ru">Или установите вручную (только два рабочих элемента):</p>
   <p data-lang="ar">أو التثبيت يدويًا (انسخ العنصرين التشغيليين فقط):</p>
   <p data-lang="es">O instala manualmente (solo los dos elementos de ejecución):</p>
-  <pre># macOS / Linux
+  <pre id="manual-install"># macOS / Linux
 mkdir -p ~/.config/opencode/skills/asset-inventory &amp;&amp; cp -r SKILL.md references ~/.config/opencode/skills/asset-inventory/
 
 # Windows (PowerShell)
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.config\opencode\skills\asset-inventory"; Copy-Item -Recurse SKILL.md, references -Destination "$env:USERPROFILE\.config\opencode\skills\asset-inventory\"</pre>
+  <button class="copy" data-copy="manual-install" data-lang="en">Copy commands</button>
+  <button class="copy" data-copy="manual-install" data-lang="zh">复制命令</button>
+  <button class="copy" data-copy="manual-install" data-lang="ja">コマンドをコピー</button>
+  <button class="copy" data-copy="manual-install" data-lang="ko">명령 복사</button>
+  <button class="copy" data-copy="manual-install" data-lang="ru">Скопировать команды</button>
+  <button class="copy" data-copy="manual-install" data-lang="ar">نسخ الأوامر</button>
+  <button class="copy" data-copy="manual-install" data-lang="es">Copiar comandos</button>
 
   <footer>
     asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>
