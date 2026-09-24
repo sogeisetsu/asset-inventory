@@ -118,13 +118,13 @@ a:hover { text-decoration: underline; }
 
 /* ---- Language toggle: segmented buttons ---- */
 .lang {
-  display: inline-flex; gap: 2px; margin-bottom: 16px;
+  display: inline-flex; flex-wrap: wrap; gap: 2px; margin-bottom: 16px;
   background: var(--md-surface-container);
   border-radius: var(--md-shape-full); padding: 4px;
 }
 .lang button {
   border: 0; background: transparent; color: var(--md-on-surface-variant);
-  border-radius: var(--md-shape-full); padding: 6px 14px;
+  border-radius: var(--md-shape-full); padding: 10px 14px;
   cursor: pointer; font: inherit; font-size: .8125rem;
   transition: background .15s var(--md-ease-standard), color .15s var(--md-ease-standard);
 }
@@ -176,6 +176,7 @@ footer {
    falling back to English when the chosen language has no translation. */
 [data-lang] { display: none; }
 [data-lang].i18n-on { display: revert; }
+html:not([data-show]) [data-lang="en"] { display: revert; }
 
 /* ---- RTL (Arabic) ---- */
 html[dir="rtl"] { direction: rtl; }
@@ -317,4 +318,8 @@ html[dir="rtl"] .facts th { text-align: right; }
   .copy:active::after, .btn:active::after { background-image: linear-gradient(rgba(255,255,255,.12), rgba(255,255,255,.12)); }
   .outputs a.card:hover::after { background-image: linear-gradient(rgba(255,255,255,.08), rgba(255,255,255,.08)); }
   .outputs a.card:active::after { background-image: linear-gradient(rgba(255,255,255,.12), rgba(255,255,255,.12)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
 }
