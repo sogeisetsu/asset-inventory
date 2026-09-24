@@ -8,6 +8,13 @@
 
 ---
 
+## [1.13.3] - 2026-09-24
+
+### 变更
+- **Release notes 内容范围定死** —— `CONTRIBUTING.md` / `zh/CONTRIBUTING-ZH.md` 现在明确规定：GitHub Release 的 notes 必须覆盖**与上一个 Release tag 相比的全部变化**（用 `gh release list` 找上个 Release），而不是本次发版的 commit 清单——patch 不建 Release，中间的每个 patch 都要写进去；以用户视角描述，绝不罗列原始 commit。`AGENTS.md` 摘要同步，`scripts/release-prep.mjs` 的 `--notes` 填写清单会当场重申这条规则。
+
+---
+
 ## [1.13.2] - 2026-09-24
 
 ### 新增
