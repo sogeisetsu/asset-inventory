@@ -45,7 +45,7 @@ Run this checklist before outputting. Every item must pass.
 - [ ] **Row count equals the number of `mcp` keys in the config** (global + project merged). If you listed fewer, you dropped servers — go back.
 - [ ] A single-row table has been double-checked against the config — it is the exception, not the norm.
 - [ ] Every server is listed: local and remote, enabled and disabled (`❌disabled` with the config line quoted).
-- [ ] A registered-but-probe-failing server is listed as `🛑broken` with the probe error quoted in a table note — never silently dropped, never `✅available`.
+- [ ] A server whose probe (spawned with the config's env/headers) failed is listed as `🛑broken` with the probe error quoted in a table note — never silently dropped, never `✅available`.
 - [ ] Rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
 - [ ] Every MCP row lists real invocation paths — ask-by-name, tool prefix, MCP Prompt if exposed, own CLI/HTTP if shipped — never "Agent calls it" / "human doesn't call it".
 

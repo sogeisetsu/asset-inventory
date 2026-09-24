@@ -183,6 +183,8 @@ Path variables: `$OPENCODE_CONFIG`, `$PROJECT_DIR`, `$HOST_CONFIG`, `$PACKAGE_CA
 
 Cheapest first: (1) direct — TUI autocomplete, host browser, read-only listing, the two `agent list` commands; (2) official docs — `opencode.ai/docs/tui#commands` (full command list), `opencode.ai/docs/agents`; (3) source, last resort — plugin cache registration tables, host `agent-tool/*.js`, app bundles. Docs may lead the local version — local ground truth wins.
 
+**MCP liveness probes must use the config's declared launch environment.** When probing a **local stdio MCP server**, spawn it with the EXACT `command` AND the `env` map from its config entry — merge the config `env` into the child process; never bare-launch the binary. A bare-launch failure proves nothing about the server and must never be recorded as a probe result; if the probe fails **even with** the config `env`, record `⚠️inferred 🛑broken` + the error class per Error Handling. For **remote HTTP probes**, send the config's `headers` (auth included) with the request.
+
 Versions/models/counts: look up fresh, order manifest → install-path → lockfile/marketplace → `unknown`. Never from memory.
 
 Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't match the actual `agent list` name (e.g. `explorer`), **the `agent list` ground truth wins**. Note the mismatch in a table footnote and don't invent a row for the stale config name.
@@ -194,7 +196,7 @@ Agent name handling: if a config-disabled agent name (e.g. `explore`) doesn't ma
 | Plugin cache unreadable | `🚫absent` + table note: `plugin cache unreadable (<error>)` |
 | Outer app bundle scan fails | note the failure reason in a table note; skip that source, don't fabricate |
 | `opencode agent list` returns empty | check `opencode --pure agent list`; if still empty, write "no selectable agents detected" |
-| MCP server unreachable | `⚠️inferred 🛑broken` + note: `liveness probe failed (<error>)` |
+| MCP server unreachable | `⚠️inferred 🛑broken` + note: `liveness probe failed (<error>)` — this row applies only after the probe is confirmed to have used the config's env/headers |
 | Config file missing or malformed | note the gap in a table note; don't guess defaults |
 | Version unknown after all sources exhausted | write `unknown` — never invent |
 | Language mismatch (user asks in English, config is Chinese) | follow the user's language for output; use English for technical terms |
