@@ -6,6 +6,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.13.0] - 2026-09-24
+
+### Added
+- **5th state marker `🛑broken` (7 locales)** — for an asset that is registered in config but not invokable (missing command / env / probe fail): source reads `⚠️inferred` + state `🛑broken`, with the failure class quoted in a table note. Added to `references/glossary.json` (en/zh/ja/ko/ru/ar/es), the state-marker table, the `MCP server unreachable` error branch, the usage-guide exclusion list, `references/checklist.md` (Table 5), and the probe-failed format-example row. It closes the gap where `✅available` / `❌disabled` / `📦shelf-only` / `🚫absent` all misdescribe a registered-but-broken server (hit live during a dim8 MCP evaluation run).
+- **Three visible checkpoint markers** — the diff paste gate 🔴, the real-name gate 🔴, and the masking STOP 🛑 now stand out as visible markers at their gates instead of reading as plain prose.
+- **`test-prompts.json`** — darwin dim8 evaluation prompts for skill testing.
+
+### Changed
+- **§5 file-output reconciliation** — a full scan writes the three files into `output/`; targeted modes write only the files named in the Targeting table (`mcp` / `agents` / `hosts` / `skills` → `inventory.md` + JSON; `usage` → `usage-guide.md` only); `diff` writes no files (answer in the chat, write a file only on explicit request). "Never write outside `output/`" stays absolute.
+- **Targeted-mode provenance rule** — the provenance template describes a full scan; in targeted modes any field whose evidence was skipped must read `not scanned (<target> target)` or `skipped (<target> target)`, never claiming a command that was not run.
+- **Table 2 / Table 6 rules extracted from the overview cells, model-chain exemption deduped** — merge/split, grouping, and row-order rules now live in dedicated sections; the core-agent model-chain exemption is stated once instead of twice.
+- **Unparseable-paste failure branch** — Error Handling now directs an unparseable pasted diff JSON/Markdown to a re-paste or a Markdown-table fallback, never guessing or inventing PK rows.
+- **Format-example Source cells carry confidence + state suffixes** — every example row in `references/format-example.md` now demonstrates "suffix confidence, then append state"; Error Handling now links `references/troubleshooting.md`.
+
+---
+
 ## [1.12.0] - 2026-09-22
 
 ### Changed

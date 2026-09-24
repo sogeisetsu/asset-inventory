@@ -8,6 +8,22 @@
 
 ---
 
+## [1.13.0] - 2026-09-24
+
+### 新增
+- **第 5 个状态标记 `🛑已损坏`（7 语言）** —— 针对"配置里注册了但调不起来"的资产（缺命令 / 缺环境变量 / 探活失败）：来源缀 `⚠️inferred` + 状态 `🛑已损坏`，失败原因引用进表注。已加入 `references/glossary.json`（en/zh/ja/ko/ru/ar/es）、状态标记表、`MCP server unreachable` 故障分支、使用指南排除清单、`references/checklist.md`（表5）与探活失败的 format-example 示例行。它补上了 `✅available` / `❌disabled` / `📦shelf-only` / `🚫absent` 四个标记全都描述不准"已注册但损坏"服务器的空档（dim8 MCP 评估实测踩中）。
+- **三处检查点标记可见化** —— diff 粘贴门 🔴、实名门 🔴、脱敏 STOP 🛑 现在以醒目标记立在各自关口，不再混在正文里。
+- **`test-prompts.json`** —— darwin dim8 评估提示词入库。
+
+### 变更
+- **§5 文件产出对齐** —— 全量扫描写三份文件到 `output/`；精扫模式只写 Targeting 表列出的文件（`mcp` / `agents` / `hosts` / `skills` → `inventory.md` + JSON；`usage` → 仅 `usage-guide.md`）；`diff` 不写文件（在对话中作答，仅明确要求才写文件）。"绝不写到 `output/` 之外"保持绝对。
+- **精扫模式 Provenance 规则** —— Provenance 模板描述的是全量扫描；精扫模式下凡证据被跳过的字段必须写 `not scanned (<target> target)` 或 `skipped (<target> target)`，绝不声称跑过其实没跑的命令。
+- **表 2 / 表 6 规则从概览单元格抽出、模型链豁免去重** —— 合并/拆分、分组、行序规则移入专节；核心 agent 的模型链豁免只说一次，不再重复。
+- **无法解析的粘贴失败分支** —— Error Handling 新增：粘贴的 diff JSON/Markdown 解析不了时，请用户重贴或退回对比 Markdown 表格，绝不猜测、绝不编造 PK 行。
+- **format-example 的 Source 单元格全部带可信度 + 状态后缀** —— `references/format-example.md` 每个示例行现在都示范"先缀可信度、再附状态"；Error Handling 关联了 `references/troubleshooting.md`。
+
+---
+
 ## [1.12.0] - 2026-09-22
 
 ### 变更
