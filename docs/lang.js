@@ -60,6 +60,11 @@
     }
   }
 
+  var LABELS = {
+    en: 'Language', zh: '语言', ja: '言語', ko: '언어',
+    ru: 'Язык', ar: 'اللغة', es: 'Idioma'
+  };
+
   function apply(lang) {
     if (LANGS.indexOf(lang) === -1) lang = DEFAULT_LANG;
     html.setAttribute('data-show', lang);
@@ -68,6 +73,9 @@
     LANGS.forEach(function (l) {
       var btn = document.getElementById('btn-' + l);
       if (btn) btn.setAttribute('aria-pressed', String(l === lang));
+    });
+    document.querySelectorAll('[data-lang-group]').forEach(function (el) {
+      el.setAttribute('aria-label', LABELS[lang] || LABELS.en);
     });
     var t = document.body.getAttribute('data-title-' + lang)
       || document.body.getAttribute('data-title-' + DEFAULT_LANG);
@@ -94,9 +102,14 @@
       if (!el) return;
       var label = btn.textContent;
       var lang = html.getAttribute('data-show') || DEFAULT_LANG;
+      var status = document.getElementById('copy-status');
       navigator.clipboard.writeText(el.textContent.trim()).then(function () {
         btn.textContent = COPIED[lang] || COPIED.en;
-        setTimeout(function () { btn.textContent = label; }, 1500);
+        if (status) status.textContent = COPIED[lang] || COPIED.en;
+        setTimeout(function () {
+          btn.textContent = label;
+          if (status) status.textContent = '';
+        }, 1500);
       });
     });
   });
