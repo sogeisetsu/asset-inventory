@@ -39,6 +39,7 @@
 | 1.13.2 | patch | release-prep script, check-docs state-parity rule, workflow mirror note, patch-Release override clause | ✅ | — | ✅ done |
 | 1.13.3 | patch | release-notes range rule (vs previous Release tag), release-prep `--notes` fill-in hint | ✅ | ✅ | ✅ done |
 | 1.13.4 | patch | Verdict-not-dump evidence rules, sufficiency stop, output budget, ranked full-scan example | ✅ | — | ✅ done |
+| 1.13.5 | patch | update.ps1 backups leave the skills/ namespace (were loading as duplicate skill); AGENTS rule synced | ✅ | — | ✅ done |
 
 ## Details
 
@@ -79,6 +80,6 @@ the detail-page titles.
 
 ## Next step
 
-The rollout is complete through **1.13.4**: 1.11.1–1.11.8 and 1.13.1–1.13.4
+The rollout is complete through **1.13.5**: 1.11.1–1.11.8 and 1.13.1–1.13.5
 (patches), 1.12.0 and 1.13.0 (minors), GitHub Releases on 1.11.3, 1.11.4, 1.12.0,
 1.13.0, 1.13.1 and 1.13.3. Nothing is in flight — start a new ladder here for the next piece of work.
