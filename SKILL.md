@@ -6,6 +6,7 @@ metadata:
   audience: opencode-users
   workflow: inventory
   version: 1.13.7
+  source: https://github.com/sogeisetsu/asset-inventory
 ---
 
 # Asset Inventory
