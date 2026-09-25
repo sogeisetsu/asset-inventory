@@ -11,6 +11,18 @@ This skill is a general tool for understanding and cleaning up your OpenCode set
 
 Choose **project-scoped** only if you specifically want the skill to live inside one repository (e.g. to share it with that repo's collaborators through version control).
 
+## ⚡ One-command install via skills.sh
+
+If you'd rather not clone anything, the [skills.sh](https://skills.sh) CLI installs the skill with one command — it detects the agents installed on your machine (OpenCode, Claude Code, Codex, GitHub Copilot, …) and installs the skill into each:
+
+```sh
+npx skills add sogeisetsu/asset-inventory
+```
+
+- **Flags:** `-g` global (user-level) install, `-y` skip prompts, `--copy` copy files instead of symlinking, `-a <agent>` target specific agents only.
+- **Scope:** without `-g` it installs project-scoped into the current directory; pass `-g` to follow the global recommendation above.
+- **Update later:** `npx skills update asset-inventory` (add `-g` if you installed globally).
+
 ## 🚀 Steps
 
 **Step 1 — get the repository locally.** Clone it:
