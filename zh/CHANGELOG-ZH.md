@@ -11,6 +11,7 @@
 ## [Unreleased]
 
 ### 新增
+- **frontmatter `description` 扩写** —— SKILL.md 的 description 现在写明三问（是什么/谁带来的/怎么用）、状态标记、触发场景（diff 模式、清理/未使用资产问询）、usage guide 产出与只读/打码保证，966 字符（上限 1024）。
 - **通过 skills.sh 安装** —— 七种语言的 README「安装」小节各新增 `### 📥 通过 skills.sh 安装` 子节（`npx skills add sogeisetsu/asset-inventory`，附 `-g` / `-y` / `--copy` 说明）；`docs/guides/install-and-update.md` 新增对应的「One-command install via skills.sh」小节，覆盖 flags、安装范围与 `skills update`。
 - **skills.sh 徽章** —— 中英 README 徽章行加入本仓库的 skills.sh 官方徽章；registry 条目收录后会变成绿色安装数（[vercel-labs/skills#2298](https://github.com/vercel-labs/skills/issues/2298)）。
 

@@ -1,6 +1,6 @@
 ---
 name: asset-inventory
-description: Inventory every plugin, companion app, skill, command, MCP server, agent, and host capability on this machine's OpenCode/OpenChamber setup, with provenance for each item. Use when the user asks to list their plugins, skills, commands, MCP servers, or agents; asks which one is disabled; asks who brought a given asset in; or wants a migration/onboarding checklist. Outputs 7 tables plus a machine-readable JSON file. Never invent assets, versions, or model names — verify everything on this machine.
+description: Inventory every plugin, companion app, skill, command, MCP server, agent, and host capability on this machine's OpenCode/OpenChamber setup, answering three questions per item — what it is, who brought it in (full provenance — bringer, registration location, upstream/license), and how to use it — plus its state (available / disabled / shelf-only / broken). Use when the user asks to list their plugins, skills, commands, MCP servers, or agents; asks which one is disabled, broken, or just sitting unused; asks who brought a given asset in or where it came from; wants a migration, onboarding, or cleanup checklist; or asks what changed since a previous scan (diff mode). Outputs 7 tables, a by-scenario usage guide, and a machine-readable JSON file into output/. Read-only — never edits config or installs anything, and never invents assets, versions, or model names — every fact is verified on this machine, and keys, tokens, and home paths are masked in the output.
 license: MIT
 metadata:
   audience: opencode-users
