@@ -102,4 +102,4 @@
 - **别手改三个详情页的生成块**（`<!-- build-sample:start -->` … `<!-- build-sample:end -->`）：改 `docs/samples/` 里的样本，再跑 `scripts/build-sample-pages.mjs`
 - `docs/samples/` 英文在 base、中文在 `zh/`；该目录**豁免**英文文档的 CJK 检查
 - **新增 release-notes 配对、或新增本地化 README，必须登记进 `scripts/check-docs.mjs` 的 `PAIRS` / `README_LOCALES` 硬编码数组**，否则校验看不到它
-- `update.ps1` 的备份写在安装目录**同级**，不要再放回安装目录内部（否则会被当成 skill 内容复制）
+- `update.ps1` 的备份写到安装目录**上级的 `backups/`**（全局即 `~/.config/opencode/backups/`），绝不留在 skills 命名空间里——`skills/` 下任何带 `SKILL.md` 的目录都会被宿主加载成重复 skill，也绝不放回安装目录内部（否则会被当成 skill 内容复制）

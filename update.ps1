@@ -146,9 +146,17 @@ if (Test-Path $oldSkill) {
 
   # --- backup existing files ---
   if (-not $NoBackup -and $oldVersion -and $oldVersion -ne $newVersion) {
-    # Backups live NEXT TO the install dir, never inside it — a backup inside the
-    # skill dir would be copied into the skill and re-nested on the next update.
-    $backupRoot = Split-Path -Parent $installDir
+    # Backups must live OUTSIDE the skills namespace: a backup sitting next to the
+    # install dir (inside skills/) has its SKILL.md picked up by the host and loaded
+    # as a duplicate skill. Put them in <parent-of-skills>/backups/ instead —
+    # never inside the skill dir (re-nested on next update), never inside skills/
+    # (loaded as a duplicate skill). Non-standard layouts fall back to beside-dir.
+    $parentDir = Split-Path -Parent $installDir
+    if ((Split-Path -Leaf $parentDir) -eq 'skills') {
+      $backupRoot = Join-Path (Split-Path -Parent $parentDir) 'backups'
+    } else {
+      $backupRoot = $parentDir
+    }
     $backupDir = Join-Path $backupRoot "$(Split-Path -Leaf $installDir).backup-$oldVersion-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
     New-Item -ItemType Directory -Force -Path $backupDir | Out-Null
     Write-Host "  Backing up to: $backupDir" -ForegroundColor DarkGray

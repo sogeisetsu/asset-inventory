@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.13.5] - 2026-09-25
+
+### Changed
+- **`update.ps1` backups leave the skills namespace** — backups were written *next to* the install dir, i.e. inside `skills/`, where the host scanner picked the backup's `SKILL.md` up and loaded it as a duplicate `asset-inventory` skill (stale version, a second entry in `/skills`). Backups now go to `<parent-of-skills>/backups/` (global: `~/.config/opencode/backups/`; project-scoped: `<project>/.opencode/backups/`), with a beside-dir fallback for non-standard `-Target` layouts; the duplicate already created on this machine was moved out and deregistered. The `AGENTS.md` backup-location rule is updated to match.
+
+---
+
 ## [1.13.4] - 2026-09-25
 
 ### Changed

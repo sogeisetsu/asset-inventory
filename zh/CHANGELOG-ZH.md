@@ -8,6 +8,13 @@
 
 ---
 
+## [1.13.5] - 2026-09-25
+
+### 变更
+- **`update.ps1` 备份移出 skills 命名空间** —— 备份原本写在安装目录**同级**（即 `skills/` 里面），宿主扫描把备份里的 `SKILL.md` 当成 skill 加载，多出一个重复的 `asset-inventory`（旧版本、`/skills` 里出现两条）。备份现改写到 `<skills 上级>/backups/`（全局 `~/.config/opencode/backups/`、项目级 `<project>/.opencode/backups/`），非标准 `-Target` 布局回退为放在安装目录旁；本机已产生的重复备份已移出并注销。`AGENTS.md` 的备份位置规则同步更新。
+
+---
+
 ## [1.13.4] - 2026-09-25
 
 ### 变更
