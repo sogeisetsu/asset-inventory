@@ -9,9 +9,14 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 ## [Unreleased]
 
 ### Added
+- **`metadata.source`** — the SKILL.md frontmatter now records the canonical repository URL (`https://github.com/sogeisetsu/asset-inventory`) as an Agent Skills `metadata` extension key, so hosts and registries can machine-read the source.
 - **Richer frontmatter `description`** — the SKILL.md description now states the three provenance questions, the state markers, the trigger scenarios (diff mode, cleanup/unused-asset questions), the usage-guide deliverable, and the read-only/masking guarantees, in 966 chars (limit 1024).
 - **Install via skills.sh** — the install section in all seven READMEs gains a `### 📥 Install via skills.sh` subsection (`npx skills add sogeisetsu/asset-inventory`, with the `-g` / `-y` / `--copy` flags explained), and `docs/guides/install-and-update.md` gains a matching "One-command install via skills.sh" section covering flags, scope, and `skills update`.
 - **skills.sh badge** — the English and Chinese README badge rows show the official `skills.sh` badge for this repo; it turns green (install count) once the registry entry lands ([vercel-labs/skills#2298](https://github.com/vercel-labs/skills/issues/2298)).
+
+### Changed
+- **SKILL.md restructured workflow-first** — `Procedure` now precedes the output-format spec, fixing the stale "the 7-table inventory below" reference; the vague `## The Rule` heading becomes `## Output format — the 7 tables`, and the targeted-modes write list in §5 points to the Targeting table instead of repeating it (darwin dim7 round, paired judges 3–0 keep).
+- **Two failure branches encoded** — the Table 5 count assertion now handles nested `mcp.servers.*` and plugin-registered servers (count leaves + plugin, quote the basis, never pad rows to pass), and diff mode defines state-flips (same PK, changed marker) as a one-line `state changed:` note instead of silently mishandling them (darwin dim3 round, paired judges 3–0 keep).
 
 ## [1.13.7] - 2026-09-25
 
