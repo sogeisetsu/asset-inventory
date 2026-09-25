@@ -8,6 +8,7 @@
 
 [![License: MIT](docs/assets/badge-license.svg)](LICENSE)
 [![OpenCode Skill](docs/assets/badge-opencode.svg)](#compatibility)
+[![skills.sh](https://skills.sh/b/sogeisetsu/asset-inventory)](https://skills.sh/sogeisetsu/asset-inventory)
 
 [English](README.md) · [中文](README-ZH.md) · [日本語](readmes/README-JA.md) · [한국어](readmes/README-KO.md) · [Русский](readmes/README-RU.md) · [العربية](readmes/README-AR.md) · [Español](readmes/README-ES.md)
 
