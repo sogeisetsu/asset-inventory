@@ -69,20 +69,6 @@ if ($newVersion) {
   Write-Host "`n  (no version declared in frontmatter)" -ForegroundColor DarkGray
 }
 
-# --- pull latest ---
-Write-Host "`n> git pull..." -ForegroundColor Cyan
-Set-Location $RepoRoot
-if (Test-Path (Join-Path $RepoRoot ".git")) {
-  $status = git status --porcelain 2>$null
-  if ($status) {
-    Write-Warning "Repo has uncommitted changes — skipping git pull. Commit or stash first."
-  } else {
-    git pull --ff-only 2>&1 | ForEach-Object { Write-Host "  $_" }
-  }
-} else {
-  Write-Warning "Not a git repo — skipping pull."
-}
-
 # --- determine install target ---
 $runtimeFiles = @("SKILL.md", "references")
 
@@ -97,6 +83,10 @@ if ($Target) {
   }
   if (Test-Path $globalDir) {
     $installDir = $globalDir
+  } elseif ($DryRun) {
+    Write-Host "`nNo existing install found at $globalDir" -ForegroundColor Yellow
+    Write-Host "A real run (without -DryRun) would install there." -ForegroundColor Yellow
+    $installDir = $globalDir
   } else {
     Write-Host "`nNo global install found at $globalDir" -ForegroundColor Yellow
     Write-Host "To install, see README.md. To update a project-scoped install, pass -Target." -ForegroundColor Yellow
@@ -110,6 +100,7 @@ if ($DryRun) {
   Write-Host "`n  DRY RUN — no files will be changed." -ForegroundColor Yellow
   if ($newVersion) { Write-Host "  Would install version: $newVersion" }
   Write-Host "  Target: $installDir" -ForegroundColor DarkGray
+  Write-Host "  Would pull latest (git pull --ff-only) — skipped in dry run." -ForegroundColor DarkGray
   foreach ($item in $runtimeFiles) {
     $src = Join-Path $RepoRoot $item
     if (Test-Path $src) {
@@ -121,6 +112,20 @@ if ($DryRun) {
   }
   Write-Host "`n  Dry run complete — nothing was written. Re-run without -DryRun to apply." -ForegroundColor Green
   exit 0
+}
+
+# --- pull latest ---
+Write-Host "`n> git pull..." -ForegroundColor Cyan
+Set-Location $RepoRoot
+if (Test-Path (Join-Path $RepoRoot ".git")) {
+  $status = git status --porcelain 2>$null
+  if ($status) {
+    Write-Warning "Repo has uncommitted changes — skipping git pull. Commit or stash first."
+  } else {
+    git pull --ff-only 2>&1 | ForEach-Object { Write-Host "  $_" }
+  }
+} else {
+  Write-Warning "Not a git repo — skipping pull."
 }
 
 # --- ensure target directory exists ---
