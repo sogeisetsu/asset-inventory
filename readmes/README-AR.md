@@ -40,6 +40,16 @@ cd asset-inventory
 - **عام:** `~/.config/opencode/skills/asset-inventory/`
 - **داخل المشروع:** `<project-root>/.opencode/skills/asset-inventory/`
 
+### 📥 التثبيت عبر skills.sh
+
+أمر واحد عبر سطر أوامر [skills.sh](https://skills.sh) — يكتشف وكلاءك (OpenCode وClaude Code وCodex وGitHub Copilot …) ويثبّت المهارة في كل منها:
+
+```sh
+npx skills add sogeisetsu/asset-inventory
+```
+
+أضف `-g` للتثبيت العام (على مستوى المستخدم)، أو `-y` لتخطي التأكيدات، أو `--copy` لنسخ الملفات بدل إنشاء روابط رمزية.
+
 ### 🤖 التثبيت عبر الذكاء الاصطناعي
 
 أرسل النص أدناه إلى الذكاء الاصطناعي وسيثبّته لك:

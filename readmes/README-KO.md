@@ -38,6 +38,16 @@ cd asset-inventory
 - **전역:** `~/.config/opencode/skills/asset-inventory/`
 - **프로젝트:** `<project-root>/.opencode/skills/asset-inventory/`
 
+### 📥 skills.sh로 설치
+
+[skills.sh](https://skills.sh) CLI로 한 줄 설치 — 에이전트(OpenCode, Claude Code, Codex, GitHub Copilot 등)를 자동 감지해 각각 스킬을 설치합니다:
+
+```sh
+npx skills add sogeisetsu/asset-inventory
+```
+
+`-g`는 전역(사용자 수준) 설치, `-y`는 확인 생략, `--copy`는 심볼릭 링크 대신 파일 복사입니다.
+
 ### 🤖 AI로 설치
 
 아래 텍스트를 AI에게 보내면 설치해 줍니다:

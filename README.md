@@ -8,6 +8,7 @@
 
 [![License: MIT](docs/assets/badge-license.svg)](LICENSE)
 [![OpenCode Skill](docs/assets/badge-opencode.svg)](#compatibility)
+[![skills.sh](https://skills.sh/b/sogeisetsu/asset-inventory)](https://skills.sh/sogeisetsu/asset-inventory)
 
 [English](README.md) · [中文](README-ZH.md) · [日本語](readmes/README-JA.md) · [한국어](readmes/README-KO.md) · [Русский](readmes/README-RU.md) · [العربية](readmes/README-AR.md) · [Español](readmes/README-ES.md)
 
@@ -37,6 +38,16 @@ cd asset-inventory
 
 - **Global:** `~/.config/opencode/skills/asset-inventory/`
 - **Project-scoped:** `<project-root>/.opencode/skills/asset-inventory/`
+
+### 📥 Install via skills.sh
+
+One-liner via the [skills.sh](https://skills.sh) CLI — it detects your agents (OpenCode, Claude Code, Codex, GitHub Copilot, …) and installs the skill into each:
+
+```sh
+npx skills add sogeisetsu/asset-inventory
+```
+
+Add `-g` for a global (user-level) install, `-y` to skip prompts, or `--copy` to copy files instead of symlinking.
 
 ### 🤖 Install via AI
 

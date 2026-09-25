@@ -8,6 +8,7 @@
 
 [![License: MIT](docs/assets/badge-license.svg)](LICENSE)
 [![OpenCode Skill](docs/assets/badge-opencode.svg)](#compatibility)
+[![skills.sh](https://skills.sh/b/sogeisetsu/asset-inventory)](https://skills.sh/sogeisetsu/asset-inventory)
 
 [English](README.md) · [中文](README-ZH.md) · [日本語](readmes/README-JA.md) · [한국어](readmes/README-KO.md) · [Русский](readmes/README-RU.md) · [العربية](readmes/README-AR.md) · [Español](readmes/README-ES.md)
 
@@ -37,6 +38,16 @@ cd asset-inventory
 
 - **全局：** `~/.config/opencode/skills/asset-inventory/`
 - **项目级：** `<项目根目录>/.opencode/skills/asset-inventory/`
+
+### 📥 通过 skills.sh 安装
+
+用 [skills.sh](https://skills.sh) CLI 一行安装——它会自动检测本机的 agent（OpenCode、Claude Code、Codex、GitHub Copilot……）并把 skill 装进各自的 skills 目录：
+
+```sh
+npx skills add sogeisetsu/asset-inventory
+```
+
+`-g` 全局（用户级）安装，`-y` 跳过确认，`--copy` 复制文件而非软链接。
 
 ### 🤖 通过 AI 安装
 

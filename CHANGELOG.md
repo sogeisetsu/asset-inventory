@@ -6,6 +6,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [Unreleased]
+
+### Added
+- **Install via skills.sh** — the install section in all seven READMEs gains a `### 📥 Install via skills.sh` subsection (`npx skills add sogeisetsu/asset-inventory`, with the `-g` / `-y` / `--copy` flags explained), and `docs/guides/install-and-update.md` gains a matching "One-command install via skills.sh" section covering flags, scope, and `skills update`.
+- **skills.sh badge** — the English and Chinese README badge rows show the official `skills.sh` badge for this repo; it turns green (install count) once the registry entry lands ([vercel-labs/skills#2298](https://github.com/vercel-labs/skills/issues/2298)).
+
 ## [1.13.7] - 2026-09-25
 
 ### Fixed
