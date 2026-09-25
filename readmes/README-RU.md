@@ -47,11 +47,11 @@ cd asset-inventory
 
 1. Сначала задайте ровно один вопрос: глобально или только в текущий проект.
 2. Получите репозиторий через `git clone https://github.com/sogeisetsu/asset-inventory.git` — обязательно; не переходите на скачивание ZIP (ZIP со страницы Releases может быть устаревшим).
-3. Скопируйте только два рабочих элемента (SKILL.md и references/):
-   - Глобально: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
-   - В проект: .opencode/skills/asset-inventory/ внутри текущего проекта.
-   Создайте каталог при отсутствии. Не копируйте README, docs, scripts.
-4. Если навык уже есть — перезапишите (это обновление), не спрашивайте второй раз.
+3. Скопируйте только два рабочих элемента (SKILL.md и references/) в <target>/asset-inventory/, где <target> — корень skills:
+   - Глобальный <target>: ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\)
+   - <target> проекта: .opencode/skills/ внутри текущего проекта.
+   Создайте <target>/asset-inventory/ при отсутствии. Не копируйте README, docs, scripts.
+4. Если <target>/asset-inventory/ уже существует — перезапишите его (это обновление), не спрашивайте второй раз.
 5. По завершении убедитесь, что <target>/asset-inventory/SKILL.md существует, и прочитайте установленную версию из `metadata.version`.
 6. Считайте источник только для чтения и не меняйте содержимое. Сообщите только путь установки и версию.
 ```

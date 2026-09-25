@@ -49,11 +49,11 @@ cd asset-inventory
 
 ١. اسألني سؤالاً واحدًا فقط: التثبيت عامًّا أم داخل المشروع الحالي فقط.
 ٢. احصل على المستودع عبر `git clone https://github.com/sogeisetsu/asset-inventory.git` — إلزامي؛ لا تنتقل إلى تنزيل ZIP (قد يكون ZIP من صفحة Releases قديمًا).
-٣. انسخ عنصرين تشغيليين فقط (SKILL.md و references/) إلى الهدف:
-   - عام: ~/.config/opencode/skills/asset-inventory/ (ويندوز: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
-   - داخل المشروع: .opencode/skills/asset-inventory/
-   أنشئ المجلد إن لم يوجد. لا تنسخ README أو docs أو scripts.
-٤. إن كانت المهارة موجودة فاستبدلها (هذا تحديث)، ولا تسأل مرة ثانية.
+٣. انسخ عنصرين تشغيليين فقط (SKILL.md و references/) إلى <target>/asset-inventory/ حيث إن <target> هو جذر skills:
+   - <target> العام: ~/.config/opencode/skills/ (ويندوز: $env:USERPROFILE\.config\opencode\skills\)
+   - <target> داخل المشروع: .opencode/skills/
+   أنشئ <target>/asset-inventory/ إن لم يوجد. لا تنسخ README أو docs أو scripts.
+٤. إن كان <target>/asset-inventory/ موجودًا فاستبدل محتواه (هذا تحديث)، ولا تسأل مرة ثانية.
 ٥. عند الانتهاء تحقق من وجود <target>/asset-inventory/SKILL.md واقرأ الإصدار من `metadata.version`.
 ٦. اعتبر المصدر للقراءة فقط ولا تعدّل أي محتوى. أبلغ فقط عن مسار التثبيت والإصدار.
 ```
