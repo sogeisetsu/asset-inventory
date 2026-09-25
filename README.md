@@ -38,6 +38,16 @@ cd asset-inventory
 - **Global:** `~/.config/opencode/skills/asset-inventory/`
 - **Project-scoped:** `<project-root>/.opencode/skills/asset-inventory/`
 
+### 📥 Install via skills.sh
+
+One-liner via the [skills.sh](https://skills.sh) CLI — it detects your agents (OpenCode, Claude Code, Codex, GitHub Copilot, …) and installs the skill into each:
+
+```sh
+npx skills add sogeisetsu/asset-inventory
+```
+
+Add `-g` for a global (user-level) install, `-y` to skip prompts, or `--copy` to copy files instead of symlinking.
+
 ### 🤖 Install via AI
 
 Send the text below to your AI and it will install the skill for you:

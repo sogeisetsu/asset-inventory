@@ -38,6 +38,16 @@ cd asset-inventory
 - **全局：** `~/.config/opencode/skills/asset-inventory/`
 - **项目级：** `<项目根目录>/.opencode/skills/asset-inventory/`
 
+### 📥 通过 skills.sh 安装
+
+用 [skills.sh](https://skills.sh) CLI 一行安装——它会自动检测本机的 agent（OpenCode、Claude Code、Codex、GitHub Copilot……）并把 skill 装进各自的 skills 目录：
+
+```sh
+npx skills add sogeisetsu/asset-inventory
+```
+
+`-g` 全局（用户级）安装，`-y` 跳过确认，`--copy` 复制文件而非软链接。
+
 ### 🤖 通过 AI 安装
 
 把下面这段发给 AI，它会帮你装好：
