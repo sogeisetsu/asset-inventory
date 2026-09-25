@@ -8,6 +8,15 @@
 
 ---
 
+## [1.13.6] - 2026-09-25
+
+### 变更
+- **示例盘点页在文档站可直接渲染** —— `samples/inventory.md` 的链接不再在浏览器里显示 Markdown 源码：`scripts/build-sample-pages.mjs` 现在额外生成独立渲染页（`docs/samples/inventory.html` 与 `docs/samples/zh/inventory.html`，完整 7 张表、每页固定语言），`docs/inventory.html` 的"完整示例"链接改指这些页面；新页面已纳入 `build-sample-pages --check` 校验。
+- **调用措辞与宿主暴露 skill 的真实方式对齐** —— 七语 README 的快速开始现在写明：输入 `/asset-inventory`、从 OpenCode TUI 的 `/skills` 选择器选中，或直接说人话；"加参数"改为"带上盘点目标"（自然语言目标同样有效），`How it works` 链接行标签改为"调用方式与盘点目标"。`SKILL.md` 的 `How to call` skill 规则与名称图例改为宿主感知：`/skills` 是 OpenCode TUI 的选择器、并非每个宿主都有，而直接输入 `/skill-name` 通用。
+- **落地页移除多余的"复制命令"按钮** —— 手动安装区块保留命令本身，仅删掉那个额外的复制按钮（7 个语言各一行）。
+
+---
+
 ## [1.13.5] - 2026-09-25
 
 ### 变更

@@ -25,7 +25,7 @@
 /asset-inventory
 ```
 
-ثبّت المهارة ثم استدعها. لا حاجة لأي إعداد. أضف وسيطًا لتجريد جزء فقط — `/asset-inventory mcp` أو `agents` أو `hosts` أو `skills` أو `diff` أو `usage`.
+ثبّت المهارة ثم استدعها — لا حاجة لأي إعداد. اكتب `/asset-inventory` (وفي TUI الخاص بـ OpenCode تجده أيضًا ضمن `/skills`)، أو اطلب بلغة طبيعية مثل «اعرض إضافاتي». أضف هدفًا لتغطية جزء فقط — `/asset-inventory mcp` أو `agents` أو `hosts` أو `skills` أو `diff` أو `usage` (يعمل أيضًا بعبارة طبيعية مثل «MCP فقط»). انظر [الأهداف](../docs/guides/how-it-works.md#targeting) لمعرفة ما يفحصه كل هدف وما يكتبه.
 
 ## 📦 التثبيت
 

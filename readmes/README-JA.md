@@ -23,7 +23,7 @@
 /asset-inventory
 ```
 
-スキルを入れて呼び出すだけ。設定は不要です。引数を付ければ一部だけを棚卸しできます — `/asset-inventory mcp`、`agents`、`hosts`、`skills`、`diff`、`usage`。
+スキルを入れて呼び出すだけ。設定は不要です。`/asset-inventory` と入力する（OpenCode TUI では `/skills` セレクタからも選べます）、または自然言語で「プラグインを棚卸しして」と頼むだけ。対象を付ければ一部だけを棚卸しできます — `/asset-inventory mcp`、`agents`、`hosts`、`skills`、`diff`、`usage`（「MCP だけ」という自然言語でも可）。各対象が何を調べて何を書くかは[ターゲティング](../docs/guides/how-it-works.md#targeting)を参照。
 
 ## 📦 インストール
 

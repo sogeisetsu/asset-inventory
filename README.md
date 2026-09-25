@@ -23,7 +23,7 @@
 /asset-inventory
 ```
 
-Install the skill (one scope), then invoke it. No configuration needed. Append an argument to target part of your setup — `/asset-inventory mcp`, `agents`, `hosts`, `skills`, `diff`, `usage`. See [Targeting](docs/guides/how-it-works.md#targeting) for what each argument scans and what it writes.
+Install the skill (one scope), then invoke it — no configuration needed. Type `/asset-inventory` (the OpenCode TUI also lists it under `/skills`), or just ask in plain language ("list my plugins"). Add a target to cover only part of your setup — `/asset-inventory mcp`, `agents`, `hosts`, `skills`, `diff`, `usage` (plain language like "MCP servers only" works too). See [Targeting](docs/guides/how-it-works.md#targeting) for what each target scans and what it writes.
 
 ## 📦 Install
 

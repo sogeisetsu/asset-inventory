@@ -5,7 +5,7 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.13.5
+  version: 1.13.6
 ---
 
 # Asset Inventory
@@ -95,7 +95,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 - **Source**: three-part shape. See Source Classification below.
 - **How to call**: how the user can actually reach it — **list ALL real invocation paths, never just one**:
   - Command → the literal `/command` (aliases in parens). Never "auto-runs on intent".
-  - Skill → both paths: `auto-triggers on intent, or pick from /skills (typing /skill-name works too)`. Never bare "auto-triggers" when a slash name exists.
+  - Skill → both paths: `auto-triggers on intent, or pick from the host's skill picker (OpenCode TUI: /skills; not every host exposes it — typing /skill-name works regardless)`. Never bare "auto-triggers" when a slash name exists.
   - Agent → `Tab switch` / `auto-takeover` / `@agent-name`.
   - MCP → ask-by-name (`use context7` / `use the gh_grep tool`); the tool the Agent calls (`<server>_<tool>`, e.g. `grep_app_*` / `gh_grep_*`); an MCP Prompt registered as `/prompt-name` (only if the server exposes one); and its own standalone CLI/HTTP endpoint (e.g. a local `pdf-mcp` command, `mcp.context7.com`) if it ships one. **Never** write "the human doesn't call it" or any "Agent-only" claim.
   - Software/host capability → `active once installed` / `nothing to call, on from launch` / `when the Agent calls it`.
@@ -247,7 +247,7 @@ No content after verification → **do not invent, do not omit**: output `no usa
 - **JSON** (`output/asset-inventory.json`): standalone file, one element per row: `table, name, source, state, confidence, invoke`. PK = `table`+`name`. Empty table ⇒ `[]`.
   - **The `table` field is always the numeric `1`-`7`** (never a localized string) — this is what makes diff mode comparable across runs.
   - Group rows, table notes, and hidden agents are excluded from JSON; the JSON row set = the Markdown data-row set.
-- **Name legend**: open `inventory.md` with a one-line legend (in the output language) explaining the Name shapes — `/name` = a slash command you type; `name` (no slash) = a skill (auto-triggers, or is picked from /skills); other bare names = plugins/software, agents, MCP servers, or host capabilities. Put it directly under the title.
+- **Name legend**: open `inventory.md` with a one-line legend (in the output language) explaining the Name shapes — `/name` = a slash command you type; `name` (no slash) = a skill (auto-triggers, or picked from the host's skill picker); other bare names = plugins/software, agents, MCP servers, or host capabilities. Put it directly under the title.
 - **Masking — apply before writing, then self-check**: redact API keys, tokens, and auth headers; replace the home-directory segment of **every** path with `~` (macOS/Linux) or `%USERPROFILE%` (Windows) — e.g. `C:\Users\alice\.local\bin\tool.exe` → `%USERPROFILE%\.local\bin\tool.exe`; mask private project names. Raw key/token/secret values must be masked at first sight and must never appear in table notes, provenance, error quotes, intermediate summaries, or commit messages — only the masked form may be written anywhere. Real-name mode only on explicit request + the Provenance line. 🛑 STOP — do not deliver until you have scanned the whole deliverable (Markdown **and** JSON) for the raw home path and fixed any leak.
 - **Diff mode**: user asks "what changed since last time" → ask them to paste the previous JSON/Markdown (answer in the chat; diff writes no files unless explicitly asked). Full protocol:
   1. **Scope**: compare ONLY the tables whose numeric ids appear in the pasted baseline JSON — re-collect just those tables' evidence, never a full 7-table scan. If the baseline lacks any of tables 1–7, end the output with a one-line scope note: `Scope: tables <present> compared; tables <absent> not in baseline — not compared.`

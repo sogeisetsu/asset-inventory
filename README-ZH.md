@@ -23,7 +23,7 @@
 /asset-inventory
 ```
 
-装好 skill 后直接调用，无需配置。加参数可只盘点一部分 —— `/asset-inventory mcp`、`agents`、`hosts`、`skills`、`diff`、`usage`。每个参数具体扫什么、写哪些文件，见[盘点模式](docs/guides/how-it-works.md#targeting)。
+装好 skill 后直接调用，无需配置：输入 `/asset-inventory`（OpenCode TUI 里也提供 `/skills` 选择器），或直接说人话——“盘点我的插件”。带上盘点目标可只盘一部分 —— `/asset-inventory mcp`、`agents`、`hosts`、`skills`、`diff`、`usage`（自然语言如“只盘 MCP”同样有效）。每个目标具体扫什么、写哪些文件，见[盘点模式](docs/guides/how-it-works.md#targeting)。
 
 ## 📦 安装
 

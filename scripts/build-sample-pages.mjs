@@ -10,11 +10,17 @@
 // English is the base sample; languages without a translated sample fall back to
 // it at runtime (see docs/lang.js).
 //
+// It also emits two standalone, fixed-language pages that render the FULL
+// inventory sample (docs/samples/inventory.html and docs/samples/zh/inventory.html).
+// GitHub Pages serves docs/ statically, so links to the raw .md sample would
+// show Markdown source instead of a rendered page; these give the "Full
+// sample" links a real HTML target.
+//
 // Usage:
 //   node scripts/build-sample-pages.mjs          # write the pages
 //   node scripts/build-sample-pages.mjs --check  # fail if a page is out of date
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -64,6 +70,14 @@ function renderMarkdown(md) {
       flushList();
       const level = m[1].length;
       html.push(`<h${level}>${inline(m[2])}</h${level}>`);
+      i += 1;
+      continue;
+    }
+    if (line === '---') {
+      // Horizontal rule. Samples carry no YAML frontmatter, so a bare `---`
+      // line is always an `<hr>`, never a document delimiter.
+      flushList();
+      html.push('<hr>');
       i += 1;
       continue;
     }
@@ -162,6 +176,30 @@ const PAGES = [
   },
 ];
 
+// Standalone fixed-language pages rendering the ENTIRE inventory sample (no
+// data-lang attributes, no lang.js — the page language never switches).
+// hrefs are relative to the output file's location under docs/samples/.
+const STANDALONE = [
+  {
+    src: 'inventory.md',
+    out: 'samples/inventory.html',
+    lang: 'en',
+    css: '../style.css',
+    favicon: '../favicon.svg',
+    index: '../index.html',
+    title: 'Asset inventory (sample output) — asset-inventory',
+  },
+  {
+    src: 'zh/inventory.md',
+    out: 'samples/zh/inventory.html',
+    lang: 'zh-Hans',
+    css: '../../style.css',
+    favicon: '../../favicon.svg',
+    index: '../../index.html',
+    title: '盘点清单（示例输出） — asset-inventory',
+  },
+];
+
 const read = (p) => readFileSync(path.join(SAMPLES, p), 'utf8');
 
 function bodyFor(kind, text) {
@@ -190,6 +228,40 @@ function renderPageContent(page) {
   return [buildBlock(page, 'en'), buildBlock(page, 'zh')].join('\n\n');
 }
 
+// Full-page render of one sample file, mirroring docs/inventory.html's <head>
+// and <main>/<footer> skeleton with the stylesheet/favicon paths made relative
+// to the output file.
+function buildStandalone(spec) {
+  const md = readFileSync(path.join(SAMPLES, spec.src), 'utf8').replace(/\r\n/g, '\n');
+  const content = renderMarkdown(md);
+  return [
+    '<!DOCTYPE html>',
+    `<html lang="${spec.lang}" dir="ltr">`,
+    '<head>',
+    '<meta charset="UTF-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">',
+    `<title>${esc(spec.title)}</title>`,
+    `<link rel="icon" type="image/svg+xml" href="${spec.favicon}">`,
+    `<link rel="stylesheet" href="${spec.css}">`,
+    '</head>',
+    '<body>',
+    '<main>',
+    `  <p><a href="${spec.index}">← asset-inventory</a></p>`,
+    '',
+    '  <article>',
+    content,
+    '  </article>',
+    '',
+    '  <footer>',
+    '    asset-inventory · MIT · <a href="https://github.com/sogeisetsu/asset-inventory" target="_blank" rel="noopener">GitHub</a>',
+    '  </footer>',
+    '</main>',
+    '</body>',
+    '</html>',
+    '',
+  ].join('\n');
+}
+
 function injectInto(raw, content, file) {
   const s = raw.indexOf(START);
   const e = raw.indexOf(END);
@@ -215,8 +287,21 @@ function main() {
       console.log(`sample pages: updated ${page.html}`);
     }
   }
+  for (const spec of STANDALONE) {
+    const file = path.join(DOCS, spec.out);
+    const next = buildStandalone(spec);
+    const raw = existsSync(file) ? readFileSync(file, 'utf8').replace(/\r\n/g, '\n') : null;
+    if (raw === next) continue;
+    if (check) {
+      stale += 1;
+      console.error(`sample pages: ${spec.out} is out of date — run node scripts/build-sample-pages.mjs`);
+    } else {
+      writeFileSync(file, next);
+      console.log(`sample pages: updated ${spec.out}`);
+    }
+  }
   if (check) {
-    console.log(`\nbuild-sample-pages: ${PAGES.length} page(s), ${stale} out of date`);
+    console.log(`\nbuild-sample-pages: ${PAGES.length + STANDALONE.length} page(s), ${stale} out of date`);
     process.exit(stale > 0 ? 1 : 0);
   }
 }

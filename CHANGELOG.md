@@ -6,6 +6,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.13.6] - 2026-09-25
+
+### Changed
+- **Sample inventory renders on the docs site** — `samples/inventory.md` links no longer serve raw Markdown source in the browser: `scripts/build-sample-pages.mjs` now also emits standalone rendered pages (`docs/samples/inventory.html` + `docs/samples/zh/inventory.html`, full 7 tables, language fixed per page) and `docs/inventory.html`'s "Full sample" links point at them; the new pages are covered by `build-sample-pages --check`.
+- **Invocation wording matches how hosts actually expose skills** — the quick start in all seven READMEs now says to type `/asset-inventory`, pick it from the OpenCode TUI's `/skills` selector, or ask in plain language, and replaces "append an argument" with "add a target" (plain-language targets work too); the `How it works` link row's label becomes "Invocation & targets". In `SKILL.md`, the `How to call` skill rule and the name legend are host-aware: `/skills` is the OpenCode TUI's picker — not every host exposes it — while typing `/skill-name` works regardless.
+- **Landing page loses the redundant "Copy commands" button** — the manual-install block keeps its commands; only the extra copy button (7 locales) is removed.
+
+---
+
 ## [1.13.5] - 2026-09-25
 
 ### Changed
