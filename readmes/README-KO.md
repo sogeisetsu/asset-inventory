@@ -47,11 +47,11 @@ OpenCode 스킬 "asset-inventory"를 <https://github.com/sogeisetsu/asset-invent
 
 1. 먼저 한 가지만 물어보세요: 전역 설치인지, 현재 프로젝트에만 설치인지.
 2. `git clone https://github.com/sogeisetsu/asset-inventory.git` 으로 저장소를 확보 — 필수이며 ZIP 다운로드로 대체하지 말 것(Releases 페이지의 ZIP은 구버전일 수 있음).
-3. 런타임 항목 두 개(SKILL.md와 references/)만 대상에 복사:
-   - 전역: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
-   - 프로젝트: 현재 프로젝트의 .opencode/skills/asset-inventory/
-   없으면 생성. README·docs·scripts는 복사하지 않음.
-4. 같은 스킬이 이미 있으면 덮어쓰기(업데이트)하고 두 번 묻지 않음.
+3. 런타임 항목 두 개(SKILL.md와 references/)만 <target>/asset-inventory/ 에 복사. <target>은 skills 루트:
+   - 전역 <target>: ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\)
+   - 프로젝트 <target>: 현재 프로젝트의 .opencode/skills/
+   <target>/asset-inventory/ 가 없으면 생성. README·docs·scripts는 복사하지 않음.
+4. <target>/asset-inventory/ 에 같은 스킬이 이미 있으면 덮어쓰기(업데이트)하고 두 번 묻지 않음.
 5. 완료 후 <target>/asset-inventory/SKILL.md 존재를 확인하고 frontmatter의 `metadata.version`을 읽음.
 6. 소스는 읽기 전용으로 취급하고 내용을 수정하지 않음. 보고는 설치 위치와 버전만.
 ```

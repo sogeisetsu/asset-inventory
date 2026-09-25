@@ -8,6 +8,17 @@
 
 ---
 
+## [1.13.7] - 2026-09-25
+
+### 修复
+- **`update.ps1 -DryRun` 不再有副作用** —— 预览移到 `git pull` 之前，dry run 绝不拉取仓库；也没有全局安装时不再 `exit 1`，而是预览真实运行会安装到的路径（并注明跳过了哪次 pull）后退出 0。真跑仍保留原来的 `exit 1` 提示。
+- **安装提示词明确 `<target>` 定义** —— 七种语言（根 README ×2、`readmes/` ×5、落地页 ×7）第 3 步写明 `<target>` 是 skills 根目录、两个运行时项复制到 `<target>/asset-inventory/`，第 3–5 步指向同一个目标，不再出现两种目标。
+
+### 变更
+- **`check-docs.mjs`** —— 文件头检查清单改为与代码一致的 1–10 连续编号（原来跳过 7、且缺本地化 README 项）；版本校验对 `[Unreleased]` 顶部标题与非 semver 的 `metadata.version` 改为告警，不再报假 mismatch。
+- **`references/glossary.json`** 改为美化缩进 —— 解析后内容完全一致，新增语言时 diff 可见。
+- **CONTRIBUTING 目录树**（中英）补上 `scripts/build-sample-pages.mjs`。
+
 ## [1.13.6] - 2026-09-25
 
 ### 变更

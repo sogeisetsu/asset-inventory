@@ -47,11 +47,11 @@ Instala el skill de OpenCode "asset-inventory" desde <https://github.com/sogeise
 
 1. Primero hazme exactamente una pregunta: ¿instalación global o solo en el proyecto actual?
 2. Obtén el repositorio con `git clone https://github.com/sogeisetsu/asset-inventory.git` — obligatorio; no recurras a descargar el ZIP (el ZIP de la página Releases puede estar desactualizado).
-3. Copia solo los dos elementos de ejecución (SKILL.md y references/):
-   - Global: ~/.config/opencode/skills/asset-inventory/ (Windows: $env:USERPROFILE\.config\opencode\skills\asset-inventory\)
-   - En el proyecto: .opencode/skills/asset-inventory/ dentro del proyecto actual.
-   Crea el directorio si falta. No copies README, docs ni scripts.
-4. Si el skill ya existe, sobrescríbelo (es una actualización); no preguntes otra vez.
+3. Copia solo los dos elementos de ejecución (SKILL.md y references/) en <target>/asset-inventory/, donde <target> es la raíz de skills:
+   - <target> global: ~/.config/opencode/skills/ (Windows: $env:USERPROFILE\.config\opencode\skills\)
+   - <target> del proyecto: .opencode/skills/ dentro del proyecto actual.
+   Crea <target>/asset-inventory/ si falta. No copies README, docs ni scripts.
+4. Si <target>/asset-inventory/ ya existe, sobrescribe su contenido (es una actualización); no preguntes otra vez.
 5. Al terminar, verifica que exista <target>/asset-inventory/SKILL.md y lee la versión instalada de `metadata.version`.
 6. Trata el origen como solo lectura y no modifiques ningún contenido. Informa solo la ubicación y la versión.
 ```

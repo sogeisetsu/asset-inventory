@@ -43,6 +43,7 @@ asset-inventory/
 ├── references/                 # skill 格式与扫描方法参考
 ├── scripts/
 │   ├── check-docs.mjs          # 文档 / 链接 / frontmatter 校验
+│   ├── build-sample-pages.mjs  # 渲染示例详情页
 │   └── generate-assets.mjs     # 重新生成 docs/assets/*.svg
 ├── docs/                       # GitHub Pages + release notes + assets + TODO
 │   ├── TODO.md                 # 发布计划（英文）

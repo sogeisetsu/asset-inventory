@@ -47,11 +47,11 @@ OpenCode スキル "asset-inventory" を <https://github.com/sogeisetsu/asset-in
 
 1. まず質問は 1 つだけ：グローバルに入れるか、今のプロジェクトだけか。
 2. `git clone https://github.com/sogeisetsu/asset-inventory.git` でリポジトリを取得する——必須。ZIP ダウンロードへのフォールバックは不可（Releases ページの ZIP は古い可能性がある）。
-3. 実行時に必要な 2 点（SKILL.md と references/）だけをコピー：
-   - グローバル：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
-   - プロジェクト単位：現在のプロジェクト内 .opencode/skills/asset-inventory/
-   無ければ作成。README・docs・scripts はコピーしない。
-4. 既に同名スキルがあれば上書き（更新）し、二度目は聞かない。
+3. 実行時に必要な 2 点（SKILL.md と references/）だけを <target>/asset-inventory/ にコピーする。<target> は skills のルート：
+   - グローバルの <target>：~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\）
+   - プロジェクト単位の <target>：現在のプロジェクト内 .opencode/skills/
+   <target>/asset-inventory/ が無ければ作成する。README・docs・scripts はコピーしない。
+4. <target>/asset-inventory/ に既に同名スキルがあれば上書き（更新）し、二度目は聞かない。
 5. 完了後 <target>/asset-inventory/SKILL.md の存在を確認し、frontmatter の `metadata.version` を読む。
 6. ソースは読み取り専用として扱い、内容を変更しない。報告はインストール先と版のみ。
 ```

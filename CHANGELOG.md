@@ -6,6 +6,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.13.7] - 2026-09-25
+
+### Fixed
+- **`update.ps1 -DryRun` no longer has side effects** — the preview now runs before `git pull`, so a dry run never pulls the repo, and it no longer exits 1 when no global install exists: it previews the path a real run would install into (and states which pull it skipped), then exits 0. Real runs keep the previous `exit 1` guidance.
+- **The install prompt now defines `<target>`** — in every locale (root READMEs ×2, `readmes/` ×5, landing page ×7) step 3 states that `<target>` is the skills root and that the two runtime items go into `<target>/asset-inventory/`, so steps 3–5 all name one destination instead of two different ones.
+
+### Changed
+- **`check-docs.mjs`** — the header check list is numbered 1–10 to match the code (it skipped 7 and had no localized-README entry), and the version check now tolerates an `[Unreleased]` top heading and a non-semver `metadata.version`, warning instead of reporting a bogus mismatch.
+- **`references/glossary.json`** is pretty-printed — parsed content is byte-identical, but language changes are now visible in diffs.
+- **CONTRIBUTING file trees** (English and Chinese) list `scripts/build-sample-pages.mjs`.
+
 ## [1.13.6] - 2026-09-25
 
 ### Changed

@@ -47,11 +47,11 @@ cd asset-inventory
 
 1. 先只问我一个问题：装到全局，还是只装进当前项目。
 2. 用 `git clone https://github.com/sogeisetsu/asset-inventory.git` 获取仓库——必须，不要回退到 ZIP 下载（Releases 页的 ZIP 可能是旧版本）。
-3. 只把两个运行时项（SKILL.md 和 references/）复制到目标位置：
-   - 全局：~/.config/opencode/skills/asset-inventory/（Windows：$env:USERPROFILE\.config\opencode\skills\asset-inventory\）
-   - 项目级：当前项目下的 .opencode/skills/asset-inventory/
-   目录不存在就创建。不要复制 README、docs、scripts。
-4. 如果目标位置已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
+3. 只把两个运行时项（SKILL.md 和 references/）复制到 <目标位置>/asset-inventory/ 下，<目标位置> 是 skills 根目录：
+   - 全局 <目标位置>：~/.config/opencode/skills/（Windows：$env:USERPROFILE\.config\opencode\skills\）
+   - 项目级 <目标位置>：当前项目下的 .opencode/skills/。
+   <目标位置>/asset-inventory/ 目录不存在就创建。不要复制 README、docs、scripts。
+4. 如果 <目标位置>/asset-inventory/ 已存在同名 skill，直接覆盖（这等于更新），不要问第二遍。
 5. 完成后确认 <目标位置>/asset-inventory/SKILL.md 存在，并从它的 frontmatter `metadata.version` 读出安装的版本号。
 6. 全程把源文件当只读，不修改任何 skill 内容；最后只报告安装位置和版本号。
 ```

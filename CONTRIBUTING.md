@@ -41,6 +41,7 @@ asset-inventory/
 ├── references/                 # Skill format & scan-method references
 ├── scripts/
 │   ├── check-docs.mjs          # Doc/link/frontmatter validation
+│   ├── build-sample-pages.mjs  # Renders sample detail pages
 │   └── generate-assets.mjs     # Regenerates docs/assets/*.svg
 ├── docs/                       # GitHub Pages + release notes + assets + TODO
 │   ├── TODO.md                 # Rollout plan (English)

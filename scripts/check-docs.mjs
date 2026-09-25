@@ -12,12 +12,14 @@
 //      or end with -ZH.md; AGENTS.md is deliberately Chinese and exempt).
 //   6. Version consistency: the SKILL.md frontmatter metadata.version matches
 //      the top release heading in CHANGELOG.md and zh/CHANGELOG-ZH.md.
+//   7. Glossary structure: every language block in references/glossary.json
+//      exposes the same key set as the `en` block, and every language SKILL.md
+//      declares as a fixed-string language actually exists in the glossary.
 //   8. Reference integrity: every `references/<name>.md` mentioned in SKILL.md
 //      exists, and references/checklist.md still holds the expected number of
 //      `- [ ]` items (guards against silent loss when the list is edited).
-//   9. Glossary structure: every language block in references/glossary.json
-//      exposes the same key set as the `en` block, and every language SKILL.md
-//      declares as a fixed-string language actually exists in the glossary.
+//   9. Localized README set: every localized README exists and links to the
+//      whole locale set.
 //   10. State parity: every `languages.<lang>.state` value in the glossary
 //      appears verbatim in that language's README and in docs/index.html, so
 //      localized pages never drift from the fixed output markers.
@@ -271,6 +273,10 @@ async function checkVersionConsistency() {
     warn('version check: no metadata.version found in SKILL.md frontmatter');
     return;
   }
+  if (!/^\d+\.\d+\.\d+/.test(skillVersion)) {
+    warn(`version check: metadata.version in SKILL.md frontmatter is not a semver value ("${skillVersion}") — skipping comparison`);
+    return;
+  }
 
   const changelogs = ['CHANGELOG.md', 'zh/CHANGELOG-ZH.md'];
   for (const relPath of changelogs) {
@@ -286,6 +292,10 @@ async function checkVersionConsistency() {
       continue;
     }
     const changelogVersion = m[1].trim();
+    if (changelogVersion.toLowerCase() === 'unreleased') {
+      warn(`version check: ${relPath} top heading is [Unreleased] — skipping comparison with SKILL.md metadata.version`);
+      continue;
+    }
     if (changelogVersion !== skillVersion) {
       err(
         `version mismatch: SKILL.md has ${skillVersion} but ${relPath} top heading is ${changelogVersion}`,
