@@ -23,7 +23,7 @@
 /asset-inventory
 ```
 
-Instala el skill y ejecútalo. No requiere configuración. Añade un argumento para cubrir solo una parte: `/asset-inventory mcp`, `agents`, `hosts`, `skills`, `diff`, `usage`.
+Instala el skill y ejecútalo — no requiere configuración. Escribe `/asset-inventory` (en la TUI de OpenCode también aparece en `/skills`), o pídelo en lenguaje natural («lista mis plugins»). Añade un objetivo para cubrir solo una parte: `/asset-inventory mcp`, `agents`, `hosts`, `skills`, `diff`, `usage` (una frase como «solo MCP» también sirve). Ver [Objetivos](../docs/guides/how-it-works.md#targeting) para saber qué escanea y qué escribe cada objetivo.
 
 ## 📦 Instalación
 

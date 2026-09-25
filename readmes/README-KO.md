@@ -23,7 +23,7 @@
 /asset-inventory
 ```
 
-스킬을 설치하고 호출하면 끝. 설정이 필요 없습니다. 인자를 붙이면 일부만 점검합니다 — `/asset-inventory mcp`, `agents`, `hosts`, `skills`, `diff`, `usage`.
+스킬을 설치하고 호출하면 끝. 설정이 필요 없습니다. `/asset-inventory`를 입력하거나(OpenCode TUI에서는 `/skills` 선택기에서 고를 수도 있음), 자연스럽게 "내 플러그인을 점검해줘"라고 말하면 됩니다. 대상을 붙이면 일부만 점검합니다 — `/asset-inventory mcp`, `agents`, `hosts`, `skills`, `diff`, `usage`("MCP만" 같은 자연 언어도 가능). 각 대상이 무엇을 점검하고 무엇을 쓰는지는[대상 지정](../docs/guides/how-it-works.md#targeting)을 참조하세요.
 
 ## 📦 설치
 
