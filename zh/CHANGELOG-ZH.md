@@ -8,6 +8,12 @@
 
 ---
 
+## [Unreleased]
+
+### 新增
+- **通过 skills.sh 安装** —— 七种语言的 README「安装」小节各新增 `### 📥 通过 skills.sh 安装` 子节（`npx skills add sogeisetsu/asset-inventory`，附 `-g` / `-y` / `--copy` 说明）；`docs/guides/install-and-update.md` 新增对应的「One-command install via skills.sh」小节，覆盖 flags、安装范围与 `skills update`。
+- **skills.sh 徽章** —— 中英 README 徽章行加入本仓库的 skills.sh 官方徽章；registry 条目收录后会变成绿色安装数（[vercel-labs/skills#2298](https://github.com/vercel-labs/skills/issues/2298)）。
+
 ## [1.13.7] - 2026-09-25
 
 ### 修复
