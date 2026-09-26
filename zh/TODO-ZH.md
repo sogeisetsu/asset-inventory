@@ -41,6 +41,7 @@
 | 1.13.5 | patch | update.ps1 备份移出 skills 命名空间（原会被加载成重复 skill）；AGENTS 规则同步 | ✅ | — | ✅ 已完成 |
 | 1.13.6 | patch | 文档站渲染示例页、宿主感知的调用措辞（7 语 README + skill）、移除复制命令按钮 | ✅ | — | ✅ 已完成 |
 | 1.13.7 | patch | `update.ps1 -DryRun` 无副作用；安装提示词七语统一 `<target>` = skills 根；check-docs 文件头与版本防御；glossary 美化缩进；CONTRIBUTING 目录树 | ✅ | — | ✅ 已完成 |
+| 1.14.0 | minor | skills.sh 安装（7 语言 README + 指南）+ 徽章；description 扩写；`metadata.source`；SKILL.md 流程前置；嵌套 mcp 计数 + diff 状态翻转分支；glossary `hostCategories`（7 语言） | ✅ | ✅ | ✅ 已完成 |
 
 ## 详情
 
@@ -76,6 +77,6 @@ HTML 页面。框架与标题保留所选语言。
 
 ## 下一步
 
-梯队已完成到 **1.13.7**：1.11.1–1.11.8 与 1.13.1–1.13.7（patch）、1.12.0 与
-1.13.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、1.13.1 与 1.13.3。
+梯队已完成到 **1.14.0**：1.11.1–1.11.8 与 1.13.1–1.13.7（patch）、1.12.0、1.13.0 与
+1.14.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、1.13.1、1.13.3 与 1.14.0。
 当前没有进行中的工作 —— 后续工作从这里开一条新梯队。

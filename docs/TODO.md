@@ -42,6 +42,7 @@
 | 1.13.5 | patch | update.ps1 backups leave the skills/ namespace (were loading as duplicate skill); AGENTS rule synced | ✅ | — | ✅ done |
 | 1.13.6 | patch | Rendered sample pages on the docs site, host-aware invocation wording (7 READMEs + skill), Copy commands button removed | ✅ | — | ✅ done |
 | 1.13.7 | patch | `update.ps1 -DryRun` side-effect free; install prompt defines `<target>` as skills root (7 locales); check-docs header/version guards; glossary pretty-printed; CONTRIBUTING trees | ✅ | — | ✅ done |
+| 1.14.0 | minor | skills.sh install (7 READMEs + guide) + badge; richer description; `metadata.source`; workflow-first SKILL.md; nested-mcp count + diff state-flip branches; glossary `hostCategories` (7 langs) | ✅ | ✅ | ✅ done |
 
 ## Details
 
@@ -82,6 +83,6 @@ the detail-page titles.
 
 ## Next step
 
-The rollout is complete through **1.13.7**: 1.11.1–1.11.8 and 1.13.1–1.13.7
-(patches), 1.12.0 and 1.13.0 (minors), GitHub Releases on 1.11.3, 1.11.4, 1.12.0,
-1.13.0, 1.13.1 and 1.13.3. Nothing is in flight — start a new ladder here for the next piece of work.
+The rollout is complete through **1.14.0**: 1.11.1–1.11.8 and 1.13.1–1.13.7
+(patches), 1.12.0, 1.13.0 and 1.14.0 (minors), GitHub Releases on 1.11.3, 1.11.4,
+1.12.0, 1.13.0, 1.13.1, 1.13.3 and 1.14.0. Nothing is in flight — start a new ladder here for the next piece of work.

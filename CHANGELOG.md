@@ -6,7 +6,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
-## [Unreleased]
+## [1.14.0] - 2026-09-26
 
 ### Added
 - **`metadata.source`** — the SKILL.md frontmatter now records the canonical repository URL (`https://github.com/sogeisetsu/asset-inventory`) as an Agent Skills `metadata` extension key, so hosts and registries can machine-read the source.

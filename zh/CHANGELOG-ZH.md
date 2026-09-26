@@ -8,7 +8,7 @@
 
 ---
 
-## [Unreleased]
+## [1.14.0] - 2026-09-26
 
 ### 新增
 - **`metadata.source`** —— SKILL.md frontmatter 记录规范仓库地址（`https://github.com/sogeisetsu/asset-inventory`），作为 Agent Skills `metadata` 扩展键，宿主与 registry 可机器读取来源。
