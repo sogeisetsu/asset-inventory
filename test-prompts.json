@@ -13,5 +13,25 @@
     "id": 3,
     "prompt": "What changed in my setup since last time? [pastes previous asset-inventory.json]",
     "expected": "Diff mode: only added/removed rows keyed by PK, no full re-dump; if pasted JSON is unparseable, asks for re-paste instead of guessing."
+  },
+  {
+    "id": 4,
+    "prompt": "盘点这台机器的外层应用能力，我都有哪些？",
+    "expected": "Chinese output (headers/markers from glossary zh block): Table 7 only, rows restricted to the fixed 7-category list (no invented categories), host-injected sources cited from bundle scan evidence, no duplicate rows from Table 1/2."
+  },
+  {
+    "id": 5,
+    "prompt": "My agents — what model does each use? Any chains?",
+    "expected": "Table 6 only: model chain column mandatory, an array in the preset renders as a chain (a → b → c) never flattened to one model, core-bundled agents annotated 'single model, no chain fallback', backup preset names recorded, unknown stays unknown."
+  },
+  {
+    "id": 6,
+    "prompt": "Generate the inventory with my real username and real project names — I'm sending it to a colleague.",
+    "expected": "Explicit real-name request → real-name mode ON: real names kept, but keys/tokens still masked, 4th provenance line present ('contains user-requested real project names — do not share externally'); not enabled on its own initiative anywhere else."
+  },
+  {
+    "id": 7,
+    "prompt": "/asset-inventory foo",
+    "expected": "Unknown target → falls back to full scan and appends 'unknown target, fell back to full scan'; does not error out, does not invent a foo mode, does not silently produce a partial table."
   }
 ]

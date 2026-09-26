@@ -11,9 +11,17 @@
 ## [Unreleased]
 
 ### 新增
+- **`metadata.source`** —— SKILL.md frontmatter 记录规范仓库地址（`https://github.com/sogeisetsu/asset-inventory`），作为 Agent Skills `metadata` 扩展键，宿主与 registry 可机器读取来源。
 - **frontmatter `description` 扩写** —— SKILL.md 的 description 现在写明三问（是什么/谁带来的/怎么用）、状态标记、触发场景（diff 模式、清理/未使用资产问询）、usage guide 产出与只读/打码保证，966 字符（上限 1024）。
 - **通过 skills.sh 安装** —— 七种语言的 README「安装」小节各新增 `### 📥 通过 skills.sh 安装` 子节（`npx skills add sogeisetsu/asset-inventory`，附 `-g` / `-y` / `--copy` 说明）；`docs/guides/install-and-update.md` 新增对应的「One-command install via skills.sh」小节，覆盖 flags、安装范围与 `skills update`。
 - **skills.sh 徽章** —— 中英 README 徽章行加入本仓库的 skills.sh 官方徽章；registry 条目收录后会变成绿色安装数（[vercel-labs/skills#2298](https://github.com/vercel-labs/skills/issues/2298)）。
+
+### 变更
+- **SKILL.md 改为流程前置结构** —— `Procedure` 移到输出格式规范之前，修复了原文"the 7-table inventory below"的死引用；模糊的 `## The Rule` 标题改为 `## Output format — the 7 tables`，§5 的定向写盘枚举改为指向 Targeting 表不再重复（darwin dim7 轮，paired judges 3–0 keep）。
+- **编码两个失败分支** —— 表 5 计数断言现在处理嵌套 `mcp.servers.*` 与插件注册的 server（数叶子 + 插件、表注写口径、绝不为凑断言填行）；diff 模式定义了状态翻转（同 PK 只变状态）为一行 `state changed:` 注记，不再静默错处（darwin dim3 轮，paired judges 3–0 keep）。
+
+### 修复
+- **表 7 类目名改从 glossary 取** —— `references/glossary.json` 全部 7 种语言新增 `hostCategories`（固定 7 槽），SKILL.md 表 7 行引用该键，zh 镜像此前自造的标签一并对齐 —— 非英文输出不再即兴翻译固定类目清单（darwin dim8 实测发现的缺口）。
 
 ## [1.13.7] - 2026-09-25
 

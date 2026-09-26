@@ -4,6 +4,7 @@
     "columns": "Headers for tables 1-5 and 7 (5 columns).",
     "columnsAgent": "Headers for table 6 (6 columns, adds model chain).",
     "tableTitles": "Display title per table number.",
+    "hostCategories": "Display names for the seven fixed Table 7 capability categories, numbered 1-7 in fixed order. The set is fixed; only labels are localized.",
     "state": "State markers; append after the confidence suffix.",
     "confidence": "Confidence suffixes.",
     "emptyTable": "Declaration line for a table with no usable rows.",
@@ -37,6 +38,15 @@
         "5": "MCP",
         "6": "Agents",
         "7": "Host capabilities"
+      },
+      "hostCategories": {
+        "1": "Global behavior rules",
+        "2": "Model-preference management",
+        "3": "Session & scheduled-task actions",
+        "4": "In-page browser",
+        "5": "Managed-process management",
+        "6": "Prompt optimization",
+        "7": "Skill marketplace catalog"
       },
       "state": {
         "available": "✅available",
@@ -85,6 +95,15 @@
         "6": "Agent",
         "7": "外层应用"
       },
+      "hostCategories": {
+        "1": "全局行为规则",
+        "2": "模型偏好管理",
+        "3": "会话与定时任务操作",
+        "4": "页内浏览器",
+        "5": "托管进程管理",
+        "6": "提示词优化",
+        "7": "技能市场目录"
+      },
       "state": {
         "available": "✅可用",
         "disabled": "❌已禁用",
@@ -131,6 +150,15 @@
         "5": "MCP",
         "6": "エージェント",
         "7": "外側アプリの機能"
+      },
+      "hostCategories": {
+        "1": "グローバル動作ルール",
+        "2": "モデル設定の管理",
+        "3": "セッション・予約タスク操作",
+        "4": "ページ内ブラウザ",
+        "5": "マネージドプロセス管理",
+        "6": "プロンプト最適化",
+        "7": "スキルマーケットカタログ"
       },
       "state": {
         "available": "✅利用可",
@@ -179,6 +207,15 @@
         "6": "Agent",
         "7": "호스트 기능"
       },
+      "hostCategories": {
+        "1": "전역 동작 규칙",
+        "2": "모델 환경설정 관리",
+        "3": "세션·예약 작업 조작",
+        "4": "페이지 내 브라우저",
+        "5": "관리형 프로세스 관리",
+        "6": "프롬프트 최적화",
+        "7": "스킬 마켓플레이스 카탈로그"
+      },
       "state": {
         "available": "✅사용 가능",
         "disabled": "❌비활성",
@@ -225,6 +262,15 @@
         "5": "MCP",
         "6": "Агенты",
         "7": "Возможности хоста"
+      },
+      "hostCategories": {
+        "1": "Глобальные правила поведения",
+        "2": "Управление предпочтениями моделей",
+        "3": "Действия с сессиями и запланированными задачами",
+        "4": "Встроенный браузер",
+        "5": "Управление управляемыми процессами",
+        "6": "Оптимизация промптов",
+        "7": "Каталог маркетплейса навыков"
       },
       "state": {
         "available": "✅доступно",
@@ -273,6 +319,15 @@
         "6": "الوكلاء",
         "7": "قدرات المضيف"
       },
+      "hostCategories": {
+        "1": "قواعد السلوك العامة",
+        "2": "إدارة تفضيلات النماذج",
+        "3": "عمليات الجلسات والمهام المجدولة",
+        "4": "متصفح داخل الصفحة",
+        "5": "إدارة العمليات المُدارة",
+        "6": "تحسين المطالبات",
+        "7": "كتالوج سوق المهارات"
+      },
       "state": {
         "available": "✅متاح",
         "disabled": "❌معطّل",
@@ -319,6 +374,15 @@
         "5": "MCP",
         "6": "Agentes",
         "7": "Capacidades del host"
+      },
+      "hostCategories": {
+        "1": "Reglas de comportamiento global",
+        "2": "Gestión de preferencias de modelos",
+        "3": "Acciones de sesiones y tareas programadas",
+        "4": "Navegador en la página",
+        "5": "Gestión de procesos administrados",
+        "6": "Optimización de prompts",
+        "7": "Catálogo del marketplace de skills"
       },
       "state": {
         "available": "✅disponible",
