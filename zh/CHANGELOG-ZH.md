@@ -20,6 +20,9 @@
 - **SKILL.md 改为流程前置结构** —— `Procedure` 移到输出格式规范之前，修复了原文"the 7-table inventory below"的死引用；模糊的 `## The Rule` 标题改为 `## Output format — the 7 tables`，§5 的定向写盘枚举改为指向 Targeting 表不再重复（darwin dim7 轮，paired judges 3–0 keep）。
 - **编码两个失败分支** —— 表 5 计数断言现在处理嵌套 `mcp.servers.*` 与插件注册的 server（数叶子 + 插件、表注写口径、绝不为凑断言填行）；diff 模式定义了状态翻转（同 PK 只变状态）为一行 `state changed:` 注记，不再静默错处（darwin dim3 轮，paired judges 3–0 keep）。
 
+### 修复
+- **表 7 类目名改从 glossary 取** —— `references/glossary.json` 全部 7 种语言新增 `hostCategories`（固定 7 槽），SKILL.md 表 7 行引用该键，zh 镜像此前自造的标签一并对齐 —— 非英文输出不再即兴翻译固定类目清单（darwin dim8 实测发现的缺口）。
+
 ## [1.13.7] - 2026-09-25
 
 ### 修复

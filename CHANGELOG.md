@@ -18,6 +18,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 - **SKILL.md restructured workflow-first** — `Procedure` now precedes the output-format spec, fixing the stale "the 7-table inventory below" reference; the vague `## The Rule` heading becomes `## Output format — the 7 tables`, and the targeted-modes write list in §5 points to the Targeting table instead of repeating it (darwin dim7 round, paired judges 3–0 keep).
 - **Two failure branches encoded** — the Table 5 count assertion now handles nested `mcp.servers.*` and plugin-registered servers (count leaves + plugin, quote the basis, never pad rows to pass), and diff mode defines state-flips (same PK, changed marker) as a one-line `state changed:` note instead of silently mishandling them (darwin dim3 round, paired judges 3–0 keep).
 
+### Fixed
+- **Table 7 category names come from the glossary** — `references/glossary.json` gains `hostCategories` (7 fixed slots) in all 7 languages, the SKILL.md Table 7 row cites it, and the zh mirror's divergent labels were realigned — non-English outputs no longer improvise translations of the fixed category list (gap found by the darwin dim8 test run).
+
 ## [1.13.7] - 2026-09-25
 
 ### Fixed
