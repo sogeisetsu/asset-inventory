@@ -1,5 +1,18 @@
 # Troubleshooting
 
+## Scan & output failures
+
+| Scenario | Action |
+|---|---|
+| Plugin cache unreadable | `🚫absent` + table note: `plugin cache unreadable (<error>)` |
+| Outer app bundle scan fails | note the failure reason in a table note; skip that source, don't fabricate |
+| `opencode agent list` returns empty | check `opencode --pure agent list`; if still empty, write "no selectable agents detected" |
+| MCP server unreachable | `⚠️inferred 🛑broken` + note: `liveness probe failed (<error>)` — this row applies only after the probe is confirmed to have used the config's env/headers |
+| Config file missing or malformed | note the gap in a table note; don't guess defaults |
+| Version unknown after all sources exhausted | write `unknown` — never invent |
+| Language mismatch (user asks in English, config is Chinese) | follow the user's language for output; use English for technical terms |
+| Pasted diff JSON/Markdown unparseable | ask the user to re-paste, or fall back to comparing the Markdown tables; never guess or invent PK rows |
+
 ## Common issues
 
 ### Skill not found (the `/asset-inventory` command doesn't appear)

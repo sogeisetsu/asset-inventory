@@ -44,6 +44,7 @@
 | 1.13.7 | patch | `update.ps1 -DryRun` side-effect free; install prompt defines `<target>` as skills root (7 locales); check-docs header/version guards; glossary pretty-printed; CONTRIBUTING trees | ✅ | — | ✅ done |
 | 1.14.0 | minor | skills.sh install (7 READMEs + guide) + badge; richer description; `metadata.source`; workflow-first SKILL.md; nested-mcp count + diff state-flip branches; glossary `hostCategories` (7 langs) | ✅ | ✅ | ✅ done |
 | 1.15.0 | minor | Registry-first host-command scan (Pass 1 registries + completeness guard, Pass 2 fallback); Table 4 three-registry cross-check | ✅ | ✅ | ✅ done |
+| 1.15.1 | patch | Progressive disclosure: mode/diff routing, failure handling and Table 2/6 rules moved out of `SKILL.md` (36.6k → 29.7k chars); checklist de-duplicated; description 969 → 620 chars | ✅ | — | ✅ done |
 
 ## Details
 
@@ -94,8 +95,21 @@ three-registry union, and `SKILL.md`'s failure-mode list records that the old fi
 dropped `/btw`, `/fork`, `/schedule-task` and `/handoff-review` and could never have found
 `/timeline`.
 
+### 1.15.1 — Progressive disclosure (patch · tag only)
+A review found the payload nominally staged but not actually on-demand: `SKILL.md` was
+~9.1k tokens (~2× the ~5k ceiling) and 5 of 6 reference files were read on every run, with
+`checklist.md` restating all 41 rules already in `SKILL.md`. The fix relocates the
+Targeting table + diff protocol to `references/modes.md` (new), the error-handling table to
+`references/troubleshooting.md`, the Table 2/6 rules to `references/format-example.md`, and
+the two host-scan failure modes to `references/host-commands.md` — each leaving a trigger
+plus a pointer, with the diff paste gate and masking STOP kept in `SKILL.md`; rewrites
+`checklist.md` as terse verdicts that cite the owning section; and trims the frontmatter
+description to what + triggers. Output behaviour is unchanged, so `docs/samples/` stays
+byte-identical. The remaining ~6.8k-token `SKILL.md` is deliberate: the rest of the body is
+needed on every full scan.
+
 ## Next step
 
-The rollout is complete through **1.15.0**: 1.11.1–1.11.8 and 1.13.1–1.13.7
+The rollout is complete through **1.15.1**: 1.11.1–1.11.8, 1.13.1–1.13.7 and 1.15.1
 (patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on 1.11.3, 1.11.4,
 1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start a new ladder here for the next piece of work.

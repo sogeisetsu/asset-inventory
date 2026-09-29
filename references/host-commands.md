@@ -134,6 +134,11 @@ if (Test-Path $configPath) {
 
 > **Note:** the config file may not contain a command list (e.g. OpenChamber) — the commands are baked into the app bundle. A config scan is only a secondary measure.
 
+## Known failure modes
+
+- Missing plugin-registered slash commands (`/loop`) because the scan stopped at `command/` and never read the plugin dist `hooks/`.
+- Treating a phrase-filtered token scan as the complete host-command set — enumerate the bundle's command registry and autocomplete i18n keys instead (see `references/host-commands.md`); a filter keyed on the literal words "slash command" silently drops real commands (this machine lost `/btw`, `/fork`, `/schedule-task` and `/handoff-review` that way; `/timeline` has no typed literal at all, so registry enumeration is the only way to find it).
+
 ## Inventory requirements
 
 1. **Never assume any command list** — every inventory must scan fresh and trust the result.

@@ -43,6 +43,7 @@
 | 1.13.7 | patch | `update.ps1 -DryRun` 无副作用；安装提示词七语统一 `<target>` = skills 根；check-docs 文件头与版本防御；glossary 美化缩进；CONTRIBUTING 目录树 | ✅ | — | ✅ 已完成 |
 | 1.14.0 | minor | skills.sh 安装（7 语言 README + 指南）+ 徽章；description 扩写；`metadata.source`；SKILL.md 流程前置；嵌套 mcp 计数 + diff 状态翻转分支；glossary `hostCategories`（7 语言） | ✅ | ✅ | ✅ 已完成 |
 | 1.15.0 | minor | 宿主命令扫描改为注册表优先（Pass 1 注册表 + 完备性守卫、Pass 2 兜底）；Table 4 三方注册表对账 | ✅ | ✅ | ✅ 已完成 |
+| 1.15.1 | patch | 按需披露：mode/diff 路由、失败处理与 Table 2/6 规则移出 `SKILL.md`（36.6k → 29.7k 字符）；checklist 去重；description 969 → 620 字符 | ✅ | — | ✅ 已完成 |
 
 ## 详情
 
@@ -86,8 +87,18 @@ HTML 页面。框架与标题保留所选语言。
 清单记录旧过滤器曾丢掉 `/btw`、`/fork`、`/schedule-task`、`/handoff-review`，且
 根本找不到 `/timeline`。
 
+### 1.15.1 —— 按需披露（patch · 仅打 tag）
+评审发现载荷只是名义分层、并未真正做到按需：`SKILL.md` 约 9.1k token（约为 5k 上限的两倍），
+6 个 reference 里有 5 个每次运行都会读，而 `checklist.md` 又把 `SKILL.md` 已有的 41 条规则全部
+复述了一遍。修正方式：把 Targeting 表 + diff 协议移入 `references/modes.md`（新增），错误处理表
+移入 `references/troubleshooting.md`，Table 2/6 规则移入 `references/format-example.md`，两条宿主
+扫描失败模式移入 `references/host-commands.md` —— 每块都留下触发条件 + 指针，diff 粘贴 gate 与
+脱敏 STOP 仍留在 `SKILL.md`；`checklist.md` 改写为标注所属小节的精简判定式条目；frontmatter
+description 精简为"是什么 + 触发短语"。输出行为未变，`docs/samples/` 保持逐字节一致。剩下的
+约 6.8k token `SKILL.md` 是有意保留的：正文其余部分每次全量扫描都要用。
+
 ## 下一步
 
-梯队已完成到 **1.15.0**：1.11.1–1.11.8 与 1.13.1–1.13.7（patch）、1.12.0、1.13.0、
+梯队已完成到 **1.15.1**：1.11.1–1.11.8、1.13.1–1.13.7 与 1.15.1（patch）、1.12.0、1.13.0、
 1.14.0 与 1.15.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、1.13.1、
 1.13.3、1.14.0 与 1.15.0。当前没有进行中的工作 —— 后续工作从这里开一条新梯队。

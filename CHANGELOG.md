@@ -6,6 +6,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.15.1] - 2026-09-29
+
+### Changed
+- **The runtime payload stops paying for rules it only sometimes needs** — a progressive-disclosure pass moved conditionally-needed content out of `SKILL.md`: the Targeting table and the full diff protocol (now `references/modes.md`, read only when a target/mode argument is present), the error-handling table (now `references/troubleshooting.md`), the Table 2 and Table 6 rules (now `references/format-example.md`), and the two host-scan failure modes (now `references/host-commands.md` → `Known failure modes`). Every block left a trigger plus a pointer behind, and the behavioural gates — the diff paste gate and the masking STOP — stay in `SKILL.md`. `SKILL.md` is 287 → 245 lines, 36,573 → 29,654 chars.
+- **`references/checklist.md` de-duplicated** — all 41 checks restated rules already written in `SKILL.md`, so every run paid for the same rule text twice. It keeps the same 41 checks and pass structure, now as terse verdicts citing the `SKILL.md` section that owns each rule (6,025 → 5,123 chars).
+- **Frontmatter description trimmed** — 969 → 620 chars. The deliverable list and the read-only/masking guarantees were body material riding in every context window; the `Use when` trigger clauses are kept verbatim, so trigger matching does not narrow.
+- Output is unchanged: 7 tables, column counts, state markers, provenance and the fixed-string language mechanism are untouched, so `docs/samples/` is byte-identical.
+
+---
+
 ## [1.15.0] - 2026-09-29
 
 ### Changed
