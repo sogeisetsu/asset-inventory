@@ -43,6 +43,7 @@
 | 1.13.6 | patch | Rendered sample pages on the docs site, host-aware invocation wording (7 READMEs + skill), Copy commands button removed | ✅ | — | ✅ done |
 | 1.13.7 | patch | `update.ps1 -DryRun` side-effect free; install prompt defines `<target>` as skills root (7 locales); check-docs header/version guards; glossary pretty-printed; CONTRIBUTING trees | ✅ | — | ✅ done |
 | 1.14.0 | minor | skills.sh install (7 READMEs + guide) + badge; richer description; `metadata.source`; workflow-first SKILL.md; nested-mcp count + diff state-flip branches; glossary `hostCategories` (7 langs) | ✅ | ✅ | ✅ done |
+| 1.15.0 | minor | Registry-first host-command scan (Pass 1 registries + completeness guard, Pass 2 fallback); Table 4 three-registry cross-check | ✅ | ✅ | ✅ done |
 
 ## Details
 
@@ -81,8 +82,20 @@ three detail pages. Restructure samples: English at `docs/samples/`, Chinese
 under `docs/samples/zh/`; update every sample link. Drop the raw filename from
 the detail-page titles.
 
+### 1.15.0 — Registry-first host-command scan (minor · Release)
+`references/host-commands.md` gained a deterministic Pass 1: enumerate the bundle's
+command registry (`{id,name,source}` entries plus a raw-`id` completeness guard),
+cross-check it against the composer-autocomplete i18n keys and the prompt-template
+`command:"/xxx"` literals, and name every command by the registry `id`/`name` (an
+autocomplete key is not always the typed form's camelCase — `featurePlan` is really
+`/plan-feature`). The phrase-filtered token scan became Pass 2, a fallback that states
+outright that it is not the complete set; `references/checklist.md` gates Table 4 on the
+three-registry union, and `SKILL.md`'s failure-mode list records that the old filter
+dropped `/btw`, `/fork`, `/schedule-task` and `/handoff-review` and could never have found
+`/timeline`.
+
 ## Next step
 
-The rollout is complete through **1.14.0**: 1.11.1–1.11.8 and 1.13.1–1.13.7
-(patches), 1.12.0, 1.13.0 and 1.14.0 (minors), GitHub Releases on 1.11.3, 1.11.4,
-1.12.0, 1.13.0, 1.13.1, 1.13.3 and 1.14.0. Nothing is in flight — start a new ladder here for the next piece of work.
+The rollout is complete through **1.15.0**: 1.11.1–1.11.8 and 1.13.1–1.13.7
+(patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on 1.11.3, 1.11.4,
+1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start a new ladder here for the next piece of work.

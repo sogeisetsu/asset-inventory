@@ -42,6 +42,7 @@
 | 1.13.6 | patch | 文档站渲染示例页、宿主感知的调用措辞（7 语 README + skill）、移除复制命令按钮 | ✅ | — | ✅ 已完成 |
 | 1.13.7 | patch | `update.ps1 -DryRun` 无副作用；安装提示词七语统一 `<target>` = skills 根；check-docs 文件头与版本防御；glossary 美化缩进；CONTRIBUTING 目录树 | ✅ | — | ✅ 已完成 |
 | 1.14.0 | minor | skills.sh 安装（7 语言 README + 指南）+ 徽章；description 扩写；`metadata.source`；SKILL.md 流程前置；嵌套 mcp 计数 + diff 状态翻转分支；glossary `hostCategories`（7 语言） | ✅ | ✅ | ✅ 已完成 |
+| 1.15.0 | minor | 宿主命令扫描改为注册表优先（Pass 1 注册表 + 完备性守卫、Pass 2 兜底）；Table 4 三方注册表对账 | ✅ | ✅ | ✅ 已完成 |
 
 ## 详情
 
@@ -75,8 +76,18 @@ HTML 页面。框架与标题保留所选语言。
 样本目录重构：英文放 `docs/samples/`、中文放 `docs/samples/zh/`；更新所有样本链接。
 详情页标题去掉裸文件名。
 
+### 1.15.0 —— 宿主命令扫描改为注册表优先（minor · 建 Release）
+`references/host-commands.md` 新增确定性的 Pass 1：枚举 bundle 的命令注册表
+（`{id,name,source}` 条目 + 原始 `id` 完备性守卫），与输入框自动补全 i18n 键集、
+提示词模板里的 `command:"/xxx"` 字面量三方交叉核对，并以注册表 `id`/`name` 作为
+命令输入形态的权威（自动补全键未必是它的 camelCase 转写——`featurePlan` 实际是
+`/plan-feature`）。词组过滤 token 扫描降级为 Pass 2，并在文中明说它不是完整集合；
+`references/checklist.md` 要求 Table 4 与三方注册表并集对账，`SKILL.md` 的失败模式
+清单记录旧过滤器曾丢掉 `/btw`、`/fork`、`/schedule-task`、`/handoff-review`，且
+根本找不到 `/timeline`。
+
 ## 下一步
 
-梯队已完成到 **1.14.0**：1.11.1–1.11.8 与 1.13.1–1.13.7（patch）、1.12.0、1.13.0 与
-1.14.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、1.13.1、1.13.3 与 1.14.0。
-当前没有进行中的工作 —— 后续工作从这里开一条新梯队。
+梯队已完成到 **1.15.0**：1.11.1–1.11.8 与 1.13.1–1.13.7（patch）、1.12.0、1.13.0、
+1.14.0 与 1.15.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、1.13.1、
+1.13.3、1.14.0 与 1.15.0。当前没有进行中的工作 —— 后续工作从这里开一条新梯队。
