@@ -8,6 +8,16 @@
 
 ---
 
+## [1.15.1] - 2026-09-29
+
+### 变更
+- **运行时载荷不再为"偶尔才用到"的规则付费** —— 一轮按需披露重构把条件性内容移出了 `SKILL.md`：Targeting 表与完整 diff 协议（移入 `references/modes.md`，仅当带 target/mode 参数时读取）、错误处理表（移入 `references/troubleshooting.md`）、Table 2 与 Table 6 规则（移入 `references/format-example.md`）、以及两条宿主扫描失败模式（移入 `references/host-commands.md` → `Known failure modes`）。每块内容都留下触发条件 + 指针，而行为闸门——diff 粘贴 gate 与脱敏 STOP——仍留在 `SKILL.md`。`SKILL.md` 从 287 行 / 36,573 字符降到 245 行 / 29,654 字符。
+- **`references/checklist.md` 去重** —— 41 项检查全部是对 `SKILL.md` 已有规则的复述，等于每轮把同一份规则文本付两遍。现在保留同样的 41 项与段落结构，改为精简的判定式条目，并标注承载该规则的 `SKILL.md` 小节（6,025 → 5,123 字符）。
+- **frontmatter description 精简** —— 969 → 620 字符。交付物清单与只读/脱敏保证属于正文内容，却常驻每个上下文窗口；`Use when` 触发短语逐字保留，触发匹配范围不变。
+- 输出未变化：7 张表、列数、状态标记、provenance 与固定字符串多语言机制均未改动，因此 `docs/samples/` 保持逐字节一致。
+
+---
+
 ## [1.15.0] - 2026-09-29
 
 ### 变更
