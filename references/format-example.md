@@ -18,6 +18,12 @@ These rows define the **format only** — replace every value with observed resu
 | example-skill | example plugin package `src/skills/example` ✅verified ✅available | auto-triggers on intent, or pick from `/skills` (typing `/example-skill` works too) | when you need a particular kind of flow | It triggers automatically when your request matches its description, and can also be picked from `/skills` or typed as `/example-skill`; once it takes over it runs the flow it describes and produces its own outputs. Reach for it when you need that particular kind of flow rather than doing it by hand. |
 | /loop | example plugin registers command (dist `hooks/loop-command`) ✅verified ✅available | `/loop` | when repeatedly trying until it passes | You type `/loop`; it first asks for the goal, success criteria, success type, and max attempts, then dispatches an executor agent to do the work and a verifier agent to check it, retrying with history on failure until it passes or attempts run out. Loop state is written to disk, so use it for a run–verify–iterate cycle rather than a single attempt. |
 
+### Table 2 rules
+
+- Grouped by providing software; **one row per skill/command, no summary rows** (the software is already in Table 1). Ownership follows the tool a command invokes (`/rtk-gain` → `@rezamonangg/opencode-rtk`). Slash commands a plugin registers via hooks also go here (e.g. `/loop`; source = `<plugin> registers command (dist hooks/…)`).
+- **Merge vs split turns on whether the same plugin package delivers both.** If one plugin package both ships a skill and registers a same-named slash command (skill path and hook registration both inside that package, e.g. `deepwork` + `/deepwork`, `reflect` + `/reflect`), emit **one** row: name = the skill name, `How to call` lists both entry points, `Source` cites both the package skill path and the hook registration. If the command is **authored separately** (e.g. a user command at `$OPENCODE_CONFIG/command/<name>.md`) while the skill comes from elsewhere, they are **two different assets → separate rows**; and when such a command is a gate/wrapper (it judges the input, then loads the skill, or overrides format rules), describe it as exactly that — never attribute the skill's behavior to the command. Read the command file (`command/*.md`) before writing its row.
+- **Grouping:** you may prefix each software's block with a bold group row (name column = software name, other cells empty); a group row is not a data row — JSON excludes it and row counts ignore it. Use group rows throughout or not at all; never mix. Table 4's "local / user-command / host-injected" group rows follow the same rule.
+
 ## Table 3 — Built-in commands & built-in skills (5 columns)
 
 | Name | Source | How to call | When to use | What it does |
@@ -50,6 +56,12 @@ These rows define the **format only** — replace every value with observed resu
 | Example subagent | example plugin (plugin package, subagent) ✅verified ✅available | auto-takeover | on a particular specialized sub-task | It is dispatched automatically by the orchestrator on matching sub-tasks; it takes the specialized work (research / code / images, etc.), does only its part, and hands results back. | `opencode-go/modelA → longcat/modelB` (current preset, look up); backup presets: preset2, preset3 |
 
 > Note: hidden system agents (compaction/title/summary) exist and run automatically, but are not selectable in the UI and are not listed as available rows.
+
+### Table 6 rules
+
+- Rows are the selectable/invocable agents (native primary `build`/`plan`, subagents, plugin-provided, custom; disabled ones `❌disabled` + config line). Agents the config disables but the runtime `agent list` never exposes (e.g. `agent.explore` / `agent.general`) are **not rows** — name them in the Table 6 note with their config key; if a disabled name collides with a real agent name (`explore` vs `explorer`), note the mismatch and keep the real one. **Hidden system agents** (`compaction`/`title`/`summary`) go in a table note only.
+- **The Model-chain column is mandatory**: the active preset's `<agent>.model` may be a string or an array, and an **array is the chain**; also record backup preset names. Never render a preset full of arrays as "single model" for every agent. **Exemption — core-bundled agents only**: agents that ship with the host and have no preset entry (e.g. `build`/`plan`) have no chain fallback — write the host's currently effective model (looked up fresh, real value) and annotate "single model, no chain fallback". This exemption **does not apply to plugin agents**; if a plugin agent's chain cannot be read, write `unknown ⚠️inferred`, never "single model".
+- **Row order is enforced: core primary → plugin primary → core subagent → plugin subagent; alphabetical within each group.**
 
 ## Table 7 — Host capabilities (5 columns: Name | Source | How to call | When to use | What it does)
 
