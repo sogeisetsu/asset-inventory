@@ -2,80 +2,80 @@
 
 Run this checklist before outputting. Every item must pass.
 
-> Moved out of `SKILL.md` in v1.4.0; `SKILL.md` points here. Anti-patterns are not repeated here.
+> Moved out of `SKILL.md` in v1.4.0; `SKILL.md` points here. Anti-patterns are not repeated here. Terse acceptance pass: each item is a verdict; full rule text at the cited section.
 
 ---
 
 ## Evidence & Output Budget
 
-- [ ] Evidence commands returned verdicts + supporting lines, not dumps: no full permission arrays, no full SKILL.md bodies, no unique-token lists, no unfiltered directory recursion.
-- [ ] No silent truncation (`-First N`-style cuts); any limit prints the pre-limit total; known-noise patterns excluded by name, not by cap.
-- [ ] Each fact backed by exactly one sufficient source — no second/third-source re-verification of the same fact (manifest + README + `git remote` for one URL = one lookup).
+- [ ] Verdict + supporting lines, never dumps (SKILL.md, Verify).
+- [ ] No silent `-First N` cut; limits print pre-limit totals; noise excluded by name (SKILL.md, Verify).
+- [ ] One sufficient source per fact; no second/third-source re-verification (SKILL.md, Verify).
 
 ## All Tables
 
-- [ ] Exactly 7 tables; Tables 1-5/7 five columns, Table 6 six (including Model chain); headers consistent.
-- [ ] Every `Source` names the specific bringer, with a confidence suffix.
-- [ ] No global-dir skill is `local` until the plugin manifest is checked (managed/customized → plugin is the bringer).
-- [ ] No plaintext keys/tokens, masks real project names, and normalizes **every** home path to `~` / `%USERPROFILE%` in the Markdown **and** the JSON (real-name mode is the only exception, with the 4th Provenance line).
-- [ ] Unregistered skill-/plugin-like residue (has `SKILL.md`/`plugin.json`/`marketplace.json` but is not referenced by the config) is not dropped silently — it is `📦shelf-only` in a table or named in the Provenance Unresolved line, with the observed reason.
-- [ ] A local skill's upstream came from the documented lookup order (manifest → config-root sibling checkout → skill README → host marketplace cache → other client dirs → description attribution); if unverified, the source reads `local (repo unverified) ⚠️inferred` — no fabricated URL.
-- [ ] `inventory.md` opens with a one-line Name legend (`/command` = a command you type; bare name = a skill or another asset).
-- [ ] Versions/models/counts looked up fresh.
-- [ ] JSON PKs match Markdown data rows, no duplicates; the `table` field is the fixed numeric `1`-`7` (never localized strings).
-- [ ] Empty tables have a declaration line + `[]`.
-- [ ] Name column uniform per type: `/command` (no "command" suffix), `skill-name` (no `/`), Table 2 bare child name, software real names. No mixed styles.
-- [ ] Every `How to call` lists ALL real invocation paths. No bare "auto-triggers on intent"; skill rows show the `/skills` picker path, not only `/skill-name`.
+- [ ] Exactly 7 tables; 1-5/7 five cols, Table 6 six incl. Model chain; headers consistent (SKILL.md, Output format).
+- [ ] Every `Source` = specific bringer + confidence suffix (SKILL.md, Source Classification).
+- [ ] No global-dir skill `local` before the plugin manifest check (SKILL.md, Discover step 4).
+- [ ] Keys/tokens + real project names masked; every home path → `~`/`%USERPROFILE%` in Markdown and JSON; real-name mode = 4th Provenance line (SKILL.md, Masking).
+- [ ] Unregistered skill-/plugin-like residue kept: `📦shelf-only` row or Provenance Unresolved + reason (SKILL.md, Discover step 4).
+- [ ] Local-skill upstream from the lookup order; else `local (repo unverified) ⚠️inferred` — no fabricated URL (SKILL.md, Source Classification).
+- [ ] `inventory.md` opens with the one-line Name legend (SKILL.md, Output → Name legend).
+- [ ] Versions/models/counts looked up fresh (SKILL.md, Verify).
+- [ ] JSON PKs = Markdown data rows, no dupes; `table` numeric `1`-`7` (SKILL.md, Output → JSON).
+- [ ] Empty tables: declaration line + `[]` (SKILL.md, Empty tables).
+- [ ] Name shape uniform per type, no mixed styles (SKILL.md, Cell Conventions).
+- [ ] `How to call` = ALL real paths; no bare "auto-triggers on intent"; skill rows show `/skills` picker (SKILL.md, Cell Conventions).
 
 ## Table 1 — Plugins & companion software
 
-- [ ] Software names are real names (e.g. `OpenChamber`), never placeholders.
+- [ ] Software names real, never placeholders (SKILL.md, Table Overview).
 
 ## Table 2 — Skills & commands each software/plugin brings
 
-- [ ] Commands sit in the right table (built-in→Table 3, plugin→Table 2, user→Table 4, host-injected→Table 4).
-- [ ] No summary rows duplicating Table 1 software entries.
-- [ ] Merge vs split: same-package skill+same-named command = one row; separately-authored = two rows; gate/wrapper described as gate.
+- [ ] Commands in the right table: built-in→3, plugin→2, user→4, host-injected→4 (SKILL.md, Table Overview).
+- [ ] No summary rows duplicating Table 1 software (format-example.md, Table 2 rules).
+- [ ] Merge vs split by the same-package test; gate/wrapper described as a gate (format-example.md, Table 2 rules).
 
 ## Table 3 — Built-in commands & built-in skills
 
-- [ ] Lists **all** built-in commands from the docs, not a handful.
+- [ ] ALL built-in commands from the docs, not a handful (SKILL.md, Table Overview).
 
 ## Table 4 — Custom skills, commands, and host-injected commands
 
-- [ ] Includes outer-app-injected commands (source `host-injected`).
-- [ ] Host commands cross-checked against the Pass 1 registry union (registry array + autocomplete i18n keys + prompt-template literals — see `host-commands.md`); typed names taken from the registry `id`/`name`.
-- [ ] This skill appears in Table 4.
+- [ ] Outer-app-injected commands included, source `host-injected` (SKILL.md, Table Overview).
+- [ ] Host commands cross-checked vs Pass 1 registry union; typed names from registry `id`/`name` (SKILL.md, Discover step 5).
+- [ ] This skill appears in Table 4 (SKILL.md, Table Overview).
 
 ## Table 5 — MCP
 
-- [ ] **Row count equals the number of `mcp` keys in the config** (global + project merged). If you listed fewer, you dropped servers — go back.
-- [ ] A single-row table has been double-checked against the config — it is the exception, not the norm.
-- [ ] Every server is listed: local and remote, enabled and disabled (`❌disabled` with the config line quoted).
-- [ ] A server whose probe (spawned with the config's env/headers) failed is listed as `🛑broken` with the probe error quoted in a table note — never silently dropped, never `✅available`.
-- [ ] Rows carry known aliases/tool-name prefixes (e.g. grep_app → `gh_grep`).
-- [ ] Every MCP row lists real invocation paths — ask-by-name, tool prefix, MCP Prompt if exposed, own CLI/HTTP if shipped — never "Agent calls it" / "human doesn't call it".
+- [ ] Row count = `mcp` key count, global + project merged; fewer = dropped servers (SKILL.md, Discover step 6).
+- [ ] Single-row table re-checked against config — exception, not the norm (SKILL.md, Discover step 6).
+- [ ] Every server listed: local/remote, enabled/disabled (`❌disabled` + config line) (SKILL.md, Discover step 6).
+- [ ] Probe failure = `🛑broken` + quoted error in note; never dropped, never `✅available` (SKILL.md, Verify).
+- [ ] Known alias/tool prefix carried (grep_app → `gh_grep`) (SKILL.md, Table Overview).
+- [ ] MCP rows: all real invocation paths; never "Agent calls it"/"human doesn't call it" (SKILL.md, Cell Conventions).
 
 ## Table 6 — Agents
 
-- [ ] Every row has a concrete chain (`a→b→c`) or (core agent only, no chain) the host's real model + "single model, no chain fallback" note.
-- [ ] Array-valued preset entries expanded into chains, not flattened. If several read "single model", re-read the preset.
-- [ ] Row order: core primary → plugin primary → core subagent → plugin subagent, alphabetical within each group.
-- [ ] Config-disabled agents absent from `agent list` are named in the table note with their config key, not invented as rows (watch `explore` vs `explorer`).
+- [ ] Chain `a→b→c`, or core-only host model + "single model, no chain fallback" (SKILL.md, Cell Conventions).
+- [ ] Array presets expanded to chains, not flattened; several "single model" → re-read preset (SKILL.md, Cell Conventions).
+- [ ] Row order: core primary → plugin primary → core subagent → plugin subagent, alphabetical in group (format-example.md, Table 6 rules).
+- [ ] Config-disabled agents absent from `agent list` = note with config key, not rows; watch `explore`/`explorer` (SKILL.md, Verify).
 
 ## Table 7 — Host capabilities
 
-- [ ] No duplication with Table 1/Table 2; outer-app capabilities (non-command) → Table 7.
+- [ ] No duplication with Tables 1/2; non-command outer-app capabilities → Table 7 (SKILL.md, Table Overview).
 
 ## What it does & Usage Guide
 
-- [ ] Every `What it does` is one detailed paragraph (no Simple/Detailed split) covering: how invoked, when to use, what happens after (caveats). One-liners/labels fail.
-- [ ] Tables 1/2/4/5/7 rows do NOT carry deletion consequences; `What it does` focuses on what/who/how/caveats.
-- [ ] Derived from the same rows — no re-collection, no invented facts; by scenario/frequency; only `✅available`; plain-language.
-- [ ] Picked the right mode: generic (Mode A) for empty project, project-anchored (Mode B) for non-empty — Mode B keeps tool facts unchanged, no real paths or private code.
+- [ ] `What it does` = one paragraph (no Simple/Detailed split): invoke, when, after + caveats; no one-liners (SKILL.md, What-it-does format).
+- [ ] No deletion consequences in rows; cell stays what/who/how/caveats (SKILL.md, What-it-does format).
+- [ ] Usage guide from the same rows — no re-collection; scenario/frequency; only `✅available`; plain language (SKILL.md, Output → Usage Guide).
+- [ ] Right mode: A empty project vs B non-empty — tool facts unchanged, no real paths/private code (SKILL.md, Output → Usage Guide).
 
 ## Language & Fixed Strings
 
-- [ ] Output language follows the user's last message.
-- [ ] Fixed strings come verbatim from `references/glossary.json` for the chosen language (or, for a language with no entry, are derived from the `en` block and noted in Provenance).
-- [ ] Provenance lines follow the output language; real-name mode adds the 4th line.
+- [ ] Output language follows the user's last message (SKILL.md, Output Language).
+- [ ] Fixed strings verbatim from `references/glossary.json`, else derived from `en` + noted in Provenance (SKILL.md, Output Language).
+- [ ] Provenance in the output language; real-name mode adds the 4th line (SKILL.md, Output → Provenance).
