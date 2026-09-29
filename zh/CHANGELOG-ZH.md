@@ -8,6 +8,16 @@
 
 ---
 
+## [Unreleased]
+
+### 变更
+- **宿主命令扫描改为注册表优先** —— `references/host-commands.md` 现在首先执行 Pass 1：确定性枚举 bundle 内的命令注册表（`{id,name,source}` 条目 + 原始 `id` 完备性守卫），并与输入框自动补全 i18n 键集、以及提到命令的提示词模板（`command:"/xxx"` 字面量、magicPrompt 描述）三方交叉核对。原来的词组过滤 token 扫描降级为 Pass 2 兜底手段，并附带明确的不完整性警告；`references/checklist.md` 要求 Table 4 与三方注册表并集对账。
+
+### 修复
+- **词组过滤的宿主命令扫描会静默漏项** —— 它只保留邻近字节含 "slash command" 字样的 `/xxx` token，证据文本不含该词组的真实命令会无声消失。实测本机 13 个宿主命令只找出 8 个，漏掉 `/btw`、`/fork`、`/schedule-task`、`/handoff-review`；`/timeline` 更是根本没有输入字面量，只有注册表枚举能找到它。`SKILL.md` 的失败模式清单同步增加对应一条。
+
+---
+
 ## [1.14.0] - 2026-09-26
 
 ### 新增

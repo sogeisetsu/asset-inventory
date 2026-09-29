@@ -6,6 +6,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [Unreleased]
+
+### Changed
+- **Host-command scan is registry-first** — `references/host-commands.md` now leads with Pass 1, deterministic enumeration of the bundle's command registry (`{id,name,source}` entries plus a raw-`id` completeness guard), cross-checked against the composer-autocomplete i18n key set and the prompt templates that name a command (`command:"/xxx"` literals, magicPrompt descriptions). The phrase-filtered token scan is demoted to Pass 2, a documented fallback carrying an explicit incompleteness warning, and `references/checklist.md` gates Table 4 on reconciling the three-registry union.
+
+### Fixed
+- **The phrase-filtered host-command scan was silently incomplete** — it kept a `/xxx` token only when the surrounding bytes contained the literal wording "slash command", so real commands whose evidence lacked that phrase disappeared without a trace. On the observed machine it surfaced 8 of 13 host commands, dropping `/btw`, `/fork`, `/schedule-task` and `/handoff-review`; `/timeline` has no typed literal at all, so registry enumeration is the only way to find it. `SKILL.md`'s failure-mode list gains the matching pitfall.
+
+---
+
 ## [1.14.0] - 2026-09-26
 
 ### Added
