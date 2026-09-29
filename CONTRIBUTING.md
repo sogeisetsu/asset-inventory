@@ -72,6 +72,8 @@ Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) are git
 
    `check-docs.mjs` resolves every relative Markdown link and `<img src>`, checks the EN/ZH pair table, warns on one-sided edits, validates frontmatter, and flags CJK characters in English docs. It exits non-zero on errors; warnings do not fail.
 
+   `zh/skill-zh.md` is a gitignored local copy. If `check-docs` warns `local copy may be stale`, the local copy's mtime is more than 24h behind `SKILL.md` — re-sync it or ignore the warning; it never fails the check.
+
 ## Canonical Terms
 
 To keep prose unambiguous, use these terms and avoid the listed alternatives:
@@ -99,6 +101,11 @@ Three places must stay in lockstep, and `check-docs.mjs` now enforces it:
 3. The top release heading in `zh/CHANGELOG-ZH.md`
 
 A mismatch fails the check. The release heading must be `## [x.y.z]` (the date after it is not compared).
+
+`update.ps1` reads the version from the `metadata.version` field of the SKILL.md frontmatter. If it can't read it:
+
+1. Check the frontmatter format (`version: x.y.z` under `metadata:`, with a space after the colon)
+2. Check the file encoding (UTF-8 with BOM also works, but plain ASCII is safest)
 
 If you add a language to `references/glossary.json`, give it **the same key set as the `en` block** — the check reports any missing or extra key per language. Every language block must expose the same keys: `columns`, `columnsAgent`, `tableTitles`, `state`, `confidence`, `emptyTable`, `unknown`, `threeQuestions`, `provenance`, `provenanceRealName`.
 

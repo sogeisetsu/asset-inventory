@@ -74,6 +74,8 @@ asset-inventory/
 
    `check-docs.mjs` 会解析所有相对 Markdown 链接与 `<img src>`、检查 EN/ZH 配对表、告警单侧改动、校验 frontmatter，并标出英文文档中的 CJK 字符。出错时退出码非 0；warning 不失败。
 
+   `zh/skill-zh.md` 是 gitignored 的本地副本。若 `check-docs` 告警 `local copy may be stale`，说明本地副本的 mtime 比 `SKILL.md` 落后超过 24 小时 —— 重新同步或忽略该告警即可；它从不导致校验失败。
+
 ## 术语规范（canonical terms）
 
 为让文案无歧义，统一使用下列术语，避免右列的写法：
@@ -101,6 +103,11 @@ asset-inventory/
 3. `zh/CHANGELOG-ZH.md` 顶部的发布标题
 
 任一不一致都会导致校验失败。发布标题格式必须为 `## [x.y.z]`（其后的日期不参与比对）。
+
+`update.ps1` 从 SKILL.md frontmatter 的 `metadata.version` 字段读取版本号。若读不到：
+
+1. 检查 frontmatter 格式（`version: x.y.z` 位于 `metadata:` 之下，冒号后有空格）
+2. 检查文件编码（带 BOM 的 UTF-8 也可以，但纯 ASCII 最稳妥）
 
 若往 `references/glossary.json` 新增语言，必须给它**与 `en` 块完全相同的键集** —— 校验会逐语言报告缺失或多余的键。每个语言块都必须包含这些键：`columns`、`columnsAgent`、`tableTitles`、`state`、`confidence`、`emptyTable`、`unknown`、`threeQuestions`、`provenance`、`provenanceRealName`。
 
