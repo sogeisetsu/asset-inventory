@@ -8,7 +8,7 @@
 
 ---
 
-## [Unreleased]
+## [1.15.0] - 2026-09-29
 
 ### 变更
 - **宿主命令扫描改为注册表优先** —— `references/host-commands.md` 现在首先执行 Pass 1：确定性枚举 bundle 内的命令注册表（`{id,name,source}` 条目 + 原始 `id` 完备性守卫），并与输入框自动补全 i18n 键集、以及提到命令的提示词模板（`command:"/xxx"` 字面量、magicPrompt 描述）三方交叉核对。原来的词组过滤 token 扫描降级为 Pass 2 兜底手段，并附带明确的不完整性警告；`references/checklist.md` 要求 Table 4 与三方注册表并集对账。

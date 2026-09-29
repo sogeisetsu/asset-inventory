@@ -6,7 +6,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
-## [Unreleased]
+## [1.15.0] - 2026-09-29
 
 ### Changed
 - **Host-command scan is registry-first** — `references/host-commands.md` now leads with Pass 1, deterministic enumeration of the bundle's command registry (`{id,name,source}` entries plus a raw-`id` completeness guard), cross-checked against the composer-autocomplete i18n key set and the prompt templates that name a command (`command:"/xxx"` literals, magicPrompt descriptions). The phrase-filtered token scan is demoted to Pass 2, a documented fallback carrying an explicit incompleteness warning, and `references/checklist.md` gates Table 4 on reconciling the three-registry union.
