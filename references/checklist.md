@@ -44,6 +44,7 @@ Run this checklist before outputting. Every item must pass.
 ## Table 4 — Custom skills, commands, and host-injected commands
 
 - [ ] Includes outer-app-injected commands (source `host-injected`).
+- [ ] Host commands cross-checked against the Pass 1 registry union (registry array + autocomplete i18n keys + prompt-template literals — see `host-commands.md`); typed names taken from the registry `id`/`name`.
 - [ ] This skill appears in Table 4.
 
 ## Table 5 — MCP
