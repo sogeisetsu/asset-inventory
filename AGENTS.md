@@ -36,7 +36,7 @@
 
 > **动手前先从 `master` 拉一个新分支**（见「分支规则」）；以下每一步都在该分支上完成，确认无误后再合并回 `master`。
 
-1. 改 `SKILL.md` — 规则/行为变更；同步 `zh/skill-zh.md`（gitignored 本地镜像，check-docs 会按 mtime 警告）
+1. 改 `SKILL.md` — 规则/行为变更；同步 `zh/skill-zh.md`（gitignored 本地中文镜像，不参与加载）。**每次改 `SKILL.md` 都要同步它**：改了结构就逐节对齐内容，同时把镜像头部那行版本针 `> 同步自 SKILL.md vX.Y.Z（metadata.version）。` 改掉；哪怕只是升了版本号，这行也必须跟着动
 2. 改 `references/` — 格式/方法文档
 3. 改了样本 → 跑 `node scripts/build-sample-pages.mjs` 重新生成三个详情页（**不要手改**标记之间的生成块）
 4. 更新 `CHANGELOG.md`（及 `zh/CHANGELOG-ZH.md`）— 在顶部新版本条目下加条目；发布时把标题改成 `[x.y.z] - YYYY-MM-DD`
@@ -103,3 +103,4 @@
 - `docs/samples/` 英文在 base、中文在 `zh/`；该目录**豁免**英文文档的 CJK 检查
 - **新增 release-notes 配对、或新增本地化 README，必须登记进 `scripts/check-docs.mjs` 的 `PAIRS` / `README_LOCALES` 硬编码数组**，否则校验看不到它
 - `update.ps1` 的备份写到安装目录**上级的 `backups/`**（全局即 `~/.config/opencode/backups/`），绝不留在 skills 命名空间里——`skills/` 下任何带 `SKILL.md` 的目录都会被宿主加载成重复 skill，也绝不放回安装目录内部（否则会被当成 skill 内容复制）
+- **`zh/skill-zh.md` 的"过期"判定只看 mtime，别拿 `touch` 糊弄**：`check-docs` 报 `local copy may be stale` 只是说镜像比 `SKILL.md` 旧；反过来，`touch` 一下就能让告警消失，内容却照样在漂。所以改完 `SKILL.md` 要真按节同步内容并更新头部版本针，而不是刷个时间戳把告警压掉
