@@ -44,6 +44,7 @@
 | 1.14.0 | minor | skills.sh 安装（7 语言 README + 指南）+ 徽章；description 扩写；`metadata.source`；SKILL.md 流程前置；嵌套 mcp 计数 + diff 状态翻转分支；glossary `hostCategories`（7 语言） | ✅ | ✅ | ✅ 已完成 |
 | 1.15.0 | minor | 宿主命令扫描改为注册表优先（Pass 1 注册表 + 完备性守卫、Pass 2 兜底）；Table 4 三方注册表对账 | ✅ | ✅ | ✅ 已完成 |
 | 1.15.1 | patch | 按需披露：mode/diff 路由、失败处理与 Table 2/6 规则移出 `SKILL.md`（36.6k → 29.7k 字符）；checklist 去重；description 969 → 620 字符 | ✅ | — | ✅ 已完成 |
+| 1.15.2 | patch | 开发侧事实（`update.ps1` 版本读取、`check-docs` 镜像陈旧告警）移出 `references/troubleshooting.md`，迁入 `CONTRIBUTING.md` 及中文对读版；本地 `zh/skill-zh.md` 镜像重同步 | ✅ | — | ✅ 已完成 |
 
 ## 详情
 
@@ -97,8 +98,15 @@ HTML 页面。框架与标题保留所选语言。
 description 精简为"是什么 + 触发短语"。输出行为未变，`docs/samples/` 保持逐字节一致。剩下的
 约 6.8k token `SKILL.md` 是有意保留的：正文其余部分每次全量扫描都要用。
 
+### 1.15.2 —— 开发侧事实移出运行时载荷（patch · 仅打 tag）
+`references/troubleshooting.md` 属于运行时载荷、会被 agent 读取，但其中两节讲的是维护仓库，
+而不是跑一次盘点：`update.ps1` 读取 `metadata.version`，以及 gitignored 的 `zh/skill-zh.md`
+镜像触发的 `check-docs` 陈旧告警。两者已迁入 `CONTRIBUTING.md` 与 `zh/CONTRIBUTING-ZH.md`；
+运行时文件逐字保留 `## Scan & output failures` 与六个运行时 `## Common issues` 小节。同一轮里
+把本地中文镜像重同步到重构后的 `SKILL.md`，因此 `check-docs` 现在是 0 error / 0 warning。
+
 ## 下一步
 
-梯队已完成到 **1.15.1**：1.11.1–1.11.8、1.13.1–1.13.7 与 1.15.1（patch）、1.12.0、1.13.0、
-1.14.0 与 1.15.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、1.13.1、
-1.13.3、1.14.0 与 1.15.0。当前没有进行中的工作 —— 后续工作从这里开一条新梯队。
+梯队已完成到 **1.15.2**：1.11.1–1.11.8、1.13.1–1.13.7、1.15.1 与 1.15.2（patch）、1.12.0、
+1.13.0、1.14.0 与 1.15.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、
+1.13.1、1.13.3、1.14.0 与 1.15.0。当前没有进行中的工作 —— 后续工作从这里开一条新梯队。

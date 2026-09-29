@@ -36,12 +36,6 @@
 3. Agents: run `opencode agent list` and `opencode --pure agent list` and compare
 4. MCP: check the `mcp` section of `opencode.jsonc`
 
-### Version read failure
-
-`update.ps1` reads the version from the `metadata.version` field of the SKILL.md frontmatter. If it can't read it:
-1. Check the frontmatter format (`version: x.y.z` under `metadata:`, with a space after the colon)
-2. Check the file encoding (UTF-8 with BOM also works, but plain ASCII is safest)
-
 ### Diff mode doesn't work
 
 1. You must have a previous `asset-inventory.json`
@@ -65,7 +59,3 @@ Row order is enforced. Before finishing, confirm all four groups appear in this 
 4. plugin subagent
 
 Common slip: plugin primary above core, or subagent in primary block. Re-sort; this is a Quality Checklist item checked manually.
-
-### Broken links in a Chinese read-along doc
-
-`zh/skill-zh.md` is a gitignored local copy. If `check-docs` warns `local copy may be stale`, the local copy's mtime is more than 24h behind `SKILL.md` — re-sync it or ignore the warning; it never fails the check.

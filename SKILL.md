@@ -5,7 +5,7 @@ license: MIT
 metadata:
   audience: opencode-users
   workflow: inventory
-  version: 1.15.1
+  version: 1.15.2
   source: https://github.com/sogeisetsu/asset-inventory
 ---
 

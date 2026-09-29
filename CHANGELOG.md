@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.15.2] - 2026-09-29
+
+### Changed
+- **Contributor-only facts left the runtime payload** — `references/troubleshooting.md` is read by the agent during an inventory, but it carried two things a maintainer needs and a run never does: how `update.ps1` reads `metadata.version` from the SKILL.md frontmatter, and the `check-docs` "local copy may be stale" warning about the gitignored `zh/skill-zh.md` mirror. Both now live in `CONTRIBUTING.md` (`## Versioning`, `## Testing Your Changes`) and its Chinese counterpart. The runtime file keeps `## Scan & output failures` and the six runtime `## Common issues` sections verbatim, so the agent no longer reads contributor instructions it cannot act on.
+
+---
+
 ## [1.15.1] - 2026-09-29
 
 ### Changed

@@ -8,6 +8,13 @@
 
 ---
 
+## [1.15.2] - 2026-09-29
+
+### 变更
+- **开发侧事实退出运行时载荷** —— `references/troubleshooting.md` 会在盘点时被 agent 读取，但其中混了两件只有维护者才需要、运行时永远用不到的内容：`update.ps1` 如何从 SKILL.md frontmatter 读取 `metadata.version`，以及 `check-docs` 关于 gitignored 的 `zh/skill-zh.md` 镜像的 `local copy may be stale` 告警。两者现已迁入 `CONTRIBUTING.md`（`## Versioning`、`## Testing Your Changes`）及其中文对读版。运行时文件逐字保留 `## Scan & output failures` 与六个运行时 `## Common issues` 小节，agent 不再读到无法执行的贡献者指引。
+
+---
+
 ## [1.15.1] - 2026-09-29
 
 ### 变更
