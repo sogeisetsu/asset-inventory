@@ -45,6 +45,7 @@
 | 1.14.0 | minor | skills.sh install (7 READMEs + guide) + badge; richer description; `metadata.source`; workflow-first SKILL.md; nested-mcp count + diff state-flip branches; glossary `hostCategories` (7 langs) | ✅ | ✅ | ✅ done |
 | 1.15.0 | minor | Registry-first host-command scan (Pass 1 registries + completeness guard, Pass 2 fallback); Table 4 three-registry cross-check | ✅ | ✅ | ✅ done |
 | 1.15.1 | patch | Progressive disclosure: mode/diff routing, failure handling and Table 2/6 rules moved out of `SKILL.md` (36.6k → 29.7k chars); checklist de-duplicated; description 969 → 620 chars | ✅ | — | ✅ done |
+| 1.15.2 | patch | Contributor facts (`update.ps1` version read, `check-docs` stale-mirror warning) moved out of `references/troubleshooting.md` into `CONTRIBUTING.md` + ZH; local `zh/skill-zh.md` mirror resynced | ✅ | — | ✅ done |
 
 ## Details
 
@@ -108,8 +109,18 @@ description to what + triggers. Output behaviour is unchanged, so `docs/samples/
 byte-identical. The remaining ~6.8k-token `SKILL.md` is deliberate: the rest of the body is
 needed on every full scan.
 
+### 1.15.2 — Contributor facts out of the runtime payload (patch · tag only)
+`references/troubleshooting.md` ships inside the runtime payload, so the agent reads it — but
+two of its sections were about maintaining the repo, not about running an inventory:
+`update.ps1` reading `metadata.version`, and the `check-docs` stale-mirror warning for the
+gitignored `zh/skill-zh.md`. Both moved into `CONTRIBUTING.md` + `zh/CONTRIBUTING-ZH.md`;
+the runtime file keeps `## Scan & output failures` and the six runtime `## Common issues`
+sections verbatim. In the same pass the local Chinese mirror was resynced to the
+restructured `SKILL.md`, so `check-docs` now reports 0 errors and 0 warnings.
+
 ## Next step
 
-The rollout is complete through **1.15.1**: 1.11.1–1.11.8, 1.13.1–1.13.7 and 1.15.1
-(patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on 1.11.3, 1.11.4,
-1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start a new ladder here for the next piece of work.
+The rollout is complete through **1.15.2**: 1.11.1–1.11.8, 1.13.1–1.13.7, 1.15.1 and
+1.15.2 (patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on 1.11.3,
+1.11.4, 1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start a
+new ladder here for the next piece of work.
