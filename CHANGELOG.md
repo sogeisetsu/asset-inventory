@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.15.3] - 2026-09-29
+
+### Changed
+- **The mirror-sync rule is written down** — `AGENTS.md` workflow step 1 previously said only "sync `zh/skill-zh.md`". It now states that every `SKILL.md` change must resync the gitignored Chinese mirror section by section *and* update the mirror header's version-pin line that names the `SKILL.md` version it mirrors, including a version-only bump. A new Pitfalls bullet records that `check-docs` judges staleness by mtime alone: `touch`-ing the mirror silences the warning while the content keeps drifting, so a fresh timestamp is not evidence of a resync. Contributor documentation only — the runtime payload (`SKILL.md` + `references/`) is unchanged.
+
+---
+
 ## [1.15.2] - 2026-09-29
 
 ### Changed

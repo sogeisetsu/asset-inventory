@@ -45,6 +45,7 @@
 | 1.15.0 | minor | 宿主命令扫描改为注册表优先（Pass 1 注册表 + 完备性守卫、Pass 2 兜底）；Table 4 三方注册表对账 | ✅ | ✅ | ✅ 已完成 |
 | 1.15.1 | patch | 按需披露：mode/diff 路由、失败处理与 Table 2/6 规则移出 `SKILL.md`（36.6k → 29.7k 字符）；checklist 去重；description 969 → 620 字符 | ✅ | — | ✅ 已完成 |
 | 1.15.2 | patch | 开发侧事实（`update.ps1` 版本读取、`check-docs` 镜像陈旧告警）移出 `references/troubleshooting.md`，迁入 `CONTRIBUTING.md` 及中文对读版；本地 `zh/skill-zh.md` 镜像重同步 | ✅ | — | ✅ 已完成 |
+| 1.15.3 | patch | `AGENTS.md`：镜像同步规则写明（逐节对齐 + 头部版本针；`touch` 不算同步） | ✅ | — | ✅ 已完成 |
 
 ## 详情
 
@@ -105,8 +106,15 @@ description 精简为"是什么 + 触发短语"。输出行为未变，`docs/sam
 运行时文件逐字保留 `## Scan & output failures` 与六个运行时 `## Common issues` 小节。同一轮里
 把本地中文镜像重同步到重构后的 `SKILL.md`，因此 `check-docs` 现在是 0 error / 0 warning。
 
+### 1.15.3 —— 镜像同步规则写入文档（patch · 仅打 tag）
+`AGENTS.md` 第 1 步原来只写"同步 `zh/skill-zh.md`"，而镜像正是这样漂掉的：`SKILL.md` 重构之后，
+它还带着旧 Target 表、旧 diff 协议，以及 v1.4.0 之前的内联 checklist。规则现在把义务写全了 ——
+结构变了就逐节对齐，哪怕只是升版本号也要改头部版本针
+（`> 同步自 SKILL.md vX.Y.Z（metadata.version）。`）；坑列表则记下 `check-docs` 只按 mtime 判断
+陈旧，`touch` 换来的是安静，不是同步。仅文档改动，运行时载荷未动。
+
 ## 下一步
 
-梯队已完成到 **1.15.2**：1.11.1–1.11.8、1.13.1–1.13.7、1.15.1 与 1.15.2（patch）、1.12.0、
-1.13.0、1.14.0 与 1.15.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、
+梯队已完成到 **1.15.3**：1.11.1–1.11.8、1.13.1–1.13.7、1.15.1、1.15.2 与 1.15.3（patch）、
+1.12.0、1.13.0、1.14.0 与 1.15.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、
 1.13.1、1.13.3、1.14.0 与 1.15.0。当前没有进行中的工作 —— 后续工作从这里开一条新梯队。

@@ -46,6 +46,7 @@
 | 1.15.0 | minor | Registry-first host-command scan (Pass 1 registries + completeness guard, Pass 2 fallback); Table 4 three-registry cross-check | ✅ | ✅ | ✅ done |
 | 1.15.1 | patch | Progressive disclosure: mode/diff routing, failure handling and Table 2/6 rules moved out of `SKILL.md` (36.6k → 29.7k chars); checklist de-duplicated; description 969 → 620 chars | ✅ | — | ✅ done |
 | 1.15.2 | patch | Contributor facts (`update.ps1` version read, `check-docs` stale-mirror warning) moved out of `references/troubleshooting.md` into `CONTRIBUTING.md` + ZH; local `zh/skill-zh.md` mirror resynced | ✅ | — | ✅ done |
+| 1.15.3 | patch | `AGENTS.md`: mirror-sync rule made explicit (section-by-section resync + header version pin; `touch` is not a resync) | ✅ | — | ✅ done |
 
 ## Details
 
@@ -118,9 +119,17 @@ the runtime file keeps `## Scan & output failures` and the six runtime `## Commo
 sections verbatim. In the same pass the local Chinese mirror was resynced to the
 restructured `SKILL.md`, so `check-docs` now reports 0 errors and 0 warnings.
 
+### 1.15.3 — Mirror-sync rule written down (patch · tag only)
+`AGENTS.md` step 1 said only "sync `zh/skill-zh.md`", which is how the mirror drifted: after a
+`SKILL.md` restructure it still carried the old Target table, the old diff protocol and a
+pre-v1.4.0 inlined checklist. The rule now spells out the whole obligation — resync section by
+section on any structural change, and update the mirror header's version-pin line even on a
+version-only bump — while the Pitfalls list records that `check-docs` measures staleness by mtime
+alone, so `touch` buys silence, not sync. Docs only: the runtime payload is untouched.
+
 ## Next step
 
-The rollout is complete through **1.15.2**: 1.11.1–1.11.8, 1.13.1–1.13.7, 1.15.1 and
-1.15.2 (patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on 1.11.3,
-1.11.4, 1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start a
-new ladder here for the next piece of work.
+The rollout is complete through **1.15.3**: 1.11.1–1.11.8, 1.13.1–1.13.7, 1.15.1, 1.15.2 and
+1.15.3 (patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on 1.11.3,
+1.11.4, 1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start a new
+ladder here for the next piece of work.
