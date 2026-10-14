@@ -21,7 +21,7 @@
 ## 🚀 Quick start
 
 ```
-/asset-inventory
+list my plugins
 ```
 
 Install the skill (one scope), then invoke it — no configuration needed. Just ask in plain language ("list my plugins") and the agent will load it automatically, or name it explicitly. Add a target to cover only part of your setup — mention 'mcp', 'agents', 'hosts', 'skills', 'diff', or 'usage' in your request (plain language like "MCP servers only" works too). See [Targeting](docs/guides/how-it-works.md#targeting) for what each target scans and what it writes.
