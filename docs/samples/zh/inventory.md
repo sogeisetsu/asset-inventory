@@ -34,7 +34,7 @@
 
 | 名称 | 来源 | 调用方式 | 何时用 | 干什么 |
 |---|---|---|---|---|
-| asset-inventory | 本地自建，上游 `github.com/sogeisetsu/asset-inventory` MIT ✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/asset-inventory` 也行） | 需要盘点本机 opencode 环境时 | 自动触发或按名调用；它一次扫清本机所有可调用的插件、Skill、命令、MCP、Agent 和外层应用能力，输出 7 张表 + JSON + 使用指南。适合换机器、交接、或搞不清环境时用。 |
+| asset-inventory | 本地自建，上游 `github.com/sogeisetsu/asset-inventory` MIT ✅实测 | 看话自动干（Agent 会调 skill 工具），也可点名让 Agent 调同一个工具；宿主如提供 UI skill 选择器也可用 | 需要盘点本机 opencode 环境时 | 它按意图自动触发（Agent 会调 skill 工具），也可显式点名；它一次扫清本机所有可调用的插件、Skill、命令、MCP、Agent 和外层应用能力，输出 7 张表 + JSON + 使用指南。适合换机器、交接、或搞不清环境时用。 |
 | /catch-up | host-injected，二进制扫描 `<app.asar>` 发现 ✅实测 | `/catch-up` | 每次回到项目、丢了上下文时第一件事 | 它由外层应用注入，输入 `/catch-up` 运行；它汇总当前分支提交、PR 状态与未提交改动，给出可速览的摘要和下一步。多会话来回切换时，这是最高频的命令。 |
 | /debug | host-injected，二进制扫描 `<app.asar>` 发现 ✅实测 | `/debug` | 测试红了、修几次修不好时 | 输入 `/debug` 运行；它做引导式根因分析，定位到原因后才动手修，禁止盲目试错。适合反复修不好、需要根因而不是再猜一次时。 |
 

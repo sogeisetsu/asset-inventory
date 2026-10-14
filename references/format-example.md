@@ -15,7 +15,7 @@ These rows define the **format only** — replace every value with observed resu
 
 | Name | Source | How to call | When to use | What it does |
 |---|---|---|---|---|
-| example-skill | example plugin package `src/skills/example` ✅verified ✅available | auto-triggers on intent, or user names it (agent calls the `skill` tool); UI skill picker if the host has one | when you need a particular kind of flow | It triggers automatically when your request matches its description, and can also be picked from `/skills` or typed as `/example-skill`; once it takes over it runs the flow it describes and produces its own outputs. Reach for it when you need that particular kind of flow rather than doing it by hand. |
+| example-skill | example plugin package `src/skills/example` ✅verified ✅available | auto-triggers on intent, or user names it (agent calls the `skill` tool); UI skill picker if the host has one | when you need a particular kind of flow | It triggers automatically when your request matches its description, or when you name it explicitly (the agent calls the same skill tool); once it takes over it runs the flow it describes and produces its own outputs. Reach for it when you need that particular kind of flow rather than doing it by hand. |
 | /loop | example plugin registers command (dist `hooks/loop-command`) ✅verified ✅available | `/loop` | when repeatedly trying until it passes | You type `/loop`; it first asks for the goal, success criteria, success type, and max attempts, then dispatches an executor agent to do the work and a verifier agent to check it, retrying with history on failure until it passes or attempts run out. Loop state is written to disk, so use it for a run–verify–iterate cycle rather than a single attempt. |
 
 ### Table 2 rules
