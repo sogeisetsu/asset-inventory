@@ -16,10 +16,10 @@
 
 | 名称 | 来源 | 调用方式 | 何时用 | 干什么 |
 |---|---|---|---|---|
-| simplify | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/simplify` 也行） | 需要在不改行为的前提下简化代码时 | 它在请求匹配描述时自动触发，也可用 `/simplify` 按名调用；触发后它梳理冗余、提升可读性，但**不改变行为**。适合行为已经明确、只想让代码更清爽时。 |
-| codemap | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/codemap` 也行） | 进入陌生仓库需要导览时 | 自动触发或按名调用；它为不熟悉的仓库生成层级结构图，标注主模块、入口文件与模块关系。第一次接触新项目时先跑它——但它很贵，只在确实需要时用。 |
-| clonedeps | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/clonedeps` 也行） | 需要读依赖库源码时 | 自动触发或按名调用；它把重要依赖的源码克隆到本地被忽略的工作区，让你能直接读 SDK/框架内部实现。调试库行为、理解底层机制时用。 |
-| deepwork | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干，或在 `/skills` 里选（直接打 `/deepwork` 也行） | 复杂多阶段、需要审查关卡时 | 自动触发或按名调用；它是高成本编排器，拆活、派活、再整合，带审查关卡，适合大型重构或新功能实现。**很贵**，只在明确需要时用。 |
+| simplify | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干（Agent 会调 skill 工具），也可点名让 Agent 调同一个工具；宿主如提供 UI skill 选择器也可用 | 需要在不改行为的前提下简化代码时 | 它在请求匹配描述时自动触发，也可用 `/simplify` 按名调用；触发后它梳理冗余、提升可读性，但**不改变行为**。适合行为已经明确、只想让代码更清爽时。 |
+| codemap | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干（Agent 会调 skill 工具），也可点名让 Agent 调同一个工具；宿主如提供 UI skill 选择器也可用 | 进入陌生仓库需要导览时 | 自动触发或按名调用；它为不熟悉的仓库生成层级结构图，标注主模块、入口文件与模块关系。第一次接触新项目时先跑它——但它很贵，只在确实需要时用。 |
+| clonedeps | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干（Agent 会调 skill 工具），也可点名让 Agent 调同一个工具；宿主如提供 UI skill 选择器也可用 | 需要读依赖库源码时 | 自动触发或按名调用；它把重要依赖的源码克隆到本地被忽略的工作区，让你能直接读 SDK/框架内部实现。调试库行为、理解底层机制时用。 |
+| deepwork | oh-my-opencode-slim manages skill（skills-manifest.json，status managed，v2.2.18）✅实测 | 看话自动干（Agent 会调 skill 工具），也可点名让 Agent 调同一个工具；宿主如提供 UI skill 选择器也可用 | 复杂多阶段、需要审查关卡时 | 自动触发或按名调用；它是高成本编排器，拆活、派活、再整合，带审查关卡，适合大型重构或新功能实现。**很贵**，只在明确需要时用。 |
 | /rtk-gain | @rezamonangg/opencode-rtk 注册命令（dist hooks/）✅实测 | `/rtk-gain` | 长会话结束时想确认省了多少 token | 你输入 `/rtk-gain`；它立即执行 rtk_gain 工具，把白名单命令经 RTK 改写后省下的 token 量打成账单展示，不问问题也不改配置。适合每次长会话结束时看一眼省了多少。 |
 
 ## 表3 原生命令与原生 Skill
