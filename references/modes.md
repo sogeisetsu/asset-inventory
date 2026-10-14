@@ -4,15 +4,15 @@
 
 ## Targeting
 
-| Input | Behavior | Output |
+| Request | Behavior | Output |
 |---|---|---|
-| `/asset-inventory` (no args) | Full 7 tables | 3 files in `output/` |
-| `/asset-inventory mcp` | MCP only | `inventory.md` (table 5 only) + JSON (table 5 rows) |
-| `/asset-inventory agents` | Agents only | `inventory.md` (table 6 only) + JSON (table 6 rows) |
-| `/asset-inventory hosts` | Outer-app capabilities only | `inventory.md` (table 7 only) + JSON (table 7 rows) |
-| `/asset-inventory skills` | Skills & commands only | `inventory.md` (tables 2–4) + JSON (tables 2–4 rows) |
-| `/asset-inventory diff` | Diff mode | Added/removed rows only (paste previous JSON) |
-| `/asset-inventory usage` | Full scan, usage guide only | `usage-guide.md` only |
+| No target mentioned | Full 7 tables | 3 files in `output/` |
+| Mentions 'mcp' | MCP only | `inventory.md` (table 5 only) + JSON (table 5 rows) |
+| Mentions 'agents' | Agents only | `inventory.md` (table 6 only) + JSON (table 6 rows) |
+| Mentions 'hosts' | Outer-app capabilities only | `inventory.md` (table 7 only) + JSON (table 7 rows) |
+| Mentions 'skills' | Skills & commands only | `inventory.md` (tables 2–4) + JSON (tables 2–4 rows) |
+| Mentions 'diff' | Diff mode | Added/removed rows only (paste previous JSON) |
+| Mentions 'usage' | Full scan, usage guide only | `usage-guide.md` only |
 
 Rules:
 - With a target, **skip unrelated evidence collection** (e.g. `mcp` skips the plugin dist scan, `agents` skips the outer-app bundle). Language, cell conventions, source classification, masking rules, and the `output/` path all stay the same.

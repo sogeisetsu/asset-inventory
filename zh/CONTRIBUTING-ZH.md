@@ -10,7 +10,7 @@
 2. 建分支：`git checkout -b improve/your-change`
 3. 做修改
 4. 本地测试：把 `SKILL.md`、`references/` 复制到你的 skills 目录
-5. 跑 `/asset-inventory` 验证能正常工作
+5. 说"盘点我的插件"验证能正常工作
 6. 提交 pull request
 
 ## 可以贡献什么
@@ -61,10 +61,10 @@ asset-inventory/
 ## 测试你的改动
 
 1. 本地安装 skill（全局或项目级）
-2. 在装了 OpenCode + 插件的机器上跑 `/asset-inventory`
+2. 在装了 OpenCode + 插件的机器上说"盘点我的插件"
 3. 检查 7 张表是否都正确生成
 4. 核对 JSON 主键与 Markdown 行一致
-5. 跑 `/asset-inventory diff` 与上次输出对比
+5. 说"和上次盘点对比一下"与上次输出对比
 6. 提 PR 前跑文档校验：
 
    ```sh
