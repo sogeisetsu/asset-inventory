@@ -47,6 +47,7 @@
 | 1.15.1 | patch | Progressive disclosure: mode/diff routing, failure handling and Table 2/6 rules moved out of `SKILL.md` (36.6k → 29.7k chars); checklist de-duplicated; description 969 → 620 chars | ✅ | — | ✅ done |
 | 1.15.2 | patch | Contributor facts (`update.ps1` version read, `check-docs` stale-mirror warning) moved out of `references/troubleshooting.md` into `CONTRIBUTING.md` + ZH; local `zh/skill-zh.md` mirror resynced | ✅ | — | ✅ done |
 | 1.15.3 | patch | `AGENTS.md`: mirror-sync rule made explicit (section-by-section resync + header version pin; `touch` is not a resync) | ✅ | — | ✅ done |
+| 1.15.4 | patch | Skill invocation facts corrected: OpenCode TUI has no `/skills` command and `/skill-name` only works if the skill opts in via `metadata.opencode/slash: "true"`; rule + checklist + every sample updated | ✅ | — | ✅ done |
 
 ## Details
 
@@ -127,9 +128,20 @@ section on any structural change, and update the mirror header's version-pin lin
 version-only bump — while the Pitfalls list records that `check-docs` measures staleness by mtime
 alone, so `touch` buys silence, not sync. Docs only: the runtime payload is untouched.
 
+### 1.15.4 — Skill invocation facts (patch · tag only)
+The `How to call` rule for skills told every run to write "pick from `/skills` (typing
+`/skill-name` works too)". Both halves are wrong on OpenCode V2: the TUI has no `/skills`
+command (17-command list at `opencode.ai/docs/tui`), and `/skill-name` only works for skills
+whose frontmatter sets `metadata.opencode/slash: "true"` — zero of this machine's local skills
+opt in. The rule now lists the real paths (auto-trigger, explicit user naming that the agent
+translates into the same `skill` tool, a host UI skill picker if the host has one, and `/name`
+for opt-in skills) and calls out that OpenCode TUI has no `/skills` command. Fix flows through
+`references/usage-guide.md`, `references/checklist.md`, `references/format-example.md`, and
+every sample in `docs/samples/` (EN + ZH inventory / JSON / usage-guide).
+
 ## Next step
 
-The rollout is complete through **1.15.3**: 1.11.1–1.11.8, 1.13.1–1.13.7, 1.15.1, 1.15.2 and
-1.15.3 (patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on 1.11.3,
-1.11.4, 1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start a new
-ladder here for the next piece of work.
+The rollout is complete through **1.15.4**: 1.11.1–1.11.8, 1.13.1–1.13.7, 1.15.1, 1.15.2,
+1.15.3 and 1.15.4 (patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on
+1.11.3, 1.11.4, 1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start
+a new ladder here for the next piece of work.

@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.15.4] - 2026-10-14
+
+### Fixed
+- **Skill invocation facts corrected** — the `How to call` convention for skills told every run to write "pick from `/skills` (typing `/skill-name` works too)", but OpenCode V2's TUI has no `/skills` command (verified against the complete 17-command list at `opencode.ai/docs/tui`) and skills that are not opted in via `metadata.opencode/slash: "true"` cannot be typed as `/skill-name`. The rule now lists the real paths — auto-trigger, explicit user naming (agent calls the same `skill` tool), an optional host UI skill picker, and `/name` only for skills that opt in — and explicitly notes the OpenCode TUI has no `/skills` command. Fixes flow through `references/usage-guide.md`, `references/checklist.md`, `references/format-example.md`, and every sample in `docs/samples/` (EN + ZH inventory / JSON / usage-guide).
+
+---
+
 ## [1.15.3] - 2026-09-29
 
 ### Changed

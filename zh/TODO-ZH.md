@@ -46,6 +46,7 @@
 | 1.15.1 | patch | 按需披露：mode/diff 路由、失败处理与 Table 2/6 规则移出 `SKILL.md`（36.6k → 29.7k 字符）；checklist 去重；description 969 → 620 字符 | ✅ | — | ✅ 已完成 |
 | 1.15.2 | patch | 开发侧事实（`update.ps1` 版本读取、`check-docs` 镜像陈旧告警）移出 `references/troubleshooting.md`，迁入 `CONTRIBUTING.md` 及中文对读版；本地 `zh/skill-zh.md` 镜像重同步 | ✅ | — | ✅ 已完成 |
 | 1.15.3 | patch | `AGENTS.md`：镜像同步规则写明（逐节对齐 + 头部版本针；`touch` 不算同步） | ✅ | — | ✅ 已完成 |
+| 1.15.4 | patch | Skill 调用事实修正：OpenCode TUI 没有 `/skills` 命令，`/skill-name` 只在 `metadata.opencode/slash: "true"` opt-in 时可用；规则 + checklist + 全部样例已同步 | ✅ | — | ✅ 已完成 |
 
 ## 详情
 
@@ -113,8 +114,19 @@ description 精简为"是什么 + 触发短语"。输出行为未变，`docs/sam
 （`> 同步自 SKILL.md vX.Y.Z（metadata.version）。`）；坑列表则记下 `check-docs` 只按 mtime 判断
 陈旧，`touch` 换来的是安静，不是同步。仅文档改动，运行时载荷未动。
 
+### 1.15.4 —— Skill 调用事实修正（patch · 仅打 tag）
+skill 的「调用方式」约定让每次盘点都写"在 `/skills` 里选（直接打 `/skill-name` 也行）"。
+这两半在 OpenCode V2 上都不成立：TUI 没有 `/skills` 命令（对照 `opencode.ai/docs/tui`
+完整的 17 条命令清单已验证），且 `/skill-name` 只对 frontmatter 里设了
+`metadata.opencode/slash: "true"` 的 skill 生效——本机 18 个本地 skill 无一 opt-in。
+规则改成列真实路径：自动触发、用户显式点名（Agent 调同一个 `skill` 工具）、宿主如提供
+UI skill 选择器可用、`/name` 只对 opt-in 的 skill 开放，并明确说明 OpenCode TUI 没有
+`/skills` 命令。修复扩散到 `references/usage-guide.md`、`references/checklist.md`、
+`references/format-example.md`，以及 `docs/samples/` 里所有中英文样本
+（inventory / JSON / usage-guide）。
+
 ## 下一步
 
-梯队已完成到 **1.15.3**：1.11.1–1.11.8、1.13.1–1.13.7、1.15.1、1.15.2 与 1.15.3（patch）、
+梯队已完成到 **1.15.4**：1.11.1–1.11.8、1.13.1–1.13.7、1.15.1、1.15.2、1.15.3 与 1.15.4（patch）、
 1.12.0、1.13.0、1.14.0 与 1.15.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、
 1.13.1、1.13.3、1.14.0 与 1.15.0。当前没有进行中的工作 —— 后续工作从这里开一条新梯队。

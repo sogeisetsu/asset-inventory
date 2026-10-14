@@ -8,6 +8,13 @@
 
 ---
 
+## [1.15.4] - 2026-10-14
+
+### 修复
+- **Skill 调用方式的事实错误** —— 原来 skill 的「调用方式」约定让每次盘点都写"在 `/skills` 里选（直接打 `/skill-name` 也行）"，但 OpenCode V2 的 TUI 根本没有 `/skills` 命令（对照 `opencode.ai/docs/tui` 完整的 17 条命令已验证），而且未在 `metadata.opencode/slash: "true"` 里 opt-in 的 skill 也不能用 `/skill-name` 打出来。现在规则改成列真实路径：自动触发、用户显式点名（Agent 调同一个 `skill` 工具）、宿主如提供 UI skill 选择器可用、只有 opt-in 的 skill 才有 `/name`——并明确说明 OpenCode TUI 没有 `/skills`。修复扩散到 `references/usage-guide.md`、`references/checklist.md`、`references/format-example.md`，以及 `docs/samples/` 里所有中英文样本（inventory / JSON / usage-guide）。
+
+---
+
 ## [1.15.3] - 2026-09-29
 
 ### 变更
