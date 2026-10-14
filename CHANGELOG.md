@@ -6,6 +6,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/), versioning foll
 
 ---
 
+## [1.15.5] - 2026-10-15
+
+### Fixed
+- **The invocation-fact correction now reaches every surface** — the previous patch fixed the `How to call` rule but left several places still teaching the disproven paths. The Chinese sample's own `asset-inventory` row and its rendered page still said "pick from `/skills`"; the `format-example.md` "What it does" cell repeated the claim right beside the corrected column; all seven READMEs opened with a `/asset-inventory` code fence and a "the OpenCode TUI also lists it under `/skills`" claim; the install and how-it-works guides still showed `/asset-inventory <target>` examples; and `SKILL.md`, `references/modes.md`, `references/troubleshooting.md`, `CONTRIBUTING.md`, `test-prompts.json`, and both Chinese mirrors still presented `/asset-inventory` as a typed command. Every one of these now describes invocation the way it actually works — ask in plain language (the agent loads the skill), name it explicitly, or use a host UI picker where one exists. Filesystem paths such as `output/asset-inventory.json` and `~/.config/opencode/skills/asset-inventory/` are untouched, since they are paths, not commands. The Japanese README's quick start, rewritten in the same pass, had picked up a Korean word; it is corrected.
+
+---
+
 ## [1.15.4] - 2026-10-14
 
 ### Fixed

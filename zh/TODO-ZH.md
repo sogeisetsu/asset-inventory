@@ -47,6 +47,7 @@
 | 1.15.2 | patch | 开发侧事实（`update.ps1` 版本读取、`check-docs` 镜像陈旧告警）移出 `references/troubleshooting.md`，迁入 `CONTRIBUTING.md` 及中文对读版；本地 `zh/skill-zh.md` 镜像重同步 | ✅ | — | ✅ 已完成 |
 | 1.15.3 | patch | `AGENTS.md`：镜像同步规则写明（逐节对齐 + 头部版本针；`touch` 不算同步） | ✅ | — | ✅ 已完成 |
 | 1.15.4 | patch | Skill 调用事实修正：OpenCode TUI 没有 `/skills` 命令，`/skill-name` 只在 `metadata.opencode/slash: "true"` opt-in 时可用；规则 + checklist + 全部样例已同步 | ✅ | — | ✅ 已完成 |
+| 1.15.5 | patch | 调用事实修正补齐到每个角落（中文样本行、`format-example` 的 What-it-does、7 个 README 快速开始、install/how-it-works 指南、`SKILL.md`、`modes.md`、`troubleshooting.md`、`CONTRIBUTING.md`、`test-prompts.json`、中文镜像）+ 日文 README 本地化修复 | ✅ | — | ✅ 已完成 |
 
 ## 详情
 
@@ -125,8 +126,18 @@ UI skill 选择器可用、`/name` 只对 opt-in 的 skill 开放，并明确说
 `references/format-example.md`，以及 `docs/samples/` 里所有中英文样本
 （inventory / JSON / usage-guide）。
 
+### 1.15.5 —— 调用事实修正补齐（patch · 仅打 tag）
+1.15.4 改了规则但没扩散到所有地方。复审发现中文样本行（及其渲染 HTML）仍写着
+"在 `/skills` 里选"，`format-example.md` 的「What it does」单元格在已修正的列旁重复了同一
+说法，七种语言的 README 开头仍以 `/asset-inventory` 代码块 + "OpenCode TUI 也在 `/skills`
+里列出"开场。顺带一扫还发现 install / how-it-works 指南，以及 `SKILL.md`、
+`references/modes.md`、`references/troubleshooting.md`、`CONTRIBUTING.md`、
+`test-prompts.json` 和两份中文镜像仍把 `/asset-inventory` 当成可输入的命令。现在都按真实
+方式描述调用（说人话、显式点名、宿主如提供 UI skill 选择器则可用）；文件路径未动。同轮
+改写日文 README 时混进的一个韩文词也已修正。
+
 ## 下一步
 
-梯队已完成到 **1.15.4**：1.11.1–1.11.8、1.13.1–1.13.7、1.15.1、1.15.2、1.15.3 与 1.15.4（patch）、
+梯队已完成到 **1.15.5**：1.11.1–1.11.8、1.13.1–1.13.7、1.15.1、1.15.2、1.15.3、1.15.4 与 1.15.5（patch）、
 1.12.0、1.13.0、1.14.0 与 1.15.0（minor），GitHub Release 见 1.11.3、1.11.4、1.12.0、1.13.0、
 1.13.1、1.13.3、1.14.0 与 1.15.0。当前没有进行中的工作 —— 后续工作从这里开一条新梯队。

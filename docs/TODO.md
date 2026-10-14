@@ -48,6 +48,7 @@
 | 1.15.2 | patch | Contributor facts (`update.ps1` version read, `check-docs` stale-mirror warning) moved out of `references/troubleshooting.md` into `CONTRIBUTING.md` + ZH; local `zh/skill-zh.md` mirror resynced | ✅ | — | ✅ done |
 | 1.15.3 | patch | `AGENTS.md`: mirror-sync rule made explicit (section-by-section resync + header version pin; `touch` is not a resync) | ✅ | — | ✅ done |
 | 1.15.4 | patch | Skill invocation facts corrected: OpenCode TUI has no `/skills` command and `/skill-name` only works if the skill opts in via `metadata.opencode/slash: "true"`; rule + checklist + every sample updated | ✅ | — | ✅ done |
+| 1.15.5 | patch | Invocation-fact correction completed everywhere (ZH sample row, `format-example` What-it-does, 7 README quick starts, install/how-it-works guides, SKILL.md, `modes.md`, `troubleshooting.md`, `CONTRIBUTING.md`, `test-prompts.json`, ZH mirrors) + JA localization fix | ✅ | — | ✅ done |
 
 ## Details
 
@@ -139,9 +140,21 @@ for opt-in skills) and calls out that OpenCode TUI has no `/skills` command. Fix
 `references/usage-guide.md`, `references/checklist.md`, `references/format-example.md`, and
 every sample in `docs/samples/` (EN + ZH inventory / JSON / usage-guide).
 
+### 1.15.5 — Invocation facts completed everywhere (patch · tag only)
+The 1.15.4 correction fixed the rule but did not propagate to every surface. Review caught a
+Chinese sample row (and its rendered HTML) still saying "pick from `/skills`", the
+`format-example.md` "What it does" cell repeating the claim next to the corrected column, and
+all seven READMEs still opening with a `/asset-inventory` fence plus a "the OpenCode TUI also
+lists it under `/skills`" claim. A sweep also found the install and how-it-works guides, plus
+`SKILL.md`, `references/modes.md`, `references/troubleshooting.md`, `CONTRIBUTING.md`,
+`test-prompts.json` and both Chinese mirrors still presenting `/asset-inventory` as a typed
+command. All now describe invocation the way it works (plain-language ask, explicit name, host
+UI picker where one exists); filesystem paths are left alone. A Korean word that slipped into
+the rewritten Japanese README was corrected too.
+
 ## Next step
 
-The rollout is complete through **1.15.4**: 1.11.1–1.11.8, 1.13.1–1.13.7, 1.15.1, 1.15.2,
-1.15.3 and 1.15.4 (patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases on
-1.11.3, 1.11.4, 1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start
+The rollout is complete through **1.15.5**: 1.11.1–1.11.8, 1.13.1–1.13.7, 1.15.1, 1.15.2,
+1.15.3, 1.15.4 and 1.15.5 (patches), 1.12.0, 1.13.0, 1.14.0 and 1.15.0 (minors), GitHub Releases
+on 1.11.3, 1.11.4, 1.12.0, 1.13.0, 1.13.1, 1.13.3, 1.14.0 and 1.15.0. Nothing is in flight — start
 a new ladder here for the next piece of work.

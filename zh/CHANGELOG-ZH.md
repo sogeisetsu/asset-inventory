@@ -8,6 +8,13 @@
 
 ---
 
+## [1.15.5] - 2026-10-15
+
+### 修复
+- **调用事实的修正补齐到每个角落** —— 上一个 patch 改了「调用方式」规则，但仍有几处继续教已被推翻的路径。中文样本自己的 `asset-inventory` 行及其渲染页仍写着"在 `/skills` 里选"；`format-example.md` 的「What it does」单元格在已修正的列旁重复了同一说法；七种语言的 README 开头仍以 `/asset-inventory` 代码块和"OpenCode TUI 也在 `/skills` 里列出"开场；安装与工作原理指南仍给出 `/asset-inventory <target>` 示例；`SKILL.md`、`references/modes.md`、`references/troubleshooting.md`、`CONTRIBUTING.md`、`test-prompts.json` 及两份中文镜像仍把 `/asset-inventory` 当成可输入的命令。现在这些地方都按真实方式描述调用：说人话（Agent 自动加载 skill）、显式点名、宿主如提供 UI skill 选择器则可用。像 `output/asset-inventory.json`、`~/.config/opencode/skills/asset-inventory/` 这类是文件路径而非命令，未改动。日文 README 在同轮改写中混进了一个韩文词，已修正。
+
+---
+
 ## [1.15.4] - 2026-10-14
 
 ### 修复
