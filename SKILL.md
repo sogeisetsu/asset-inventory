@@ -162,7 +162,7 @@ Produce **7 tables**. Tables 1-5 and 7 have **5 columns** (`Name | Source | How 
 - **Source**: three-part shape. See Source Classification below.
 - **How to call**: how the user can actually reach it — **list ALL real invocation paths, never just one**:
   - Command → the literal `/command` (aliases in parens). Never "auto-runs on intent".
-  - Skill → both paths: `auto-triggers on intent, or pick from the host's skill picker (OpenCode TUI: /skills; not every host exposes it — typing /skill-name works regardless)`. Never bare "auto-triggers" when a slash name exists.
+  - Skill → all real paths: `auto-triggers on intent, or user names it explicitly (agent calls the same skill tool); a UI skill picker if the host exposes one; /name if the skill opts into it via metadata.opencode/slash: "true"` (OpenCode TUI has no `/skills` command — that only exists if the skill opts in). Never bare "auto-triggers" when other paths exist; verify which paths actually apply before writing.
   - Agent → `Tab switch` / `auto-takeover` / `@agent-name`.
   - MCP → ask-by-name (`use context7` / `use the gh_grep tool`); the tool the Agent calls (`<server>_<tool>`, e.g. `grep_app_*` / `gh_grep_*`); an MCP Prompt registered as `/prompt-name` (only if the server exposes one); and its own standalone CLI/HTTP endpoint (e.g. a local `pdf-mcp` command, `mcp.context7.com`) if it ships one. **Never** write "the human doesn't call it" or any "Agent-only" claim.
   - Software/host capability → `active once installed` / `nothing to call, on from launch` / `when the Agent calls it`.

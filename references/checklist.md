@@ -25,7 +25,7 @@ Run this checklist before outputting. Every item must pass.
 - [ ] JSON PKs = Markdown data rows, no dupes; `table` numeric `1`-`7` (SKILL.md, Output → JSON).
 - [ ] Empty tables: declaration line + `[]` (SKILL.md, Empty tables).
 - [ ] Name shape uniform per type, no mixed styles (SKILL.md, Cell Conventions).
-- [ ] `How to call` = ALL real paths; no bare "auto-triggers on intent"; skill rows show `/skills` picker (SKILL.md, Cell Conventions).
+- [ ] `How to call` = ALL real paths; no bare "auto-triggers on intent"; skill rows list the real invocation paths (auto-trigger + explicit name; UI picker only if the host exposes one; `/name` only if the skill opts in via `metadata.opencode/slash: "true"`) (SKILL.md, Cell Conventions).
 
 ## Table 1 — Plugins & companion software
 

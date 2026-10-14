@@ -29,7 +29,7 @@
     "source": "oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or pick from /skills (typing /simplify works too)"
+    "invoke": "auto-triggers on intent, or user names it (agent calls the skill tool); UI skill picker if the host has one"
   },
   {
     "table": 2,
@@ -37,7 +37,7 @@
     "source": "oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or pick from /skills (typing /codemap works too)"
+    "invoke": "auto-triggers on intent, or user names it (agent calls the skill tool); UI skill picker if the host has one"
   },
   {
     "table": 2,
@@ -45,7 +45,7 @@
     "source": "oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or pick from /skills (typing /clonedeps works too)"
+    "invoke": "auto-triggers on intent, or user names it (agent calls the skill tool); UI skill picker if the host has one"
   },
   {
     "table": 2,
@@ -53,7 +53,7 @@
     "source": "oh-my-opencode-slim manages skill (skills-manifest.json, status managed, v2.2.18)",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or pick from /skills (typing /deepwork works too)"
+    "invoke": "auto-triggers on intent, or user names it (agent calls the skill tool); UI skill picker if the host has one"
   },
   {
     "table": 2,
@@ -93,7 +93,7 @@
     "source": "local, upstream github.com/sogeisetsu/asset-inventory MIT",
     "state": "✅available",
     "confidence": "✅verified",
-    "invoke": "auto-triggers on intent, or pick from /skills (typing /asset-inventory works too)"
+    "invoke": "auto-triggers on intent, or user names it (agent calls the skill tool); UI skill picker if the host has one"
   },
   {
     "table": 4,

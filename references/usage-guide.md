@@ -44,7 +44,7 @@ A second view derived from the 7-table inventory — same facts, by scenario/fre
 ## Notes
 
 - `/new`, `/sessions`, `/undo`, and `/redo` manage file changes via git internally, so the project must be a git repo.
-- Skills can also be picked from `/skills` (or typed as `/skill-name`, e.g. `/codemap`, `/simplify`), and auto-trigger on intent.
+- Skills auto-trigger on intent (the agent calls the `skill` tool); you can also name one explicitly and the agent calls the same tool. Some hosts expose a UI skill picker. Skills opt into `/name` as a TUI command only if their frontmatter sets `metadata.opencode/slash: "true"` — OpenCode's TUI has no `/skills` command and no `/skill-name` for skills that haven't opted in.
 - Expensive commands (deepwork, codemap, oracle) are only for when clearly needed; don't reach for them on everyday changes.
 
 ---
