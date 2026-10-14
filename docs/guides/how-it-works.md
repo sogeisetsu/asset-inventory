@@ -57,7 +57,7 @@ By default the skill produces the full inventory. Appending **one argument** nar
 | `diff` | no new scan — you paste the previous JSON | only the added and removed rows |
 | `usage` | a full scan (the guide derives from the full rows) | `usage-guide.md` only |
 
-Example: `/asset-inventory mcp` re-checks only your MCP servers and rewrites `inventory.md` with Table 5 alone — handy after adding or removing a server. An unrecognized argument falls back to the full scan and says so at the end.
+Example: saying "re-check my MCP servers" re-checks only your MCP servers and rewrites `inventory.md` with Table 5 alone — handy after adding or removing a server. An unrecognized target falls back to the full scan and says so at the end.
 
 ## 🖥️ A note on "outer app" (host)
 

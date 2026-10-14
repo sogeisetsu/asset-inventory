@@ -20,7 +20,7 @@
 ## 🚀 Inicio rápido
 
 ```
-/asset-inventory
+lista mis plugins
 ```
 
 Instala el skill y ejecútalo — no requiere configuración. Pídelo en lenguaje natural («lista mis plugins») — el agente lo cargará automáticamente. También puedes invocarlo por nombre. Añade un objetivo para cubrir solo una parte: menciona 'mcp', `agents`, `hosts`, `skills`, `diff` o `usage` en tu solicitud (una frase como «solo MCP» también sirve). Ver [Objetivos](../docs/guides/how-it-works.md#targeting) para saber qué escanea y qué escribe cada objetivo.
