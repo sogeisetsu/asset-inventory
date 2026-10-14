@@ -26,7 +26,7 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 
 ## Quick Reference
 
-**One-line trigger:** `/asset-inventory`, or natural language such as "list my plugins / skills / commands / MCP / agents".
+**One-line trigger:** natural language such as "list my plugins / skills / commands / MCP / agents" — the agent loads this skill automatically.
 
 **Three deliverables (one body of evidence, never re-collected):**
 
@@ -36,7 +36,7 @@ Inventory what this machine can **actually invoke** — not what files exist on 
 | `output/usage-guide.md` | Usage guide by scenario/frequency (daily / main tools / on-demand / periodic); the same rows, never re-collected | `references/usage-guide.md` |
 | `output/asset-inventory.json` | Machine-readable JSON, PK = `table` + `name` | see [Output](#5-output) step |
 
-**Targeted modes:** `/asset-inventory mcp` | `agents` | `hosts` | `skills` | `diff` | `usage`
+**Targeted modes:** mention 'mcp' | 'agents' | 'hosts' | 'skills' | 'diff' | 'usage' in your request
 
 **Three questions per row:** what it is (name) · who brought it in (three-part source) · how to use it (when to use + invocation path)
 

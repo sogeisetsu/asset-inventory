@@ -31,7 +31,7 @@
   },
   {
     "id": 7,
-    "prompt": "/asset-inventory foo",
+    "prompt": "list my plugins foo",
     "expected": "Unknown target → falls back to full scan and appends 'unknown target, fell back to full scan'; does not error out, does not invent a foo mode, does not silently produce a partial table."
   }
 ]

@@ -15,7 +15,7 @@
 
 ## Common issues
 
-### Skill not found (the `/asset-inventory` command doesn't appear)
+### Skill not found (the skill doesn't appear in the agent's available skills)
 
 1. Check the install location:
    - Global: `~/.config/opencode/skills/asset-inventory/SKILL.md` should exist
@@ -27,7 +27,7 @@
 
 1. Check that the current directory is writable
 2. Check whether the `output/` directory exists (it is created automatically if missing)
-3. For a targeted mode (e.g. `/asset-inventory mcp`), confirm the argument is spelled correctly
+3. For a targeted mode (e.g. mentioning 'mcp' in your request), confirm the target word is spelled correctly
 
 ### Inventory results are incomplete
 

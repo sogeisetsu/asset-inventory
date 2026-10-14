@@ -8,7 +8,7 @@ Thanks for your interest in improving this skill! Here's how to contribute.
 2. Create a branch: `git checkout -b improve/your-change`
 3. Make your changes
 4. Test by installing locally: copy `SKILL.md` and `references/` to your skills directory
-5. Run `/asset-inventory` to verify it works
+5. Ask "list my plugins" to verify it works
 6. Submit a pull request
 
 ## What to Contribute
@@ -59,10 +59,10 @@ Local-only Chinese guides (`zh/skill-zh.md`, `zh/repo-init-guide-zh.md`) are git
 ## Testing Your Changes
 
 1. Install the skill locally (global or project-scoped)
-2. Run `/asset-inventory` on a machine with OpenCode + plugins
+2. Ask "list my plugins" on a machine with OpenCode + plugins
 3. Check that all 7 tables are generated correctly
 4. Verify JSON PKs match Markdown rows
-5. Run `/asset-inventory diff` to compare with previous output
+5. Ask "show the diff from my last inventory" to compare with previous output
 6. Run the docs check before opening a PR:
 
    ```sh
